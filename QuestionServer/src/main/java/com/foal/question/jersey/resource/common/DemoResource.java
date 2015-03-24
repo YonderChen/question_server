@@ -22,7 +22,7 @@ public class DemoResource
 	/**
 	 * 处理GET请求<br>
 	 * <br>
-	 * url : http://localhost:8080/JerseyServerDemo/rs/jersey_path/getHello<br>
+	 * url : http://localhost:8080/QuestionServer/rs/jersey_path/getHello<br>
 	 * result : Hello Jersey<br>
 	 */
 	@GET
@@ -35,7 +35,7 @@ public class DemoResource
 	/**
 	 * 处理GET请求，url路径作为参数<br>
 	 * <br>
-	 * url : http://localhost:8080/JerseyServerDemo/rs/jersey_path/user/yonder<br>
+	 * url : http://localhost:8080/QuestionServer/rs/jersey_path/user/yonder<br>
 	 * result : {"username":"yonder","data":"this is a test getPathParamData by 'GET'"}<br>
 	 */
 	@GET
@@ -51,7 +51,7 @@ public class DemoResource
 	/**
 	 * 处理http的GET请求，url中?后面的参数对应QueryParam<br>
 	 * <br>
-	 * url : http://localhost:8080/JerseyServerDemo/rs/jersey_path/getQueryParamData?username=yonder<br>
+	 * url : http://localhost:8080/QuestionServer/rs/jersey_path/getQueryParamData?username=yonder<br>
 	 * ret : {"username":"yonder","data":"this is a test getQueryParamData by 'GET'"}<br>
 	 */
 	@GET
@@ -67,7 +67,7 @@ public class DemoResource
 	/**
 	 * 处理网页表单POST请求<br>
 	 * <br>
-	 * url : http://localhost:8080/JerseyServerDemo/rs/jersey_path/postFormData<br>
+	 * url : http://localhost:8080/QuestionServer/rs/jersey_path/postFormData<br>
 	 * param : username=yonder<br>
 	 * ret : {"username":"yonder","data":"this is a test postFormData by 'GET'"}<br>
 	 */
