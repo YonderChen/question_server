@@ -68,13 +68,13 @@
     </listener>
     <listener>
         <listener-class>
-        	com.meat.question.listener.ApplicationContextListener
+        	com.foal.question.listener.ApplicationContextListener
         </listener-class>
     </listener>
     
     <filter>
 		<filter-name>encodingFilter</filter-name>
-		<filter-class>com.meat.question.filter.UTF8EncoderFilter</filter-class>
+		<filter-class>com.foal.question.filter.UTF8EncoderFilter</filter-class>
 		<init-param>
 			<param-name>encode</param-name>
 			<param-value>UTF-8</param-value>
@@ -91,7 +91,7 @@
 	
 	<servlet>
 		<servlet-name>StartUpServlet</servlet-name>
-		<servlet-class>com.meat.question.servlet.StartUpServlet</servlet-class>
+		<servlet-class>com.foal.question.servlet.StartUpServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	
@@ -107,6 +107,23 @@
         <url-pattern>/poolAdmin</url-pattern>
     </servlet-mapping>
    
+	<servlet>
+		<servlet-name>JerseyServlet</servlet-name>  
+		<servlet-class>
+			com.sun.jersey.spi.container.servlet.ServletContainer   
+		</servlet-class>  
+		<init-param>  
+			<param-name>com.sun.jersey.config.property.class</param-name>  
+			<!-- 系统启动时扫描的包的路径-->  
+			<param-value>com.foal.question.jersey.resource.*</param-value>  
+		</init-param>  
+		<load-on-startup>1</load-on-startup>    
+	</servlet>  
+    <servlet-mapping>
+        <servlet-name>JerseyServlet</servlet-name>
+        <url-pattern>/rs/*</url-pattern>
+    </servlet-mapping>
+    
     <session-config>
         <session-timeout>600</session-timeout>
     </session-config>

@@ -7,7 +7,7 @@
     <![endif]-->
 	<!--[if lt IE 9]><link href="${ctx}/style/ie.css" type="text/css" rel="stylesheet" /><![endif]-->
 	<link type="text/css" href="${ctx}/style/style.css?7" rel="stylesheet"/>
-	<link type="text/css" href="${ctx}/style/question.css" rel="stylesheet"/>
+	<link type="text/css" href="${ctx}/style/yonder.css" rel="stylesheet"/>
 	<script type="text/javascript" src="${ctx}/js/base.js"></script>
 	<script type="text/javascript" src="${ctx}/js/check.js"></script>
   	<script type="text/javascript" src="${ctx}/js/jquery.js"></script>
@@ -17,7 +17,7 @@
   	<script type="text/javascript" src="${ctx}/js/jquery.idTabs.min.js"></script>
    	<script type="text/javascript" src="${ctx}/js/bootstrap.min.js"></script>   
    	<script type="text/javascript" src="${ctx}/js/calendar/WdatePicker.js"></script>
-<script type="text/javascript">
+	<script type="text/javascript">
 $('document').ready(function() {
    	var funs = preArray();
 	for (var i = 0; i < funs.length; i++) {
