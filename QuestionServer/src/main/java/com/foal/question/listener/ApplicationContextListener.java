@@ -6,9 +6,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.foal.question.service.akka.AkkaService;
-import com.foal.question.service.elasticsearch.ElasticsearchService;
-
 public class ApplicationContextListener extends ContextLoaderListener {
 
 	@Override
@@ -22,8 +19,6 @@ public class ApplicationContextListener extends ContextLoaderListener {
 	public void contextDestroyed(ServletContextEvent event) {
 		// TODO Auto-generated method stub
 		super.contextDestroyed(event);
-		AkkaService.getInstance().dispose();
-		ElasticsearchService.getInstance().stop();
 	}
 
 }

@@ -15,16 +15,6 @@ public class Constant {
 	public static String DATA_LOGO_SAVE_PATH_VALUE;
 	public static String DATA_LOGO_WEB_PATH_VALUE;
 	
-	public static boolean ELASTICSEARCH_ENABLE=false;
-	public static String ELASTICSEARCH_CLUSTER_NAME;
-	public static String ELASTICSEARCH_HOST;
-	public static int ELASTICSEARCH_PORT;
-
-	public static boolean AKKA_ENABLE=false;
-	public static int LOCAL_AKKA_PORT;
-	public static String AKKA_SERVER_1_HOST;
-	public static int AKKA_SERVER_1_PORT;
-	
 	// 以下从数据库取
 	public static String INIT_PASSWORD;
 	

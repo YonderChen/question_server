@@ -119,11 +119,7 @@ CREATE TABLE `t_system_param` (
 -- ----------------------------
 -- Records of t_system_param
 -- ----------------------------
-INSERT INTO `t_system_param` VALUES ('balanceAkkaIp', '负载AKKA通信IP', '192.168.2.15', '2014-12-18 09:34:22', '2014-12-18 15:45:05');
-INSERT INTO `t_system_param` VALUES ('balanceAkkaPort', '负载AKKA通信端口', '10001', '2014-12-18 09:34:22', '2014-12-18 09:34:22');
 INSERT INTO `t_system_param` VALUES ('initPassword', '新用户初始化密码', '123456', '2014-12-18 09:34:22', '2014-12-18 09:42:22');
-INSERT INTO `t_system_param` VALUES ('worldAkkaIp', '世界服AKKA通信IP', '', '2014-12-18 09:34:22', '2014-12-18 09:34:22');
-INSERT INTO `t_system_param` VALUES ('worldAkkaPort', '世界服AKKA通信端口', '', '2014-12-18 09:34:22', '2014-12-18 09:34:22');
 
 -- ----------------------------
 -- Table structure for t_user_role
@@ -139,3 +135,23 @@ CREATE TABLE `t_user_role` (
 -- Records of t_user_role
 -- ----------------------------
 INSERT INTO `t_user_role` VALUES ('402881e846e4b3910146e4b8ce6c0004', '100000');
+
+
+-- ----------------------------
+-- Table structure for app_user
+-- ----------------------------
+DROP TABLE IF EXISTS `app_user`;
+CREATE TABLE `app_user` (
+  `uid_` varchar(50) NOT NULL COMMENT '本地id',
+  `open_id_` varchar(100) NOT NULL COMMENT '第三方id',
+  `name_` varchar(255) DEFAULT NULL COMMENT '昵称',
+  `gender_` varchar(20) DEFAULT NULL COMMENT '性别',
+  `figureurl_` varchar(255) DEFAULT NULL COMMENT '头像url',
+  `create_time_` datetime NOT NULL COMMENT '用户创建时间',
+  `update_at_` datetime NOT NULL COMMENT '最近一次更新时间',
+  PRIMARY KEY (`uid_`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of app_user
+-- ----------------------------

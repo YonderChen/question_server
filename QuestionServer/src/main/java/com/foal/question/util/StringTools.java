@@ -134,4 +134,18 @@ public class StringTools extends StringUtils {
 		}
 		return val.replaceAll("\"", "“");
 	}
+	/**
+	 * 判断两个字符串是否equals
+	 * @param str1
+	 * @param str2
+	 * @return
+	 */
+	public static boolean equalsStr(String str1, String str2) {
+		if (str1 == null) {
+			if (str2 != null)
+				return false;
+		} else if (!str1.equals(str2))
+			return false;
+		return true;
+	}
 }
