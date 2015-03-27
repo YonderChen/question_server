@@ -8,10 +8,14 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.foal.question.jersey.resource.tools.ResultMap;
+import com.foal.question.jersey.resource.tools.APIConstants.RetCode;
 import com.foal.question.pojo.AppUser;
-import com.google.gson.JsonObject;
+import com.foal.question.service.app.AppUserService;
+import com.foal.question.util.StringTools;
 
 /**
  * 
@@ -20,12 +24,21 @@ import com.google.gson.JsonObject;
  */
 @Component
 @Path("/login")
-public class LoginResource extends BaseResource {
+public class LoginResource {
+	
+	@Autowired
+	AppUserService appUserService;
 	
 	@POST
 	@Produces( { MediaType.TEXT_HTML })
 	public String login(@FormParam(value = "openid") String openId, @FormParam(value = "name") String name,
 			@FormParam(value = "gender") String gender, @FormParam(value = "figureurl") String figureurl) {
+
+		ResultMap ret = ResultMap.getResultMap();
+		if (StringTools.isBlank(openId)) {
+			ret.setResult(RetCode.Faild, "OpenId不正确");
+			return ret.toJson();
+		}
 		AppUser appUser = appUserService.getAppUserByOpenId(openId);
 		Date now = new Date();
 		if (appUser == null) {
@@ -45,9 +58,8 @@ public class LoginResource extends BaseResource {
 			appUserService.updateAppUser(appUser);
 		}
 		
-		JsonObject ret = new JsonObject();
-		ret.addProperty("ret", 0);
-		ret.addProperty("uid", appUser.getUid());
-		return ret.toString();
+		ret.add("ret", 0);
+		ret.add("uid", appUser.getUid());
+		return ret.toJson();
 	}
 }

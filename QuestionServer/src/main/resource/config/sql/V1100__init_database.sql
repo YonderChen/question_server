@@ -162,8 +162,8 @@ DROP TABLE IF EXISTS `app_text_image`;
 CREATE TABLE `app_text_image` (
   `id_` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增长id',
   `owner_id_` varchar(50) NOT NULL COMMENT '发表人id',
-  `content_` varchar(500) NOT NULL DEFAULT '' COMMENT '一句话内容',
-  `image_url_` varchar(500) NOT NULL DEFAULT '' COMMENT '一张图片url',
+  `content_` varchar(500) DEFAULT NULL COMMENT '一句话内容',
+  `image_url_` varchar(500) DEFAULT NULL COMMENT '一张图片url',
   `create_time_` datetime NOT NULL COMMENT '创建时间',
   `positive_count_` int(11) NOT NULL COMMENT '点赞数目',
   `op_lock_` int(11) NOT NULL COMMENT '乐观锁标识',
@@ -188,8 +188,8 @@ DROP TABLE IF EXISTS `app_text_voice`;
 CREATE TABLE `app_text_voice` (
   `id_` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增长id',
   `owner_id_` varchar(50) NOT NULL COMMENT '发表人id',
-  `content_` varchar(500) NOT NULL DEFAULT '' COMMENT '一句话内容',
-  `voice_url_` varchar(500) NOT NULL DEFAULT '' COMMENT '一张图片url',
+  `content_` varchar(500) DEFAULT NULL COMMENT '一句话内容',
+  `voice_url_` varchar(500) DEFAULT NULL COMMENT '一张图片url',
   `create_time_` datetime NOT NULL COMMENT '创建时间',
   `positive_count_` int(11) NOT NULL COMMENT '点赞数目',
   `op_lock_` int(11) NOT NULL COMMENT '乐观锁标识',

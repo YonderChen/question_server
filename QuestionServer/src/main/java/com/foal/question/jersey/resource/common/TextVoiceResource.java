@@ -22,10 +22,11 @@ import com.foal.question.jersey.resource.tools.MultipartFormParam;
 import com.foal.question.jersey.resource.tools.ResourceTools;
 import com.foal.question.jersey.resource.tools.ResultMap;
 import com.foal.question.jersey.resource.tools.APIConstants.RetCode;
-import com.foal.question.pojo.AppTextImage;
-import com.foal.question.pojo.AppTextImageOpLog;
-import com.foal.question.service.app.AppTextImageService;
+import com.foal.question.pojo.AppTextVoice;
+import com.foal.question.pojo.AppTextVoiceOpLog;
+import com.foal.question.service.app.AppTextVoiceService;
 import com.foal.question.util.GsonTools;
+import com.foal.question.util.StringTools;
 import com.google.gson.JsonArray;
 
 /**
@@ -34,19 +35,19 @@ import com.google.gson.JsonArray;
  * @date 2015-3-23
  */
 @Component
-@Path("/text_image")
-public class TextImageResource {
+@Path("/text_voice")
+public class TextVoiceResource {
 	
-	private static final Logger logger = Logger.getLogger(TextImageResource.class);
+	private static final Logger logger = Logger.getLogger(TextVoiceResource.class);
 	
 	@Autowired
-	AppTextImageService appTextImageService;
+	AppTextVoiceService appTextVoiceService;
 	
 	@POST
 	@Path(value = "/add")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces( { MediaType.TEXT_HTML })
-	public String addTextImage(@Context HttpServletRequest request) {
+	public String addTextVoice(@Context HttpServletRequest request) {
 		ResultMap ret = ResultMap.getResultMap();
 		ret.setResult(RetCode.Faild);
 		try {
@@ -57,18 +58,18 @@ public class TextImageResource {
 				ret.setResult(RetCode.Faild, "用户uid不存在");
 				return ret.toJson();
 			}
-			String imageUrl = ResourceTools.uploadFile(param.getFileItemList(), ResourceTools.getImageSuffixs(), Constant.UPLOAD_IMAGE_PATH);
-			AppTextImage textImage = new AppTextImage();
-			textImage.setContent(content);
-			textImage.setOwnerId(uid);
-			textImage.setImageUrl(imageUrl);
-			textImage.setCreateTime(new Date());
-			textImage.setPositiveCount(0);
-			appTextImageService.addAppTextImage(textImage);
-			ret.add("text_image", GsonTools.parseJsonObject(textImage));
+			String voiceUrl = ResourceTools.uploadFile(param.getFileItemList(), ResourceTools.getVoiceSuffixs(), Constant.UPLOAD_VOICE_PATH);
+			AppTextVoice textVoice = new AppTextVoice();
+			textVoice.setContent(content);
+			textVoice.setOwnerId(uid);
+			textVoice.setVoiceUrl(voiceUrl);
+			textVoice.setCreateTime(new Date());
+			textVoice.setPositiveCount(0);
+			appTextVoiceService.addAppTextVoice(textVoice);
+			ret.add("text_voice", GsonTools.parseJsonObject(textVoice));
 			ret.setResult(RetCode.Success);
 		} catch (Exception e) {
-			logger.error("发送文字图片失败", e);
+			logger.error("发送文字声音失败", e);
 		}
 		return ret.toJson();
 	}
@@ -89,12 +90,12 @@ public class TextImageResource {
 			ret.setResult(RetCode.Faild, "用户uid不存在");
 			return ret.toJson();
 		}
-		List<AppTextImage> textImageList = appTextImageService.getAppTextImageByOwner(uid, orderBy, page, pageSize);
+		List<AppTextVoice> textVoiceList = appTextVoiceService.getAppTextVoiceByOwner(uid, orderBy, page, pageSize);
 		JsonArray retJa = new JsonArray();
-		for (AppTextImage textImage : textImageList) {
-			retJa.add(textImage.toJson());
+		for (AppTextVoice textVoice : textVoiceList) {
+			retJa.add(textVoice.toJson());
 		}
-		ret.add("text_images", retJa);
+		ret.add("text_voices", retJa);
 		ret.setResult(RetCode.Success);
 		return ret.toJson();
 	}
@@ -110,14 +111,14 @@ public class TextImageResource {
 	@GET
 	@Path(value = "/load_public")
 	@Produces( { MediaType.TEXT_HTML })
-	public String addTextImage(@QueryParam(value = "order_by") int orderBy, @QueryParam(value = "page") int page, @QueryParam(value = "page_size") int pageSize) {
+	public String addTextVoice(@QueryParam(value = "order_by") int orderBy, @QueryParam(value = "page") int page, @QueryParam(value = "page_size") int pageSize) {
 		ResultMap ret = ResultMap.getResultMap();
-		List<AppTextImage> textImageList = appTextImageService.getPublicAppTextImage(orderBy, page, pageSize);
+		List<AppTextVoice> textVoiceList = appTextVoiceService.getPublicAppTextVoice(orderBy, page, pageSize);
 		JsonArray retJa = new JsonArray();
-		for (AppTextImage textImage : textImageList) {
-			retJa.add(textImage.toJson());
+		for (AppTextVoice textVoice : textVoiceList) {
+			retJa.add(textVoice.toJson());
 		}
-		ret.add("text_images", retJa);
+		ret.add("text_voices", retJa);
 		ret.setResult(RetCode.Success);
 		return ret.toJson();
 	}
@@ -125,25 +126,47 @@ public class TextImageResource {
 	@GET
 	@Path(value = "/positive")
 	@Produces( { MediaType.TEXT_HTML })
-	public String positive(@QueryParam(value = "uid") String uid, @QueryParam(value = "text_image_id") int textImageId) {
+	public String positive(@QueryParam(value = "uid") String uid, @QueryParam(value = "text_voice_id") int textVoiceId) {
 		ResultMap ret = ResultMap.getResultMap();
 		if (!ResourceTools.checkUid(uid)) {
 			ret.setResult(RetCode.Faild, "用户uid不存在");
 			return ret.toJson();
 		}
-		AppTextImageOpLog opLog = appTextImageService.getOpLog(textImageId, uid);
+		AppTextVoiceOpLog opLog = appTextVoiceService.getOpLog(textVoiceId, uid);
 		if (opLog != null) {
 			ret.setResult(RetCode.Faild, "已经对该条记录点过赞");
 			return ret.toJson();
 		}
-		AppTextImage textImage = appTextImageService.getAppTextImage(textImageId);
-		if (textImage == null) {
+		AppTextVoice textVoice = appTextVoiceService.getAppTextVoice(textVoiceId);
+		if (textVoice == null) {
 			ret.setResult(RetCode.Faild, "要点赞的记录不存在");
 			return ret.toJson();
 		}
-		appTextImageService.incPositiveCount(textImage, uid);
+		appTextVoiceService.incPositiveCount(textVoice, uid);
 		ret.setResult(RetCode.Success);
 		return ret.toJson();
 	}
 	
+	@GET
+	@Path(value = "/del")
+	@Produces( { MediaType.TEXT_HTML })
+	public String delTextVoice(@QueryParam(value = "uid") String uid, @QueryParam(value = "text_voice_id") int textVoiceId) {
+		ResultMap ret = ResultMap.getResultMap();
+		if (!ResourceTools.checkUid(uid)) {
+			ret.setResult(RetCode.Faild, "用户uid不存在");
+			return ret.toJson();
+		}
+		AppTextVoice textVoice = appTextVoiceService.getAppTextVoice(textVoiceId);
+		if (textVoice == null) {
+			ret.setResult(RetCode.Faild, "要删除的记录不存在");
+			return ret.toJson();
+		}
+		if (!StringTools.equalsStr(textVoice.getOwnerId(), uid)) {
+			ret.setResult(RetCode.Faild, "该记录不属于你，不能进行删除");
+			return ret.toJson();
+		}
+		appTextVoiceService.incPositiveCount(textVoice, uid);
+		ret.setResult(RetCode.Success);
+		return ret.toJson();
+	}
 }

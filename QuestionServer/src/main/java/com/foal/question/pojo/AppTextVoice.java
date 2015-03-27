@@ -15,7 +15,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Index;
 
+import com.foal.question.config.Constant;
+import com.foal.question.util.GsonTools;
 import com.foal.question.util.StringTools;
+import com.google.gson.JsonObject;
 
 @Entity
 @Table(name = "app_text_voice")
@@ -79,6 +82,9 @@ public class AppTextVoice implements Serializable{
 	public void setPositiveCount(int positiveCount) {
 		this.positiveCount = positiveCount;
 	}
+	public void incPositiveCount() {
+		this.positiveCount++;
+	}
 	@Version
 	@Column(name = "op_lock_")
 	public int getVersion() {
@@ -118,5 +124,12 @@ public class AppTextVoice implements Serializable{
 				&& createTime.getTime() == other.createTime.getTime()
 				&& positiveCount == other.positiveCount
 				&& opLock == other.opLock;
+	}
+	
+	public JsonObject toJson() {
+		JsonObject jo = GsonTools.parseJsonObject(this);
+		jo.remove("opLock");
+		jo.addProperty("imageUrl", Constant.CONTEXT_WEB_URL + this.voiceUrl);
+		return jo;
 	}
 }

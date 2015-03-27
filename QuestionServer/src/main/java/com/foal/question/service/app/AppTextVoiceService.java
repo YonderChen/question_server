@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.foal.question.dao.DaoSupport;
 import com.foal.question.pojo.AppTextVoice;
+import com.foal.question.pojo.AppTextVoiceOpLog;
 
 @SuppressWarnings("unchecked")
 @Service(value = "appTextVoiceService")
@@ -23,10 +24,22 @@ public class AppTextVoiceService extends DaoSupport {
 	public void updateAppTextVoice(AppTextVoice textVoice) {
 		this.hibernateDao.update(textVoice);
 	}
+	
+	public void incPositiveCount(AppTextVoice textImage, String uid) {
+		textImage.incPositiveCount();
+		this.hibernateDao.update(textImage);
+		AppTextVoiceOpLog opLog = new AppTextVoiceOpLog();
+		opLog.setOpId(textImage.getId() + uid);
+		this.hibernateDao.save(opLog);
+	}
 
 	public boolean deleteAppTextVoice(AppTextVoice textVoice) {
 		this.hibernateDao.delete(textVoice);
 		return true;
+	}
+
+	public AppTextVoiceOpLog getOpLog(int id, String uid) {
+		return this.hibernateDao.get(AppTextVoiceOpLog.class, id + uid);
 	}
 
 	/**
