@@ -155,3 +155,29 @@ CREATE TABLE `app_user` (
 -- ----------------------------
 -- Records of app_user
 -- ----------------------------
+-- ----------------------------
+-- Table structure for app_text_voice
+-- ----------------------------
+DROP TABLE IF EXISTS `app_text_voice`;
+CREATE TABLE `app_text_voice` (
+  `id_` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增长id',
+  `content_` varchar(500) NOT NULL DEFAULT '' COMMENT '一句话内容',
+  `voice_url_` varchar(500) NOT NULL DEFAULT '' COMMENT '一张图片url',
+  `create_time_` datetime NOT NULL COMMENT '创建时间',
+  `positive_count_` int(11) NOT NULL COMMENT '点赞数目',
+  PRIMARY KEY (`id_`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for app_text_image
+-- ----------------------------
+DROP TABLE IF EXISTS `app_text_image`;
+CREATE TABLE `app_text_image` (
+  `id_` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增长id',
+  `content_` varchar(500) NOT NULL DEFAULT '' COMMENT '一句话内容',
+  `image_url_` varchar(500) NOT NULL DEFAULT '' COMMENT '一张图片url',
+  `create_time_` datetime NOT NULL COMMENT '创建时间',
+  `positive_count_` int(11) NOT NULL COMMENT '点赞数目',
+  PRIMARY KEY (`id_`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

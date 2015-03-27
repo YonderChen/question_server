@@ -108,22 +108,14 @@
     </servlet-mapping>
    
 	<servlet>
-		<servlet-name>JerseyServlet</servlet-name>  
-		<servlet-class>
-			com.sun.jersey.spi.container.servlet.ServletContainer   
-		</servlet-class>  
-		<init-param>  
-			<param-name>com.sun.jersey.config.property.class</param-name>  
-			<!-- 系统启动时扫描的包的路径-->  
-			<param-value>com.foal.question.jersey.resource.*</param-value>  
-		</init-param>  
-		<load-on-startup>1</load-on-startup>    
-	</servlet>  
-    <servlet-mapping>
-        <servlet-name>JerseyServlet</servlet-name>
-        <url-pattern>/rs/*</url-pattern>
-    </servlet-mapping>
-    
+		<servlet-name>JerseyServlet</servlet-name>
+		<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>JerseyServlet</servlet-name>
+		<url-pattern>/rs/*</url-pattern>
+	</servlet-mapping>
+	
     <session-config>
         <session-timeout>600</session-timeout>
     </session-config>

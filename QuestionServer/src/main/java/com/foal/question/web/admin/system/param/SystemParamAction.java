@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.foal.question.bean.AjaxBean;
 import com.foal.question.bean.SystemParamBean;
-import com.foal.question.service.ISystemParamService;
+import com.foal.question.service.SystemParamService;
 import com.foal.question.web.admin.AdminBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -18,7 +18,7 @@ public class SystemParamAction extends AdminBaseAction implements ModelDriven<Sy
 	private SystemParamBean paramBean = new SystemParamBean();
 	
 	@Autowired
-	private ISystemParamService systemParamService;
+	private SystemParamService systemParamService;
 	
 	
 	public SystemParamBean getModel() {

@@ -7,17 +7,19 @@ public class Constant {
 
 	public static final long FILE_MAX_SIZE = 1024 * 1024 * 10;
 
-	public static final String DATA_LOGO_WEB_PATH_KEY = "webUrl";
+	public static final String CONTEXT_WEB_URL_KEY = "webUrl";
 
 	public static String TOMCAT_SERVICE_ADDRESS;
 	
-	// 以下从配置文件取
-	public static String DATA_LOGO_SAVE_PATH_VALUE;
-	public static String DATA_LOGO_WEB_PATH_VALUE;
-	
+	public static String CONTEXT_WEB_URL;
+
 	// 以下从数据库取
 	public static String INIT_PASSWORD;
 	
 	public static final String INIT_PASSWORD_KEY = "initPassword";
+	
+	public static final String UPLOAD_IMAGE_PATH = "/app_upload/image/";
+	public static final String UPLOAD_VOICE_PATH = "/app_upload/voice/";
+	public static final String UPLOAD_TEMP_PATH = "/app_upload/temp/";
 
 }

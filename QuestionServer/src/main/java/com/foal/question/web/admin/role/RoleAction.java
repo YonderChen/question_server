@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.foal.question.bean.AjaxBean;
 import com.foal.question.bean.RoleBean;
 import com.foal.question.pojo.Menu;
-import com.foal.question.service.IRoleService;
-import com.foal.question.service.IServerUserService;
+import com.foal.question.service.RoleService;
+import com.foal.question.service.ServerUserService;
 import com.foal.question.web.admin.AdminBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -23,10 +23,10 @@ public class RoleAction extends AdminBaseAction implements ModelDriven<RoleBean>
 	private RoleBean roleBean = new RoleBean();
 	
 	@Autowired
-	private IRoleService roleService;
+	private RoleService roleService;
 	
 	@Autowired
-	private IServerUserService serverUserService;
+	private ServerUserService serverUserService;
 	
 	public RoleBean getModel() {
 		return roleBean;

@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -31,8 +32,9 @@ public class AppUser implements Serializable{
 	private Date createTime;
 	private Date updateAt;
 
-	@GenericGenerator(name = "generator", strategy = "assigned")
+	@GenericGenerator(name = "generator", strategy = "uuid")
 	@Id
+	@GeneratedValue(generator = "generator")
 	@Column(name = "uid_")
 	public String getUid() {
 		return uid;

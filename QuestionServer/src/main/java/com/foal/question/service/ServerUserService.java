@@ -1,4 +1,4 @@
-package com.foal.question.service.impl;
+package com.foal.question.service;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -16,12 +16,11 @@ import com.foal.question.pojo.Role;
 import com.foal.question.pojo.ServerUser;
 import com.foal.question.pojo.UserRole;
 import com.foal.question.pojo.UserRolePK;
-import com.foal.question.service.IServerUserService;
 import com.foal.question.util.StringUtil;
 
 @SuppressWarnings("unchecked")
 @Service(value = "serverUserService")
-public class ServerUserServiceImpl extends DaoSupport implements IServerUserService{
+public class ServerUserService extends DaoSupport {
 
 	public ServerUser queryServerUser(ServerUserBean userBean, StringBuffer sb) {
 		String queryHql = "from ServerUser as t where t.username = ? and t.isDelete = 0";

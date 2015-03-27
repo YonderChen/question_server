@@ -1,4 +1,4 @@
-package com.foal.question.service.impl;
+package com.foal.question.service.app;
 
 import java.util.List;
 
@@ -6,19 +6,16 @@ import org.springframework.stereotype.Service;
 
 import com.foal.question.dao.DaoSupport;
 import com.foal.question.pojo.AppUser;
-import com.foal.question.service.IAppUserService;
 
 @SuppressWarnings("unchecked")
 @Service(value = "appUserService")
-public class AppUserServiceImpl extends DaoSupport implements IAppUserService{
+public class AppUserService extends DaoSupport {
 
-	@Override
 	public boolean addAppUser(AppUser appUser) {
 		this.hibernateDao.save(appUser);
 		return true;
 	}
 
-	@Override
 	public AppUser getAppUserByOpenId(String openId) {
 		String queryHql = "from AppUser as u where u.openId = ?";
 		List<AppUser> list = this.hibernateDao.queryList(queryHql, openId);
@@ -28,12 +25,10 @@ public class AppUserServiceImpl extends DaoSupport implements IAppUserService{
 		return list.get(0);
 	}
 
-	@Override
-	public AppUser getOpenIdById(String id) {
+	public AppUser getAppUserById(String id) {
 		return this.hibernateDao.get(AppUser.class, id);
 	}
 
-	@Override
 	public boolean updateAppUser(AppUser appUser) {
 		this.hibernateDao.update(appUser);
 		return true;

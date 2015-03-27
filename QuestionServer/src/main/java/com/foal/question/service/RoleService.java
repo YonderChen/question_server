@@ -1,4 +1,4 @@
-package com.foal.question.service.impl;
+package com.foal.question.service;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -14,12 +14,11 @@ import com.foal.question.pojo.Menu;
 import com.foal.question.pojo.Role;
 import com.foal.question.pojo.RoleMenu;
 import com.foal.question.pojo.RoleMenuPK;
-import com.foal.question.service.IRoleService;
 import com.foal.question.util.StringUtil;
 
 @SuppressWarnings("unchecked")
 @Service(value = "roleService")
-public class RoleServiceImpl extends DaoSupport implements IRoleService{
+public class RoleService extends DaoSupport {
 
 	public String queryRoleName(String userId) {
 		String queryHql = "select t.pk.role.name from UserRole as t where t.pk.serverUser.userId = ?";

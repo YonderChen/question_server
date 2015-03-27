@@ -1,4 +1,4 @@
-package com.foal.question.service.impl;
+package com.foal.question.service;
 
 import java.io.File;
 
@@ -8,13 +8,12 @@ import org.springframework.stereotype.Service;
 import com.foal.question.config.Constant;
 import com.foal.question.dao.DaoSupport;
 import com.foal.question.pojo.SystemParam;
-import com.foal.question.service.IGlobalConfigService;
 import com.googlecode.flyway.core.Flyway;
 
 @Service(value = "globalConfigService")
-public class GlobalConfigServiceImpl extends DaoSupport implements IGlobalConfigService {
+public class GlobalConfigService extends DaoSupport {
 	@SuppressWarnings("unused")
-	private final Logger logger = Logger.getLogger(GlobalConfigServiceImpl.class);
+	private final Logger logger = Logger.getLogger(GlobalConfigService.class);
 	
 	public void runDbMigrate() {
 		File file = new File(Constant.TOMCAT_SERVICE_ADDRESS + "/WEB-INF/classes/config/sql");

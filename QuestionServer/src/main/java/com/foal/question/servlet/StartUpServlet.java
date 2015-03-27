@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 
 import com.foal.question.config.Constant;
 import com.foal.question.listener.ServiceLocator;
-import com.foal.question.service.IGlobalConfigService;
+import com.foal.question.service.GlobalConfigService;
 
 public class StartUpServlet extends HttpServlet {
 	private final Logger logger = Logger.getLogger(StartUpServlet.class);
@@ -33,11 +33,10 @@ public class StartUpServlet extends HttpServlet {
 		
 		Constant.TOMCAT_SERVICE_ADDRESS = this.getServletContext().getRealPath("");
 		
-		Constant.DATA_LOGO_SAVE_PATH_VALUE = ServiceLocator.getMessage("logo.real.address");
-		Constant.DATA_LOGO_WEB_PATH_VALUE = ServiceLocator.getMessage("logo.web.url");
-		this.getServletContext().setAttribute(Constant.DATA_LOGO_WEB_PATH_KEY, Constant.DATA_LOGO_WEB_PATH_VALUE);
+		Constant.CONTEXT_WEB_URL = ServiceLocator.getMessage("context.web.url");
+		this.getServletContext().setAttribute(Constant.CONTEXT_WEB_URL_KEY, Constant.CONTEXT_WEB_URL);
 		
-		IGlobalConfigService globalConfigService = ServiceLocator.getBean(IGlobalConfigService.class);
+		GlobalConfigService globalConfigService = ServiceLocator.getBean(GlobalConfigService.class);
 		// 执行增量脚本
 		globalConfigService.runDbMigrate();
 		globalConfigService.initSystemParam();

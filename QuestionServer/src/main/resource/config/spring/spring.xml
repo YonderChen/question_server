@@ -140,6 +140,7 @@
 				<prop key="add*">PROPAGATION_REQUIRED</prop>
 				<prop key="update*">PROPAGATION_REQUIRED</prop>
 				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="inc*">PROPAGATION_REQUIRED</prop>
 			</props>
 		</property>
 	</bean>

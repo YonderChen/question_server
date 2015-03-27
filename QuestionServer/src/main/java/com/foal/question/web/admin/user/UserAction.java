@@ -9,8 +9,8 @@ import com.foal.question.bean.AjaxBean;
 import com.foal.question.bean.PageBean;
 import com.foal.question.bean.ServerUserBean;
 import com.foal.question.pojo.ServerUser;
-import com.foal.question.service.IRoleService;
-import com.foal.question.service.IServerUserService;
+import com.foal.question.service.RoleService;
+import com.foal.question.service.ServerUserService;
 import com.foal.question.web.admin.AdminBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -19,10 +19,10 @@ public class UserAction extends AdminBaseAction implements ModelDriven<ServerUse
 	private static final long serialVersionUID = 1323581861086668462L;
 
 	@Autowired
-    private IServerUserService serverUserService;
+    private ServerUserService serverUserService;
 
 	@Autowired
-	private IRoleService roleService;
+	private RoleService roleService;
 
     private ServerUserBean serverUserBean = new ServerUserBean();
 

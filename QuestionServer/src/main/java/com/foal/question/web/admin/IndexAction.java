@@ -10,7 +10,7 @@ import com.foal.question.bean.ServerUserBean;
 import com.foal.question.config.Constant;
 import com.foal.question.pojo.Menu;
 import com.foal.question.pojo.ServerUser;
-import com.foal.question.service.IServerUserService;
+import com.foal.question.service.ServerUserService;
 import com.opensymphony.xwork2.ModelDriven;
 
 public class IndexAction extends AdminBaseAction implements ModelDriven<ServerUserBean>{
@@ -19,7 +19,7 @@ public class IndexAction extends AdminBaseAction implements ModelDriven<ServerUs
 	private ServerUserBean userBean = new ServerUserBean();
 	
 	@Autowired
-	private IServerUserService serverUserService;
+	private ServerUserService serverUserService;
 
 	public ServerUserBean getModel() {
 		return this.userBean;

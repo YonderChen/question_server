@@ -1,7 +1,6 @@
 package com.foal.question.jersey.resource.common;
 
 import java.util.Date;
-import java.util.UUID;
 
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -9,11 +8,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.foal.question.pojo.AppUser;
-import com.foal.question.service.IAppUserService;
 import com.google.gson.JsonObject;
 
 /**
@@ -23,9 +20,7 @@ import com.google.gson.JsonObject;
  */
 @Component
 @Path("/login")
-public class LoginResource {
-	@Autowired
-	IAppUserService appUserService;
+public class LoginResource extends BaseResource {
 	
 	@POST
 	@Produces( { MediaType.TEXT_HTML })
@@ -35,7 +30,6 @@ public class LoginResource {
 		Date now = new Date();
 		if (appUser == null) {
 			appUser = new AppUser();
-			appUser.setUid(UUID.randomUUID().toString());
 			appUser.setOpenId(openId);
 			appUser.setName(name);
 			appUser.setGender(gender);
