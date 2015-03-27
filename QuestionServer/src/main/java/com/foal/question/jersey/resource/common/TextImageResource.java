@@ -25,7 +25,6 @@ import com.foal.question.jersey.resource.tools.APIConstants.RetCode;
 import com.foal.question.pojo.AppTextImage;
 import com.foal.question.pojo.AppTextImageOpLog;
 import com.foal.question.service.app.AppTextImageService;
-import com.foal.question.util.GsonTools;
 import com.google.gson.JsonArray;
 
 /**
@@ -65,7 +64,7 @@ public class TextImageResource {
 			textImage.setCreateTime(new Date());
 			textImage.setPositiveCount(0);
 			appTextImageService.addAppTextImage(textImage);
-			ret.add("text_image", GsonTools.parseJsonObject(textImage));
+			ret.add("text_image", textImage.toJson());
 			ret.setResult(RetCode.Success);
 		} catch (Exception e) {
 			logger.error("发送文字图片失败", e);

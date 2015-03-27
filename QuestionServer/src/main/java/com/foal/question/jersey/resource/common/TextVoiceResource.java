@@ -25,7 +25,6 @@ import com.foal.question.jersey.resource.tools.APIConstants.RetCode;
 import com.foal.question.pojo.AppTextVoice;
 import com.foal.question.pojo.AppTextVoiceOpLog;
 import com.foal.question.service.app.AppTextVoiceService;
-import com.foal.question.util.GsonTools;
 import com.foal.question.util.StringTools;
 import com.google.gson.JsonArray;
 
@@ -66,7 +65,7 @@ public class TextVoiceResource {
 			textVoice.setCreateTime(new Date());
 			textVoice.setPositiveCount(0);
 			appTextVoiceService.addAppTextVoice(textVoice);
-			ret.add("text_voice", GsonTools.parseJsonObject(textVoice));
+			ret.add("text_voice", textVoice.toJson());
 			ret.setResult(RetCode.Success);
 		} catch (Exception e) {
 			logger.error("发送文字声音失败", e);
