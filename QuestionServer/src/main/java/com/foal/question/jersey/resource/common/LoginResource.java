@@ -58,7 +58,7 @@ public class LoginResource {
 			appUserService.updateAppUser(appUser);
 		}
 		
-		ret.add("ret", 0);
+		ret.setResult(RetCode.Success);
 		ret.add("uid", appUser.getUid());
 		return ret.toJson();
 	}

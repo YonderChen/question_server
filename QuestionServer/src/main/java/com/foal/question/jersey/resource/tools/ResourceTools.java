@@ -33,7 +33,7 @@ public class ResourceTools {
 	}
 	
 	public static String[] getImageSuffixs() {
-		return new String[]{".jpg", ".jpeg", ".png", ".bmp", ".gif",};
+		return new String[]{".jpg", ".jpeg", ".png", ".bmp", ".gif"};
 	}
 	
 	public static String[] getVoiceSuffixs() {
