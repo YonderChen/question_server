@@ -108,6 +108,9 @@ public class ResourceTools {
 	}
 	
 	public static boolean checkUid(String uid) {
+		if (StringTools.isBlank(uid)) {
+			return false;
+		}
 		AppUser user = appUserService.getAppUserById(uid);
 		if (user == null) {
 			return false;

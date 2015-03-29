@@ -23,8 +23,8 @@ import com.foal.question.jersey.resource.tools.ResourceTools;
 import com.foal.question.jersey.resource.tools.ResultMap;
 import com.foal.question.jersey.resource.tools.APIConstants.RetCode;
 import com.foal.question.pojo.AppTextImage;
-import com.foal.question.pojo.AppTextImageOpLog;
 import com.foal.question.service.app.AppTextImageService;
+import com.foal.question.util.StringTools;
 import com.google.gson.JsonArray;
 
 /**
@@ -62,9 +62,9 @@ public class TextImageResource {
 			textImage.setOwnerId(uid);
 			textImage.setImageUrl(imageUrl);
 			textImage.setCreateTime(new Date());
-			textImage.setPositiveCount(0);
+			textImage.setPraiseCount(0);
 			appTextImageService.addAppTextImage(textImage);
-			ret.add("text_image", textImage.toJson());
+			ret.add("text_image", textImage.toJson(false));
 			ret.setResult(RetCode.Success);
 		} catch (Exception e) {
 			logger.error("发送文字图片失败", e);
@@ -82,7 +82,7 @@ public class TextImageResource {
 	@GET
 	@Path(value = "/load_my")
 	@Produces( { MediaType.TEXT_HTML })
-	public String getByOwner(@QueryParam(value = "uid") String uid, @QueryParam(value = "order_by") int orderBy, @QueryParam(value = "page") int page, @QueryParam(value = "page_size") int pageSize) {
+	public String loadByOwner(@QueryParam(value = "uid") String uid, @QueryParam(value = "order_by") int orderBy, @QueryParam(value = "page") int page, @QueryParam(value = "page_size") int pageSize) {
 		ResultMap ret = ResultMap.getResultMap();
 		if (!ResourceTools.checkUid(uid)) {
 			ret.setResult(RetCode.Faild, "用户uid不存在");
@@ -91,7 +91,7 @@ public class TextImageResource {
 		List<AppTextImage> textImageList = appTextImageService.getAppTextImageByOwner(uid, orderBy, page, pageSize);
 		JsonArray retJa = new JsonArray();
 		for (AppTextImage textImage : textImageList) {
-			retJa.add(textImage.toJson());
+			retJa.add(textImage.toJson(appTextImageService.hasPraised(textImage.getId(), uid)));
 		}
 		ret.add("text_images", retJa);
 		ret.setResult(RetCode.Success);
@@ -109,12 +109,16 @@ public class TextImageResource {
 	@GET
 	@Path(value = "/load_public")
 	@Produces( { MediaType.TEXT_HTML })
-	public String addTextImage(@QueryParam(value = "order_by") int orderBy, @QueryParam(value = "page") int page, @QueryParam(value = "page_size") int pageSize) {
+	public String loadPublic(@QueryParam(value = "uid") String uid, @QueryParam(value = "order_by") int orderBy, @QueryParam(value = "page") int page, @QueryParam(value = "page_size") int pageSize) {
 		ResultMap ret = ResultMap.getResultMap();
+		if (!ResourceTools.checkUid(uid)) {
+			ret.setResult(RetCode.Faild, "用户uid不存在");
+			return ret.toJson();
+		}
 		List<AppTextImage> textImageList = appTextImageService.getPublicAppTextImage(orderBy, page, pageSize);
 		JsonArray retJa = new JsonArray();
 		for (AppTextImage textImage : textImageList) {
-			retJa.add(textImage.toJson());
+			retJa.add(textImage.toJson(appTextImageService.hasPraised(textImage.getId(), uid)));
 		}
 		ret.add("text_images", retJa);
 		ret.setResult(RetCode.Success);
@@ -122,27 +126,48 @@ public class TextImageResource {
 	}
 	
 	@GET
-	@Path(value = "/positive")
+	@Path(value = "/praise")
 	@Produces( { MediaType.TEXT_HTML })
-	public String positive(@QueryParam(value = "uid") String uid, @QueryParam(value = "text_image_id") int textImageId) {
+	public String praise(@QueryParam(value = "uid") String uid, @QueryParam(value = "record_id") int recordId) {
 		ResultMap ret = ResultMap.getResultMap();
 		if (!ResourceTools.checkUid(uid)) {
 			ret.setResult(RetCode.Faild, "用户uid不存在");
 			return ret.toJson();
 		}
-		AppTextImageOpLog opLog = appTextImageService.getOpLog(textImageId, uid);
-		if (opLog != null) {
+		if (appTextImageService.hasPraised(recordId, uid)) {
 			ret.setResult(RetCode.Faild, "已经对该条记录点过赞");
 			return ret.toJson();
 		}
-		AppTextImage textImage = appTextImageService.getAppTextImage(textImageId);
+		AppTextImage textImage = appTextImageService.getAppTextImage(recordId);
 		if (textImage == null) {
 			ret.setResult(RetCode.Faild, "要点赞的记录不存在");
 			return ret.toJson();
 		}
-		appTextImageService.incPositiveCount(textImage, uid);
+		appTextImageService.incPraiseCount(textImage, uid);
 		ret.setResult(RetCode.Success);
 		return ret.toJson();
 	}
 	
+	@GET
+	@Path(value = "/del")
+	@Produces( { MediaType.TEXT_HTML })
+	public String del(@QueryParam(value = "uid") String uid, @QueryParam(value = "record_id") int recordId) {
+		ResultMap ret = ResultMap.getResultMap();
+		if (!ResourceTools.checkUid(uid)) {
+			ret.setResult(RetCode.Faild, "用户uid不存在");
+			return ret.toJson();
+		}
+		AppTextImage textImage = appTextImageService.getAppTextImage(recordId);
+		if (textImage == null) {
+			ret.setResult(RetCode.Faild, "要删除的记录不存在");
+			return ret.toJson();
+		}
+		if (!StringTools.equalsStr(textImage.getOwnerId(), uid)) {
+			ret.setResult(RetCode.Faild, "该记录不属于你，不能进行删除");
+			return ret.toJson();
+		}
+		appTextImageService.deleteAppTextImage(textImage);
+		ret.setResult(RetCode.Success);
+		return ret.toJson();
+	}
 }

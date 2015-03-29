@@ -165,7 +165,7 @@ CREATE TABLE `app_text_image` (
   `content_` varchar(500) DEFAULT NULL COMMENT '一句话内容',
   `image_url_` varchar(500) DEFAULT NULL COMMENT '一张图片url',
   `create_time_` datetime NOT NULL COMMENT '创建时间',
-  `positive_count_` int(11) NOT NULL COMMENT '点赞数目',
+  `praise_count_` int(11) NOT NULL COMMENT '点赞数目',
   `op_lock_` int(11) NOT NULL COMMENT '乐观锁标识',
   PRIMARY KEY (`id_`),
   KEY `owner_id_index` (`owner_id_`) USING BTREE
@@ -191,7 +191,7 @@ CREATE TABLE `app_text_voice` (
   `content_` varchar(500) DEFAULT NULL COMMENT '一句话内容',
   `voice_url_` varchar(500) DEFAULT NULL COMMENT '一张图片url',
   `create_time_` datetime NOT NULL COMMENT '创建时间',
-  `positive_count_` int(11) NOT NULL COMMENT '点赞数目',
+  `praise_count_` int(11) NOT NULL COMMENT '点赞数目',
   `op_lock_` int(11) NOT NULL COMMENT '乐观锁标识',
   PRIMARY KEY (`id_`),
   KEY `owner_id_index` (`owner_id_`) USING BTREE

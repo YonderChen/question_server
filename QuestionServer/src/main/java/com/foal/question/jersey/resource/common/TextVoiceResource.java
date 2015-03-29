@@ -23,7 +23,6 @@ import com.foal.question.jersey.resource.tools.ResourceTools;
 import com.foal.question.jersey.resource.tools.ResultMap;
 import com.foal.question.jersey.resource.tools.APIConstants.RetCode;
 import com.foal.question.pojo.AppTextVoice;
-import com.foal.question.pojo.AppTextVoiceOpLog;
 import com.foal.question.service.app.AppTextVoiceService;
 import com.foal.question.util.StringTools;
 import com.google.gson.JsonArray;
@@ -63,9 +62,9 @@ public class TextVoiceResource {
 			textVoice.setOwnerId(uid);
 			textVoice.setVoiceUrl(voiceUrl);
 			textVoice.setCreateTime(new Date());
-			textVoice.setPositiveCount(0);
+			textVoice.setPraiseCount(0);
 			appTextVoiceService.addAppTextVoice(textVoice);
-			ret.add("text_voice", textVoice.toJson());
+			ret.add("text_voice", textVoice.toJson(appTextVoiceService.hasPraised(textVoice.getId(), uid)));
 			ret.setResult(RetCode.Success);
 		} catch (Exception e) {
 			logger.error("发送文字声音失败", e);
@@ -83,7 +82,7 @@ public class TextVoiceResource {
 	@GET
 	@Path(value = "/load_my")
 	@Produces( { MediaType.TEXT_HTML })
-	public String getByOwner(@QueryParam(value = "uid") String uid, @QueryParam(value = "order_by") int orderBy, @QueryParam(value = "page") int page, @QueryParam(value = "page_size") int pageSize) {
+	public String loadByOwner(@QueryParam(value = "uid") String uid, @QueryParam(value = "order_by") int orderBy, @QueryParam(value = "page") int page, @QueryParam(value = "page_size") int pageSize) {
 		ResultMap ret = ResultMap.getResultMap();
 		if (!ResourceTools.checkUid(uid)) {
 			ret.setResult(RetCode.Faild, "用户uid不存在");
@@ -92,7 +91,7 @@ public class TextVoiceResource {
 		List<AppTextVoice> textVoiceList = appTextVoiceService.getAppTextVoiceByOwner(uid, orderBy, page, pageSize);
 		JsonArray retJa = new JsonArray();
 		for (AppTextVoice textVoice : textVoiceList) {
-			retJa.add(textVoice.toJson());
+			retJa.add(textVoice.toJson(appTextVoiceService.hasPraised(textVoice.getId(), uid)));
 		}
 		ret.add("text_voices", retJa);
 		ret.setResult(RetCode.Success);
@@ -110,12 +109,16 @@ public class TextVoiceResource {
 	@GET
 	@Path(value = "/load_public")
 	@Produces( { MediaType.TEXT_HTML })
-	public String addTextVoice(@QueryParam(value = "order_by") int orderBy, @QueryParam(value = "page") int page, @QueryParam(value = "page_size") int pageSize) {
+	public String loadPublic(@QueryParam(value = "uid") String uid, @QueryParam(value = "order_by") int orderBy, @QueryParam(value = "page") int page, @QueryParam(value = "page_size") int pageSize) {
 		ResultMap ret = ResultMap.getResultMap();
+		if (!ResourceTools.checkUid(uid)) {
+			ret.setResult(RetCode.Faild, "用户uid不存在");
+			return ret.toJson();
+		}
 		List<AppTextVoice> textVoiceList = appTextVoiceService.getPublicAppTextVoice(orderBy, page, pageSize);
 		JsonArray retJa = new JsonArray();
 		for (AppTextVoice textVoice : textVoiceList) {
-			retJa.add(textVoice.toJson());
+			retJa.add(textVoice.toJson(appTextVoiceService.hasPraised(textVoice.getId(), uid)));
 		}
 		ret.add("text_voices", retJa);
 		ret.setResult(RetCode.Success);
@@ -123,25 +126,24 @@ public class TextVoiceResource {
 	}
 	
 	@GET
-	@Path(value = "/positive")
+	@Path(value = "/praise")
 	@Produces( { MediaType.TEXT_HTML })
-	public String positive(@QueryParam(value = "uid") String uid, @QueryParam(value = "text_voice_id") int textVoiceId) {
+	public String praise(@QueryParam(value = "uid") String uid, @QueryParam(value = "record_id") int recordId) {
 		ResultMap ret = ResultMap.getResultMap();
 		if (!ResourceTools.checkUid(uid)) {
 			ret.setResult(RetCode.Faild, "用户uid不存在");
 			return ret.toJson();
 		}
-		AppTextVoiceOpLog opLog = appTextVoiceService.getOpLog(textVoiceId, uid);
-		if (opLog != null) {
+		if (appTextVoiceService.hasPraised(recordId, uid)) {
 			ret.setResult(RetCode.Faild, "已经对该条记录点过赞");
 			return ret.toJson();
 		}
-		AppTextVoice textVoice = appTextVoiceService.getAppTextVoice(textVoiceId);
+		AppTextVoice textVoice = appTextVoiceService.getAppTextVoice(recordId);
 		if (textVoice == null) {
 			ret.setResult(RetCode.Faild, "要点赞的记录不存在");
 			return ret.toJson();
 		}
-		appTextVoiceService.incPositiveCount(textVoice, uid);
+		appTextVoiceService.incPraiseCount(textVoice, uid);
 		ret.setResult(RetCode.Success);
 		return ret.toJson();
 	}
@@ -149,13 +151,13 @@ public class TextVoiceResource {
 	@GET
 	@Path(value = "/del")
 	@Produces( { MediaType.TEXT_HTML })
-	public String delTextVoice(@QueryParam(value = "uid") String uid, @QueryParam(value = "text_voice_id") int textVoiceId) {
+	public String del(@QueryParam(value = "uid") String uid, @QueryParam(value = "record_id") int recordId) {
 		ResultMap ret = ResultMap.getResultMap();
 		if (!ResourceTools.checkUid(uid)) {
 			ret.setResult(RetCode.Faild, "用户uid不存在");
 			return ret.toJson();
 		}
-		AppTextVoice textVoice = appTextVoiceService.getAppTextVoice(textVoiceId);
+		AppTextVoice textVoice = appTextVoiceService.getAppTextVoice(recordId);
 		if (textVoice == null) {
 			ret.setResult(RetCode.Faild, "要删除的记录不存在");
 			return ret.toJson();
@@ -164,7 +166,7 @@ public class TextVoiceResource {
 			ret.setResult(RetCode.Faild, "该记录不属于你，不能进行删除");
 			return ret.toJson();
 		}
-		appTextVoiceService.incPositiveCount(textVoice, uid);
+		appTextVoiceService.deleteAppTextVoice(textVoice);
 		ret.setResult(RetCode.Success);
 		return ret.toJson();
 	}

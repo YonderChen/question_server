@@ -25,8 +25,8 @@ public class AppTextVoiceService extends DaoSupport {
 		this.hibernateDao.update(textVoice);
 	}
 	
-	public void incPositiveCount(AppTextVoice textImage, String uid) {
-		textImage.incPositiveCount();
+	public void incPraiseCount(AppTextVoice textImage, String uid) {
+		textImage.incPraiseCount();
 		this.hibernateDao.update(textImage);
 		AppTextVoiceOpLog opLog = new AppTextVoiceOpLog();
 		opLog.setOpId(textImage.getId() + uid);
@@ -38,8 +38,12 @@ public class AppTextVoiceService extends DaoSupport {
 		return true;
 	}
 
-	public AppTextVoiceOpLog getOpLog(int id, String uid) {
+	private AppTextVoiceOpLog getOpLog(int id, String uid) {
 		return this.hibernateDao.get(AppTextVoiceOpLog.class, id + uid);
+	}
+
+	public boolean hasPraised(int id, String uid) {
+		return getOpLog(id, uid) != null;
 	}
 
 	/**
@@ -55,7 +59,7 @@ public class AppTextVoiceService extends DaoSupport {
 		if (orderBy == 0) {
 			queryHql = "from AppTextVoice v where v.ownerId = ? order by v.createTime desc";
 		} else {
-			queryHql = "from AppTextVoice v where v.ownerId = ? order by v.positiveCount desc";
+			queryHql = "from AppTextVoice v where v.ownerId = ? order by v.praiseCount desc";
 		}
 		return this.hibernateDao.queryList(queryHql, page, pageSize, ownerId);
 	}
@@ -72,7 +76,7 @@ public class AppTextVoiceService extends DaoSupport {
 		if (orderBy == 0) {
 			queryHql = "from AppTextVoice v order by v.createTime desc";
 		} else {
-			queryHql= "from AppTextVoice v order by v.positiveCount desc";
+			queryHql= "from AppTextVoice v order by v.praiseCount desc";
 		}
 		return this.hibernateDao.queryList(queryHql, page, pageSize);
 	}

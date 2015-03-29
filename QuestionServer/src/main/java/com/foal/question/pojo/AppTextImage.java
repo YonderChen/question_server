@@ -33,7 +33,7 @@ public class AppTextImage implements Serializable{
 	private String content;
 	private String imageUrl;
 	private Date createTime;
-	private int positiveCount;
+	private int praiseCount;
 	private int opLock;
 
 	@GenericGenerator(name = "generator", strategy = "native")
@@ -75,15 +75,15 @@ public class AppTextImage implements Serializable{
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	@Column(name = "positive_count_")
-	public int getPositiveCount() {
-		return positiveCount;
+	@Column(name = "praise_count_")
+	public int getPraiseCount() {
+		return praiseCount;
 	}
-	public void setPositiveCount(int positiveCount) {
-		this.positiveCount = positiveCount;
+	public void setPraiseCount(int praiseCount) {
+		this.praiseCount = praiseCount;
 	}
-	public void incPositiveCount() {
-		this.positiveCount++;
+	public void incPraiseCount() {
+		this.praiseCount++;
 	}
 	@Version
 	@Column(name = "op_lock_")
@@ -103,7 +103,7 @@ public class AppTextImage implements Serializable{
 		result = prime * result + ((content == null) ? 0 : content.hashCode());
 		result = prime * result + ((imageUrl == null) ? 0 : imageUrl.hashCode());
 		result = prime * result + ((createTime == null) ? 0 : createTime.hashCode());
-		result = prime * result + positiveCount;
+		result = prime * result + praiseCount;
 		result = prime * result + opLock;
 		return result;
 	}
@@ -122,14 +122,15 @@ public class AppTextImage implements Serializable{
 				&& StringTools.equalsStr(content, other.content)
 				&& StringTools.equalsStr(imageUrl, other.imageUrl)
 				&& createTime.getTime() == other.createTime.getTime()
-				&& positiveCount == other.positiveCount
+				&& praiseCount == other.praiseCount
 				&& opLock == other.opLock;
 	}
 	
-	public JsonObject toJson() {
+	public JsonObject toJson(boolean hasPraised) {
 		JsonObject jo = GsonTools.parseJsonObject(this);
 		jo.remove("opLock");
 		jo.addProperty("imageUrl", Constant.CONTEXT_WEB_URL + this.imageUrl);
+		jo.addProperty("hasPraised", hasPraised);
 		return jo;
 	}
 }

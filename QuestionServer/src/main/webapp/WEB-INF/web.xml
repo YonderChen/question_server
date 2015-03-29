@@ -88,6 +88,10 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/web/*</url-pattern>
 	</filter-mapping>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/rs/*</url-pattern>
+	</filter-mapping>
 	
 	<servlet>
 		<servlet-name>StartUpServlet</servlet-name>

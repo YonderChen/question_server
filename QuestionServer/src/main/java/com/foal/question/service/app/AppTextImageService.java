@@ -25,24 +25,26 @@ public class AppTextImageService extends DaoSupport {
 		this.hibernateDao.update(textImage);
 	}
 	
-	public void incPositiveCount(AppTextImage textImage, String uid) {
-		textImage.incPositiveCount();
+	public void incPraiseCount(AppTextImage textImage, String uid) {
+		textImage.incPraiseCount();
 		this.hibernateDao.update(textImage);
 		AppTextImageOpLog opLog = new AppTextImageOpLog();
 		opLog.setOpId(textImage.getId() + uid);
 		this.hibernateDao.save(opLog);
 	}
 
-	public boolean deleteAppTextImage(int id) {
-		AppTextImage textImage = getAppTextImage(id);
+	public boolean deleteAppTextImage(AppTextImage textImage) {
 		this.hibernateDao.delete(textImage);
 		return true;
 	}
 
-	public AppTextImageOpLog getOpLog(int id, String uid) {
+	private AppTextImageOpLog getOpLog(int id, String uid) {
 		return this.hibernateDao.get(AppTextImageOpLog.class, id + uid);
 	}
-	
+
+	public boolean hasPraised(int id, String uid) {
+		return getOpLog(id, uid) != null;
+	}
 	/**
 	 * 
 	 * @param ownerId	所有者uid
@@ -56,7 +58,7 @@ public class AppTextImageService extends DaoSupport {
 		if (orderBy == 0) {
 			queryHql = "from AppTextImage v where v.ownerId = ? order by v.createTime desc";
 		} else {
-			queryHql = "from AppTextImage v where v.ownerId = ? order by v.positiveCount desc";
+			queryHql = "from AppTextImage v where v.ownerId = ? order by v.praiseCount desc";
 		}
 		return this.hibernateDao.queryList(queryHql, page, pageSize, ownerId);
 	}
@@ -73,7 +75,7 @@ public class AppTextImageService extends DaoSupport {
 		if (orderBy == 0) {
 			queryHql = "from AppTextImage v order by v.createTime desc";
 		} else {
-			queryHql= "from AppTextImage v order by v.positiveCount desc";
+			queryHql= "from AppTextImage v order by v.praiseCount desc";
 		}
 		return this.hibernateDao.queryList(queryHql, page, pageSize);
 	}
