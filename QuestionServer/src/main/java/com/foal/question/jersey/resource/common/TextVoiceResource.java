@@ -111,10 +111,6 @@ public class TextVoiceResource {
 	@Produces( { MediaType.TEXT_HTML })
 	public String loadPublic(@QueryParam(value = "uid") String uid, @QueryParam(value = "order_by") int orderBy, @QueryParam(value = "page") int page, @QueryParam(value = "page_size") int pageSize) {
 		ResultMap ret = ResultMap.getResultMap();
-		if (!ResourceTools.checkUid(uid)) {
-			ret.setResult(RetCode.Faild, "用户uid不存在");
-			return ret.toJson();
-		}
 		List<AppTextVoice> textVoiceList = appTextVoiceService.getPublicAppTextVoice(orderBy, page, pageSize);
 		JsonArray retJa = new JsonArray();
 		for (AppTextVoice textVoice : textVoiceList) {
@@ -134,16 +130,12 @@ public class TextVoiceResource {
 			ret.setResult(RetCode.Faild, "用户uid不存在");
 			return ret.toJson();
 		}
-		if (appTextVoiceService.hasPraised(recordId, uid)) {
-			ret.setResult(RetCode.Faild, "已经对该条记录点过赞");
-			return ret.toJson();
-		}
 		AppTextVoice textVoice = appTextVoiceService.getAppTextVoice(recordId);
 		if (textVoice == null) {
 			ret.setResult(RetCode.Faild, "要点赞的记录不存在");
 			return ret.toJson();
 		}
-		appTextVoiceService.incPraiseCount(textVoice, uid);
+		appTextVoiceService.praise(textVoice, uid);
 		ret.setResult(RetCode.Success);
 		return ret.toJson();
 	}

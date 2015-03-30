@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.foal.question.dao.DaoSupport;
 import com.foal.question.pojo.AppTextImage;
 import com.foal.question.pojo.AppTextImageOpLog;
+import com.foal.question.util.StringTools;
 
 @SuppressWarnings("unchecked")
 @Service(value = "appTextImageService")
@@ -25,12 +26,27 @@ public class AppTextImageService extends DaoSupport {
 		this.hibernateDao.update(textImage);
 	}
 	
-	public void incPraiseCount(AppTextImage textImage, String uid) {
-		textImage.incPraiseCount();
+	public void praise(AppTextImage textImage, String uid) {
+		AppTextImageOpLog opLog = getOpLog(textImage.getId(), uid);
+		if (opLog == null) {
+			opLog = new AppTextImageOpLog();
+			opLog.setOpId(textImage.getId() + uid);
+			opLog.setStatus(1);
+			textImage.incPraiseCount();
+			this.hibernateDao.save(opLog);
+		} else {
+			if (opLog.hasPraised()) {
+				opLog.setStatus(0);
+				textImage.decPraiseCount();
+				this.hibernateDao.update(opLog);
+			} else {
+				opLog.setOpId(textImage.getId() + uid);
+				opLog.setStatus(1);
+				textImage.incPraiseCount();
+				this.hibernateDao.update(opLog);
+			}
+		}
 		this.hibernateDao.update(textImage);
-		AppTextImageOpLog opLog = new AppTextImageOpLog();
-		opLog.setOpId(textImage.getId() + uid);
-		this.hibernateDao.save(opLog);
 	}
 
 	public boolean deleteAppTextImage(AppTextImage textImage) {
@@ -43,8 +59,13 @@ public class AppTextImageService extends DaoSupport {
 	}
 
 	public boolean hasPraised(int id, String uid) {
-		return getOpLog(id, uid) != null;
+		if (StringTools.isBlank(uid)) {
+			return false;
+		}
+		AppTextImageOpLog opLog = getOpLog(id, uid);
+		return opLog != null && opLog.hasPraised();
 	}
+
 	/**
 	 * 
 	 * @param ownerId	所有者uid

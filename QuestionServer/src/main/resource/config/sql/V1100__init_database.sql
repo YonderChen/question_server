@@ -177,7 +177,7 @@ CREATE TABLE `app_text_image` (
 DROP TABLE IF EXISTS `app_text_image_op_log`;
 CREATE TABLE `app_text_image_op_log` (
   `op_id_` varchar(50) NOT NULL COMMENT '操作标识，文字图片记录id + 用户uid',
-  `create_time_` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `status_` int(11) NOT NULL COMMENT '是否点过赞',
   PRIMARY KEY (`op_id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -203,6 +203,6 @@ CREATE TABLE `app_text_voice` (
 DROP TABLE IF EXISTS `app_text_voice_op_log`;
 CREATE TABLE `app_text_voice_op_log` (
   `op_id_` varchar(50) NOT NULL COMMENT '操作标识，文字声音记录id + 用户uid',
-  `create_time_` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `status_` int(11) NOT NULL COMMENT '是否点过赞',
   PRIMARY KEY (`op_id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

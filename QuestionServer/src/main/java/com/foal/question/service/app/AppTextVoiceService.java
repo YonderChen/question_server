@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.foal.question.dao.DaoSupport;
 import com.foal.question.pojo.AppTextVoice;
 import com.foal.question.pojo.AppTextVoiceOpLog;
+import com.foal.question.util.StringTools;
 
 @SuppressWarnings("unchecked")
 @Service(value = "appTextVoiceService")
@@ -25,14 +26,29 @@ public class AppTextVoiceService extends DaoSupport {
 		this.hibernateDao.update(textVoice);
 	}
 	
-	public void incPraiseCount(AppTextVoice textImage, String uid) {
-		textImage.incPraiseCount();
-		this.hibernateDao.update(textImage);
-		AppTextVoiceOpLog opLog = new AppTextVoiceOpLog();
-		opLog.setOpId(textImage.getId() + uid);
-		this.hibernateDao.save(opLog);
+	public void praise(AppTextVoice textVoice, String uid) {
+		AppTextVoiceOpLog opLog = getOpLog(textVoice.getId(), uid);
+		if (opLog == null) {
+			opLog = new AppTextVoiceOpLog();
+			opLog.setOpId(textVoice.getId() + uid);
+			opLog.setStatus(1);
+			textVoice.incPraiseCount();
+			this.hibernateDao.save(opLog);
+		} else {
+			if (opLog.hasPraised()) {
+				opLog.setStatus(0);
+				textVoice.decPraiseCount();
+				this.hibernateDao.update(opLog);
+			} else {
+				opLog.setOpId(textVoice.getId() + uid);
+				opLog.setStatus(1);
+				textVoice.incPraiseCount();
+				this.hibernateDao.update(opLog);
+			}
+		}
+		this.hibernateDao.update(textVoice);
 	}
-
+	
 	public boolean deleteAppTextVoice(AppTextVoice textVoice) {
 		this.hibernateDao.delete(textVoice);
 		return true;
@@ -43,7 +59,11 @@ public class AppTextVoiceService extends DaoSupport {
 	}
 
 	public boolean hasPraised(int id, String uid) {
-		return getOpLog(id, uid) != null;
+		if (StringTools.isBlank(uid)) {
+			return false;
+		}
+		AppTextVoiceOpLog opLog = getOpLog(id, uid);
+		return opLog != null && opLog.hasPraised();
 	}
 
 	/**

@@ -85,6 +85,9 @@ public class AppTextImage implements Serializable{
 	public void incPraiseCount() {
 		this.praiseCount++;
 	}
+	public void decPraiseCount() {
+		this.praiseCount--;
+	}
 	@Version
 	@Column(name = "op_lock_")
 	public int getVersion() {

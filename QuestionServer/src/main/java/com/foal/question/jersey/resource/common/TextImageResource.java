@@ -111,10 +111,6 @@ public class TextImageResource {
 	@Produces( { MediaType.TEXT_HTML })
 	public String loadPublic(@QueryParam(value = "uid") String uid, @QueryParam(value = "order_by") int orderBy, @QueryParam(value = "page") int page, @QueryParam(value = "page_size") int pageSize) {
 		ResultMap ret = ResultMap.getResultMap();
-		if (!ResourceTools.checkUid(uid)) {
-			ret.setResult(RetCode.Faild, "用户uid不存在");
-			return ret.toJson();
-		}
 		List<AppTextImage> textImageList = appTextImageService.getPublicAppTextImage(orderBy, page, pageSize);
 		JsonArray retJa = new JsonArray();
 		for (AppTextImage textImage : textImageList) {
@@ -134,16 +130,12 @@ public class TextImageResource {
 			ret.setResult(RetCode.Faild, "用户uid不存在");
 			return ret.toJson();
 		}
-		if (appTextImageService.hasPraised(recordId, uid)) {
-			ret.setResult(RetCode.Faild, "已经对该条记录点过赞");
-			return ret.toJson();
-		}
 		AppTextImage textImage = appTextImageService.getAppTextImage(recordId);
 		if (textImage == null) {
 			ret.setResult(RetCode.Faild, "要点赞的记录不存在");
 			return ret.toJson();
 		}
-		appTextImageService.incPraiseCount(textImage, uid);
+		appTextImageService.praise(textImage, uid);
 		ret.setResult(RetCode.Success);
 		return ret.toJson();
 	}
