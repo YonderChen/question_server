@@ -1,6 +1,7 @@
 package com.foal.question.jersey.resource.tools;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -99,7 +100,11 @@ public class ResourceTools {
 		while (it.hasNext()) {
 			FileItem fieldItem = (FileItem) it.next();
 			if (fieldItem.isFormField()) {
-				param.getFieldParam().put(fieldItem.getFieldName(), fieldItem.getString());
+				try {
+					param.getFieldParam().put(fieldItem.getFieldName(), fieldItem.getString("UTF-8"));
+				} catch (UnsupportedEncodingException e) {
+					param.getFieldParam().put(fieldItem.getFieldName(), fieldItem.getString());
+				}
 			} else {
 				param.getFileItemList().add(fieldItem);
 			}
