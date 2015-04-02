@@ -18,7 +18,7 @@ import com.foal.question.util.StringTools;
 
 @Entity
 @Table(name = "app_user", uniqueConstraints = {@UniqueConstraint(columnNames={"open_id_"})})
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(region = "myHibernateCache", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class AppUser implements Serializable{
 	/**
 	 * 

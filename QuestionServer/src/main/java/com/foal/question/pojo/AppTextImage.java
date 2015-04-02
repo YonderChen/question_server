@@ -22,7 +22,7 @@ import com.google.gson.JsonObject;
 
 @Entity
 @Table(name = "app_text_image")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(region = "myHibernateCache", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class AppTextImage implements Serializable{
 	/**
 	 * 

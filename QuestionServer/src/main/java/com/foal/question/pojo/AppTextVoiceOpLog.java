@@ -16,7 +16,7 @@ import com.foal.question.util.StringTools;
 
 @Entity
 @Table(name = "app_text_voice_op_log")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(region = "myHibernateCache", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class AppTextVoiceOpLog implements Serializable {
 	/**
 	 * 
