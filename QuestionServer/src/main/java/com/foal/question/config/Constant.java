@@ -21,5 +21,8 @@ public class Constant {
 	public static final String UPLOAD_IMAGE_PATH = "/app_upload/image/";
 	public static final String UPLOAD_VOICE_PATH = "/app_upload/voice/";
 	public static final String UPLOAD_TEMP_PATH = "/app_upload/temp/";
+	
+	public static final String ADMIN_ID = "402881e846e4b3910146e4b8ce6c0004";
+	public static final String DEFAULT_ROLE_ID = "402882374a4ba68c014a4bb1cc9d0001";
 
 }

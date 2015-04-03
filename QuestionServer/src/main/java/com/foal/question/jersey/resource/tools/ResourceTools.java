@@ -15,15 +15,10 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.foal.question.config.Constant;
-import com.foal.question.listener.ServiceLocator;
-import com.foal.question.pojo.AppUser;
-import com.foal.question.service.app.AppUserService;
 import com.foal.question.util.StringTools;
 
 @SuppressWarnings("unchecked")
 public class ResourceTools {
-	
-	private static AppUserService appUserService = ServiceLocator.getBean(AppUserService.class);
 
 	public static String getFileSuffix(String fileName) {
 		int index = fileName.indexOf(".");
@@ -101,9 +96,9 @@ public class ResourceTools {
 			FileItem fieldItem = (FileItem) it.next();
 			if (fieldItem.isFormField()) {
 				try {
-					param.getFieldParam().put(fieldItem.getFieldName(), fieldItem.getString("UTF-8"));
+					param.setField(fieldItem.getFieldName(), fieldItem.getString("UTF-8"));
 				} catch (UnsupportedEncodingException e) {
-					param.getFieldParam().put(fieldItem.getFieldName(), fieldItem.getString());
+					param.setField(fieldItem.getFieldName(), fieldItem.getString());
 				}
 			} else {
 				param.getFileItemList().add(fieldItem);
@@ -112,14 +107,4 @@ public class ResourceTools {
 		return param;
 	}
 	
-	public static boolean checkUid(String uid) {
-		if (StringTools.isBlank(uid)) {
-			return false;
-		}
-		AppUser user = appUserService.getAppUserById(uid);
-		if (user == null) {
-			return false;
-		}
-		return true;
-	}
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.foal.question.bean.AjaxBean;
 import com.foal.question.bean.PageBean;
 import com.foal.question.bean.ServerUserBean;
+import com.foal.question.config.Constant;
 import com.foal.question.pojo.ServerUser;
 import com.foal.question.service.RoleService;
 import com.foal.question.service.ServerUserService;
@@ -37,7 +38,6 @@ public class UserAction extends AdminBaseAction implements ModelDriven<ServerUse
 
     @Action("list")
     public String list() {
-        serverUserBean.setUserId(this.getSessionServerUser().getUserId());
         PageBean pageBean = this.serverUserService.queryServerUser(serverUserBean);
 		for (int i = 0; i < pageBean.getList().size(); i++) {
 			ServerUser user = (ServerUser)pageBean.getList().get(i);
@@ -50,14 +50,21 @@ public class UserAction extends AdminBaseAction implements ModelDriven<ServerUse
     @Action("edit_input")
     public String editInput() {
     	ServerUser user = this.serverUserService.getServerUser(serverUserBean.getUserId());
-    	this.setAttrToRequest("roleIds", this.roleService.queryRoleId(serverUserBean.getUserId()));
-    	this.setAttrToRequest("roleList", this.roleService.queryRole(this.getSessionServerUser().getUserId()));
+    	if (this.getSessionServerUser().getUserId().equals(Constant.ADMIN_ID)) {
+    		this.setAttrToRequest("roleIds", this.roleService.queryRoleId(serverUserBean.getUserId()));
+        	this.setAttrToRequest("roleList", this.roleService.queryRole(this.getSessionServerUser().getUserId()));
+        	this.setAttrToRequest("isAdmin", true);
+    	} else {
+    		this.setAttrToRequest("isAdmin", false);
+    		user.setRoleName(this.roleService.queryRoleName(user.getUserId()));
+    	}
     	this.setAttrToRequest("user", user);
         return SUCCESS;
     }
     
     @Action("edit")
    	public String edit() {
+    	serverUserBean.setOperator(this.getSessionServerUser());
         boolean result = this.serverUserService.updateServerUserInfo(serverUserBean);
         if (result) {
    			ajaxBean = new AjaxBean(true, "编辑成功.");

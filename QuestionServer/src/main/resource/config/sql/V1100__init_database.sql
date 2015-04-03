@@ -29,17 +29,18 @@ CREATE TABLE `t_menu` (
   `sort_` varchar(10) DEFAULT NULL,
   `icon_` varchar(20) DEFAULT NULL,
   `title_` varchar(50) DEFAULT NULL,
+  `visit_key_` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`menu_id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_menu
 -- ----------------------------
-INSERT INTO `t_menu` VALUES ('100000', null, '0', '权限管理', null, null, '100000', 'leftico01.png', null);
-INSERT INTO `t_menu` VALUES ('100001', '100000', '1', '用户管理', 'web/admin/user/index', 'rightFrame', '100001', null, null);
-INSERT INTO `t_menu` VALUES ('100002', '100000', '1', '角色管理', 'web/admin/role/index', 'rightFrame', '100002', null, null);
-INSERT INTO `t_menu` VALUES ('300000', null, '0', '系统管理', null, null, '300000', 'leftico01.png', null);
-INSERT INTO `t_menu` VALUES ('300001', '300000', '1', '系统参数设置', 'web/admin/system/param/index', 'rightFrame', '300001', null, null);
+INSERT INTO `t_menu` VALUES ('100000', null, '0', '权限管理', null, null, '100000', 'leftico01.png', null, null);
+INSERT INTO `t_menu` VALUES ('100001', '100000', '1', '用户管理', 'web/admin/user/index', 'rightFrame', '100001', null, null, '100001');
+INSERT INTO `t_menu` VALUES ('100002', '100000', '1', '角色管理', 'web/admin/role/index', 'rightFrame', '100002', null, null, '100002');
+INSERT INTO `t_menu` VALUES ('300000', null, '0', '系统管理', null, null, '300000', 'leftico01.png', null, null);
+INSERT INTO `t_menu` VALUES ('300001', '300000', '1', '系统参数设置', 'web/admin/system/param/index', 'rightFrame', '300001', null, null, '300001');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -94,14 +95,17 @@ CREATE TABLE `t_server_user` (
   `create_time_` datetime DEFAULT NULL,
   `modify_time_` datetime DEFAULT NULL,
   `last_login_time_` datetime DEFAULT NULL,
-  `is_delete_` int(11) DEFAULT NULL,
+  `status_` int(11) DEFAULT NULL,
+  `last_login_ip_` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`user_id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of t_server_user
+--  Records of `t_server_user`
 -- ----------------------------
-INSERT INTO `t_server_user` VALUES ('402881e846e4b3910146e4b8ce6c0004', 'admin', 'T0tQNVM=', '6cff5807cf61610da2446669acd09838', 'yonder', '15000000000', null, '2014-12-10 11:11:11', '2014-12-10 11:11:11', '2015-03-20 17:14:48', '0');
+BEGIN;
+INSERT INTO `t_server_user` VALUES ('402881e846e4b3910146e4b8ce6c0004', 'admin', 'T0tQNVM=', '6cff5807cf61610da2446669acd09838', '管理员', '15000000000', null, '2014-12-10 11:11:11', '2015-03-27 15:32:39', '2015-03-27 15:49:26', '1', '127.0.0.1');
+COMMIT;
 
 -- ----------------------------
 -- Table structure for t_system_param
@@ -120,6 +124,8 @@ CREATE TABLE `t_system_param` (
 -- Records of t_system_param
 -- ----------------------------
 INSERT INTO `t_system_param` VALUES ('initPassword', '新用户初始化密码', '123456', '2014-12-18 09:34:22', '2014-12-18 09:42:22');
+INSERT INTO `t_system_param` VALUES ('client_version', '客户端版本号', '1.0.0', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
+INSERT INTO `t_system_param` VALUES ('client_version_info', '客户端版本信息', '这是一个新版本提示', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
 
 -- ----------------------------
 -- Table structure for t_user_role
@@ -153,9 +159,6 @@ CREATE TABLE `app_user` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of app_user
--- ----------------------------
--- ----------------------------
 -- Table structure for app_text_image
 -- ----------------------------
 DROP TABLE IF EXISTS `app_text_image`;
@@ -164,21 +167,40 @@ CREATE TABLE `app_text_image` (
   `owner_id_` varchar(50) NOT NULL COMMENT '发表人id',
   `content_` varchar(500) DEFAULT NULL COMMENT '一句话内容',
   `image_url_` varchar(500) DEFAULT NULL COMMENT '一张图片url',
+  `image_info_` varchar(50) DEFAULT NULL COMMENT '图片信息',
   `create_time_` datetime NOT NULL COMMENT '创建时间',
-  `praise_count_` int(11) NOT NULL COMMENT '点赞数目',
-  `op_lock_` int(11) NOT NULL COMMENT '乐观锁标识',
+  `praise_count_` int(11) NOT NULL DEFAULT '0' COMMENT '点赞数目',
+  `share_count_` int(11) NOT NULL DEFAULT '0' COMMENT '被分享次数',
   PRIMARY KEY (`id_`),
   KEY `owner_id_index` (`owner_id_`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for app_text_image_op_log
+-- Table structure for app_text_image_praise_log
 -- ----------------------------
-DROP TABLE IF EXISTS `app_text_image_op_log`;
-CREATE TABLE `app_text_image_op_log` (
+DROP TABLE IF EXISTS `app_text_image_praise_log`;
+CREATE TABLE `app_text_image_praise_log` (
   `op_id_` varchar(50) NOT NULL COMMENT '操作标识，文字图片记录id + 用户uid',
+  `record_id_` int(11) NOT NULL,
+  `uid_` varchar(50) NOT NULL,
   `status_` int(11) NOT NULL COMMENT '是否点过赞',
-  PRIMARY KEY (`op_id_`)
+  `op_time_` datetime NOT NULL,
+  PRIMARY KEY (`op_id_`),
+  KEY `record_index` (`record_id_`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for app_text_image_share_log
+-- ----------------------------
+DROP TABLE IF EXISTS `app_text_image_share_log`;
+CREATE TABLE `app_text_image_share_log` (
+  `op_id_` varchar(50) NOT NULL COMMENT '操作标识，文字图片记录id + 用户uid',
+  `record_id_` int(11) NOT NULL,
+  `uid_` varchar(50) NOT NULL,
+  `status_` int(11) NOT NULL COMMENT '是否点过赞',
+  `op_time_` datetime NOT NULL,
+  PRIMARY KEY (`op_id_`),
+  KEY `uid_index` (`uid_`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -190,19 +212,38 @@ CREATE TABLE `app_text_voice` (
   `owner_id_` varchar(50) NOT NULL COMMENT '发表人id',
   `content_` varchar(500) DEFAULT NULL COMMENT '一句话内容',
   `voice_url_` varchar(500) DEFAULT NULL COMMENT '一张图片url',
+  `voice_info_` varchar(50) DEFAULT NULL COMMENT '声音信息',
   `create_time_` datetime NOT NULL COMMENT '创建时间',
-  `praise_count_` int(11) NOT NULL COMMENT '点赞数目',
-  `op_lock_` int(11) NOT NULL COMMENT '乐观锁标识',
+  `praise_count_` int(11) NOT NULL DEFAULT '0' COMMENT '点赞数目',
+  `share_count_` int(11) NOT NULL DEFAULT '0' COMMENT '被分享次数',
   PRIMARY KEY (`id_`),
   KEY `owner_id_index` (`owner_id_`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for app_text_voice_op_log
+-- Table structure for app_text_voice_praise_log
 -- ----------------------------
-DROP TABLE IF EXISTS `app_text_voice_op_log`;
-CREATE TABLE `app_text_voice_op_log` (
-  `op_id_` varchar(50) NOT NULL COMMENT '操作标识，文字声音记录id + 用户uid',
+DROP TABLE IF EXISTS `app_text_voice_praise_log`;
+CREATE TABLE `app_text_voice_praise_log` (
+  `op_id_` varchar(50) NOT NULL COMMENT '操作标识，文字图片记录id + 用户uid',
+  `record_id_` int(11) NOT NULL,
+  `uid_` varchar(50) NOT NULL,
   `status_` int(11) NOT NULL COMMENT '是否点过赞',
-  PRIMARY KEY (`op_id_`)
+  `op_time_` datetime NOT NULL,
+  PRIMARY KEY (`op_id_`),
+  KEY `record_index` (`record_id_`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for app_text_voice_share_log
+-- ----------------------------
+DROP TABLE IF EXISTS `app_text_voice_share_log`;
+CREATE TABLE `app_text_voice_share_log` (
+  `op_id_` varchar(50) NOT NULL COMMENT '操作标识，文字图片记录id + 用户uid',
+  `record_id_` int(11) NOT NULL,
+  `uid_` varchar(50) NOT NULL,
+  `status_` int(11) NOT NULL COMMENT '是否点过赞',
+  `op_time_` datetime NOT NULL,
+  PRIMARY KEY (`op_id_`),
+  KEY `uid_index` (`uid_`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

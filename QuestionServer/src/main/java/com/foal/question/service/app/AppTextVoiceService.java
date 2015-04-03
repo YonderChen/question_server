@@ -1,80 +1,133 @@
 package com.foal.question.service.app;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.foal.question.dao.DaoSupport;
 import com.foal.question.pojo.AppTextVoice;
-import com.foal.question.pojo.AppTextVoiceOpLog;
+import com.foal.question.pojo.AppTextVoicePraiseLog;
+import com.foal.question.pojo.AppTextVoiceShareLog;
+import com.foal.question.pojo.AppUser;
 import com.foal.question.util.StringTools;
 
 @SuppressWarnings("unchecked")
 @Service(value = "appTextVoiceService")
 public class AppTextVoiceService extends DaoSupport {
 
-	public boolean addAppTextVoice(AppTextVoice textVoice) {
-		this.hibernateDao.save(textVoice);
+	@Autowired
+	private AppUserService appUserService;
+	
+	public AppUserService getAppUserService() {
+		return appUserService;
+	}
+	
+	public boolean addRecord(AppTextVoice record) {
+		this.hibernateDao.save(record);
 		return true;
 	}
 
-	public AppTextVoice getAppTextVoice(int id) {
-		return hibernateDao.get(AppTextVoice.class, id);
+	public AppTextVoice getRecord(int id) {
+		return this.hibernateDao.get(AppTextVoice.class, id);
 	}
 	
-	public void updateAppTextVoice(AppTextVoice textVoice) {
-		this.hibernateDao.update(textVoice);
-	}
-	
-	public void praise(AppTextVoice textVoice, String uid) {
-		AppTextVoiceOpLog opLog = getOpLog(textVoice.getId(), uid);
+	public void praise(AppTextVoice record, String uid) {
+		AppTextVoicePraiseLog opLog = getPraiseLog(record.getId(), uid);
 		if (opLog == null) {
-			opLog = new AppTextVoiceOpLog();
-			opLog.setOpId(textVoice.getId() + uid);
+			opLog = new AppTextVoicePraiseLog();
+			opLog.setOpId(record.getId() + uid);
+			opLog.setRecordId(record.getId());
+			opLog.setUid(uid);
 			opLog.setStatus(1);
-			textVoice.incPraiseCount();
+			opLog.setOpTime(new Date());
+			record.incPraiseCount();
 			this.hibernateDao.save(opLog);
 		} else {
 			if (opLog.hasPraised()) {
 				opLog.setStatus(0);
-				textVoice.decPraiseCount();
+				opLog.setOpTime(new Date());
+				record.decPraiseCount();
 				this.hibernateDao.update(opLog);
 			} else {
-				opLog.setOpId(textVoice.getId() + uid);
+				opLog.setOpId(record.getId() + uid);
 				opLog.setStatus(1);
-				textVoice.incPraiseCount();
+				opLog.setOpTime(new Date());
+				record.incPraiseCount();
 				this.hibernateDao.update(opLog);
 			}
 		}
-		this.hibernateDao.update(textVoice);
-	}
-	
-	public boolean deleteAppTextVoice(AppTextVoice textVoice) {
-		this.hibernateDao.delete(textVoice);
-		return true;
+		this.hibernateDao.update(record);
 	}
 
-	private AppTextVoiceOpLog getOpLog(int id, String uid) {
-		return this.hibernateDao.get(AppTextVoiceOpLog.class, id + uid);
+	private AppTextVoicePraiseLog getPraiseLog(int recordId, String uid) {
+		return this.hibernateDao.get(AppTextVoicePraiseLog.class, recordId + uid);
 	}
 
 	public boolean hasPraised(int id, String uid) {
 		if (StringTools.isBlank(uid)) {
 			return false;
 		}
-		AppTextVoiceOpLog opLog = getOpLog(id, uid);
+		AppTextVoicePraiseLog opLog = getPraiseLog(id, uid);
+		return opLog != null && opLog.hasPraised();
+	}
+	
+	public void share(AppTextVoice record, String uid) {
+		AppTextVoiceShareLog opLog = getShareLog(record.getId(), uid);
+		if (opLog == null) {
+			opLog = new AppTextVoiceShareLog();
+			opLog.setOpId(record.getId() + uid);
+			opLog.setRecordId(record.getId());
+			opLog.setUid(uid);
+			opLog.setStatus(1);
+			opLog.setOpTime(new Date());
+			record.incPraiseCount();
+			this.hibernateDao.save(opLog);
+		} else {
+			if (opLog.hasPraised()) {
+				opLog.setStatus(0);
+				opLog.setOpTime(new Date());
+				record.decPraiseCount();
+				this.hibernateDao.update(opLog);
+			} else {
+				opLog.setOpId(record.getId() + uid);
+				opLog.setStatus(1);
+				opLog.setOpTime(new Date());
+				record.incPraiseCount();
+				this.hibernateDao.update(opLog);
+			}
+		}
+		this.hibernateDao.update(record);
+	}
+
+	private AppTextVoiceShareLog getShareLog(int recordId, String uid) {
+		return this.hibernateDao.get(AppTextVoiceShareLog.class, recordId + uid);
+	}
+
+	public boolean hasShared(int id, String uid) {
+		if (StringTools.isBlank(uid)) {
+			return false;
+		}
+		AppTextVoiceShareLog opLog = getShareLog(id, uid);
 		return opLog != null && opLog.hasPraised();
 	}
 
+	public boolean deleteRecord(AppTextVoice record) {
+		this.hibernateDao.delete(record);
+		return true;
+	}
+
 	/**
-	 * 
+	 * 根据用户获取列表
 	 * @param ownerId	所有者uid
 	 * @param orderBy	0（默认）：创建时间，1：点赞数
 	 * @param page
 	 * @param pageSize
 	 * @return
 	 */
-	public List<AppTextVoice> getAppTextVoiceByOwner(String ownerId, int orderBy, int page, int pageSize) {
+	public List<AppTextVoice> getRecordByOwner(String ownerId, int orderBy, int page, int pageSize) {
 		String queryHql;
 		if (orderBy == 0) {
 			queryHql = "from AppTextVoice v where v.ownerId = ? order by v.createTime desc";
@@ -85,13 +138,13 @@ public class AppTextVoiceService extends DaoSupport {
 	}
 
 	/**
-	 * 
+	 * 获取公共列表
 	 * @param orderBy	0（默认）：创建时间，1：点赞数
 	 * @param page
 	 * @param pageSize
 	 * @return
 	 */
-	public List<AppTextVoice> getPublicAppTextVoice(int orderBy, int page, int pageSize) {
+	public List<AppTextVoice> getPublicRecord(int orderBy, int page, int pageSize) {
 		String queryHql;
 		if (orderBy == 0) {
 			queryHql = "from AppTextVoice v order by v.createTime desc";
@@ -100,5 +153,37 @@ public class AppTextVoiceService extends DaoSupport {
 		}
 		return this.hibernateDao.queryList(queryHql, page, pageSize);
 	}
-	
+
+	/**
+	 * 获取分享的列表（按时间，最新的在前面）
+	 * @param ownerId	分享者uid
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 */
+	public List<AppTextVoice> getShareRecordByOwner(String ownerId, int page, int pageSize) {
+		String queryHql = "from AppTextVoiceShareLog v where v.uid = ? order by v.opTime desc";
+		List<AppTextVoiceShareLog> logList =  this.hibernateDao.queryList(queryHql, page, pageSize, ownerId);
+		List<AppTextVoice> recordList = new ArrayList<AppTextVoice>();
+		for (AppTextVoiceShareLog log : logList) {
+			recordList.add(getRecord(log.getRecordId()));
+		}
+		return recordList;
+	}
+	/**
+	 * 获取对某条记录点过赞的用户列表（按时间，最新的在前面）
+	 * @param recordId
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 */
+	public List<AppUser> getPraiseUsers(int recordId, int page, int pageSize) {
+		String queryHql = "from AppTextVoicePraiseLog v where recordId = ? order by v.opTime desc";
+		List<AppTextVoicePraiseLog> logList =  this.hibernateDao.queryList(queryHql, page, pageSize, recordId);
+		List<AppUser> userList = new ArrayList<AppUser>();
+		for (AppTextVoicePraiseLog log : logList) {
+			userList.add(appUserService.getAppUserById(log.getUid()));
+		}
+		return userList;
+	}
 }

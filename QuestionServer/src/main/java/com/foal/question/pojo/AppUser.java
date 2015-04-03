@@ -14,11 +14,13 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.foal.question.util.GsonTools;
 import com.foal.question.util.StringTools;
+import com.google.gson.JsonObject;
 
 @Entity
 @Table(name = "app_user", uniqueConstraints = {@UniqueConstraint(columnNames={"open_id_"})})
-@Cache(region = "myHibernateCache", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(region = "yonderHibernateCache", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class AppUser implements Serializable{
 	/**
 	 * 
@@ -115,5 +117,13 @@ public class AppUser implements Serializable{
 				&& StringTools.equalsStr(figureurl, other.figureurl)
 				&& createTime.getTime() == other.createTime.getTime()
 				&& updateAt.getTime() == other.updateAt.getTime();
+	}
+	
+	public JsonObject toJson() {
+		JsonObject jo = GsonTools.parseJsonObject(this);
+		jo.remove("openId");
+		jo.remove("createTime");
+		jo.remove("updateAt");
+		return jo;
 	}
 }

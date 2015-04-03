@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.foal.question.bean.PageBean;
 import com.foal.question.bean.RoleBean;
+import com.foal.question.config.Constant;
 import com.foal.question.dao.DaoSupport;
 import com.foal.question.pojo.Menu;
 import com.foal.question.pojo.Role;
@@ -47,9 +48,8 @@ public class RoleService extends DaoSupport {
 	}
 	
 	public PageBean queryRole(RoleBean roleBean) {
-		String queryHql = "from Role as r where r.serverUser.userId = :userId";
+		String queryHql = "from Role as r where r.serverUser.userId is not null";
 		Map paramMap = new HashMap();
-		paramMap.put("userId", roleBean.getUserId());
 		if (!StringUtil.isEmpty(roleBean.getName())) {
 			queryHql += " and r.name like :name";
 			paramMap.put("name", "%"+roleBean.getName()+"%");
@@ -70,8 +70,8 @@ public class RoleService extends DaoSupport {
 	}
 	
 	public boolean addRole(RoleBean roleBean) {
-		String queryHql = "from Role as r where r.name = ? and r.serverUser.userId = ?";
-		List list = this.hibernateDao.queryList(queryHql, roleBean.getName(), roleBean.getOperator().getUserId());
+		String queryHql = "from Role as r where r.name = ?";
+		List list = this.hibernateDao.queryList(queryHql, roleBean.getName());
 		if (!list.isEmpty()) {
 			return false;
 		}
@@ -95,8 +95,8 @@ public class RoleService extends DaoSupport {
 	}
 	
 	public boolean updateRole(RoleBean roleBean) {
-		String queryHql = "from Role as r where r.name = ? and r.roleId <> ? and r.serverUser.userId = ?";
-		List list = this.hibernateDao.queryList(queryHql, roleBean.getName(), roleBean.getRoleId(), roleBean.getOperator().getUserId());
+		String queryHql = "from Role as r where r.name = ? and r.roleId <> ?";
+		List list = this.hibernateDao.queryList(queryHql, roleBean.getName(), roleBean.getRoleId());
 		if (!list.isEmpty()) {
 			return false;
 		}
@@ -122,8 +122,13 @@ public class RoleService extends DaoSupport {
 	}
 	
 	public List<Role> queryRole(String userId) {
-		String queryHql = "from Role as r where r.serverUser.userId = ? order by r.name";
-		return this.hibernateDao.queryList(queryHql, userId);
+		if (userId.equals(Constant.ADMIN_ID)) {
+			String queryHql = "from Role as r where r.serverUser.userId is not null order by r.name";
+			return this.hibernateDao.queryList(queryHql);
+		} else {
+			String queryHql = "from Role as r where r.roleId = ?";
+			return this.hibernateDao.queryList(queryHql, Constant.DEFAULT_ROLE_ID);
+		}
 	}
 	
 }

@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Version;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -22,7 +21,7 @@ import com.google.gson.JsonObject;
 
 @Entity
 @Table(name = "app_text_image")
-@Cache(region = "myHibernateCache", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(region = "yonderHibernateCache", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class AppTextImage implements Serializable{
 	/**
 	 * 
@@ -32,9 +31,10 @@ public class AppTextImage implements Serializable{
 	private String ownerId;
 	private String content;
 	private String imageUrl;
+	private String imageInfo;
 	private Date createTime;
 	private int praiseCount;
-	private int opLock;
+	private int shareCount;
 
 	@GenericGenerator(name = "generator", strategy = "native")
 	@Id
@@ -68,6 +68,13 @@ public class AppTextImage implements Serializable{
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
+	@Column(name = "image_info_")
+	public String getImageInfo() {
+		return imageInfo;
+	}
+	public void setImageInfo(String imageInfo) {
+		this.imageInfo = imageInfo;
+	}
 	@Column(name = "create_time_")
 	public Date getCreateTime() {
 		return createTime;
@@ -88,13 +95,18 @@ public class AppTextImage implements Serializable{
 	public void decPraiseCount() {
 		this.praiseCount--;
 	}
-	@Version
-	@Column(name = "op_lock_")
-	public int getVersion() {
-		return opLock;
+	@Column(name = "share_count_")
+	public int getShareCount() {
+		return shareCount;
 	}
-	public void setVersion(int opLock) {
-		this.opLock = opLock;
+	public void setShareCount(int shareCount) {
+		this.shareCount = shareCount;
+	}
+	public void incShareCount() {
+		this.praiseCount++;
+	}
+	public void decShareCount() {
+		this.praiseCount--;
 	}
 	
 	@Override
@@ -105,9 +117,10 @@ public class AppTextImage implements Serializable{
 		result = prime * result + ((ownerId == null) ? 0 : ownerId.hashCode());
 		result = prime * result + ((content == null) ? 0 : content.hashCode());
 		result = prime * result + ((imageUrl == null) ? 0 : imageUrl.hashCode());
+		result = prime * result + ((imageInfo == null) ? 0 : imageInfo.hashCode());
 		result = prime * result + ((createTime == null) ? 0 : createTime.hashCode());
 		result = prime * result + praiseCount;
-		result = prime * result + opLock;
+		result = prime * result + shareCount;
 		return result;
 	}
 
@@ -124,16 +137,21 @@ public class AppTextImage implements Serializable{
 				&& StringTools.equalsStr(ownerId, other.ownerId)
 				&& StringTools.equalsStr(content, other.content)
 				&& StringTools.equalsStr(imageUrl, other.imageUrl)
+				&& StringTools.equalsStr(imageInfo, other.imageInfo)
 				&& createTime.getTime() == other.createTime.getTime()
 				&& praiseCount == other.praiseCount
-				&& opLock == other.opLock;
+				&& shareCount == other.shareCount;
 	}
 	
-	public JsonObject toJson(boolean hasPraised) {
+	public JsonObject toJson(AppUser owner, boolean hasPraised, boolean hasShared) {
 		JsonObject jo = GsonTools.parseJsonObject(this);
-		jo.remove("opLock");
+		jo.addProperty("ownerFigureurl", owner.getFigureurl());
+		jo.addProperty("ownerName", owner.getName());
 		jo.addProperty("imageUrl", Constant.CONTEXT_WEB_URL + this.imageUrl);
+		jo.add("imageInfo", GsonTools.parseJsonObject(imageInfo));
+		jo.addProperty("createTime", createTime.getTime());
 		jo.addProperty("hasPraised", hasPraised);
+		jo.addProperty("hasShared", hasShared);
 		return jo;
 	}
 }

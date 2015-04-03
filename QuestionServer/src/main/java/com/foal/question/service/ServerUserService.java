@@ -23,7 +23,7 @@ import com.foal.question.util.StringUtil;
 public class ServerUserService extends DaoSupport {
 
 	public ServerUser queryServerUser(ServerUserBean userBean, StringBuffer sb) {
-		String queryHql = "from ServerUser as t where t.username = ? and t.isDelete = 0";
+		String queryHql = "from ServerUser as t where t.username = ?";
 		List list = this.hibernateDao.queryList(queryHql, userBean.getUsername());
 		if (list.isEmpty()) {
 			sb.append("用户名不存在.");
@@ -34,12 +34,21 @@ public class ServerUserService extends DaoSupport {
 			sb.append("密码错误.");
 			return null;
 		}
+		if (user.getStatus() == ServerUser.Status.AwayCompay) {
+			sb.append("你已离职,无权登录.");
+			return null;
+		}
 		return user;
 	}
 	
 	public void updateServerUserLastLoginTime(ServerUser user) {
 		user.setLastLoginTime(new Date());
 		this.hibernateDao.update(user);
+	}
+	
+	public List<Menu> queryAllMenu() {
+		String queryHql = "from Menu as t order by t.sort";
+		return this.hibernateDao.queryList(queryHql);
 	}
 	
 	public List<Menu> queryLoginMenu(String userId) {
@@ -49,9 +58,8 @@ public class ServerUserService extends DaoSupport {
 	}
 	
 	public PageBean queryServerUser(ServerUserBean serverUserBean) {
-        String queryHql = "from ServerUser as s where s.parent.userId = :userId and s.isDelete = 0";
+        String queryHql = "from ServerUser as s where s.parent.userId is not null";
         Map paramMap = new HashMap();
-        paramMap.put("userId", serverUserBean.getUserId());
         if (!StringUtil.isEmpty(serverUserBean.getName())) {
             queryHql += " and s.name like :name";
             paramMap.put("name", "%" +serverUserBean.getName()+"%" );
@@ -59,10 +67,6 @@ public class ServerUserService extends DaoSupport {
         if (!StringUtil.isEmpty(serverUserBean.getUsername())) {
             queryHql += " and s.username like :username";
             paramMap.put("username", "%" +serverUserBean.getUsername()+"%" );
-        }
-        if (!StringUtil.isEmpty(serverUserBean.getPhone())) {
-            queryHql += " and s.phone like :phone";
-            paramMap.put("phone", "%" +serverUserBean.getPhone()+"%" );
         }
         int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
         queryHql += " order by s.createTime desc";
@@ -81,24 +85,48 @@ public class ServerUserService extends DaoSupport {
 		}
 		user.setName(userBean.getName());
 		user.setPhone(userBean.getPhone());
+		user.setStatus(userBean.getStatus());
 		user.setModifyTime(new Date());
 		this.hibernateDao.update(user);
-		List list = this.hibernateDao.queryList("from UserRole as u where u.pk.serverUser.userId = ?", userBean.getUserId());
-		this.hibernateDao.deleteAll(list);
-		String[] roleId = userBean.getRoleIds().split(",");
-		for (int i = 0; i < roleId.length; i++) {
-			UserRole ur = new UserRole();
-			UserRolePK pk = new UserRolePK();
-			pk.setRole(this.hibernateDao.get(Role.class, roleId[i]));
-			pk.setServerUser(user);
-			ur.setPk(pk);
-			this.hibernateDao.save(ur);
+		if (userBean.getOperator().getUserId().equals(Constant.ADMIN_ID)) {
+			List list = this.hibernateDao.queryList("from UserRole as u where u.pk.serverUser.userId = ?", userBean.getUserId());
+			this.hibernateDao.deleteAll(list);
+			String[] roleId = userBean.getRoleIds().split(",");
+			for (int i = 0; i < roleId.length; i++) {
+				UserRole ur = new UserRole();
+				UserRolePK pk = new UserRolePK();
+				pk.setRole(this.hibernateDao.get(Role.class, roleId[i]));
+				pk.setServerUser(user);
+				ur.setPk(pk);
+				this.hibernateDao.save(ur);
+			}
 		}
 		return true;
 	}
+	
+	public ServerUser updateServerUserPass(ServerUserBean userBean) {
+		ServerUser user = this.getServerUser(userBean.getUserId());
+		if (!StringUtil.checkPassword(userBean.getOldPassword(), user.getEncryptedPassword(), user.getAssistantPassword())) {
+			return null;
+		}
+		String[] passwords = StringUtil.generatePassword(userBean.getNewPassword());
+		user.setAssistantPassword(passwords[1]);
+		user.setEncryptedPassword(passwords[0]);
+		user.setModifyTime(new Date());
+		this.hibernateDao.update(user);
+		return user;
+	}
+	
+	public ServerUser updateServerUserBaseInfo(ServerUserBean userBean) {
+		ServerUser user = this.getServerUser(userBean.getUserId());
+		user.setPhone(userBean.getPhone());
+		user.setModifyTime(new Date());
+		this.hibernateDao.update(user);
+		return user;
+	}
 
 	public boolean addServerUser(ServerUserBean userBean) {
-		String queryHql = "from ServerUser as t where t.username = ? and t.isDelete = 0";
+		String queryHql = "from ServerUser as t where t.username = ?";
 		List list = this.hibernateDao.queryList(queryHql, userBean.getUsername());
 		if (!list.isEmpty()) {
 			return false;
@@ -113,6 +141,7 @@ public class ServerUserService extends DaoSupport {
 		String[] passwords = StringUtil.generatePassword(Constant.INIT_PASSWORD);
 		user.setAssistantPassword(passwords[1]);
 		user.setEncryptedPassword(passwords[0]);
+		user.setStatus(ServerUser.Status.InCompany);
 		this.hibernateDao.save(user);
 		String[] roleId = userBean.getRoleIds().split(",");
 		for (int i = 0; i < roleId.length; i++) {
@@ -125,4 +154,6 @@ public class ServerUserService extends DaoSupport {
 		}
 		return true;
 	}
+	
 }
+

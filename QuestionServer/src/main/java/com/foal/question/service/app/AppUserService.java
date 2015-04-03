@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.foal.question.dao.DaoSupport;
 import com.foal.question.pojo.AppUser;
+import com.foal.question.util.StringTools;
 
 @SuppressWarnings("unchecked")
 @Service(value = "appUserService")
@@ -26,6 +27,9 @@ public class AppUserService extends DaoSupport {
 	}
 
 	public AppUser getAppUserById(String id) {
+		if (StringTools.isBlank(id)) {
+			return null;
+		}
 		return this.hibernateDao.get(AppUser.class, id);
 	}
 

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.foal.question.jersey.resource.tools.ResultMap;
 import com.foal.question.jersey.resource.tools.APIConstants.RetCode;
 import com.foal.question.pojo.AppUser;
+import com.foal.question.service.SystemParamService;
 import com.foal.question.service.app.AppUserService;
 import com.foal.question.util.StringTools;
 
@@ -23,13 +24,35 @@ import com.foal.question.util.StringTools;
  * @date 2015-3-23
  */
 @Component
-@Path("/login")
-public class LoginResource {
+@Path("/common")
+public class CommonResource {
 	
 	@Autowired
 	AppUserService appUserService;
 	
+	@Autowired
+	SystemParamService systemParamService;
+	
 	@POST
+	@Path("/get_version")
+	@Produces( { MediaType.TEXT_HTML })
+	public String getVersion(@FormParam(value = "version") String version) {
+		ResultMap ret = ResultMap.getResultMap();
+		String versionNew = systemParamService.getSystemParam("client_version").getValue();
+		ret.setResult(RetCode.Success);
+		if (!versionNew.equals(version)) {
+			ret.add("update", true);
+			ret.add("version", versionNew);
+			String versionInfo = systemParamService.getSystemParam("client_version_info").getValue();
+			ret.add("version_info", versionInfo);
+		} else {
+			ret.add("update", false);
+		}
+		return ret.toJson();
+	}
+	
+	@POST
+	@Path("/login")
 	@Produces( { MediaType.TEXT_HTML })
 	public String login(@FormParam(value = "openid") String openId, @FormParam(value = "name") String name,
 			@FormParam(value = "gender") String gender, @FormParam(value = "figureurl") String figureurl) {
