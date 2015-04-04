@@ -143,7 +143,7 @@ public class AppTextImage implements Serializable{
 				&& shareCount == other.shareCount;
 	}
 	
-	public JsonObject toJson(AppUser owner, boolean hasPraised, boolean hasShared) {
+	public JsonObject toJson(AppUser owner, boolean hasPraised) {
 		JsonObject jo = GsonTools.parseJsonObject(this);
 		jo.addProperty("ownerFigureurl", owner.getFigureurl());
 		jo.addProperty("ownerName", owner.getName());
@@ -151,7 +151,6 @@ public class AppTextImage implements Serializable{
 		jo.add("imageInfo", GsonTools.parseJsonObject(imageInfo));
 		jo.addProperty("createTime", createTime.getTime());
 		jo.addProperty("hasPraised", hasPraised);
-		jo.addProperty("hasShared", hasShared);
 		return jo;
 	}
 }

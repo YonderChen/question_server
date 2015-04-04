@@ -190,20 +190,6 @@ CREATE TABLE `app_text_image_praise_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for app_text_image_share_log
--- ----------------------------
-DROP TABLE IF EXISTS `app_text_image_share_log`;
-CREATE TABLE `app_text_image_share_log` (
-  `op_id_` varchar(50) NOT NULL COMMENT '操作标识，文字图片记录id + 用户uid',
-  `record_id_` int(11) NOT NULL,
-  `uid_` varchar(50) NOT NULL,
-  `status_` int(11) NOT NULL COMMENT '是否点过赞',
-  `op_time_` datetime NOT NULL,
-  PRIMARY KEY (`op_id_`),
-  KEY `uid_index` (`uid_`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
 -- Table structure for app_text_voice
 -- ----------------------------
 DROP TABLE IF EXISTS `app_text_voice`;
@@ -232,18 +218,4 @@ CREATE TABLE `app_text_voice_praise_log` (
   `op_time_` datetime NOT NULL,
   PRIMARY KEY (`op_id_`),
   KEY `record_index` (`record_id_`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for app_text_voice_share_log
--- ----------------------------
-DROP TABLE IF EXISTS `app_text_voice_share_log`;
-CREATE TABLE `app_text_voice_share_log` (
-  `op_id_` varchar(50) NOT NULL COMMENT '操作标识，文字图片记录id + 用户uid',
-  `record_id_` int(11) NOT NULL,
-  `uid_` varchar(50) NOT NULL,
-  `status_` int(11) NOT NULL COMMENT '是否点过赞',
-  `op_time_` datetime NOT NULL,
-  PRIMARY KEY (`op_id_`),
-  KEY `uid_index` (`uid_`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

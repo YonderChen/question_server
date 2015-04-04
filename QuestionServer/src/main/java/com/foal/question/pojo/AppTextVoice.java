@@ -143,7 +143,7 @@ public class AppTextVoice implements Serializable{
 				&& shareCount == other.shareCount;
 	}
 
-	public JsonObject toJson(AppUser owner, boolean hasPraised, boolean hasShared) {
+	public JsonObject toJson(AppUser owner, boolean hasPraised) {
 		JsonObject jo = GsonTools.parseJsonObject(this);
 		jo.addProperty("ownerFigureurl", owner.getFigureurl());
 		jo.addProperty("ownerName", owner.getName());
@@ -151,7 +151,6 @@ public class AppTextVoice implements Serializable{
 		jo.add("voiceInfo", GsonTools.parseJsonObject(voiceInfo));
 		jo.addProperty("createTime", createTime.getTime());
 		jo.addProperty("hasPraised", hasPraised ? 1 : 0);
-		jo.addProperty("hasShared", hasShared ? 1 : 0);
 		return jo;
 	}
 }

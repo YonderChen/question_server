@@ -82,8 +82,9 @@ public class TextImageResource {
 			
 			record.setCreateTime(new Date());
 			record.setPraiseCount(0);
+			record.setShareCount(0);
 			appTextImageService.addRecord(record);
-			ret.add("text_image", record.toJson(user, false, false));
+			ret.add("text_image", record.toJson(user, false));
 			ret.setResult(RetCode.Success);
 		} catch (Exception e) {
 			logger.error("发送文字图片失败", e);
@@ -178,8 +179,7 @@ public class TextImageResource {
 	
 	private JsonObject getRetRecordJson(AppUser user, AppTextImage record, String uid) {
 		boolean hasPraised = appTextImageService.hasPraised(record.getId(), uid);
-		boolean hasShared = appTextImageService.hasShared(record.getId(), uid);
-		return record.toJson(user, hasPraised, hasShared);
+		return record.toJson(user, hasPraised);
 	}
 	
 	/**
@@ -260,39 +260,6 @@ public class TextImageResource {
 			return ret.toJson();
 		}
 		appTextImageService.share(record, uid);
-		ret.setResult(RetCode.Success);
-		return ret.toJson();
-	}
-
-	/**
-	 * 加载别人的分享列表
-	 * @param uid
-	 * @param targetUid
-	 * @param page
-	 * @param pageSize
-	 * @return
-	 */
-	@GET
-	@Path(value = "/load_share")
-	@Produces( { MediaType.TEXT_HTML })
-	public String loadShare(@QueryParam(value = "uid") String uid, @QueryParam(value = "target_uid") String targetUid, @QueryParam(value = "page") int page, @QueryParam(value = "page_size") int pageSize) {
-		ResultMap ret = ResultMap.getResultMap();
-		AppUser user = appTextImageService.getAppUserService().getAppUserById(uid);
-		if (user == null) {
-			ret.setResult(RetCode.Faild, "用户uid不存在");
-			return ret.toJson();
-		}
-		AppUser targetUser = appTextImageService.getAppUserService().getAppUserById(targetUid);
-		if (targetUser == null) {
-			ret.setResult(RetCode.Faild, "目标用户uid不存在");
-			return ret.toJson();
-		}
-		List<AppTextImage> recordList = appTextImageService.getShareRecordByOwner(targetUid, page, pageSize);
-		JsonArray retJa = new JsonArray();
-		for (AppTextImage record : recordList) {
-			retJa.add(getRetRecordJson(targetUser, record, uid));
-		}
-		ret.add("text_images", retJa);
 		ret.setResult(RetCode.Success);
 		return ret.toJson();
 	}

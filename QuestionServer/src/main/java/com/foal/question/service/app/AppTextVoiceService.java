@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.foal.question.dao.DaoSupport;
 import com.foal.question.pojo.AppTextVoice;
 import com.foal.question.pojo.AppTextVoicePraiseLog;
-import com.foal.question.pojo.AppTextVoiceShareLog;
 import com.foal.question.pojo.AppUser;
 import com.foal.question.util.StringTools;
 
@@ -75,43 +74,8 @@ public class AppTextVoiceService extends DaoSupport {
 	}
 	
 	public void share(AppTextVoice record, String uid) {
-		AppTextVoiceShareLog opLog = getShareLog(record.getId(), uid);
-		if (opLog == null) {
-			opLog = new AppTextVoiceShareLog();
-			opLog.setOpId(record.getId() + uid);
-			opLog.setRecordId(record.getId());
-			opLog.setUid(uid);
-			opLog.setStatus(1);
-			opLog.setOpTime(new Date());
-			record.incPraiseCount();
-			this.hibernateDao.save(opLog);
-		} else {
-			if (opLog.hasPraised()) {
-				opLog.setStatus(0);
-				opLog.setOpTime(new Date());
-				record.decPraiseCount();
-				this.hibernateDao.update(opLog);
-			} else {
-				opLog.setOpId(record.getId() + uid);
-				opLog.setStatus(1);
-				opLog.setOpTime(new Date());
-				record.incPraiseCount();
-				this.hibernateDao.update(opLog);
-			}
-		}
+		record.incPraiseCount();
 		this.hibernateDao.update(record);
-	}
-
-	private AppTextVoiceShareLog getShareLog(int recordId, String uid) {
-		return this.hibernateDao.get(AppTextVoiceShareLog.class, recordId + uid);
-	}
-
-	public boolean hasShared(int id, String uid) {
-		if (StringTools.isBlank(uid)) {
-			return false;
-		}
-		AppTextVoiceShareLog opLog = getShareLog(id, uid);
-		return opLog != null && opLog.hasPraised();
 	}
 
 	public boolean deleteRecord(AppTextVoice record) {
@@ -154,22 +118,6 @@ public class AppTextVoiceService extends DaoSupport {
 		return this.hibernateDao.queryList(queryHql, page, pageSize);
 	}
 
-	/**
-	 * 获取分享的列表（按时间，最新的在前面）
-	 * @param ownerId	分享者uid
-	 * @param page
-	 * @param pageSize
-	 * @return
-	 */
-	public List<AppTextVoice> getShareRecordByOwner(String ownerId, int page, int pageSize) {
-		String queryHql = "from AppTextVoiceShareLog v where v.uid = ? order by v.opTime desc";
-		List<AppTextVoiceShareLog> logList =  this.hibernateDao.queryList(queryHql, page, pageSize, ownerId);
-		List<AppTextVoice> recordList = new ArrayList<AppTextVoice>();
-		for (AppTextVoiceShareLog log : logList) {
-			recordList.add(getRecord(log.getRecordId()));
-		}
-		return recordList;
-	}
 	/**
 	 * 获取对某条记录点过赞的用户列表（按时间，最新的在前面）
 	 * @param recordId

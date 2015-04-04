@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.foal.question.dao.DaoSupport;
 import com.foal.question.pojo.AppTextImage;
 import com.foal.question.pojo.AppTextImagePraiseLog;
-import com.foal.question.pojo.AppTextImageShareLog;
 import com.foal.question.pojo.AppUser;
 import com.foal.question.util.StringTools;
 
@@ -75,43 +74,8 @@ public class AppTextImageService extends DaoSupport {
 	}
 	
 	public void share(AppTextImage record, String uid) {
-		AppTextImageShareLog opLog = getShareLog(record.getId(), uid);
-		if (opLog == null) {
-			opLog = new AppTextImageShareLog();
-			opLog.setOpId(record.getId() + uid);
-			opLog.setRecordId(record.getId());
-			opLog.setUid(uid);
-			opLog.setStatus(1);
-			opLog.setOpTime(new Date());
-			record.incPraiseCount();
-			this.hibernateDao.save(opLog);
-		} else {
-			if (opLog.hasPraised()) {
-				opLog.setStatus(0);
-				opLog.setOpTime(new Date());
-				record.decPraiseCount();
-				this.hibernateDao.update(opLog);
-			} else {
-				opLog.setOpId(record.getId() + uid);
-				opLog.setStatus(1);
-				opLog.setOpTime(new Date());
-				record.incPraiseCount();
-				this.hibernateDao.update(opLog);
-			}
-		}
+		record.incPraiseCount();
 		this.hibernateDao.update(record);
-	}
-
-	private AppTextImageShareLog getShareLog(int recordId, String uid) {
-		return this.hibernateDao.get(AppTextImageShareLog.class, recordId + uid);
-	}
-
-	public boolean hasShared(int id, String uid) {
-		if (StringTools.isBlank(uid)) {
-			return false;
-		}
-		AppTextImageShareLog opLog = getShareLog(id, uid);
-		return opLog != null && opLog.hasPraised();
 	}
 
 	public boolean deleteRecord(AppTextImage record) {
@@ -154,22 +118,6 @@ public class AppTextImageService extends DaoSupport {
 		return this.hibernateDao.queryList(queryHql, page, pageSize);
 	}
 
-	/**
-	 * 获取分享的列表（按时间，最新的在前面）
-	 * @param ownerId	分享者uid
-	 * @param page
-	 * @param pageSize
-	 * @return
-	 */
-	public List<AppTextImage> getShareRecordByOwner(String ownerId, int page, int pageSize) {
-		String queryHql = "from AppTextImageShareLog v where v.uid = ? and status > 0 order by v.opTime desc";
-		List<AppTextImageShareLog> logList =  this.hibernateDao.queryList(queryHql, page, pageSize, ownerId);
-		List<AppTextImage> recordList = new ArrayList<AppTextImage>();
-		for (AppTextImageShareLog log : logList) {
-			recordList.add(getRecord(log.getRecordId()));
-		}
-		return recordList;
-	}
 	/**
 	 * 获取对某条记录点过赞的用户列表（按时间，最新的在前面）
 	 * @param recordId

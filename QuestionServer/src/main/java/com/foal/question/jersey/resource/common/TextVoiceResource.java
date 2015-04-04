@@ -71,8 +71,9 @@ public class TextVoiceResource {
 			
 			record.setCreateTime(new Date());
 			record.setPraiseCount(0);
+			record.setShareCount(0);
 			appTextVoiceService.addRecord(record);
-			ret.add("text_voice", record.toJson(user, false, false));
+			ret.add("text_voice", record.toJson(user, false));
 			ret.setResult(RetCode.Success);
 		} catch (Exception e) {
 			logger.error("发送文字声音失败", e);
@@ -167,8 +168,7 @@ public class TextVoiceResource {
 	
 	private JsonObject getRetRecordJson(AppUser user, AppTextVoice record, String uid) {
 		boolean hasPraised = appTextVoiceService.hasPraised(record.getId(), uid);
-		boolean hasShared = appTextVoiceService.hasShared(record.getId(), uid);
-		return record.toJson(user, hasPraised, hasShared);
+		return record.toJson(user, hasPraised);
 	}
 
 	/**
@@ -243,39 +243,6 @@ public class TextVoiceResource {
 			return ret.toJson();
 		}
 		appTextVoiceService.share(record, uid);
-		ret.setResult(RetCode.Success);
-		return ret.toJson();
-	}
-
-	/**
-	 * 加载别人的分享列表
-	 * @param uid
-	 * @param targetUid
-	 * @param page
-	 * @param pageSize
-	 * @return
-	 */
-	@GET
-	@Path(value = "/load_share")
-	@Produces( { MediaType.TEXT_HTML })
-	public String loadShare(@QueryParam(value = "uid") String uid, @QueryParam(value = "target_uid") String targetUid, @QueryParam(value = "page") int page, @QueryParam(value = "page_size") int pageSize) {
-		ResultMap ret = ResultMap.getResultMap();
-		AppUser user = appTextVoiceService.getAppUserService().getAppUserById(uid);
-		if (user == null) {
-			ret.setResult(RetCode.Faild, "用户uid不存在");
-			return ret.toJson();
-		}
-		AppUser targetUser = appTextVoiceService.getAppUserService().getAppUserById(targetUid);
-		if (targetUser == null) {
-			ret.setResult(RetCode.Faild, "目标用户uid不存在");
-			return ret.toJson();
-		}
-		List<AppTextVoice> recordList = appTextVoiceService.getShareRecordByOwner(targetUid, page, pageSize);
-		JsonArray retJa = new JsonArray();
-		for (AppTextVoice record : recordList) {
-			retJa.add(getRetRecordJson(targetUser, record, uid));
-		}
-		ret.add("text_voices", retJa);
 		ret.setResult(RetCode.Success);
 		return ret.toJson();
 	}
