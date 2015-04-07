@@ -74,7 +74,7 @@ public class AppTextImageService extends DaoSupport {
 	}
 	
 	public void share(AppTextImage record, String uid) {
-		record.incPraiseCount();
+		record.incShareCount();
 		this.hibernateDao.update(record);
 	}
 

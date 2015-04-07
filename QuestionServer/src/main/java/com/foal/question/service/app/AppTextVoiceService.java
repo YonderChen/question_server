@@ -74,7 +74,7 @@ public class AppTextVoiceService extends DaoSupport {
 	}
 	
 	public void share(AppTextVoice record, String uid) {
-		record.incPraiseCount();
+		record.incShareCount();
 		this.hibernateDao.update(record);
 	}
 
