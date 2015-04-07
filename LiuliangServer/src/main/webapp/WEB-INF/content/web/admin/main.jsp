@@ -6,7 +6,6 @@
     <link rel="shortcut icon" href="${ctx }/images/favicon.ico" type="image/x-icon" />
 	<link rel="icon" href="${ctx }/images/favicon.ico" type="image/x-icon" />
     <script type="text/javascript" src="${ctx}/js/jquery.js"></script>
-    <script type="text/javascript" src="${ctx}/js/comet4j.js"></script>
     <script type="text/javascript">
     $('document').ready(function() {
 		identifyLogin();

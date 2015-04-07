@@ -31,6 +31,7 @@ public class ServerUser implements Serializable {
 	private String assistantPassword;
 	private String name;
 	private String phone;
+	private String email;
 	private Date createTime;
 	private Date modifyTime;
 	private Date lastLoginTime;
@@ -82,6 +83,15 @@ public class ServerUser implements Serializable {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	@Column(name = "email_")
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Column(name = "create_time_")

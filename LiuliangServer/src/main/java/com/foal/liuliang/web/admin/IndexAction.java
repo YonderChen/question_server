@@ -35,6 +35,26 @@ public class IndexAction extends AdminBaseAction implements ModelDriven<ServerUs
 		return SUCCESS;
 	}
 	
+	@Action("register")
+	public String register() {
+		StringBuffer sb = new StringBuffer();
+		userBean.setRoleIds(Constant.ROLE_ID_NORMAL_USER);
+        boolean result = this.serverUserService.addServerUser(userBean, sb);
+        if (result) {
+   			ajaxBean = new AjaxBean(true, "新增成功.");
+   			String redirectUrl = Constant.PRO_CTX_VALUE + "/web/admin/index";
+   			this.setAttrToSession("redirectUrl", redirectUrl);
+   			ajaxBean = new AjaxBean(true);
+   			ajaxBean.setRedirectUrl(redirectUrl);
+   			this.ajaxWrite(ajaxBean);
+   		} else {
+   			ajaxBean = new AjaxBean(false, sb.toString());
+   	   		return null;
+   		}
+   		this.ajaxWrite(ajaxBean);
+		return null;
+	}
+	
 	@Action("login")
 	public String login() {
 		/*

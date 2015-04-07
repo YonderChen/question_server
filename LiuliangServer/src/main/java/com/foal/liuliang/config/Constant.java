@@ -25,4 +25,7 @@ public class Constant {
 	public static final String ADMIN_ID = "402881e846e4b3910146e4b8ce6c0004";
 	public static final String DEFAULT_ROLE_ID = "402882374a4ba68c014a4bb1cc9d0001";
 
+	
+	public static final String ROLE_ID_NORMAL_ADMIN = "100001";
+	public static final String ROLE_ID_NORMAL_USER = "100002";
 }

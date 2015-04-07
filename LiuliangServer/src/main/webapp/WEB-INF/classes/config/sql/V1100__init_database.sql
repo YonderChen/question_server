@@ -59,7 +59,9 @@ CREATE TABLE `t_role` (
 -- ----------------------------
 -- Records of t_role
 -- ----------------------------
-INSERT INTO `t_role` VALUES ('100000', '超级管理员', '可管理后台整个系统', '2014-12-10 17:36:33', '2014-12-10 17:36:36', null);
+INSERT INTO `t_role` VALUES ('100000', '超级管理员', '可管理后台整个系统', '2014-12-10 17:36:33', '2014-12-10 17:36:36', NULL);
+INSERT INTO `t_role` VALUES ('100001', '管理员', '管理员', '2015-4-7 19:41:27', '2015-4-7 19:42:04', NULL);
+INSERT INTO `t_role` VALUES ('100002', '商家用户', '店铺商家', '2015-4-7 19:41:57', '2015-4-7 19:41:57', NULL);
 
 -- ----------------------------
 -- Table structure for t_role_menu
@@ -91,6 +93,7 @@ CREATE TABLE `t_server_user` (
   `encrypted_password_` varchar(50) DEFAULT NULL,
   `name_` varchar(50) DEFAULT NULL,
   `phone_` varchar(20) DEFAULT NULL,
+  `email_` varchar(50) DEFAULT NULL,
   `parent_id_` varchar(64) DEFAULT NULL,
   `create_time_` datetime DEFAULT NULL,
   `modify_time_` datetime DEFAULT NULL,
