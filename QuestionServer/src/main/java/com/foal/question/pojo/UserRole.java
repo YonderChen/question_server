@@ -16,7 +16,10 @@ import javax.persistence.Entity;
 @Table(name = "t_user_role")
 @Cache(region = "yonderHibernateCache", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class UserRole implements Serializable{
-	private static final long serialVersionUID = -232044930064003506L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3401767365132001757L;
 	private UserRolePK pk;
 
 	@EmbeddedId

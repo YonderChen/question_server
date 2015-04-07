@@ -17,7 +17,10 @@ import com.opensymphony.xwork2.ModelDriven;
 
 @InterceptorRefs( { @InterceptorRef("interceptor-admin") })
 public class RoleAction extends AdminBaseAction implements ModelDriven<RoleBean>{
-	private static final long serialVersionUID = -3113561808050453434L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6304528677823172483L;
 
 	private RoleBean roleBean = new RoleBean();
 	

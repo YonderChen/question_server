@@ -20,7 +20,10 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "t_role")
 @Cache(region = "yonderHibernateCache", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Role implements Serializable {
-	private static final long serialVersionUID = 5275914221695301910L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 35048072991627693L;
 	private String roleId;
 	private String name;
 	private String description;

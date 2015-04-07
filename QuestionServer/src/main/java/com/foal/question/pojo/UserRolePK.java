@@ -9,7 +9,10 @@ import javax.persistence.ManyToOne;
 
 @Embeddable
 public class UserRolePK implements Serializable{
-	private static final long serialVersionUID = -8812557790194194642L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6661836971568563926L;
 	private ServerUser serverUser;
 	private Role role;
 

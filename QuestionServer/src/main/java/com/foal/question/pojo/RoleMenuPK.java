@@ -9,7 +9,10 @@ import javax.persistence.ManyToOne;
 
 @Embeddable
 public class RoleMenuPK implements Serializable{
-	private static final long serialVersionUID = 1641595798545980482L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4798826976747851644L;
 	private Role role;
 	private Menu menu;
 

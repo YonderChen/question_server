@@ -23,11 +23,13 @@
 			$("#password").select();
 			return;
 		}
+		/*
 		if ($("#code").val().trim() == "") {
 			alert("验证码不能为空.");
 			$("#code").select();
 			return;
 		}
+		*/
 		$("#loginBtn").button('loading');
 		var url = "${ctx}/web/admin/login";
 		$.ajax({
@@ -141,7 +143,7 @@
     <ul>
     <li><input id="username" name="username" type="text" class="loginuser" value="" placeholder="用户名" maxlength="50"/></li>
     <li><input id="password" name="password" type="password" class="loginpwd" value="" placeholder="密码" maxlength="50" autocomplete="off"/></li>
-    <li><input id="code" name="code" type="text" class="loginpwd1" value="" placeholder="验证码" maxlength="5"/>
+    <li style="display: none;"><input id="code" name="code" type="text" class="loginpwd1" value="" placeholder="验证码" maxlength="5"/>
     	<img src="${ctx}/web/admin/code" style="vertical-align: middle;padding-left:10px;cursor:pointer;" id="img" onclick="changeCode();" title="换一张"/>
     	</li>
     <li><input id="loginBtn" type="button" class="loginbtn" value="登录"  onclick="login();"  data-toggle="button" data-loading-text="登录"/><label><input name="rememberMe" id="rememberMe" type="checkbox"/>记住密码</label>

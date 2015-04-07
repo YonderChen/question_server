@@ -5,7 +5,11 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import org.apache.log4j.Logger;
 
 public abstract class Authority extends AbstractInterceptor {
-	private static final long serialVersionUID = -7207467066748069421L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6662700619540013769L;
+
 	private final Logger logger = Logger.getLogger(Authority.class);
 	
 	private String authorityUrl = "login";

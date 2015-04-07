@@ -15,7 +15,11 @@ import com.google.common.io.BaseEncoding;
 import com.opensymphony.xwork2.ModelDriven;
 
 public class IndexAction extends AdminBaseAction implements ModelDriven<ServerUserBean>{
-	private static final long serialVersionUID = 1781250358098834474L;
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5369312737292827903L;
 
 	private ServerUserBean userBean = new ServerUserBean();
 	

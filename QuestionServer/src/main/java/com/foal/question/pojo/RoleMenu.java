@@ -16,7 +16,10 @@ import javax.persistence.Entity;
 @Table(name = "t_role_menu")
 @Cache(region = "yonderHibernateCache", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RoleMenu implements Serializable{
-	private static final long serialVersionUID = -3262032370296478702L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1813310905345981806L;
 	private RoleMenuPK pk;
 
 	@EmbeddedId

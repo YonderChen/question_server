@@ -18,7 +18,10 @@ import com.opensymphony.xwork2.ActionInvocation;
 
 @SuppressWarnings("unchecked")
 public class AdminAuthority extends Authority {
-	private static final long serialVersionUID = 595626559058339723L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5950241131786571771L;
 	private final Logger logger = Logger.getLogger(AdminAuthority.class);
 
 	/**

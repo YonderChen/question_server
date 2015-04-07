@@ -17,7 +17,10 @@ import com.opensymphony.xwork2.ModelDriven;
 
 @InterceptorRefs( { @InterceptorRef("interceptor-admin") })
 public class UserAction extends AdminBaseAction implements ModelDriven<ServerUserBean> {
-	private static final long serialVersionUID = 1323581861086668462L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5720362261497664936L;
 
 	@Autowired
     private ServerUserService serverUserService;

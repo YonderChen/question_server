@@ -16,7 +16,10 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "t_system_param")
 @Cache(region = "yonderHibernateCache", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class SystemParam implements Serializable {
-	private static final long serialVersionUID = 9038609710665977540L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2620542658318538279L;
 	private String paramId;
 	private String name;
 	private String value;

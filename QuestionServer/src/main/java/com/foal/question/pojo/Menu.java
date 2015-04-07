@@ -18,7 +18,10 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "t_menu")
 @Cache(region = "yonderHibernateCache", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Menu implements Serializable {
-	private static final long serialVersionUID = 4309771262629424118L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5941530905618273584L;
 	private String menuId;
 	private Menu parent;
 	private int level;

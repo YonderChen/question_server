@@ -11,10 +11,13 @@ import com.foal.question.listener.ServiceLocator;
 import com.foal.question.service.GlobalConfigService;
 
 public class StartUpServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -78106983159926066L;
+
 	private final Logger logger = Logger.getLogger(StartUpServlet.class);
 
-	private static final long serialVersionUID = 6487993737859386918L;
-	
 	private static ServletContext context;
 
 	public void destroy() {

@@ -17,7 +17,10 @@ import com.opensymphony.xwork2.ActionSupport;
 
 @SuppressWarnings("unchecked")
 public class BaseAction extends ActionSupport{
-	private static final long serialVersionUID = -8468100847483945091L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5185632574672626869L;
 	protected AjaxBean ajaxBean;
     
 	protected HttpServletRequest getRequest() {

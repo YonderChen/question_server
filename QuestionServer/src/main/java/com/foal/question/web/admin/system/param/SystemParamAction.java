@@ -13,7 +13,11 @@ import com.opensymphony.xwork2.ModelDriven;
 
 @InterceptorRefs( { @InterceptorRef("interceptor-admin") })
 public class SystemParamAction extends AdminBaseAction implements ModelDriven<SystemParamBean> {
-	private static final long serialVersionUID = 7202860715165864701L;
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4068376099188661808L;
 
 	private SystemParamBean paramBean = new SystemParamBean();
 	

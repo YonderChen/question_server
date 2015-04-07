@@ -23,11 +23,13 @@
 			$("#password").select();
 			return;
 		}
+		/*
 		if ($("#code").val().trim() == "") {
 			alert("验证码不能为空.");
 			$("#code").select();
 			return;
 		}
+		*/
 		$("#loginBtn").button('loading');
 		var url = "${ctx}/web/admin/login";
 		$.ajax({
@@ -104,14 +106,6 @@
 		document.getElementById("img").src="${ctx}/web/admin/code?num="+Math.random();
 	}
 	
-	function cancelAdd() {
-		$("#addDiv").fadeOut(100);
-	}
-	
-	function addInput() {
-		$("#addDiv").fadeIn(100);
-	}
-	
 	</script>
   </head>
   <body style="background-color:#1c77ac; background-image:url(${ctx }/images/light.png); background-repeat:no-repeat; background-position:center top; overflow:hidden;">
@@ -131,51 +125,43 @@
     <li><a href="#">关于</a></li>
     </ul>    
     </div>
-    
-    <div class="loginbody">
-    
-    <span class="systemlogo"></span> 
-       
-    <div class="loginbox">
-    <form action="" method="post" onkeydown="if(event.keyCode==13) {login();}">
-    <ul>
-    <li><input id="username" name="username" type="text" class="loginuser" value="" placeholder="用户名" maxlength="50"/></li>
-    <li><input id="password" name="password" type="password" class="loginpwd" value="" placeholder="密码" maxlength="50" autocomplete="off"/></li>
-    <li><input id="code" name="code" type="text" class="loginpwd1" value="" placeholder="验证码" maxlength="5"/>
-    	<img src="${ctx}/web/admin/code" style="vertical-align: middle;padding-left:10px;cursor:pointer;" id="img" onclick="changeCode();" title="换一张"/>
-    	</li>
-    <li><input id="loginBtn" type="button" class="loginbtn" value="登录"  onclick="login();"  data-toggle="button" data-loading-text="登录"/><label><input name="rememberMe" id="rememberMe" type="checkbox"/>记住密码</label>
-    	<label><a href="javascript:addInput();">忘记密码？</a></label></li>
-    </ul>
-    </form>
-    
-    </div>
-    
-    <div class="tip1" id="addDiv">
-    	<div class="tiptop1"><span>忘记密码</span><a onclick="cancelAdd();"></a></div>
-        
-      <div class="tipinfo1">
-      
-      <table width="100%" border="1">
-  <tr>
-    <td>
-    请联系开发技术人员，电话：150********
-    </td>
-    </tr>
-</table>
-      </div>
-        
-        <div class="tipbtn1">
-        <input id="cancelBtn" type="button"  class="cancel" value="关闭" onclick="cancelAdd();" data-toggle="button" data-loading-text="关闭"/>
-        </div>
-    
-    </div>
-    
-    </div>
-    
-    
-    
-    <div class="loginbm">Copyright©2015 yonder </div>
+
+		<div class="loginbody">
+
+			<span class="systemlogo"></span>
+
+			<div class="loginbox">
+				<form action="" method="post" onkeydown="if(event.keyCode==13) {login();}">
+					<ul>
+						<li>
+							<input id="username" name="username" type="text" class="loginuser" value="" placeholder="用户名" maxlength="50" />
+						</li>
+						<li>
+							<input id="password" name="password" type="password" class="loginpwd" value="" placeholder="密码" maxlength="50" autocomplete="off" />
+						</li>
+						<li style="display: none;">
+							<input id="code" name="code" type="text" class="loginpwd1" value="" placeholder="验证码" maxlength="5" />
+							<img src="${ctx}/web/admin/code" style="vertical-align: middle; padding-left: 10px; cursor: pointer;" id="img" onclick="changeCode();" title="换一张" />
+						</li>
+						<li>
+							<input id="loginBtn" type="button" class="loginbtn" value="登录" onclick="login();"  data-toggle="button" data-loading-text="登录"/>
+							<input id="registerBtn" type="button" class="loginbtn" value="注册" onclick="window.location.href='${ctx}/register.jsp'" />
+							<label>
+								<input name="rememberMe" id="rememberMe" type="checkbox" />记住密码
+							</label>
+							<label>
+								<a href="${ctx}/forget.jsp">忘记密码</a>
+							</label>
+						</li>
+					</ul>
+				</form>
+
+			</div>
+		</div>
+
+
+
+		<div class="loginbm">Copyright©2015 yonder </div>
     
 </body>
 </html>

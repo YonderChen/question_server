@@ -21,7 +21,10 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "t_server_user")
 @Cache(region = "yonderHibernateCache", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class ServerUser implements Serializable {
-	private static final long serialVersionUID = -2604003057447806211L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8138828605548192293L;
 	private String userId;
 	private String username;
 	private String encryptedPassword;
