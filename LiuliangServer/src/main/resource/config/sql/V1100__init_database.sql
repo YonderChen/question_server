@@ -36,11 +36,13 @@ CREATE TABLE `t_menu` (
 -- ----------------------------
 -- Records of t_menu
 -- ----------------------------
-INSERT INTO `t_menu` VALUES ('100000', null, '0', '权限管理', null, null, '100000', 'leftico01.png', null, null);
-INSERT INTO `t_menu` VALUES ('100001', '100000', '1', '用户管理', 'web/admin/user/index', 'rightFrame', '100001', null, null, '100001');
-INSERT INTO `t_menu` VALUES ('100002', '100000', '1', '角色管理', 'web/admin/role/index', 'rightFrame', '100002', null, null, '100002');
-INSERT INTO `t_menu` VALUES ('300000', null, '0', '系统管理', null, null, '300000', 'leftico01.png', null, null);
-INSERT INTO `t_menu` VALUES ('300001', '300000', '1', '系统参数设置', 'web/admin/system/param/index', 'rightFrame', '300001', null, null, '300001');
+INSERT INTO `t_menu` VALUES ('100000', NULL, 0, '权限管理', NULL, NULL, '100000', 'leftico01.png', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('100001', '100000', 1, '用户管理', 'web/admin/user/index', 'rightFrame', '100001', NULL, NULL, '100001');
+INSERT INTO `t_menu` VALUES ('100002', '100000', 1, '角色管理', 'web/admin/role/index', 'rightFrame', '100002', NULL, NULL, '100002');
+INSERT INTO `t_menu` VALUES ('300000', NULL, 0, '系统管理', NULL, NULL, '300000', 'leftico01.png', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('300001', '300000', 1, '系统参数设置', 'web/admin/system/param/index', 'rightFrame', '300001', NULL, NULL, '300001');
+INSERT INTO `t_menu` VALUES ('400000', NULL, 0, '说明', NULL, NULL, '400000', 'leftico01.png', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('400001', '400000', 1, '说明', 'web/admin/business/index', 'rightFrame', '400001', NULL, NULL, '400001');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -81,6 +83,17 @@ INSERT INTO `t_role_menu` VALUES ('100000', '100001');
 INSERT INTO `t_role_menu` VALUES ('100000', '100002');
 INSERT INTO `t_role_menu` VALUES ('100000', '300000');
 INSERT INTO `t_role_menu` VALUES ('100000', '300001');
+INSERT INTO `t_role_menu` VALUES ('100000', '400000');
+INSERT INTO `t_role_menu` VALUES ('100000', '400001');
+INSERT INTO `t_role_menu` VALUES ('100001', '300000');
+INSERT INTO `t_role_menu` VALUES ('100001', '300001');
+INSERT INTO `t_role_menu` VALUES ('100001', '400000');
+INSERT INTO `t_role_menu` VALUES ('100001', '400001');
+INSERT INTO `t_role_menu` VALUES ('100002', '300000');
+INSERT INTO `t_role_menu` VALUES ('100002', '300001');
+INSERT INTO `t_role_menu` VALUES ('100002', '400000');
+INSERT INTO `t_role_menu` VALUES ('100002', '400001');
+
 
 -- ----------------------------
 -- Table structure for t_server_user
@@ -107,7 +120,7 @@ CREATE TABLE `t_server_user` (
 --  Records of `t_server_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_server_user` VALUES ('402881e846e4b3910146e4b8ce6c0004', 'admin', 'T0tQNVM=', '6cff5807cf61610da2446669acd09838', '管理员', '15000000000', null, '2014-12-10 11:11:11', '2015-03-27 15:32:39', '2015-03-27 15:49:26', '1', '127.0.0.1');
+INSERT INTO `t_server_user` VALUES ('402881e846e4b3910146e4b8ce6c0004', 'admin', 'T0tQNVM=', '6cff5807cf61610da2446669acd09838', '超级管理员', '15000000000', null, '2014-12-10 11:11:11', '2015-03-27 15:32:39', '2015-03-27 15:49:26', '1', '127.0.0.1');
 COMMIT;
 
 -- ----------------------------
