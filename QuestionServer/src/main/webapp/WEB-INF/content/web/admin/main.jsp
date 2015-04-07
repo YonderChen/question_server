@@ -13,25 +13,6 @@
 		initComet();
 	});
 	
-	function initComet(){  
-        JS.Engine.on({
-			logout_push : function(data) { //侦听一个channel
-				//data = eval("("+data+")");
-				if ("${sessionServerUserInfo.userId }" == data) {
-					alert("你的权限已被更新，请重新登陆.");
-					window.location.href = "${ctx }/web/admin/logout";
-				}
-			},
-			start : function(cId, channelList, engine){  
-      			//alert('连接已建立，连接ID为：' + cId); 
-    		},  
-    		stop : function(cause, cId, url, engine){  
-      			//alert('连接已断开，连接ID为：' + cId + ',断开原因：' + cause + ',断开的连接地址：'+ url);  
-    		}
-        });
-        JS.Engine.start('comet');
-	}
-	
 	function identifyLogin() {
 		var url = "${ctx}/web/admin/identify";
 		$.ajax( {
