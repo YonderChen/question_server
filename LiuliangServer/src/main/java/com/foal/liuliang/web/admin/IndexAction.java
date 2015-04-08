@@ -38,7 +38,8 @@ public class IndexAction extends AdminBaseAction implements ModelDriven<ServerUs
 	@Action("register")
 	public String register() {
 		StringBuffer sb = new StringBuffer();
-		userBean.setRoleIds(Constant.ROLE_ID_NORMAL_USER);
+		userBean.setRoleIds(Constant.ROLE_ID_USER);
+		userBean.setOperator(serverUserService.getServerUser(Constant.ADMIN_ID));
         boolean result = this.serverUserService.addServerUser(userBean, sb);
         if (result) {
    			ajaxBean = new AjaxBean(true, "新增成功.");

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.foal.liuliang.bean.PageBean;
 import com.foal.liuliang.bean.RoleBean;
-import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.dao.DaoSupport;
 import com.foal.liuliang.pojo.Menu;
 import com.foal.liuliang.pojo.Role;
@@ -122,13 +121,8 @@ public class RoleService extends DaoSupport {
 	}
 	
 	public List<Role> queryRole(String userId) {
-		if (userId.equals(Constant.ADMIN_ID)) {
-			String queryHql = "from Role as r where r.serverUser.userId is not null order by r.name";
-			return this.hibernateDao.queryList(queryHql);
-		} else {
-			String queryHql = "from Role as r where r.roleId = ?";
-			return this.hibernateDao.queryList(queryHql, Constant.DEFAULT_ROLE_ID);
-		}
+		String queryHql = "from Role as r where r.serverUser.userId is not null order by r.name";
+		return this.hibernateDao.queryList(queryHql);
 	}
 	
 }

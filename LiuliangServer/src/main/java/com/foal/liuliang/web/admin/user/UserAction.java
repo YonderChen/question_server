@@ -89,6 +89,7 @@ public class UserAction extends AdminBaseAction implements ModelDriven<ServerUse
    	public String add() {
     	serverUserBean.setOperator(this.getSessionServerUser());
     	StringBuffer sb = new StringBuffer();
+    	serverUserBean.setPassword(Constant.INIT_PASSWORD);
         boolean result = this.serverUserService.addServerUser(serverUserBean, sb);
         if (result) {
    			ajaxBean = new AjaxBean(true, "新增成功.");
