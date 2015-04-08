@@ -148,7 +148,7 @@
 		</div>
 	</div>
 
-<div id="editPassModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="editPassModalLabel" aria-hidden="true" style="z-index:100000;" data-backdrop="static">
+<div id="editPassModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="editPassModalLabel" aria-hidden="true" style="z-index:100000;position: absolute;" data-backdrop="static">
 		<div class="modal-header">
 			<button type="button" class="close btn-cancel" data-dismiss="modal" aria-hidden="true" data-toggle="button" data-loading-text="×">×</button>
 		<h3 id="editPassModalLabel">修改密码</h3>
@@ -175,7 +175,7 @@
 		</div>
 	</div>
 	
-	<div id="editInfoModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="editInfoModalLabel" aria-hidden="true" style="z-index:100000;" data-backdrop="static">
+	<div id="editInfoModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="editInfoModalLabel" aria-hidden="true" style="z-index:100000;position: absolute;" data-backdrop="static">
 		<div class="modal-header">
 			<button type="button" class="close btn-cancel" data-dismiss="modal" aria-hidden="true" data-toggle="button" data-loading-text="×">×</button>
 		<h3 id="editInfoModalLabel">修改基础信息</h3>

@@ -41,8 +41,14 @@ INSERT INTO `t_menu` VALUES ('100001', '100000', 1, '用户管理', 'web/admin/u
 INSERT INTO `t_menu` VALUES ('100002', '100000', 1, '角色管理', 'web/admin/role/index', 'rightFrame', '100002', NULL, NULL, '100002');
 INSERT INTO `t_menu` VALUES ('300000', NULL, 0, '系统管理', NULL, NULL, '300000', 'leftico01.png', NULL, NULL);
 INSERT INTO `t_menu` VALUES ('300001', '300000', 1, '系统参数设置', 'web/admin/system/param/index', 'rightFrame', '300001', NULL, NULL, '300001');
-INSERT INTO `t_menu` VALUES ('400000', NULL, 0, '说明', NULL, NULL, '400000', 'leftico01.png', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('400001', '400000', 1, '说明', 'web/admin/business/index', 'rightFrame', '400001', NULL, NULL, '400001');
+INSERT INTO `t_menu` VALUES ('400000', NULL, 0, '流量管理', NULL, 'rightFrame', '400000', 'leftico01.png', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('400001', '400000', 1, '任务管理', 'web/admin/taskmanage/index', 'rightFrame', '400001', NULL, NULL, '400001');
+INSERT INTO `t_menu` VALUES ('500000', NULL, 0, '账户管理', NULL, 'rightFrame', '500000', 'leftico01.png', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('500001', '500000', 1, '基本信息', 'web/admin/accountmanage/baseinfo', 'rightFrame', '500001', NULL, NULL, '500001');
+INSERT INTO `t_menu` VALUES ('500002', '500000', 1, '绑定店铺', 'web/admin/accountmanage/shopmanage/index', 'rightFrame', '500002', NULL, NULL, '500002');
+INSERT INTO `t_menu` VALUES ('500003', '500000', 1, '续费会员', 'web/admin/accountmanage/renewalvip', 'rightFrame', '500003', NULL, NULL, '500003');
+INSERT INTO `t_menu` VALUES ('500004', '500000', 1, '积分管理', 'web/admin/accountmanage/scoremanage/index', 'rightFrame', '500004', NULL, NULL, '500004');
+INSERT INTO `t_menu` VALUES ('500005', '500000', 1, '邀请商家', 'web/admin/accountmanage/inviteothers', 'rightFrame', '500005', NULL, NULL, '500005');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -85,17 +91,24 @@ INSERT INTO `t_role_menu` VALUES ('100000', '300000');
 INSERT INTO `t_role_menu` VALUES ('100000', '300001');
 INSERT INTO `t_role_menu` VALUES ('100000', '400000');
 INSERT INTO `t_role_menu` VALUES ('100000', '400001');
+INSERT INTO `t_role_menu` VALUES ('100000', '500000');
+INSERT INTO `t_role_menu` VALUES ('100000', '500001');
+INSERT INTO `t_role_menu` VALUES ('100000', '500002');
+INSERT INTO `t_role_menu` VALUES ('100000', '500003');
+INSERT INTO `t_role_menu` VALUES ('100000', '500004');
+INSERT INTO `t_role_menu` VALUES ('100000', '500005');
 INSERT INTO `t_role_menu` VALUES ('100001', '100000');
 INSERT INTO `t_role_menu` VALUES ('100001', '100001');
 INSERT INTO `t_role_menu` VALUES ('100001', '300000');
 INSERT INTO `t_role_menu` VALUES ('100001', '300001');
-INSERT INTO `t_role_menu` VALUES ('100001', '400000');
-INSERT INTO `t_role_menu` VALUES ('100001', '400001');
-INSERT INTO `t_role_menu` VALUES ('100002', '300000');
-INSERT INTO `t_role_menu` VALUES ('100002', '300001');
 INSERT INTO `t_role_menu` VALUES ('100002', '400000');
 INSERT INTO `t_role_menu` VALUES ('100002', '400001');
-
+INSERT INTO `t_role_menu` VALUES ('100002', '500000');
+INSERT INTO `t_role_menu` VALUES ('100002', '500001');
+INSERT INTO `t_role_menu` VALUES ('100002', '500002');
+INSERT INTO `t_role_menu` VALUES ('100002', '500003');
+INSERT INTO `t_role_menu` VALUES ('100002', '500004');
+INSERT INTO `t_role_menu` VALUES ('100002', '500005');
 
 -- ----------------------------
 -- Table structure for t_server_user
@@ -161,4 +174,3 @@ CREATE TABLE `t_user_role` (
 -- ----------------------------
 INSERT INTO `t_user_role` VALUES ('402881e846e4b3910146e4b8ce6c0004', '100000');
 INSERT INTO `t_user_role` VALUES ('402882044c981aee014c981b344a0001', '100001');
-INSERT INTO `t_user_role` VALUES ('402882044c981aee014c981b344a0001', '100002');
