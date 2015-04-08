@@ -1,29 +1,29 @@
-package com.foal.liuliang.web.admin.business;
+package com.foal.liuliang.web.admin.accountmanage.scoremanage;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
 
-import com.foal.liuliang.bean.SystemParamBean;
+import com.foal.liuliang.bean.Page;
+import com.foal.liuliang.bean.ServerUserBean;
 import com.foal.liuliang.web.admin.AdminBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
 @InterceptorRefs( { @InterceptorRef("interceptor-admin") })
-public class BusinessAction extends AdminBaseAction implements ModelDriven<SystemParamBean> {
+public class ScoreAction extends AdminBaseAction implements ModelDriven<Page>{
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -638687224202724684L;
+	private static final long serialVersionUID = -1185455689368526250L;
 
-	private SystemParamBean paramBean = new SystemParamBean();
 	
-	public SystemParamBean getModel() {
-		return paramBean;
+	public ServerUserBean getModel() {
+		return null;
 	}
-	
+
 	@Action("index")
 	public String index() {
 		return SUCCESS;
 	}
-	
 }
