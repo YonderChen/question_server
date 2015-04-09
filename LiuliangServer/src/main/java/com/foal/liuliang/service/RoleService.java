@@ -46,6 +46,12 @@ public class RoleService extends DaoSupport {
 		return roleId;
 	}
 	
+	public List<String> queryRoleIds(String userId) {
+		String queryHql = "select t.pk.role.roleId from UserRole as t where t.pk.serverUser.userId = ?";
+		List<String> list = this.hibernateDao.queryList(queryHql, userId);
+		return list;
+	}
+	
 	public PageBean queryRole(RoleBean roleBean) {
 		String queryHql = "from Role as r where r.serverUser.userId is not null";
 		Map paramMap = new HashMap();
@@ -120,7 +126,7 @@ public class RoleService extends DaoSupport {
 		return true;
 	}
 	
-	public List<Role> queryRole(String userId) {
+	public List<Role> queryRole() {
 		String queryHql = "from Role as r where r.serverUser.userId is not null order by r.name";
 		return this.hibernateDao.queryList(queryHql);
 	}

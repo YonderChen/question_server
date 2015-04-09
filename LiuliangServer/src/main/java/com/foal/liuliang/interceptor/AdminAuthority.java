@@ -1,22 +1,20 @@
 package com.foal.liuliang.interceptor;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.foal.liuliang.config.Constant;
-import com.foal.liuliang.pojo.Menu;
 import com.foal.liuliang.pojo.ServerUser;
+import com.foal.liuliang.service.RoleService;
+import com.foal.liuliang.util.StringTools;
 import com.foal.liuliang.util.StringUtil;
 import com.foal.liuliang.web.admin.AdminBaseAction;
-import com.google.common.io.BaseEncoding;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 
-@SuppressWarnings("unchecked")
 public class AdminAuthority extends Authority {
 	/**
 	 * 
@@ -24,6 +22,9 @@ public class AdminAuthority extends Authority {
 	private static final long serialVersionUID = 299928136867496818L;
 	private final Logger logger = Logger.getLogger(AdminAuthority.class);
 
+	@Autowired
+	private RoleService roleService;
+	
 	/**
 	 * 默认构造器
 	 */
@@ -51,15 +52,20 @@ public class AdminAuthority extends Authority {
 				this.setAuthorityUrl("admin_welcome");
 				return false;
 			}
-			List<Menu> menuList = (List<Menu>)ctx.getSession().get("menuList");
-			Menu menu = this.getMenuByUrl(requestUrl, menuList);
-			if (menu != null) {
-				String token = ServletActionContext.getRequest().getParameter("token");
-				boolean identify = this.identifyToken(token, menu);
-				if (!identify) {
-					logger.info("访问令牌错误");
-					this.setAuthorityUrl("visit_limit");
-					return false;
+			if (!Constant.ADMIN_ID.equals(loginUser.getUserId())) {	//不是超级管理员，验证路径权限
+				List<String> roleIds = roleService.queryRoleIds(loginUser.getUserId());
+				if(StringTools.contains(requestUrl, Constant.PRO_CTX_VALUE + "/web/admin/useradmin/")) {
+					if (!roleIds.contains(Constant.ROLE_ID_USER_ADMIN)) {
+						logger.info("权限错误");
+						this.setAuthorityUrl("visit_limit");
+						return false;
+					}
+				} else if(StringTools.contains(requestUrl, Constant.PRO_CTX_VALUE + "/web/admin/usershop/")) {
+					if (!roleIds.contains(Constant.ROLE_ID_USER_SHOP)) {
+						logger.info("权限错误");
+						this.setAuthorityUrl("visit_limit");
+						return false;
+					}
 				}
 			}
 			return true;
@@ -70,44 +76,4 @@ public class AdminAuthority extends Authority {
 		}
 	}
 
-	private boolean identifyToken(String token, Menu menu) {
-		try {
-			token = new String(BaseEncoding.base64().decode(token), "utf-8");
-			String visitMenuId = this.getParameter("menuId", token);
-			if (!visitMenuId.equals(menu.getMenuId())) {
-				return false;
-			}
-			String visitKey = this.getParameter("visitKey", token);
-			if (!menu.getVisitKey().equals(visitKey)) {
-				return false;
-			}
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-		
-	}
-	
-	private Menu getMenuByUrl(String requestUrl, List<Menu> menuList) {
-		for (Menu menu : menuList) {
-			if (requestUrl.equals(Constant.PRO_CTX_VALUE + "/" + menu.getHrefUrl())) {
-				return menu;
-			}
-		}
-		return null;
-	}
-	
-	private String getParameter(String name, String token) {
-		Matcher m = parameterPattern(name, token);
-		if (m.find()) {
-			return m.group(1);
-		} else {
-			return "";
-		}
-	}
-
-	private Matcher parameterPattern(String name, String token) {
-		return Pattern.compile("[&]" + name + "=([^&]*)").matcher(
-				"&" + token);
-	}
 }

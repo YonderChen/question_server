@@ -38,6 +38,7 @@ public class ServerUser implements Serializable {
 	private ServerUser parent;
 	private int status;
 	private String lastLoginIp;
+	private int score;
 
 	private String roleName;
 
@@ -167,6 +168,15 @@ public class ServerUser implements Serializable {
 		this.lastLoginIp = lastLoginIp;
 	}
 
+	@Column(name = "score_")
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
 	@Transient
 	public String getRoleName() {
 		return roleName;
@@ -205,6 +215,7 @@ public class ServerUser implements Serializable {
 		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		result = prime * result
 				+ ((username == null) ? 0 : username.hashCode());
+		result = prime * score + score;
 		return result;
 	}
 
@@ -278,6 +289,8 @@ public class ServerUser implements Serializable {
 			if (other.username != null)
 				return false;
 		} else if (!username.equals(other.username))
+			return false;
+		if (score != other.score)
 			return false;
 		return true;
 	}

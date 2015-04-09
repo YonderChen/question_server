@@ -20,7 +20,8 @@
         <global-results>
             <!-- 逻辑名为welcome的结果，映射到/welcome.jsp页面 -->
             <result name="admin_login">/admin_login.jsp</result>
-            <result name="admin_welcome">/admin_welcome.jsp</result>
+            <result name="admin_login">/admin_login.jsp</result>
+            <result name="visit_limit">/visit_limit.jsp</result>
         </global-results>
     </package>
     <!--默认加载类的后缀的名字 ,deafault:Action-->

@@ -119,6 +119,7 @@ public class ServerUserService extends DaoSupport {
 	
 	public ServerUser updateServerUserBaseInfo(ServerUserBean userBean) {
 		ServerUser user = this.getServerUser(userBean.getUserId());
+		user.setName(userBean.getName());
 		user.setPhone(userBean.getPhone());
 		user.setModifyTime(new Date());
 		this.hibernateDao.update(user);
