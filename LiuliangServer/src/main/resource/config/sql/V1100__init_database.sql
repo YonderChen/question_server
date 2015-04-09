@@ -45,9 +45,10 @@ INSERT INTO `t_menu` VALUES ('400001', '400000', 1, '任务管理', 'web/admin/u
 INSERT INTO `t_menu` VALUES ('500000', NULL, 0, '账户管理', NULL, 'rightFrame', '500000', 'leftico01.png', NULL);
 INSERT INTO `t_menu` VALUES ('500001', '500000', 1, '基本信息', 'web/admin/usershop/accountmanage/baseinfo', 'rightFrame', '500001', NULL, NULL);
 INSERT INTO `t_menu` VALUES ('500002', '500000', 1, '绑定店铺', 'web/admin/usershop/accountmanage/shopmanage/index', 'rightFrame', '500002', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('500003', '500000', 1, '续费会员', 'web/admin/usershop/accountmanage/renewalvip', 'rightFrame', '500003', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('500004', '500000', 1, '积分管理', 'web/admin/usershop/accountmanage/scoremanage/index', 'rightFrame', '500004', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('500005', '500000', 1, '邀请商家', 'web/admin/usershop/accountmanage/inviteothers', 'rightFrame', '500005', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('500003', '500000', 1, '店铺列表', 'web/admin/usershop/accountmanage/shopmanage/list', 'rightFrame', '500003', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('500004', '500000', 1, '续费会员', 'web/admin/usershop/accountmanage/renewalvip', 'rightFrame', '500004', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('500005', '500000', 1, '积分管理', 'web/admin/usershop/accountmanage/scoremanage/index', 'rightFrame', '500005', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('500006', '500000', 1, '邀请商家', 'web/admin/usershop/accountmanage/inviteothers', 'rightFrame', '500006', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for t_role
@@ -96,6 +97,7 @@ INSERT INTO `t_role_menu` VALUES ('100000', '500002');
 INSERT INTO `t_role_menu` VALUES ('100000', '500003');
 INSERT INTO `t_role_menu` VALUES ('100000', '500004');
 INSERT INTO `t_role_menu` VALUES ('100000', '500005');
+INSERT INTO `t_role_menu` VALUES ('100000', '500006');
 INSERT INTO `t_role_menu` VALUES ('100001', '100000');
 INSERT INTO `t_role_menu` VALUES ('100001', '100001');
 INSERT INTO `t_role_menu` VALUES ('100001', '300000');
@@ -108,6 +110,7 @@ INSERT INTO `t_role_menu` VALUES ('100002', '500002');
 INSERT INTO `t_role_menu` VALUES ('100002', '500003');
 INSERT INTO `t_role_menu` VALUES ('100002', '500004');
 INSERT INTO `t_role_menu` VALUES ('100002', '500005');
+INSERT INTO `t_role_menu` VALUES ('100002', '500006');
 
 -- ----------------------------
 -- Table structure for t_server_user
@@ -127,7 +130,7 @@ CREATE TABLE `t_server_user` (
   `last_login_time_` datetime DEFAULT NULL,
   `status_` int(11) DEFAULT NULL,
   `last_login_ip_` varchar(20) DEFAULT NULL,
-  `score_` int(11) NOT NULL COMMENT '用户但钱积分',
+  `score_` int(11) NOT NULL COMMENT '用户当前积分',
   PRIMARY KEY (`user_id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -185,7 +188,7 @@ INSERT INTO `t_user_role` VALUES ('402882044c981aee014c981b344a0001', '100001');
 -- ----------------------------
 DROP TABLE IF EXISTS `ll_score_order`;
 CREATE TABLE `ll_score_order` (
-  `order_id_` int(11) NOT NULL AUTO_INCREMENT COMMENT '购买订单id',
+  `order_id_` varchar(64) NOT NULL AUTO_INCREMENT COMMENT '购买订单id',
   `user_id_` varchar(64) NOT NULL COMMENT '购买用户',
   `score_num_` int(11) NOT NULL COMMENT '积分数目',
   `price_` int(11) NOT NULL COMMENT '订单价格',
@@ -199,12 +202,13 @@ CREATE TABLE `ll_score_order` (
 -- ----------------------------
 DROP TABLE IF EXISTS `ll_shop`;
 CREATE TABLE `ll_shop` (
-  `shop_id_` int(11) NOT NULL AUTO_INCREMENT COMMENT '流量任务id',
+  `shop_id_` varchar(64) NOT NULL AUTO_INCREMENT COMMENT '流量任务id',
   `user_id_` varchar(64) NOT NULL COMMENT '用户id',
   `shop_type_` int(11) NOT NULL COMMENT '商家平台类型',
+  `shop_owner_account_` varchar(150) NOT NULL COMMENT '店主旺旺',
   `shop_url_` varchar(150) NOT NULL COMMENT '店铺url',
   `verify_goods_url_` varchar(500) NOT NULL COMMENT '审核商品url',
-  `verify_code_` int(11) NOT NULL COMMENT '审核验证码',
+  `verify_code_` varchar(50) NOT NULL COMMENT '审核验证码',
   `status_` int(11) NOT NULL COMMENT '店铺审核状态',
   PRIMARY KEY (`shop_id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -214,9 +218,9 @@ CREATE TABLE `ll_shop` (
 -- ----------------------------
 DROP TABLE IF EXISTS `ll_task`;
 CREATE TABLE `ll_task` (
-  `task_id_` int(11) NOT NULL AUTO_INCREMENT COMMENT '流量任务id',
+  `task_id_` varchar(64) NOT NULL AUTO_INCREMENT COMMENT '流量任务id',
   `user_id_` varchar(64) NOT NULL COMMENT '发布的用户id',
-  `shop_id_` int(11) NOT NULL COMMENT '店铺id',
+  `shop_id_` varchar(64) NOT NULL COMMENT '店铺id',
   `shop_url_` varchar(150) NOT NULL COMMENT '店铺url',
   `goods_url_` varchar(500) NOT NULL COMMENT '商品url',
   `order_number_one_day_` int(11) NOT NULL COMMENT '每天订单数',
