@@ -5,6 +5,67 @@
 	<head>
 		<title></title>
 		<jsp:include page="../../../include/style.jsp" flush="true"></jsp:include>
+	<script type="text/javascript">
+	function add() {
+		if($("#bindPlat").val().trim() == ""){
+			alert("请选择平台");
+			return;
+		}
+		if($("#bindName").val().trim() == ""){
+			alert("角色描述过长");
+			$("#bindName").select();
+			return;
+		}
+		if($("#shopUrl").val().trim() == ""){
+			alert("角色描述过长");
+			$("#shopUrl").select();
+			return;
+		}
+		var menuIdArray = [];
+		$(".leftmenu_a").find("input").each(function() {
+			if ($(this).prop("checked")) {
+				menuIdArray.push(this.id);
+			}
+		});
+		if (menuIdArray.length == 0) {
+			alert("请勾选菜单.");
+			return;
+		}
+		$(".btn-cancel").button('loading');
+		$(".btn-primary").button('loading');
+		var url = "${ctx}/web/admin/useradmin/role/add";
+		$.ajax({
+			url:url,
+			type:'post',
+			data:{
+				name:$("#name_a").val().trim(),
+				description:$("#description_a").val().trim(),
+				menuIds:myArrayToString(menuIdArray)
+			},
+			dataType:'text',
+			timeout:60000,
+			error: function(e) {
+				$(".btn-cancel").button('reset');
+				$(".btn-primary").button('reset');
+				alert("连接服务器超时,请稍后再试.");
+			},
+			success: function(result){
+				if (!isOutTime(result)) {
+					$(".btn-cancel").button('reset');
+					$(".btn-primary").button('reset');
+					result = eval("("+result+")");
+					if (result.success) {
+						$('#addModal').modal('hide');
+						ajaxSearch(1);
+					} else {
+						alert(result.msg);
+						$("#name_a").select();
+					}
+				}
+			}
+		});
+	}
+</script>
 	</head>
 	<body>
 		<div class="place">
@@ -32,9 +93,11 @@
 										<h3>
 											选择平台
 										</h3>
-										<input type="radio" name="bind_plat" value="taobao">淘宝&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="radio" name="bind_plat" value="tmall" checked="checked">天猫 &nbsp;&nbsp;&nbsp;
-										<input type="radio" name="bind_plat" value="jd">京东
+										<select name="bindPlat" id="bindPlat" class="span2">
+											<option value="taobao">淘宝</option>
+											<option value="tmall" selected="selected">天猫 </option>
+											<option value="jd">京东</option>
+										</select>
 									</div>
 
 									<div class="business-bind-right">
@@ -48,14 +111,14 @@
 
 												<div>
 														<i style="color: red;">*</i> 店铺主旺旺（账号）:
-														<input type="text" class="txt" name="bind_name" value="">(店铺主旺旺绑定后无法修改)
+														<input type="text" class="txt" id="bindName" name="bindName" value="">(店铺主旺旺绑定后无法修改)
 													<div class="inp">
 														
 													</div>
 												</div>
 												<div>
 														<i style="color: red;">*</i> 店铺首页网址（URL）:
-														<input type="text" name="bind_url" value="">
+														<input type="text" id="shopUrl" name="shopUrl" value="">
 													<div class="inp">
 														
 													</div>
@@ -71,7 +134,7 @@
 												</p>
 												<div>
 													<i style="color: red;">*</i> 商品网址（URL）:
-													<input type="text" name="check_url" value="">
+													<input type="text" name="verifyGoodsUrl" value="">
 												</div>
 
 												<button class="btn btn-primary" data-toggle="button" data-loading-text="提交审核" onclick="">提交审核</button>

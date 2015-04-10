@@ -7,31 +7,39 @@ import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.foal.liuliang.bean.Page;
-import com.foal.liuliang.bean.ServerUserBean;
+import com.foal.liuliang.bean.LLShopBean;
 import com.foal.liuliang.service.LLShopService;
 import com.foal.liuliang.web.admin.AdminBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
 @SuppressWarnings("unchecked")
 @InterceptorRefs( { @InterceptorRef("interceptor-admin") })
-public class ShopAction extends AdminBaseAction implements ModelDriven<Page>{
+public class ShopAction extends AdminBaseAction implements ModelDriven<LLShopBean>{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3314755557809492024L;
+
+	private LLShopBean llShopBean = new LLShopBean();
 	
 	@Autowired
 	LLShopService llShopService;
 	
-	public ServerUserBean getModel() {
-		return null;
+	public LLShopBean getModel() {
+		return llShopBean;
 	}
 
 	@Action("index")
 	public String index() {
 		return SUCCESS;
+	}
+	
+	@Action("add")
+	public String add() {
+		llShopBean.setOperator(this.getSessionServerUser());
+        this.llShopService.add(llShopBean);
+        return null;
 	}
 
 	@Action("list")

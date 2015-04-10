@@ -24,8 +24,8 @@ public class LLShop implements Serializable {
 	private static final long serialVersionUID = 6358906394155010990L;
 	private String shopId;
 	private ServerUser serverUser;
-	private int shopType;
-	private String shopOwnerAccount;
+	private String bindPlat;
+	private String bindName;
 	private String shopUrl;
 	private String verifyGoodsUrl;
 	private String verifyCode;
@@ -52,22 +52,22 @@ public class LLShop implements Serializable {
 		this.serverUser = serverUser;
 	}
 
-	@Column(name = "shop_type_")
-	public int getShopType() {
-		return shopType;
+	@Column(name = "bind_plat_")
+	public String getBindPlat() {
+		return bindPlat;
 	}
 
-	public void setShopType(int shopType) {
-		this.shopType = shopType;
+	public void setBindPlat(String bindPlat) {
+		this.bindPlat = bindPlat;
 	}
 
-	@Column(name = "shop_owner_account_")
-	public String getShopOwnerAccount() {
-		return shopOwnerAccount;
+	@Column(name = "bind_name_")
+	public String getBindName() {
+		return bindName;
 	}
 
-	public void setShopOwnerAccount(String shopOwnerAccount) {
-		this.shopOwnerAccount = shopOwnerAccount;
+	public void setBindName(String bindName) {
+		this.bindName = bindName;
 	}
 
 	@Column(name = "shop_url_")
@@ -112,8 +112,8 @@ public class LLShop implements Serializable {
 		int result = 1;
 		result = prime * result + ((shopId == null) ? 0 : shopId.hashCode());
 		result = prime * result + ((serverUser == null) ? 0 : serverUser.hashCode());
-		result = prime * result + shopType;
-		result = prime * result + ((shopOwnerAccount == null) ? 0 : shopOwnerAccount.hashCode());
+		result = prime * result + ((bindPlat == null) ? 0 : bindPlat.hashCode());;
+		result = prime * result + ((bindName == null) ? 0 : bindName.hashCode());
 		result = prime * result + ((shopUrl == null) ? 0 : shopUrl.hashCode());
 		result = prime * result + ((verifyGoodsUrl == null) ? 0 : verifyGoodsUrl.hashCode());
 		result = prime * result + ((verifyCode == null) ? 0 : verifyCode.hashCode());
@@ -139,12 +139,15 @@ public class LLShop implements Serializable {
 				return false;
 		} else if (!serverUser.equals(other.serverUser))
 			return false;
-		if (shopType != other.shopType)
-			return false;
-		if (shopOwnerAccount == null) {
-			if (other.shopOwnerAccount != null)
+		if (bindPlat == null) {
+			if (other.bindPlat != null)
 				return false;
-		} else if (!shopOwnerAccount.equals(other.shopOwnerAccount))
+		} else if (!bindPlat.equals(other.bindPlat))
+			return false;
+		if (bindName == null) {
+			if (other.bindName != null)
+				return false;
+		} else if (!bindName.equals(other.bindName))
 			return false;
 		if (shopUrl == null) {
 			if (other.shopUrl != null)

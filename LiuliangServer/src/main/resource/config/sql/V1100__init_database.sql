@@ -188,7 +188,7 @@ INSERT INTO `t_user_role` VALUES ('402882044c981aee014c981b344a0001', '100001');
 -- ----------------------------
 DROP TABLE IF EXISTS `ll_score_order`;
 CREATE TABLE `ll_score_order` (
-  `order_id_` varchar(64) NOT NULL AUTO_INCREMENT COMMENT '购买订单id',
+  `order_id_` varchar(64) NOT NULL COMMENT '购买订单id',
   `user_id_` varchar(64) NOT NULL COMMENT '购买用户',
   `score_num_` int(11) NOT NULL COMMENT '积分数目',
   `price_` int(11) NOT NULL COMMENT '订单价格',
@@ -202,10 +202,10 @@ CREATE TABLE `ll_score_order` (
 -- ----------------------------
 DROP TABLE IF EXISTS `ll_shop`;
 CREATE TABLE `ll_shop` (
-  `shop_id_` varchar(64) NOT NULL AUTO_INCREMENT COMMENT '流量任务id',
+  `shop_id_` varchar(64) NOT NULL COMMENT '流量任务id',
   `user_id_` varchar(64) NOT NULL COMMENT '用户id',
-  `shop_type_` int(11) NOT NULL COMMENT '商家平台类型',
-  `shop_owner_account_` varchar(150) NOT NULL COMMENT '店主旺旺',
+  `bind_plat_` varchar(20) NOT NULL COMMENT '绑定平台',
+  `bind_name_` varchar(150) NOT NULL COMMENT '店主旺旺',
   `shop_url_` varchar(150) NOT NULL COMMENT '店铺url',
   `verify_goods_url_` varchar(500) NOT NULL COMMENT '审核商品url',
   `verify_code_` varchar(50) NOT NULL COMMENT '审核验证码',
@@ -218,7 +218,7 @@ CREATE TABLE `ll_shop` (
 -- ----------------------------
 DROP TABLE IF EXISTS `ll_task`;
 CREATE TABLE `ll_task` (
-  `task_id_` varchar(64) NOT NULL AUTO_INCREMENT COMMENT '流量任务id',
+  `task_id_` varchar(64) NOT NULL COMMENT '流量任务id',
   `user_id_` varchar(64) NOT NULL COMMENT '发布的用户id',
   `shop_id_` varchar(64) NOT NULL COMMENT '店铺id',
   `shop_url_` varchar(150) NOT NULL COMMENT '店铺url',

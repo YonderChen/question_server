@@ -26,4 +26,16 @@ public class Constant {
 	
 	public static final String ROLE_ID_USER_ADMIN = "100001";
 	public static final String ROLE_ID_USER_SHOP = "100002";
+	
+	public static class Status {
+		public static final int Create = 0;
+		public static final int Success = 1;
+		public static final int CheckFail = -1;
+	}
+	
+	public static class BindPlat {
+		public static final String Taobao = "taobao";
+		public static final String Tmall = "tmall";
+		public static final String Jd = "jd";
+	}
 }
