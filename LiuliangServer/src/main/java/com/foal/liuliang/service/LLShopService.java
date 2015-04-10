@@ -13,6 +13,16 @@ import com.foal.liuliang.pojo.LLShop;
 @Service(value = "llShopService")
 public class LLShopService extends DaoSupport {
 
+	public boolean checkBindName(LLShopBean llShopBean) {
+		//检测店铺旺旺是否正确
+		return true;
+    }
+	
+	public boolean checkVerifyCode(LLShopBean llShopBean) {
+		//检测验证码是否正确
+		return true;
+    }
+	
 	public void add(LLShopBean shopBean) {
 		LLShop llShop = new LLShop();
 		llShop.setServerUser(shopBean.getOperator());

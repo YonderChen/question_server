@@ -23,13 +23,17 @@
 					<s:iterator value="#request.list" id="shop">
 					<tr>
 						<td>
-							${shop.shopOwnerAccount }
+							${shop.bindName }
 						</td>
 						<td>
 							${shop.shopUrl}
 						</td>
 						<td>
-							${shop.status}
+							<s:if test="status == 0">待审核</s:if>
+							<s:else>
+								<s:if test="status == 1">审核通过</s:if>
+								<s:else>审核失败</s:else>
+							</s:else>
 						</td>
 					</tr>
 					</s:iterator>
