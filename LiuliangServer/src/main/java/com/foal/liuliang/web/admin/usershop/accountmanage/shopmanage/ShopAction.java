@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.foal.liuliang.bean.AjaxBean;
 import com.foal.liuliang.bean.LLShopBean;
 import com.foal.liuliang.service.LLShopService;
+import com.foal.liuliang.util.RandomTools;
 import com.foal.liuliang.web.admin.AdminBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -33,17 +34,40 @@ public class ShopAction extends AdminBaseAction implements ModelDriven<LLShopBea
 
 	@Action("index")
 	public String index() {
+		this.setAttrToSession("goodsVerifyCode", getVerifyCode());
 		return SUCCESS;
+	}
+
+	
+	private String getVerifyCode() {
+	    String str = "";
+	    char[] numberArr = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+	    char[] wordArr = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+		str += randomWord(4, numberArr);
+		str += "-";
+		str += randomWord(4, wordArr);
+		return str;
+	}
+	private String randomWord(int length, char[] arr){
+		String str = "";
+	    // 随机产生
+	    for(int i=0; i<length; i++){
+	        int pos = RandomTools.random(0, arr.length);
+	        str += arr[pos];
+	    }
+	    return str;
 	}
 	
 	@Action("add")
 	public String add() {
 		llShopBean.setOperator(this.getSessionServerUser());
-		if (!this.llShopService.checkBindName(llShopBean)) {
-			this.ajaxWrite(new AjaxBean(false, "店铺旺旺与验证页面旺旺不符"));
+		llShopBean.setVerifyCode(this.getAttrFromSession("goodsVerifyCode").toString());
+		if (!this.llShopService.checkShopUrl(llShopBean)) {
+			this.ajaxWrite(new AjaxBean(false, "请输入正确的店铺地址"));
+			return null;
 		}
-		if (!this.llShopService.checkVerifyCode(llShopBean)) {
-			this.ajaxWrite(new AjaxBean(false, "验证页面标题中未找到匹配的验证码"));
+		if (!this.llShopService.checkGoodsUrl(llShopBean)) {
+			this.ajaxWrite(new AjaxBean(false, "请输入正确的商品地址"));
 		} else {
 			this.llShopService.add(llShopBean);
 			this.ajaxWrite(new AjaxBean(true, "绑定成功.请耐心等待店铺审核工作"));

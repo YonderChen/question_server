@@ -6,30 +6,34 @@
 		<title></title>
 		<jsp:include page="../../../include/style.jsp" flush="true"></jsp:include>
 	<script type="text/javascript">
-	$('document').ready(function() {
-		var randomVerifyCode = getVerifyCode();
-		$("#verifyCode").val(randomVerifyCode);
-		$("#verifyCode_b").html(randomVerifyCode);
+	
+	$(document).ready(function(){
+	    bindPlatChange();
+	  	$("#bindPlat").change(function(){
+		    bindPlatChange();
+	  	});
 	});
 	
-	function getVerifyCode() {
-	    var str = "";
-	    var numberArr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-	    var wordArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-		str += randomWord(4, numberArr);
-		str += "-";
-		str += randomWord(4, wordArr);
-		return str;
-	}
-	function randomWord(length, arr){
-	    var str = "";
-	    // 随机产生
-	    for(var i=0; i<length; i++){
-	        pos = Math.round(Math.random() * (arr.length-1));
-	        str += arr[pos];
+	function bindPlatChange() {
+	    if($("#bindPlat").val() == "taobao") {
+	    	$("#bindName_desc").html("店铺主旺旺");
+	    	$("#binding_shopimg_taobao").show();
+	    	$("#binding_shopimg_tmall").hide();
+	    	$("#binding_shopimg_jd").hide();
 	    }
-	    return str;
+	    else if ($("#bindPlat").val() == "tmall"){
+	    	$("#bindName_desc").html("店铺名称");
+	    	$("#binding_shopimg_taobao").hide();
+	    	$("#binding_shopimg_tmall").show();
+	    	$("#binding_shopimg_jd").hide();
+	    } else {
+	    	$("#bindName_desc").html("店铺名称");
+	    	$("#binding_shopimg_taobao").hide();
+	    	$("#binding_shopimg_tmall").hide();
+	    	$("#binding_shopimg_jd").show();
+	    }
 	}
+	
 	function bind() {
 		if($("#bindPlat").val().trim() == ""){
 			alert("请选择平台");
@@ -50,8 +54,6 @@
 			$("#verifyGoodsUrl").select();
 			return;
 		}
-		$(".btn-cancel").button('loading');
-		$(".btn-primary").button('loading');
 		var url = "${ctx}/web/admin/usershop/accountmanage/shopmanage/add";
 		$.ajax({
 			url:url,
@@ -60,28 +62,22 @@
 				bindPlat : $("#bindPlat").val().trim(),
 				bindName : $("#bindName").val().trim(),
 				shopUrl : $("#shopUrl").val().trim(),
-				verifyCode : $("#verifyCode").val().trim(),
 				verifyGoodsUrl : $("#verifyGoodsUrl").val().trim()
 			},
 			dataType:'text',
 			timeout:60000,
 			error: function(e) {
-				$(".btn-cancel").button('reset');
-				$(".btn-primary").button('reset');
 				alert("连接服务器超时,请稍后再试.");
 			},
 			success: function(result){
 				if (!isOutTime(result)) {
-					$(".btn-cancel").button('reset');
-					$(".btn-primary").button('reset');
 					result = eval("("+result+")");
 					alert(result.msg);
 					if (result.success) {
-						bindPlat:$("#bindPlat").val("taobao");
-						bindName:$("#bindName").val("");
-						shopUrl:$("#shopUrl").val("");
-						verifyCode:$("#verifyCode").val("");
-						verifyGoodsUrl:$("#verifyGoodsUrl").val("");
+						$("#bindPlat").val("taobao");
+						$("#bindName").val("");
+						$("#shopUrl").val("");
+						$("#verifyGoodsUrl").val("");
 					}
 				}
 			}
@@ -132,8 +128,8 @@
 										<div class="business-bind-list business-bind-new">
 
 											<div>
-													<i style="color: red;">*</i> 店铺主旺旺（账号）:
-													<input type="text" class="txt" id="bindName" name="bindName" value="">(店铺主旺旺绑定后无法修改)
+													<i style="color: red;">*</i> <i style="font-style: normal" id="bindName_desc">店铺主旺旺:</i>
+													<input type="text" class="txt" id="bindName" name="bindName" value="">(绑定后无法修改)
 												<div class="inp">
 													
 												</div>
@@ -146,14 +142,17 @@
 												</div>
 											</div>
 											<div>
-												验证码: <b id="verifyCode_b">9650-ALTS</b>
-												<input type="hidden" id="verifyCode" name="verifyCode" value="9650-ALTS">
+												验证码: <b id="verifyCode">${goodsVerifyCode}</b>
 												
 											</div>
 											<p>
 												1.将验证码加到您的店铺里某个上架商品的标题上，类似这样：
 											</p>
-											<img alt="商品验证" src="${ctx}/images/binding_shopimg.jpg">
+											<div>
+												<img id="binding_shopimg_taobao" alt="商品验证" src="${ctx}/images/binding_shopimg_taobao.jpg">
+												<img id="binding_shopimg_tmall" alt="商品验证" src="${ctx}/images/binding_shopimg_tmall.jpg">
+												<img id="binding_shopimg_jd" alt="商品验证" src="${ctx}/images/binding_shopimg_jd.jpg">
+											</div>
 											<p>
 												2.再将这个商品的详情页链接，复制到下面输入框
 											</p>

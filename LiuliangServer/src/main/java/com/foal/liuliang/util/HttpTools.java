@@ -13,12 +13,14 @@ import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import com.google.gson.JsonParser;
 /**
  * @author jackyli515
  *
  */
 public class HttpTools {
+    public static String sendGet(String url, HashMap<String,String> params) throws ConnectException {
+    	return sendGet(url, params, "UTF-8");
+    }
 	/**
      * 向指定URL发送GET方法的请求
      * @param url 发送请求的URL
@@ -26,13 +28,19 @@ public class HttpTools {
      * @return URL 所代表远程资源的响应结果
 	 * @throws ConnectException 
      */
-    public static String sendGet(String url, HashMap<String,String> params) throws ConnectException {
+    public static String sendGet(String url, HashMap<String,String> params, String charset) throws ConnectException {
+    	if (charset == null) {
+			charset = "UTF-8";
+		}
         String result = "";
         BufferedReader in = null;
         try {
             /**组装参数**/
             String param = parseParams(params);
-            String urlNameString = url + "?" + param;
+            String urlNameString = url;
+            if (StringTools.isNotBlank(param)) {
+            	urlNameString = urlNameString + "?" + param;
+			}
             URL realUrl = new URL(urlNameString);
             /**打开和URL之间的连接**/
             URLConnection connection = realUrl.openConnection();
@@ -43,7 +51,7 @@ public class HttpTools {
             /**建立实际的连接**/
             connection.connect();
             /**定义 BufferedReader输入流来读取URL的响应**/
-            in = new BufferedReader(new InputStreamReader(connection.getInputStream(),"UTF-8"));
+            in = new BufferedReader(new InputStreamReader(connection.getInputStream(), charset));
             String line;
             while ((line = in.readLine()) != null) {
                 result += line;
@@ -62,6 +70,9 @@ public class HttpTools {
         }
         return result;
     }
+    public static String sendPost(String url, HashMap<String,String> params) throws ConnectException {
+    	return sendPost(url, params, "UTF-8");
+    }
     /**
      * 向指定 URL 发送POST方法的请求
      * @param url 发送请求的 URL
@@ -69,7 +80,10 @@ public class HttpTools {
      * @return 所代表远程资源的响应结果
      * @throws ConnectException 
      */
-    public static String sendPost(String url, HashMap<String,String> params) throws ConnectException {
+    public static String sendPost(String url, HashMap<String,String> params, String charset) throws ConnectException {
+    	if (charset == null) {
+			charset = "UTF-8";
+		}
         PrintWriter out = null;
         BufferedReader in = null;
         String result = "";
@@ -92,7 +106,7 @@ public class HttpTools {
             /**flush输出流的缓冲**/
             out.flush();
             /**定义BufferedReader输入流来读取URL的响应**/
-            in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            in = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
             String line;
             while ((line = in.readLine()) != null) {
                 result += line;
@@ -134,35 +148,20 @@ public class HttpTools {
     }
     
     public static void main(String[] args){
-    	String ClientId = "1019087227211-i56evpc7q3jltr9r1s1j48orogc1mmqp.apps.googleusercontent.com";
-    	String ClientSecret ="TsnRb80w1-VWnE_6IMVlqdbb";
-//    	String Code = "4/tBjuM91gBMHLwddHP3s8o5jUysHz.sthXsQybtpYXEnp6UAPFm0FQLBnihgI";
-    	String url = "https://accounts.google.com/o/oauth2/token";
-    	String RefreshCode = "1/KWcJ1F31bI_zAYjy1oDB6577XL9m9sUnNUzMtRpMGSM";
-    	
-    	HashMap<String,String> params = new HashMap<String,String>();
-    	params.put("grant_type", "refresh_token");
-    	
-    	params.put("client_id", ClientId);
-    	params.put("client_secret", ClientSecret);
-    	params.put("refresh_token", RefreshCode);
+    	String url = "http://lvtujiaju.jd.com";
     	
     	String content = "";
+    	String bindName = "";
 		try {
-			content = HttpTools.sendPost(url, params);
-	    	System.out.println(content);
-	    	JsonParser jp = new JsonParser();
-	    	
-	    	String accessToken =jp.parse(content).getAsJsonObject().get("access_token").getAsString(); 
-	    	String checkUrl ="";
-	    	params = new HashMap<String,String>();
-	    	params.put("access_token", accessToken);
-			content = HttpTools.sendGet(checkUrl, params);
+			content = HttpTools.sendGet(url, null);
+			String html = content.substring(content.indexOf("<title>") + 7, content.indexOf("</title>", content.indexOf("<title>") + 7));
+			html = html.trim();
+			bindName = html.substring(0, html.indexOf(" - 京东"));
+	    	System.out.println(bindName);
 		} catch (ConnectException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 			//链接超时
 		}
-    	System.out.println(content);
     }
     
 }

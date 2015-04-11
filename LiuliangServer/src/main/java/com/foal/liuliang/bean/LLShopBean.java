@@ -7,6 +7,7 @@ package com.foal.liuliang.bean;
 public class LLShopBean extends Page {
 
 	private String shopId;
+	private String userId;
 	private String bindPlat;
 	private String bindName;
 	private String shopUrl;
@@ -18,6 +19,12 @@ public class LLShopBean extends Page {
 	}
 	public void setShopId(String shopId) {
 		this.shopId = shopId;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	public String getBindPlat() {
 		return bindPlat;

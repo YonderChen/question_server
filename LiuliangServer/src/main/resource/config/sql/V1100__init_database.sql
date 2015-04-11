@@ -47,8 +47,9 @@ INSERT INTO `t_menu` VALUES ('500001', '500000', 1, '基本信息', 'web/admin/u
 INSERT INTO `t_menu` VALUES ('500002', '500000', 1, '绑定店铺', 'web/admin/usershop/accountmanage/shopmanage/index', 'rightFrame', '500002', NULL, NULL);
 INSERT INTO `t_menu` VALUES ('500003', '500000', 1, '店铺列表', 'web/admin/usershop/accountmanage/shopmanage/list', 'rightFrame', '500003', NULL, NULL);
 INSERT INTO `t_menu` VALUES ('500004', '500000', 1, '续费会员', 'web/admin/usershop/accountmanage/renewalvip', 'rightFrame', '500004', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('500005', '500000', 1, '积分管理', 'web/admin/usershop/accountmanage/scoremanage/index', 'rightFrame', '500005', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('500006', '500000', 1, '邀请商家', 'web/admin/usershop/accountmanage/inviteothers', 'rightFrame', '500006', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('500005', '500000', 1, '购买积分', 'web/admin/usershop/accountmanage/scoremanage/index', 'rightFrame', '500005', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('500006', '500000', 1, '积分列表', 'web/admin/usershop/accountmanage/scoremanage/list', 'rightFrame', '500006', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('500007', '500000', 1, '邀请商家', 'web/admin/usershop/accountmanage/inviteothers', 'rightFrame', '500007', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for t_role
@@ -98,6 +99,7 @@ INSERT INTO `t_role_menu` VALUES ('100000', '500003');
 INSERT INTO `t_role_menu` VALUES ('100000', '500004');
 INSERT INTO `t_role_menu` VALUES ('100000', '500005');
 INSERT INTO `t_role_menu` VALUES ('100000', '500006');
+INSERT INTO `t_role_menu` VALUES ('100000', '500007');
 INSERT INTO `t_role_menu` VALUES ('100001', '100000');
 INSERT INTO `t_role_menu` VALUES ('100001', '100001');
 INSERT INTO `t_role_menu` VALUES ('100001', '300000');
@@ -111,6 +113,7 @@ INSERT INTO `t_role_menu` VALUES ('100002', '500003');
 INSERT INTO `t_role_menu` VALUES ('100002', '500004');
 INSERT INTO `t_role_menu` VALUES ('100002', '500005');
 INSERT INTO `t_role_menu` VALUES ('100002', '500006');
+INSERT INTO `t_role_menu` VALUES ('100002', '500007');
 
 -- ----------------------------
 -- Table structure for t_server_user
@@ -192,6 +195,7 @@ CREATE TABLE `ll_score_order` (
   `user_id_` varchar(64) NOT NULL COMMENT '购买用户',
   `score_num_` int(11) NOT NULL COMMENT '积分数目',
   `price_` int(11) NOT NULL COMMENT '订单价格',
+  `deal_id_` varchar(50) NOT NULL COMMENT '转账交易号',
   `check_admin_id_` varchar(64) DEFAULT NULL COMMENT '验证发货的管理员id',
   `status_` int(11) NOT NULL COMMENT '订单状态',
   PRIMARY KEY (`order_id_`)
