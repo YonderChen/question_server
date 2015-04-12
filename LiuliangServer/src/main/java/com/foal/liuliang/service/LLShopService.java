@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.foal.liuliang.bean.LLShopBean;
+import com.foal.liuliang.bean.PageBean;
 import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.dao.DaoSupport;
 import com.foal.liuliang.pojo.LLShop;
@@ -173,9 +174,11 @@ public class LLShopService extends DaoSupport {
         this.hibernateDao.save(llShop);
     }
 	
-	public List queryLLShop(String userId) {
+	public PageBean queryLLShop(String userId, LLShopBean llShopBean) {
         String queryHql = "from LLShop as s where s.serverUser.userId = ?";
-        return this.hibernateDao.queryList(queryHql, userId);
+        List list = this.hibernateDao.queryList(queryHql, llShopBean.getPage(), llShopBean.getPageSize(), userId);
+        int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, userId);
+		return new PageBean(list, allRow, llShopBean.getPage(), llShopBean.getPageSize());
     }
 }
 

@@ -41,15 +41,17 @@ INSERT INTO `t_menu` VALUES ('100002', '100000', 1, '角色管理', 'web/admin/u
 INSERT INTO `t_menu` VALUES ('300000', NULL, 0, '系统管理', NULL, NULL, '300000', 'leftico01.png', NULL);
 INSERT INTO `t_menu` VALUES ('300001', '300000', 1, '系统参数设置', 'web/admin/useradmin/system/param/index', 'rightFrame', '300001', NULL, NULL);
 INSERT INTO `t_menu` VALUES ('400000', NULL, 0, '流量管理', NULL, 'rightFrame', '400000', 'leftico01.png', NULL);
-INSERT INTO `t_menu` VALUES ('400001', '400000', 1, '任务管理', 'web/admin/usershop/taskmanage/index', 'rightFrame', '400001', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('400001', '400000', 1, '发布任务', 'web/admin/usershop/taskmanage/add_task', 'rightFrame', '400001', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('400002', '400000', 1, '任务列表', 'web/admin/usershop/taskmanage/index', 'rightFrame', '400002', NULL, NULL);
 INSERT INTO `t_menu` VALUES ('500000', NULL, 0, '账户管理', NULL, 'rightFrame', '500000', 'leftico01.png', NULL);
 INSERT INTO `t_menu` VALUES ('500001', '500000', 1, '基本信息', 'web/admin/usershop/accountmanage/baseinfo', 'rightFrame', '500001', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('500002', '500000', 1, '绑定店铺', 'web/admin/usershop/accountmanage/shopmanage/index', 'rightFrame', '500002', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('500003', '500000', 1, '店铺列表', 'web/admin/usershop/accountmanage/shopmanage/list', 'rightFrame', '500003', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('500004', '500000', 1, '续费会员', 'web/admin/usershop/accountmanage/renewalvip', 'rightFrame', '500004', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('500005', '500000', 1, '购买积分', 'web/admin/usershop/accountmanage/scoremanage/index', 'rightFrame', '500005', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('500006', '500000', 1, '积分列表', 'web/admin/usershop/accountmanage/scoremanage/list', 'rightFrame', '500006', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('500007', '500000', 1, '邀请商家', 'web/admin/usershop/accountmanage/inviteothers', 'rightFrame', '500007', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('500002', '500000', 1, '绑定店铺', 'web/admin/usershop/accountmanage/shopmanage/bind_shop', 'rightFrame', '500002', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('500003', '500000', 1, '店铺列表', 'web/admin/usershop/accountmanage/shopmanage/index', 'rightFrame', '500003', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('500004', '500000', 1, '续费会员', 'web/admin/usershop/accountmanage/dealmanage/renewalvip', 'rightFrame', '500004', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('500005', '500000', 1, '会员续费记录', 'web/admin/usershop/accountmanage/dealmanage/index_vip_order', 'rightFrame', '500005', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('500006', '500000', 1, '购买积分', 'web/admin/usershop/accountmanage/dealmanage/get_score', 'rightFrame', '500006', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('500007', '500000', 1, '积分购买记录', 'web/admin/usershop/accountmanage/dealmanage/index_score_order', 'rightFrame', '500007', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('500008', '500000', 1, '邀请商家', 'web/admin/usershop/accountmanage/inviteothers', 'rightFrame', '500008', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for t_role
@@ -92,6 +94,7 @@ INSERT INTO `t_role_menu` VALUES ('100000', '300000');
 INSERT INTO `t_role_menu` VALUES ('100000', '300001');
 INSERT INTO `t_role_menu` VALUES ('100000', '400000');
 INSERT INTO `t_role_menu` VALUES ('100000', '400001');
+INSERT INTO `t_role_menu` VALUES ('100000', '400002');
 INSERT INTO `t_role_menu` VALUES ('100000', '500000');
 INSERT INTO `t_role_menu` VALUES ('100000', '500001');
 INSERT INTO `t_role_menu` VALUES ('100000', '500002');
@@ -100,12 +103,14 @@ INSERT INTO `t_role_menu` VALUES ('100000', '500004');
 INSERT INTO `t_role_menu` VALUES ('100000', '500005');
 INSERT INTO `t_role_menu` VALUES ('100000', '500006');
 INSERT INTO `t_role_menu` VALUES ('100000', '500007');
+INSERT INTO `t_role_menu` VALUES ('100000', '500008');
 INSERT INTO `t_role_menu` VALUES ('100001', '100000');
 INSERT INTO `t_role_menu` VALUES ('100001', '100001');
 INSERT INTO `t_role_menu` VALUES ('100001', '300000');
 INSERT INTO `t_role_menu` VALUES ('100001', '300001');
 INSERT INTO `t_role_menu` VALUES ('100002', '400000');
 INSERT INTO `t_role_menu` VALUES ('100002', '400001');
+INSERT INTO `t_role_menu` VALUES ('100002', '400002');
 INSERT INTO `t_role_menu` VALUES ('100002', '500000');
 INSERT INTO `t_role_menu` VALUES ('100002', '500001');
 INSERT INTO `t_role_menu` VALUES ('100002', '500002');
@@ -114,6 +119,7 @@ INSERT INTO `t_role_menu` VALUES ('100002', '500004');
 INSERT INTO `t_role_menu` VALUES ('100002', '500005');
 INSERT INTO `t_role_menu` VALUES ('100002', '500006');
 INSERT INTO `t_role_menu` VALUES ('100002', '500007');
+INSERT INTO `t_role_menu` VALUES ('100002', '500008');
 
 -- ----------------------------
 -- Table structure for t_server_user
@@ -193,7 +199,22 @@ DROP TABLE IF EXISTS `ll_score_order`;
 CREATE TABLE `ll_score_order` (
   `order_id_` varchar(64) NOT NULL COMMENT '购买订单id',
   `user_id_` varchar(64) NOT NULL COMMENT '购买用户',
-  `score_num_` int(11) NOT NULL COMMENT '积分数目',
+  `num_` int(11) NOT NULL COMMENT '积分数目',
+  `price_` int(11) NOT NULL COMMENT '订单价格',
+  `deal_id_` varchar(50) NOT NULL COMMENT '转账交易号',
+  `check_admin_id_` varchar(64) DEFAULT NULL COMMENT '验证发货的管理员id',
+  `status_` int(11) NOT NULL COMMENT '订单状态',
+  PRIMARY KEY (`order_id_`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for ll_score_order
+-- ----------------------------
+DROP TABLE IF EXISTS `ll_vip_order`;
+CREATE TABLE `ll_vip_order` (
+  `order_id_` varchar(64) NOT NULL COMMENT '购买订单id',
+  `user_id_` varchar(64) NOT NULL COMMENT '购买用户',
+  `num_` int(11) NOT NULL COMMENT 'vip续费月数',
   `price_` int(11) NOT NULL COMMENT '订单价格',
   `deal_id_` varchar(50) NOT NULL COMMENT '转账交易号',
   `check_admin_id_` varchar(64) DEFAULT NULL COMMENT '验证发货的管理员id',
@@ -225,10 +246,25 @@ CREATE TABLE `ll_task` (
   `task_id_` varchar(64) NOT NULL COMMENT '流量任务id',
   `user_id_` varchar(64) NOT NULL COMMENT '发布的用户id',
   `shop_id_` varchar(64) NOT NULL COMMENT '店铺id',
-  `shop_url_` varchar(150) NOT NULL COMMENT '店铺url',
   `goods_url_` varchar(500) NOT NULL COMMENT '商品url',
-  `order_number_one_day_` int(11) NOT NULL COMMENT '每天订单数',
+  `goods_name_` varchar(500) NOT NULL COMMENT '商品名称',
+  `goods_img_` varchar(500) NOT NULL COMMENT '商品图片地址',
+  `keyword_1_` varchar(500) NOT NULL DEFAULT '' COMMENT '关键词1',
+  `order_number_one_day_1_` int(11) NOT NULL DEFAULT '0' COMMENT '关键词1每日访客数',
+  `keyword_2_` varchar(500) NOT NULL DEFAULT '' COMMENT '关键词2',
+  `order_number_one_day_2_` int(11) NOT NULL DEFAULT '0' COMMENT '关键词2每日访客数',
+  `keyword_3_` varchar(500) NOT NULL DEFAULT '' COMMENT '关键词3',
+  `order_number_one_day_3_` int(11) NOT NULL DEFAULT '0' COMMENT '关键词3每日访客数',
+  `keyword_4_` varchar(500) NOT NULL DEFAULT '' COMMENT '关键词4',
+  `order_number_one_day_4_` int(11) NOT NULL DEFAULT '0' COMMENT '关键词4每日访客数',
+  `keyword_5_` varchar(500) NOT NULL DEFAULT '' COMMENT '关键词5',
+  `order_number_one_day_5_` int(11) NOT NULL DEFAULT '0' COMMENT '关键词5每日访客数',
+  `search_source_` int(11) NOT NULL DEFAULT '0' COMMENT '搜索来源分布占比，平台为天猫时该项才有值，表示淘宝的自然搜索占比百分数',
   `duration_day_` int(11) NOT NULL COMMENT '持续天数',
+  `page_stay_type_` int(11) NOT NULL DEFAULT '0' COMMENT '增值服务，页面停留时间（0：默认 停留30-60秒，1：停留时间60-120秒，2：停留时间120-180秒）',
+  `visit_time_type_` int(11) NOT NULL DEFAULT '0' COMMENT '访问时间类型（0：默认 全天平均分布，1：随即分布，2：网购用户习惯曲线分布）',
+  `is_quick_verify_` int(11) NOT NULL DEFAULT '0' COMMENT '是否优先审核',
+  `is_quick_execute_` int(11) NOT NULL DEFAULT '0' COMMENT '是否优先执行',
   `cost_score_` int(11) NOT NULL COMMENT '消耗积分',
   `status_` int(11) NOT NULL COMMENT '任务状态',
   PRIMARY KEY (`task_id_`)

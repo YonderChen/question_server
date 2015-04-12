@@ -1,24 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<title></title>
-	</head>
-	<body>
-		<jsp:include page="../../../include/style.jsp" flush="true"></jsp:include>
-		<div class="place">
-			<span>位置：</span>
-			<ul class="placeul">
-				<li>
-					账户管理
-				</li>
-				<li>
-					积分列表
-				</li>
-			</ul>
-		</div>
-
 <s:if test="#request.pageBean.allRow == 0">
 <div class='no-found'>无结果.</div>
 </s:if>
@@ -28,7 +9,7 @@
 				<thead>
 					<tr>
 						<th width="15%">
-							获得积分
+							续费月数
 						</th>
 						<th width="25%">
 							价格
@@ -42,10 +23,10 @@
 					</tr>
 				</thead>
 				<tbody>
-					<s:iterator value="#request.list" id="order">
+					<s:iterator value="#request.pageBean.list" id="order">
 					<tr>
 						<td>
-							${order.scoreNum }
+							${order.num }
 						</td>
 						<td>
 							${order.price}
@@ -64,5 +45,5 @@
 					</s:iterator>
 				</tbody>
 			</table>
+			<jsp:include page="../../../include/ajax_pager.jsp" flush="true"></jsp:include>
 </s:else>
-</body></html>

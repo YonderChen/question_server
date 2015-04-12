@@ -16,9 +16,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "ll_score_order")
+@Table(name = "ll_vip_order")
 @Cache(region = "yonderHibernateCache", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class LLScoreOrder implements Serializable {
+public class LLVIPOrder implements Serializable {
 	/**
 	 * 
 	 */
@@ -120,7 +120,7 @@ public class LLScoreOrder implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		LLScoreOrder other = (LLScoreOrder) obj;
+		LLVIPOrder other = (LLVIPOrder) obj;
 		if (orderId == null) {
 			if (other.orderId != null)
 				return false;

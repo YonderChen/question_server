@@ -45,7 +45,7 @@ public class ResourceTools {
 		return false;
 	}
 	
-	private static String getUploadFileName(String suffix) {
+	public static String getUploadFileName(String suffix) {
 		return UUID.randomUUID() + suffix;
 	}
 	/**

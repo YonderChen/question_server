@@ -26,7 +26,7 @@
 		}
 		$("#searchBtn").button('loading');
 		$("#ajaxSearchId").html("<div class='no-found'>加载中...</div>");
-		var url = "${ctx}/web/admin/usershop/accountmanage/shopmanage/list";
+		var url = "${ctx}/web/admin/usershop/accountmanage/dealmanage/list_vip_order";
 		$.ajax( {
 			url : url,
 			type : 'post',
@@ -61,7 +61,7 @@
 					账户管理
 				</li>
 				<li>
-					购买积分列表
+					会员续费列表
 				</li>
 			</ul>
 		</div>

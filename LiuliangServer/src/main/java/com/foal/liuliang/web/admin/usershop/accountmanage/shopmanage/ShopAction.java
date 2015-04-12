@@ -1,7 +1,5 @@
 package com.foal.liuliang.web.admin.usershop.accountmanage.shopmanage;
 
-import java.util.List;
-
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
@@ -9,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.foal.liuliang.bean.AjaxBean;
 import com.foal.liuliang.bean.LLShopBean;
+import com.foal.liuliang.bean.PageBean;
 import com.foal.liuliang.service.LLShopService;
 import com.foal.liuliang.util.RandomTools;
 import com.foal.liuliang.web.admin.AdminBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
-@SuppressWarnings("unchecked")
 @InterceptorRefs( { @InterceptorRef("interceptor-admin") })
 public class ShopAction extends AdminBaseAction implements ModelDriven<LLShopBean>{
 
@@ -34,6 +32,11 @@ public class ShopAction extends AdminBaseAction implements ModelDriven<LLShopBea
 
 	@Action("index")
 	public String index() {
+		return SUCCESS;
+	}
+	
+	@Action("bind_shop")
+	public String bindShop() {
 		this.setAttrToSession("goodsVerifyCode", getVerifyCode());
 		return SUCCESS;
 	}
@@ -77,8 +80,8 @@ public class ShopAction extends AdminBaseAction implements ModelDriven<LLShopBea
 
 	@Action("list")
     public String list() {
-        List list = this.llShopService.queryLLShop(getSessionServerUser().getUserId());
-		this.setAttrToRequest("list", list);
+        PageBean pageBean = this.llShopService.queryLLShop(getSessionServerUser().getUserId(), llShopBean);
+		this.setAttrToRequest("pageBean", pageBean);
         return SUCCESS;
     }
 }

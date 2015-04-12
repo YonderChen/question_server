@@ -4,11 +4,11 @@ package com.foal.liuliang.bean;
  * @author cyd
  * @date 2015-4-10
  */
-public class LLScoreOrderBean extends Page {
+public class LLDealOrderBean extends Page {
 
 	private String orderId;
 	private String userId;
-	private int scoreNum;
+	private int num;
 	private int price;
 	private String dealId;
 	private String checkAdminId;
@@ -25,11 +25,11 @@ public class LLScoreOrderBean extends Page {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public int getScoreNum() {
-		return scoreNum;
+	public int getNum() {
+		return num;
 	}
-	public void setScoreNum(int scoreNum) {
-		this.scoreNum = scoreNum;
+	public void setNum(int num) {
+		this.num = num;
 	}
 	public int getPrice() {
 		return price;

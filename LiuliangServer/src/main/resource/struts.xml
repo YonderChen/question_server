@@ -41,7 +41,7 @@
     <constant name="struts.convention.default.parent.package" value="interceptor-default"/>
     <constant name="struts.objectFactory" value="spring"/>
     <!--属性指定Struts 2文件上传中整个请求内容允许的最大字节数-->
-    <constant name="struts.multipart.maxSize" value="1073741824"/>
+    <constant name="struts.multipart.maxSize" value="10485760"/>
     <constant name="struts.custom.i18n.resources" value="globalMessages"/>
     <constant name="struts.i18n.encoding" value="UTF-8"/>
     <!--struts.multipart.parser：该属性指定处理multipart/form-data的MIME类型（文件上传）请求的框架，该属性支持cos、pell和jakarta等属性值，即分别对应使用cos的文件上传框架、pell上传及common-fileupload文件上传框架。该属性的默认值为jakarta。-->

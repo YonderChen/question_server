@@ -8,20 +8,20 @@
 	<script type="text/javascript">
 	
 	$(document).ready(function(){
-	    priceChange();
-	  	$("#price").change(function(){
-		    priceChange();
+	    numChange();
+	  	$("#num").change(function(){
+		    numChange();
 	  	});
 	});
 	
-	function priceChange() {
+	function numChange() {
 		//金额变更
-		$("#scoreNum").html($("#price").val()*1.8)
+		$("#price").html($("#num").val()*50)
 	}
 	
 	function submit() {
-		if($("#price").val().trim() == ""){
-			alert("请选择充值金额");
+		if($("#num").val().trim() == ""){
+			alert("请选择续费月数");
 			return;
 		}
 		if($("#dealId").val().trim() == ""){
@@ -29,12 +29,12 @@
 			$("#dealId").select();
 			return;
 		}
-		var url = "${ctx}/web/admin/usershop/accountmanage/scoremanage/add";
+		var url = "${ctx}/web/admin/usershop/accountmanage/dealmanage/add_vip_order";
 		$.ajax({
 			url:url,
 			type:'post',
 			data:{
-				price : $("#price").val().trim(),
+				num : $("#num").val().trim(),
 				dealId : $("#dealId").val().trim()
 			},
 			dataType:'text',
@@ -65,7 +65,7 @@
 					账户管理
 				</li>
 				<li>
-					购买积分
+					续费会员
 				</li>
 			</ul>
 		</div>
@@ -76,14 +76,14 @@
             <div class="register-main">
                   <div class="register">
                     <div class="register_info">
-						<h3>1.请选择积分<span>因每月所售积分有限，<em>建议提前一次性选择足够1个月使用的积分数量</em></span></h3>
+						<h3>1.请选择要续费的月数</h3>
                         <div>
-                        	充值金额：<select name="price" id="price" class="span2">
-								<option value="50">50元</option>
-								<option value="100" selected="selected">100元 </option>
-								<option value="500">500元</option>
+                        	续费月数：<select name="num" id="num" class="span2">
+								<option value="3">3个月</option>
+								<option value="6" selected="selected">6个月 </option>
+								<option value="12">12个月</option>
 							</select>
-							您将获得的积分：<b id="scoreNum"></b>
+							价格：<b id="price" style="color: red;"></b>元
                         </div>
                         <div>
                             <h3>2.输入转账交易号</h3>
@@ -98,8 +98,8 @@
               
               <div class="pay-problem">
                   <h3 class="f18 cor555">常见问题</h3>
-                  <p class="f14 cor555">问：转账成功后，积分多久会到账？ </p>
-                  <p class="f14 cor555">答：要等后台管理人员验证订单的真实性后，积分就会发放到账，一般在两天之内。</p>
+                  <p class="f14 cor555">问：转账成功后，续费会员多久才会生效？ </p>
+                  <p class="f14 cor555">答：要等后台管理人员验证订单的真实性后，续费会员就会生效，一般在两天之内。</p>
               </div>
             
             </div>  

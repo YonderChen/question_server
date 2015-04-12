@@ -8,14 +8,14 @@ import com.foal.liuliang.bean.LLDealOrderBean;
 import com.foal.liuliang.bean.PageBean;
 import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.dao.DaoSupport;
-import com.foal.liuliang.pojo.LLScoreOrder;
+import com.foal.liuliang.pojo.LLVIPOrder;
 
 @SuppressWarnings("unchecked")
-@Service(value = "llScoreOrderService")
-public class LLScoreOrderService extends DaoSupport {
+@Service(value = "llVipOrderService")
+public class LLVIPOrderService extends DaoSupport {
 	
 	public void add(LLDealOrderBean orderBean) {
-		LLScoreOrder order = new LLScoreOrder();
+		LLVIPOrder order = new LLVIPOrder();
 		order.setServerUser(orderBean.getOperator());
 		order.setNum(orderBean.getNum());
 		order.setPrice(orderBean.getPrice());
@@ -25,7 +25,7 @@ public class LLScoreOrderService extends DaoSupport {
     }
 
 	public PageBean queryLLScoreOrder(String userId, LLDealOrderBean llOrderBean) {
-        String queryHql = "from LLScoreOrder as s where s.serverUser.userId = ?";
+        String queryHql = "from LLVIPOrder as s where s.serverUser.userId = ?";
         List list = this.hibernateDao.queryList(queryHql, llOrderBean.getPage(), llOrderBean.getPageSize(), userId);
         int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, userId);
 		return new PageBean(list, allRow, llOrderBean.getPage(), llOrderBean.getPageSize());

@@ -19,7 +19,6 @@ public class Constant {
 	public static final String INIT_PASSWORD_KEY = "initPassword";
 	
 	public static final String UPLOAD_IMAGE_PATH = "/app_upload/image/";
-	public static final String UPLOAD_VOICE_PATH = "/app_upload/voice/";
 	public static final String UPLOAD_TEMP_PATH = "/app_upload/temp/";
 	
 	public static final String ADMIN_ID = "402881e846e4b3910146e4b8ce6c0004";
@@ -38,4 +37,8 @@ public class Constant {
 		public static final String Tmall = "tmall";
 		public static final String Jd = "jd";
 	}
+
+	public static final int ONE_ORDER_COST_SCORE = 3;//每个流浪花费积分
+	public static final double SCORE_PRICE_RATE = 1.8;//购买积分价格参数，积分/价格
+	public static final int VIP_PRICE_RATE = 50;//会员续费每个月价钱
 }

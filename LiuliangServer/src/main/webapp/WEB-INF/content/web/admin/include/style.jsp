@@ -11,6 +11,7 @@
 	<script type="text/javascript" src="${ctx}/js/base.js"></script>
 	<script type="text/javascript" src="${ctx}/js/check.js"></script>
   	<script type="text/javascript" src="${ctx}/js/jquery.js"></script>
+  	<script type="text/javascript" src="${ctx}/js/jquery-form.js"></script>
   	<script type="text/javascript" src="${ctx}/js/swfupload.js"></script>
 	<script type="text/javascript" src="${ctx}/js/swfupload.queue.js"></script>
 	<script type="text/javascript" src="${ctx}/js/jquery.swfupload.js"></script>
