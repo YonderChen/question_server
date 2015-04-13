@@ -17,13 +17,13 @@
 						<th width="20%">
 							参数值
 						</th>
-						<th width="15%">
+						<th width="12%">
 							创建时间
 						</th>
-						<th width="15%">
+						<th width="12%">
 							最近修改时间
 						</th>
-						<th width="5%">
+						<th width="11%">
 							操作
 						</th>
 					</tr>

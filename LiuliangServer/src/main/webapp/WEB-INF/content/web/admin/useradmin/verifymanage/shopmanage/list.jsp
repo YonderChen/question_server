@@ -9,36 +9,36 @@
 				<thead>
 					<tr>
 						<th width="15%">
-							获得积分
+							店铺旺旺
 						</th>
-						<th width="15%">
-							价格
+						<th width="25%">
+							店铺地址
 						</th>
-						<th width="30%">
-							转账交易号
+						<th width="40%">
+							验证商品地址
 						</th>
-						<th width="20%">
-							创建时间
+						<th width="10%">
+							验证码
 						</th>
-						<th width="20%">
+						<th width="10%">
 							状态
 						</th>
 					</tr>
 				</thead>
 				<tbody>
-					<s:iterator value="#request.pageBean.list" id="order">
+					<s:iterator value="#request.pageBean.list" id="shop">
 					<tr>
 						<td>
-							${order.num }
+							${shop.bindName }
 						</td>
 						<td>
-							${order.price}
+							${shop.shopUrl}
 						</td>
 						<td>
-							${order.dealId}
+							${shop.verifyGoodsUrl}
 						</td>
 						<td>
-							${order.createTime}
+							${shop.verifyCode}
 						</td>
 						<td>
 							<s:if test="status == 0">待审核</s:if>

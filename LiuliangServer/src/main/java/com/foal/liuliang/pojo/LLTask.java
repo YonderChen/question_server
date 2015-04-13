@@ -1,6 +1,7 @@
 package com.foal.liuliang.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,6 +47,8 @@ public class LLTask implements Serializable {
 	private int isQuickVerify;
 	private int isQuickExecute;
 	private int costScore;
+	private Date createTime;
+	private Date finishTime;
 	private int status;
 
 	@GenericGenerator(name = "generator", strategy = "uuid")
@@ -260,6 +263,24 @@ public class LLTask implements Serializable {
 		this.costScore = costScore;
 	}
 
+	@Column(name = "create_time_")
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	@Column(name = "finish_time_")
+	public Date getFinishTime() {
+		return finishTime;
+	}
+
+	public void setFinishTime(Date finishTime) {
+		this.finishTime = finishTime;
+	}
+
 	@Column(name = "status_")
 	public int getStatus() {
 		return status;
@@ -274,7 +295,9 @@ public class LLTask implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + costScore;
+		result = prime * result + ((createTime == null) ? 0 : createTime.hashCode());
 		result = prime * result + durationDay;
+		result = prime * result + ((finishTime == null) ? 0 : finishTime.hashCode());
 		result = prime * result + ((goodsImg == null) ? 0 : goodsImg.hashCode());
 		result = prime * result + ((goodsName == null) ? 0 : goodsName.hashCode());
 		result = prime * result + ((goodsUrl == null) ? 0 : goodsUrl.hashCode());
@@ -311,7 +334,17 @@ public class LLTask implements Serializable {
 		LLTask other = (LLTask) obj;
 		if (costScore != other.costScore)
 			return false;
+		if (createTime == null) {
+			if (other.createTime != null)
+				return false;
+		} else if (!createTime.equals(other.createTime))
+			return false;
 		if (durationDay != other.durationDay)
+			return false;
+		if (finishTime == null) {
+			if (other.finishTime != null)
+				return false;
+		} else if (!finishTime.equals(other.finishTime))
 			return false;
 		if (goodsImg == null) {
 			if (other.goodsImg != null)
@@ -392,5 +425,5 @@ public class LLTask implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 }

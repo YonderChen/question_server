@@ -1,5 +1,6 @@
 package com.foal.liuliang.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -173,6 +174,7 @@ public class LLShopService extends DaoSupport {
 		llShop.setShopUrl(shopBean.getShopUrl());
 		llShop.setVerifyCode(shopBean.getVerifyCode());
 		llShop.setVerifyGoodsUrl(shopBean.getVerifyGoodsUrl());
+		llShop.setCreateTime(new Date());
 		llShop.setStatus(Constant.Status.Create);
         this.hibernateDao.save(llShop);
     }

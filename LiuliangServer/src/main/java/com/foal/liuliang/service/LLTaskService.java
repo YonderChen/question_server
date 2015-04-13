@@ -1,5 +1,6 @@
 package com.foal.liuliang.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -75,6 +76,7 @@ public class LLTaskService extends DaoSupport {
 		llTask.setIsQuickVerify(llTaskBean.getIsQuickVerify());
 		llTask.setIsQuickExecute(llTaskBean.getIsQuickExecute());
 		llTask.setCostScore(llTaskBean.getCostScore());
+		llTask.setCreateTime(new Date());
 		llTask.setStatus(Constant.Status.Create);
         this.hibernateDao.save(llTask);
     }

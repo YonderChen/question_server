@@ -1,6 +1,7 @@
 package com.foal.liuliang.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,6 +31,9 @@ public class LLShop implements Serializable {
 	private String shopUrl;
 	private String verifyGoodsUrl;
 	private String verifyCode;
+	private Date createTime;
+	private Date checkTime;
+	private ServerUser checkAdmin;
 	private int status;
 
 	@GenericGenerator(name = "generator", strategy = "uuid")
@@ -99,6 +103,34 @@ public class LLShop implements Serializable {
 		this.verifyCode = verifyCode;
 	}
 
+	@Column(name = "create_time_")
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	@Column(name = "check_time_")
+	public Date getCheckTime() {
+		return checkTime;
+	}
+
+	public void setCheckTime(Date checkTime) {
+		this.checkTime = checkTime;
+	}
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "check_admin_id_")
+	public ServerUser getCheckAdmin() {
+		return checkAdmin;
+	}
+
+	public void setCheckAdmin(ServerUser checkAdmin) {
+		this.checkAdmin = checkAdmin;
+	}
+
 	@Column(name = "status_")
 	public int getStatus() {
 		return status;
@@ -112,16 +144,20 @@ public class LLShop implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((shopId == null) ? 0 : shopId.hashCode());
-		result = prime * result + ((serverUser == null) ? 0 : serverUser.hashCode());
-		result = prime * result + ((bindPlat == null) ? 0 : bindPlat.hashCode());;
 		result = prime * result + ((bindName == null) ? 0 : bindName.hashCode());
+		result = prime * result + ((bindPlat == null) ? 0 : bindPlat.hashCode());
+		result = prime * result + ((checkAdmin == null) ? 0 : checkAdmin.hashCode());
+		result = prime * result + ((checkTime == null) ? 0 : checkTime.hashCode());
+		result = prime * result + ((createTime == null) ? 0 : createTime.hashCode());
+		result = prime * result + ((serverUser == null) ? 0 : serverUser.hashCode());
+		result = prime * result + ((shopId == null) ? 0 : shopId.hashCode());
 		result = prime * result + ((shopUrl == null) ? 0 : shopUrl.hashCode());
-		result = prime * result + ((verifyGoodsUrl == null) ? 0 : verifyGoodsUrl.hashCode());
-		result = prime * result + ((verifyCode == null) ? 0 : verifyCode.hashCode());
 		result = prime * result + status;
+		result = prime * result + ((verifyCode == null) ? 0 : verifyCode.hashCode());
+		result = prime * result + ((verifyGoodsUrl == null) ? 0 : verifyGoodsUrl.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -131,42 +167,57 @@ public class LLShop implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		LLShop other = (LLShop) obj;
-		if (shopId == null) {
-			if (other.shopId != null)
+		if (bindName == null) {
+			if (other.bindName != null)
 				return false;
-		} else if (!shopId.equals(other.shopId))
-			return false;
-		if (serverUser == null) {
-			if (other.serverUser != null)
-				return false;
-		} else if (!serverUser.equals(other.serverUser))
+		} else if (!bindName.equals(other.bindName))
 			return false;
 		if (bindPlat == null) {
 			if (other.bindPlat != null)
 				return false;
 		} else if (!bindPlat.equals(other.bindPlat))
 			return false;
-		if (bindName == null) {
-			if (other.bindName != null)
+		if (checkAdmin == null) {
+			if (other.checkAdmin != null)
 				return false;
-		} else if (!bindName.equals(other.bindName))
+		} else if (!checkAdmin.equals(other.checkAdmin))
+			return false;
+		if (checkTime == null) {
+			if (other.checkTime != null)
+				return false;
+		} else if (!checkTime.equals(other.checkTime))
+			return false;
+		if (createTime == null) {
+			if (other.createTime != null)
+				return false;
+		} else if (!createTime.equals(other.createTime))
+			return false;
+		if (serverUser == null) {
+			if (other.serverUser != null)
+				return false;
+		} else if (!serverUser.equals(other.serverUser))
+			return false;
+		if (shopId == null) {
+			if (other.shopId != null)
+				return false;
+		} else if (!shopId.equals(other.shopId))
 			return false;
 		if (shopUrl == null) {
 			if (other.shopUrl != null)
 				return false;
 		} else if (!shopUrl.equals(other.shopUrl))
 			return false;
-		if (verifyGoodsUrl == null) {
-			if (other.verifyGoodsUrl != null)
-				return false;
-		} else if (!verifyGoodsUrl.equals(other.verifyGoodsUrl))
+		if (status != other.status)
 			return false;
 		if (verifyCode == null) {
 			if (other.verifyCode != null)
 				return false;
 		} else if (!verifyCode.equals(other.verifyCode))
 			return false;
-		if (status != other.status)
+		if (verifyGoodsUrl == null) {
+			if (other.verifyGoodsUrl != null)
+				return false;
+		} else if (!verifyGoodsUrl.equals(other.verifyGoodsUrl))
 			return false;
 		return true;
 	}

@@ -142,5 +142,9 @@ public class IndexAction extends AdminBaseAction implements ModelDriven<ServerUs
 		}
 		return null;
 	}
-	
+
+	@Action("baseinfo")
+	public String baseinfo() {
+		return SUCCESS;
+	}
 }

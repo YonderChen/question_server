@@ -1,6 +1,7 @@
 package com.foal.liuliang.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +29,8 @@ public class LLScoreOrder implements Serializable {
 	private int num;
 	private int price;
 	private String dealId;
+	private Date createTime;
+	private Date checkTime;
 	private ServerUser checkAdmin;
 	private int status;
 
@@ -80,6 +83,24 @@ public class LLScoreOrder implements Serializable {
 		this.dealId = dealId;
 	}
 
+	@Column(name = "create_time_")
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	@Column(name = "check_time_")
+	public Date getCheckTime() {
+		return checkTime;
+	}
+
+	public void setCheckTime(Date checkTime) {
+		this.checkTime = checkTime;
+	}
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "check_admin_id_")
 	public ServerUser getCheckAdmin() {
@@ -98,20 +119,23 @@ public class LLScoreOrder implements Serializable {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((orderId == null) ? 0 : orderId.hashCode());
-		result = prime * result + ((serverUser == null) ? 0 : serverUser.hashCode());
-		result = prime * result + num;
-		result = prime * result + price;
-		result = prime * result + ((dealId == null) ? 0 : dealId.hashCode());
 		result = prime * result + ((checkAdmin == null) ? 0 : checkAdmin.hashCode());
+		result = prime * result + ((checkTime == null) ? 0 : checkTime.hashCode());
+		result = prime * result + ((createTime == null) ? 0 : createTime.hashCode());
+		result = prime * result + ((dealId == null) ? 0 : dealId.hashCode());
+		result = prime * result + num;
+		result = prime * result + ((orderId == null) ? 0 : orderId.hashCode());
+		result = prime * result + price;
+		result = prime * result + ((serverUser == null) ? 0 : serverUser.hashCode());
 		result = prime * result + status;
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -121,35 +145,43 @@ public class LLScoreOrder implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		LLScoreOrder other = (LLScoreOrder) obj;
+		if (checkAdmin == null) {
+			if (other.checkAdmin != null)
+				return false;
+		} else if (!checkAdmin.equals(other.checkAdmin))
+			return false;
+		if (checkTime == null) {
+			if (other.checkTime != null)
+				return false;
+		} else if (!checkTime.equals(other.checkTime))
+			return false;
+		if (createTime == null) {
+			if (other.createTime != null)
+				return false;
+		} else if (!createTime.equals(other.createTime))
+			return false;
+		if (dealId == null) {
+			if (other.dealId != null)
+				return false;
+		} else if (!dealId.equals(other.dealId))
+			return false;
+		if (num != other.num)
+			return false;
 		if (orderId == null) {
 			if (other.orderId != null)
 				return false;
 		} else if (!orderId.equals(other.orderId))
+			return false;
+		if (price != other.price)
 			return false;
 		if (serverUser == null) {
 			if (other.serverUser != null)
 				return false;
 		} else if (!serverUser.equals(other.serverUser))
 			return false;
-		if (num != other.num) {
-			return false;
-		}
-		if (price != other.price) {
-			return false;
-		}
-		if (dealId == null) {
-			if (other.dealId != null)
-				return false;
-		} else if (!dealId.equals(other.dealId))
-			return false;
-		if (checkAdmin == null) {
-			if (other.checkAdmin != null)
-				return false;
-		} else if (!checkAdmin.equals(other.checkAdmin))
-			return false;
 		if (status != other.status)
 			return false;
 		return true;
 	}
-
+	
 }

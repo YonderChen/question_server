@@ -21,11 +21,6 @@ public class AccountAction extends AdminBaseAction implements ModelDriven<Page>{
 		return null;
 	}
 
-	@Action("baseinfo")
-	public String baseinfo() {
-		return SUCCESS;
-	}
-
 	@Action("renewalvip")
 	public String renewalvip() {
 		return SUCCESS;

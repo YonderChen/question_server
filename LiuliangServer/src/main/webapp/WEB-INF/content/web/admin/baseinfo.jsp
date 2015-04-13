@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<title></title>
-		<jsp:include page="../../include/style.jsp" flush="true"></jsp:include>
+		<jsp:include page="include/style.jsp" flush="true"></jsp:include>
 			<script type="text/javascript">
 	function preFunArray() {
 		var funs = new Array();

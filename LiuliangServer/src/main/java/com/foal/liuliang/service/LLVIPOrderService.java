@@ -1,5 +1,6 @@
 package com.foal.liuliang.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class LLVIPOrderService extends DaoSupport {
 		order.setNum(orderBean.getNum());
 		order.setPrice(orderBean.getPrice());
 		order.setDealId(orderBean.getDealId());
+		order.setCreateTime(new Date());
 		order.setStatus(Constant.Status.Create);
         this.hibernateDao.save(order);
     }
