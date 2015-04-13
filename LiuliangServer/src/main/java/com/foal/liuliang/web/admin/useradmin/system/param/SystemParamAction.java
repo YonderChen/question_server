@@ -41,7 +41,7 @@ public class SystemParamAction extends AdminBaseAction implements ModelDriven<Sy
 	
 	@Action("edit")
 	public String edit() {
-		this.systemParamService.updateSystemParam(paramBean);
+		this.systemParamService.updateSystemParam(paramBean, getSession().getServletContext());
 		ajaxBean = new AjaxBean(true, "保存成功.");
 		this.ajaxWrite(ajaxBean);
 		return null;

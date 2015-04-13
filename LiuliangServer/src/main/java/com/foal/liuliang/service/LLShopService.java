@@ -1,6 +1,8 @@
 package com.foal.liuliang.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ import com.foal.liuliang.dao.DaoSupport;
 import com.foal.liuliang.pojo.LLShop;
 import com.foal.liuliang.util.HttpTools;
 import com.foal.liuliang.util.StringTools;
+import com.foal.liuliang.util.StringUtil;
 
 @SuppressWarnings("unchecked")
 @Service(value = "llShopService")
@@ -174,11 +177,34 @@ public class LLShopService extends DaoSupport {
         this.hibernateDao.save(llShop);
     }
 	
-	public PageBean queryLLShop(String userId, LLShopBean llShopBean) {
-        String queryHql = "from LLShop as s where s.serverUser.userId = ?";
-        List list = this.hibernateDao.queryList(queryHql, llShopBean.getPage(), llShopBean.getPageSize(), userId);
-        int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, userId);
+	public PageBean queryLLShop(LLShopBean llShopBean) {
+        String queryHql = "from LLShop as s where 1=1";
+        Map paramMap = new HashMap();
+        if (!StringUtil.isEmpty(llShopBean.getUserId())) {
+            queryHql += " and s.serverUser.userId = :userId";
+            paramMap.put("userId", llShopBean.getUserId() );
+        }
+        if (!StringUtil.isEmpty(llShopBean.getBindPlat())) {
+            queryHql += " and s.bindPlat = :bindPlat";
+            paramMap.put("bindPlat", llShopBean.getBindPlat() );
+        }
+        List list = this.hibernateDao.queryList(queryHql, llShopBean.getPage(), llShopBean.getPageSize(), paramMap);
+        int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
 		return new PageBean(list, allRow, llShopBean.getPage(), llShopBean.getPageSize());
+    }
+	
+	public List queryLLShopList(LLShopBean llShopBean) {
+        String queryHql = "from LLShop as s where 1=1";
+        Map paramMap = new HashMap();
+        if (!StringUtil.isEmpty(llShopBean.getUserId())) {
+            queryHql += " and s.serverUser.userId = :userId";
+            paramMap.put("userId", llShopBean.getUserId() );
+        }
+        if (!StringUtil.isEmpty(llShopBean.getBindPlat())) {
+            queryHql += " and s.bindPlat = :bindPlat";
+            paramMap.put("bindPlat", llShopBean.getBindPlat() );
+        }
+        return this.hibernateDao.queryList(queryHql, paramMap);
     }
 }
 

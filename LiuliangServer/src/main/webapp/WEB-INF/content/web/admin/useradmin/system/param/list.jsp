@@ -8,22 +8,22 @@
                        <table width="95%" class="tablelist">
 				<thead>
 					<tr>
-						<th width="10%">
+						<th width="15%">
 							参数KEY
 						</th>
-						<th width="10%">
+						<th width="30%">
 							参数名
 						</th>
-						<th width="30%">
+						<th width="20%">
 							参数值
 						</th>
-						<th width="20%">
+						<th width="15%">
 							创建时间
 						</th>
-						<th width="20%">
+						<th width="15%">
 							最近修改时间
 						</th>
-						<th width="10%">
+						<th width="5%">
 							操作
 						</th>
 					</tr>

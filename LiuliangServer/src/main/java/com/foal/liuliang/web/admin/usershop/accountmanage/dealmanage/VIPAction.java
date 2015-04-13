@@ -38,7 +38,7 @@ public class VIPAction extends AdminBaseAction implements ModelDriven<LLDealOrde
 	@Action("add_vip_order")
 	public String add() {
 		llOrderBean.setOperator(this.getSessionServerUser());
-		llOrderBean.setPrice((int)(llOrderBean.getNum() * Constant.VIP_PRICE_RATE));
+		llOrderBean.setPrice((int)(llOrderBean.getNum() * Constant.VIPPriceRate));
 		llVIPOrderService.add(llOrderBean);
 		this.ajaxWrite(new AjaxBean(true, "订单提交成功，请耐心等待审核"));
         return null;

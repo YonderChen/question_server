@@ -16,6 +16,10 @@ import com.foal.liuliang.util.StringTools;
 @Service(value = "llTaskService")
 public class LLTaskService extends DaoSupport {
 	
+	public LLTask getLLTask(String taskId) {
+		return this.hibernateDao.get(LLTask.class, taskId);
+	}
+	
 	public void add(LLTaskBean llTaskBean) {
 		int countOrderOneDay = llTaskBean.getOrderNumberOneDay1() 
 			+ llTaskBean.getOrderNumberOneDay2() 
@@ -23,7 +27,10 @@ public class LLTaskService extends DaoSupport {
 			+ llTaskBean.getOrderNumberOneDay4() 
 			+ llTaskBean.getOrderNumberOneDay5();
 		int countOrder = countOrderOneDay * llTaskBean.getDurationDay();
-		int costScore = countOrder * Constant.ONE_ORDER_COST_SCORE;
+		int costScore = countOrder * Constant.OneVisitCostScore 
+			+ Constant.PageStayCostScoreMap.get(String.valueOf(llTaskBean.getPageStayType()))
+			+ Constant.VisitTimeCostScoreMap.get(String.valueOf(llTaskBean.getVisitTimeType()))
+			+ Constant.QuickVerifyCostScore + Constant.QuickExecuteCostScore;
 		llTaskBean.setCostScore(costScore);
 		LLTask llTask = new LLTask();
 		llTask.setServerUser(llTaskBean.getOperator());

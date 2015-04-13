@@ -16,7 +16,29 @@
 	
 	function priceChange() {
 		//金额变更
-		$("#num").html($("#price").val()*1.8)
+		var url = "${ctx}/web/admin/usershop/accountmanage/dealmanage/get_score_num";
+		$.ajax({
+			url:url,
+			type:'post',
+			data:{
+				price : $("#price").val().trim(),
+			},
+			dataType:'text',
+			timeout:60000,
+			error: function(e) {
+				alert("连接服务器超时,请稍后再试.");
+			},
+			success: function(result){
+				if (!isOutTime(result)) {
+					result = eval("("+result+")");
+					if (result.success) {
+						$("#num").html(result.msg);
+					} else {
+						alert(result.msg);
+					}
+				}
+			}
+		});
 	}
 	
 	function submit() {

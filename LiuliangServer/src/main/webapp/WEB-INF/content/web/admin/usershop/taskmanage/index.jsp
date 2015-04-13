@@ -51,6 +51,34 @@
 		});
 	}
 	
+	function detail(taskId) {
+		$('#detailModal').modal('show');
+    	$(".btn-cancel").button('loading');
+		$(".btn-primary").button('loading');
+		$("#detailDiv").html("<div class='no-found'>加载中...</div>");
+		var url = "${ctx}/web/admin/usershop/taskmanage/detail";
+		$.ajax( {
+			url : url,
+			type : 'post',
+			data : {
+				taskId : taskId
+			},
+			dataType : 'text',
+			timeout : 60000,
+			error : function(e) {
+				$("#addDetail").html("<div class='no-found'>连接服务器超时,请稍后再试.</div>");
+				$(".btn-cancel").button('reset');
+				$(".btn-primary").button('reset');
+			},
+			success : function(result) {
+				if (!isOutTime(result)) {
+					$(".btn-cancel").button('reset');
+					$(".btn-primary").button('reset');
+					$("#detailDiv").html(result);
+				}
+			}
+		});
+	}
 </script>
 	</head>
 	<body>
@@ -94,5 +122,18 @@
 			</div>
 		</div>
 		
+	
+	<div id="detailModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true" style="z-index:100000;position: absolute;" data-backdrop="static">
+		<div class="modal-header">
+			<button type="button" class="close btn-cancel" data-dismiss="modal" aria-hidden="true" data-toggle="button" data-loading-text="×">×</button>
+		<h3 id="detailModalLabel">任务详情</h3>
+		</div>
+		<div class="modal-body" id="detailDiv">
+		
+		</div>
+		<div class="modal-footer">
+		<button class="btn btn-cancel" data-dismiss="modal" aria-hidden="true" data-toggle="button" data-loading-text="关闭">关闭</button>
+		</div>
+	</div>
 	</body>
 </html>

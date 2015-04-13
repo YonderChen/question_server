@@ -75,7 +75,7 @@
 							<s:if test="status == 3">执行完毕</s:if>
 						</td>
 						<td>
-							<button class="btn btn-link" type="button" onclick="alert('详情');" data-toggle="button" data-loading-text="<i class='icon-pencil'></i>&nbsp;详情"><i class="icon-pencil"></i>&nbsp;详情</button>
+							<button class="btn btn-link" type="button" onclick="detail('${task.taskId}');" data-toggle="button" data-loading-text="<i class='icon-pencil'></i>&nbsp;详情"><i class="icon-pencil"></i>&nbsp;详情</button>
 						</td>
 					</tr>
 					</s:iterator>

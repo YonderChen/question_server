@@ -80,7 +80,9 @@ public class ShopAction extends AdminBaseAction implements ModelDriven<LLShopBea
 
 	@Action("list")
     public String list() {
-        PageBean pageBean = this.llShopService.queryLLShop(getSessionServerUser().getUserId(), llShopBean);
+		llShopBean.setOperator(this.getSessionServerUser());
+		llShopBean.setUserId(getSessionServerUser().getUserId());
+        PageBean pageBean = this.llShopService.queryLLShop(llShopBean);
 		this.setAttrToRequest("pageBean", pageBean);
         return SUCCESS;
     }

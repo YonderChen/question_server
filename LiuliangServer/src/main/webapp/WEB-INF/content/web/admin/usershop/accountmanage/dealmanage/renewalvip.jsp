@@ -16,7 +16,7 @@
 	
 	function numChange() {
 		//金额变更
-		$("#price").html($("#num").val()*50)
+		$("#price").html($("#num").val() * "${VIPPriceRate }")
 	}
 	
 	function submit() {

@@ -38,7 +38,11 @@ public class ScoreAction extends AdminBaseAction implements ModelDriven<LLDealOr
 	@Action("add_score_order")
 	public String add() {
 		llOrderBean.setOperator(this.getSessionServerUser());
-		llOrderBean.setNum((int)(llOrderBean.getPrice() * Constant.SCORE_PRICE_RATE));
+		if (!Constant.PriceScoreMap.containsKey(String.valueOf(llOrderBean.getPrice()))) {
+			this.ajaxWrite(new AjaxBean(false, "提交数据有误，请重试"));
+	        return null;
+		}
+		llOrderBean.setNum(Constant.PriceScoreMap.get(String.valueOf(llOrderBean.getPrice())));
 		llScoreOrderService.add(llOrderBean);
 		this.ajaxWrite(new AjaxBean(true, "订单提交成功，请耐心等待审核"));
         return null;
@@ -57,4 +61,16 @@ public class ScoreAction extends AdminBaseAction implements ModelDriven<LLDealOr
 		this.setAttrToRequest("pageBean", pageBean);
         return SUCCESS;
     }
+	
+	@Action("get_score_num")
+	public String getScoreNum() {
+		int price = llOrderBean.getPrice();
+		Integer scoreNum = Constant.PriceScoreMap.get(String.valueOf(price));
+		if (scoreNum == null) {
+			this.ajaxWrite(new AjaxBean(false, "找不到该价格对应的积分，请联系管理员"));
+	        return null;
+		}
+		this.ajaxWrite(new AjaxBean(true, String.valueOf(scoreNum)));
+        return null;
+	}
 }

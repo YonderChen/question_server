@@ -156,9 +156,9 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_system_param`;
 CREATE TABLE `t_system_param` (
-  `param_id_` varchar(20) NOT NULL,
-  `name_` varchar(50) DEFAULT NULL,
-  `value_` varchar(100) DEFAULT NULL,
+  `param_id_` varchar(200) NOT NULL,
+  `name_` varchar(500) DEFAULT NULL,
+  `value_` varchar(500) DEFAULT NULL,
   `create_time_` datetime DEFAULT NULL,
   `modify_time_` datetime DEFAULT NULL,
   PRIMARY KEY (`param_id_`)
@@ -168,8 +168,18 @@ CREATE TABLE `t_system_param` (
 -- Records of t_system_param
 -- ----------------------------
 INSERT INTO `t_system_param` VALUES ('initPassword', '新用户初始化密码', '123456', '2014-12-18 09:34:22', '2014-12-18 09:42:22');
-INSERT INTO `t_system_param` VALUES ('client_version', '客户端版本号', '1.0.0', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
-INSERT INTO `t_system_param` VALUES ('client_version_info', '客户端版本信息', '这是一个新版本提示', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
+INSERT INTO `t_system_param` VALUES ('oneVisitCostScore', '每个流量花费积分数', '3', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
+INSERT INTO `t_system_param` VALUES ('pageStayCostScore1', '增值服务，页面停留60~120秒花费积分数', '40', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
+INSERT INTO `t_system_param` VALUES ('pageStayCostScore2', '增值服务，页面停留120~180秒花费积分数', '50', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
+INSERT INTO `t_system_param` VALUES ('visitTimeCostScore1', '增值服务，流量访问时间随机分布花费积分数', '50', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
+INSERT INTO `t_system_param` VALUES ('visitTimeCostScore2', '增值服务，流量访问时间网购用户习惯曲线分布花费积分数', '60', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
+INSERT INTO `t_system_param` VALUES ('quickVerifyCostScore', '增值服务，优先审核花费积分数', '50', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
+INSERT INTO `t_system_param` VALUES ('quickExecuteCostScore', '增值服务，优先执行花费积分数', '50', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
+
+INSERT INTO `t_system_param` VALUES ('VIPPriceRate', 'VIP续费，续费VIP每个月的价格（元）', '50', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
+INSERT INTO `t_system_param` VALUES ('priceScore50', '购买积分，50元获得的积分数', '500', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
+INSERT INTO `t_system_param` VALUES ('priceScore100', '购买积分，100元获得的积分数', '1200', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
+INSERT INTO `t_system_param` VALUES ('priceScore500', '购买积分，500元获得的积分数', '6000', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
 
 -- ----------------------------
 -- Table structure for t_user_role

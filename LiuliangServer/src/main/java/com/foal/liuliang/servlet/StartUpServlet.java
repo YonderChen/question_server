@@ -42,7 +42,7 @@ public class StartUpServlet extends HttpServlet {
 		GlobalConfigService globalConfigService = ServiceLocator.getBean(GlobalConfigService.class);
 		// 执行增量脚本
 		globalConfigService.runDbMigrate();
-		globalConfigService.initSystemParam();
+		globalConfigService.initSystemParam(this.getServletContext());
 		
 		logger.info("启动成功...");
 	}

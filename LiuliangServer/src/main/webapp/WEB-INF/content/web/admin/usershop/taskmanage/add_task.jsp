@@ -8,16 +8,37 @@
 	<script type="text/javascript">
 	
 	$(document).ready(function(){
-	    shopPlatChange();
-	  	$("#shopPlat").change(function(){
-		    shopPlatChange();
+	    bindPlatChange();
+	  	$("#bindPlat").change(function(){
+		    bindPlatChange();
 	  	});
 	  	$("#searchSource").change(function(){
 	  		$("#searchSource_cut").val(100 - $("#searchSource").val());
 	  	})
 	});
 	
-	function shopPlatChange() {
+	function bindPlatChange() {
+		var url = "${ctx}/web/admin/usershop/taskmanage/load_shop";
+		$.ajax( {
+			url : url,
+			type : 'post',
+			data : {
+				bindPlat : $("#bindPlat").val().trim()
+			},
+			dataType : 'text',
+			timeout : 60000,
+			error : function(e) {
+				alert("连接服务器超时,加载店铺列表失败,请稍后再试.");
+			},
+			success : function(result) {
+				if (!isOutTime(result)) {
+					result = eval("("+result+")");
+					if (result.success) {
+						$("#shopId").html(result.msg);
+					}
+				}
+			}
+		});
 	}
 	
 	function addKeyword(){
@@ -132,9 +153,6 @@
 						选择店铺
 					</b>
 					<select name="shopId" id="shopId" class="span2">
-						<option value="402881834ca77f8c014ca781d73d0001" selected="selected">A</option>
-						<option value="402881834ca7b224014ca7b281660001">B</option>
-						<option value="402882eb4ca44f76014ca4508d220001">C</option>
 					</select>
 				</div>
 				<div>
@@ -160,7 +178,7 @@
 						流量设置
 					</h3>
 					<h4>
-						设置访客来源及每日访客数 <b style="color: red;">（3积分/访客）</b>
+						设置访客来源及每日访客数 <b style="color: red;">（${oneVisitCostScore }积分/访客）</b>
 					</h4>
 					<div>
 						<p>
@@ -279,8 +297,8 @@
 							<b>设置停留时间</b>
 							<select name="pageStayType" id="pageStayType" class="span2">
 								<option value="0" selected="selected">30~60秒</option>
-								<option value="1">60~120秒</option>
-								<option value="2">120~180秒 </option>
+								<option value="1">60~120秒（${pageStayCostScoreMap['1'] }积分）</option>
+								<option value="2">120~180秒（${pageStayCostScoreMap["2"] }积分） </option>
 							</select>
 	                	</div>
 	                </div>
@@ -291,8 +309,8 @@
 		                   	<b>提示：流量进入店铺时间默认全天平均分布，选择此项服务后，流量将按照固定的分布规律进入店铺；</b>
 							<select name="visitTimeType" id="visitTimeType" class="span2">
 								<option value="0" selected="selected">全天平均分布</option>
-								<option value="1">随机分布（50积分）</option>
-								<option value="2">网购用户习惯曲线分布（60积分）</option>
+								<option value="1">随机分布（${visitTimeCostScoreMap['1'] }积分）</option>
+								<option value="2">网购用户习惯曲线分布（${visitTimeCostScoreMap["2"] }积分）</option>
 							</select>
 	                	</div>
 	                </div>
@@ -303,7 +321,7 @@
 		                   	<h5>提示：选择此项服务后。平台将优先审核您发布的流量任务</h5>
 		                	<select name="isQuickVerify" id="isQuickVerify" class="span2">
 								<option value="0" selected="selected">普通</option>
-								<option value="1">任务优先审核（50积分）</option>
+								<option value="1">任务优先审核（${quickVerifyCostScore }积分）</option>
 							</select>
 	                	</div>
 	                	<div>
@@ -312,13 +330,17 @@
 	                        	<h5>提示：平台默认所有商家的流量任务按照任务发布时间排队执行，选择此项服务后，当系统繁忙时，优先执行你的任务；</h5>
 			                	<select name="isQuickExecute" id="isQuickExecute" class="span2">
 									<option value="0" selected="selected">普通</option>
-									<option value="1">任务优先执行（50积分）</option>
+									<option value="1">任务优先执行（${quickExecuteCostScore }积分）</option>
 								</select>
 	                        </div>
 	                    </div>
 	                </div>
 	            </div>
 			</form>
+			<div>
+				<h3>费用统计</h3>
+				<b>*******积分</b>
+			</div>
 	    	<input class="btn btn-primary" type="button" onclick="submit();" value="发布任务">
 		</div>
 	</body>
