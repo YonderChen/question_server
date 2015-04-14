@@ -103,10 +103,7 @@ public class AppTextImage implements Serializable{
 		this.shareCount = shareCount;
 	}
 	public void incShareCount() {
-		this.praiseCount++;
-	}
-	public void decShareCount() {
-		this.praiseCount--;
+		this.shareCount++;
 	}
 	
 	@Override
