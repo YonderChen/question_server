@@ -8,7 +8,10 @@
                         <table width="95%" class="tablelist">
 				<thead>
 					<tr>
-						<th width="15%">
+						<th width="5%">
+							用户名
+						</th>
+						<th width="10%">
 							商品图片
 						</th>
 						<th width="5%">
@@ -20,10 +23,10 @@
 						<th width="25%">
 							商品
 						</th>
-						<th width="8%">
+						<th width="10%">
 							总访客数
 						</th>
-						<th width="8%">
+						<th width="10%">
 							日访客数
 						</th>
 						<th width="5%">
@@ -32,7 +35,7 @@
 						<th width="5%">
 							状态
 						</th>
-						<th width="10%">
+						<th width="5%">
 							操作
 						</th>
 					</tr>
@@ -40,6 +43,9 @@
 				<tbody>
 					<s:iterator value="#request.pageBean.list" id="task">
 					<tr>
+						<td>
+							${task.serverUser.username }
+						</td>
 						<td>
 							<img style="height: 80px;width: 100px;" src="${ctx}${task.goodsImg}" />
 						</td>

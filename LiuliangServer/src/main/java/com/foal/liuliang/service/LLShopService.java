@@ -208,5 +208,20 @@ public class LLShopService extends DaoSupport {
         }
         return this.hibernateDao.queryList(queryHql, paramMap);
     }
+	
+	public int checkShop(LLShopBean shopBean) {
+		LLShop llShop = hibernateDao.get(LLShop.class, shopBean.getShopId());
+		llShop.setCheckAdmin(shopBean.getOperator());
+		llShop.setCheckTime(new Date());
+		if(shopBean.getStatus() == Constant.Status.Success){
+			llShop.setStatus(Constant.Status.Success);
+		} else if (shopBean.getStatus() == Constant.Status.Create) {
+			llShop.setStatus(Constant.Status.Create);
+		} else {
+			llShop.setStatus(Constant.Status.CheckFail);
+		}
+        this.hibernateDao.update(llShop);
+        return llShop.getStatus();
+    }
 }
 

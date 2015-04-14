@@ -1,7 +1,9 @@
 package com.foal.liuliang.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import com.foal.liuliang.dao.DaoSupport;
 import com.foal.liuliang.pojo.LLShop;
 import com.foal.liuliang.pojo.LLTask;
 import com.foal.liuliang.util.StringTools;
+import com.foal.liuliang.util.StringUtil;
 
 @SuppressWarnings("unchecked")
 @Service(value = "llTaskService")
@@ -32,6 +35,10 @@ public class LLTaskService extends DaoSupport {
 			+ Constant.PageStayCostScoreMap.get(String.valueOf(llTaskBean.getPageStayType()))
 			+ Constant.VisitTimeCostScoreMap.get(String.valueOf(llTaskBean.getVisitTimeType()))
 			+ Constant.QuickVerifyCostScore + Constant.QuickExecuteCostScore;
+		
+		//店铺审核验证处理
+		//扣除积分验证处理
+		
 		llTaskBean.setCostScore(costScore);
 		LLTask llTask = new LLTask();
 		llTask.setServerUser(llTaskBean.getOperator());
@@ -81,10 +88,15 @@ public class LLTaskService extends DaoSupport {
         this.hibernateDao.save(llTask);
     }
 	
-	public PageBean queryLLTask(String userId, LLTaskBean llTaskBean) {
-        String queryHql = "from LLTask as s where s.serverUser.userId = ?";
-        List list = this.hibernateDao.queryList(queryHql, llTaskBean.getPage(), llTaskBean.getPageSize(), userId);
-        int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, userId);
+	public PageBean queryLLTask(LLTaskBean llTaskBean) {
+        String queryHql = "from LLTask as s where 1=1";
+        Map paramMap = new HashMap();
+        if (!StringUtil.isEmpty(llTaskBean.getUserId())) {
+            queryHql += " and s.serverUser.userId = :userId";
+            paramMap.put("userId", llTaskBean.getUserId() );
+        }
+        List list = this.hibernateDao.queryList(queryHql, llTaskBean.getPage(), llTaskBean.getPageSize(), paramMap);
+        int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
 		return new PageBean(list, allRow, llTaskBean.getPage(), llTaskBean.getPageSize());
     }
 }

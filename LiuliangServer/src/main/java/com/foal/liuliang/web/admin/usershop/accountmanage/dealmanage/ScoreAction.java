@@ -50,14 +50,13 @@ public class ScoreAction extends AdminBaseAction implements ModelDriven<LLDealOr
 
 	@Action("index_score_order")
     public String indexScoreOrder() {
-		PageBean pageBean = this.llScoreOrderService.queryLLScoreOrder(getSessionServerUser().getUserId(), llOrderBean);
-		this.setAttrToRequest("pageBean", pageBean);
         return SUCCESS;
     }
 
 	@Action("list_score_order")
     public String list() {
-		PageBean pageBean = this.llScoreOrderService.queryLLScoreOrder(getSessionServerUser().getUserId(), llOrderBean);
+		llOrderBean.setUserId(getSessionServerUser().getUserId());
+		PageBean pageBean = this.llScoreOrderService.queryLLScoreOrder(llOrderBean);
 		this.setAttrToRequest("pageBean", pageBean);
         return SUCCESS;
     }

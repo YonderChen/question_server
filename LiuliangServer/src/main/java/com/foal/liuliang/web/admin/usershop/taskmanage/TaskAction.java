@@ -82,7 +82,8 @@ public class TaskAction extends AdminBaseAction implements ModelDriven<LLTaskBea
 
 	@Action("list")
     public String list() {
-        PageBean pageBean = this.llTaskService.queryLLTask(getSessionServerUser().getUserId(), llTaskBean);
+		llTaskBean.setUserId(getSessionServerUser().getUserId());
+        PageBean pageBean = this.llTaskService.queryLLTask(llTaskBean);
 		this.setAttrToRequest("pageBean", pageBean);
         return SUCCESS;
     }

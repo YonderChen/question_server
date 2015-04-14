@@ -51,6 +51,38 @@
 		});
 	}
 	
+	function check_shop(shopId, status) {
+		var url = "${ctx}/web/admin/useradmin/verifymanage/shopmanage/check_shop";
+		$.ajax( {
+			url : url,
+			type : 'post',
+			data : {
+				shopId : shopId,
+				status : status
+			},
+			dataType : 'text',
+			timeout : 60000,
+			error : function(e) {
+				alert("连接服务器超时,请稍后再试.");
+			},
+			success : function(result) {
+				if (!isOutTime(result)) {
+					result = eval("("+result+")");
+					if (result.success) {
+						var status_desc = "待审核";
+						if(result.msg == "1"){
+							status_desc = "审核通过";
+						} else {
+							status_desc = "审核失败";
+						}
+						$("#status_"+shopId).html(status_desc);
+						$("#op_"+shopId).html("无");
+						alert("操作成功");
+					}
+				}
+			}
+		});
+	}
 </script>
 	</head>
 	<body>

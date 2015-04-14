@@ -8,10 +8,13 @@
                         <table width="95%" class="tablelist">
 				<thead>
 					<tr>
-						<th width="15%">
+						<th width="10%">
+							用户名
+						</th>
+						<th width="10%">
 							续费月数
 						</th>
-						<th width="15%">
+						<th width="10%">
 							价格
 						</th>
 						<th width="30%">
@@ -28,6 +31,9 @@
 				<tbody>
 					<s:iterator value="#request.pageBean.list" id="order">
 					<tr>
+						<td>
+							${order.serverUser.username }
+						</td>
 						<td>
 							${order.num }
 						</td>

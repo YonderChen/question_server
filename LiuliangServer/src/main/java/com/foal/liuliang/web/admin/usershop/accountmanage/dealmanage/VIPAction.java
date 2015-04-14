@@ -51,7 +51,8 @@ public class VIPAction extends AdminBaseAction implements ModelDriven<LLDealOrde
 	
 	@Action("list_vip_order")
     public String list() {
-		PageBean pageBean = this.llVIPOrderService.queryLLScoreOrder(getSessionServerUser().getUserId(), llOrderBean);
+		llOrderBean.setUserId(this.getSessionServerUser().getUserId());
+		PageBean pageBean = this.llVIPOrderService.queryLLScoreOrder(llOrderBean);
         this.setAttrToRequest("pageBean", pageBean);
         return SUCCESS;
     }
