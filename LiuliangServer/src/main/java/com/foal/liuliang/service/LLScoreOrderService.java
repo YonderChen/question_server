@@ -40,5 +40,23 @@ public class LLScoreOrderService extends DaoSupport {
         int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
 		return new PageBean(list, allRow, llOrderBean.getPage(), llOrderBean.getPageSize());
     }
+	
+	public int checkScoreOrder(LLDealOrderBean llOrderBean) {
+		LLScoreOrder order = hibernateDao.get(LLScoreOrder.class, llOrderBean.getOrderId());
+		order.setCheckAdmin(llOrderBean.getOperator());
+		order.setCheckTime(new Date());
+		if(llOrderBean.getStatus() == Constant.Status.Success){
+			order.setStatus(Constant.Status.Success);
+			//给用户增加积分
+			order.getServerUser().incScore(order.getNum());
+			this.hibernateDao.update(order.getServerUser());
+		} else if (llOrderBean.getStatus() == Constant.Status.Create) {
+			order.setStatus(Constant.Status.Create);
+		} else {
+			order.setStatus(Constant.Status.CheckFail);
+		}
+        this.hibernateDao.update(order);
+        return order.getStatus();
+    }
 }
 

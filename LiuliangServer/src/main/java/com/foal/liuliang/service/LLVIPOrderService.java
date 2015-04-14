@@ -1,5 +1,6 @@
 package com.foal.liuliang.service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +40,31 @@ public class LLVIPOrderService extends DaoSupport {
         List list = this.hibernateDao.queryList(queryHql, llOrderBean.getPage(), llOrderBean.getPageSize(), paramMap);
         int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
 		return new PageBean(list, allRow, llOrderBean.getPage(), llOrderBean.getPageSize());
+    }
+	
+	public int checkVIPOrder(LLDealOrderBean llOrderBean) {
+		LLVIPOrder order = hibernateDao.get(LLVIPOrder.class, llOrderBean.getOrderId());
+		order.setCheckAdmin(llOrderBean.getOperator());
+		order.setCheckTime(new Date());
+		if(llOrderBean.getStatus() == Constant.Status.Success){
+			order.setStatus(Constant.Status.Success);
+			//给用户推迟vip结束时间
+			Date oldEndTime = order.getServerUser().getVipEndTime();
+			if (oldEndTime == null) {
+				oldEndTime = new Date();
+			}
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(oldEndTime);
+			cal.add(Calendar.MONTH, order.getNum());
+			order.getServerUser().setVipEndTime(cal.getTime());
+			this.hibernateDao.update(order.getServerUser());
+		} else if (llOrderBean.getStatus() == Constant.Status.Create) {
+			order.setStatus(Constant.Status.Create);
+		} else {
+			order.setStatus(Constant.Status.CheckFail);
+		}
+        this.hibernateDao.update(order);
+        return order.getStatus();
     }
 }
 

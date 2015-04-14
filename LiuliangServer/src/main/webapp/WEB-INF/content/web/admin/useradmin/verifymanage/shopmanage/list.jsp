@@ -17,16 +17,16 @@
 						<th width="20%">
 							店铺地址
 						</th>
-						<th width="35%">
+						<th width="25%">
 							验证商品地址
 						</th>
 						<th width="10%">
 							验证码
 						</th>
-						<th width="5%">
+						<th width="10%">
 							状态
 						</th>
-						<th width="10%">
+						<th width="15%">
 							操作
 						</th>
 					</tr>

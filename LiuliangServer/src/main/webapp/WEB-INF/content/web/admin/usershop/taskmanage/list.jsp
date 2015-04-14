@@ -8,7 +8,7 @@
                         <table width="95%" class="tablelist">
 				<thead>
 					<tr>
-						<th width="15%">
+						<th width="10%">
 							商品图片
 						</th>
 						<th width="5%">
@@ -20,10 +20,10 @@
 						<th width="25%">
 							商品
 						</th>
-						<th width="8%">
+						<th width="10%">
 							总访客数
 						</th>
-						<th width="8%">
+						<th width="10%">
 							日访客数
 						</th>
 						<th width="5%">

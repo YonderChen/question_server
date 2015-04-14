@@ -20,7 +20,7 @@
 						<th width="20%">
 							店铺
 						</th>
-						<th width="25%">
+						<th width="20%">
 							商品
 						</th>
 						<th width="10%">
@@ -35,7 +35,7 @@
 						<th width="5%">
 							状态
 						</th>
-						<th width="5%">
+						<th width="10%">
 							操作
 						</th>
 					</tr>

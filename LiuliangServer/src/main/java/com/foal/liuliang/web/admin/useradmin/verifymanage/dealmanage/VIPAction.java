@@ -5,6 +5,7 @@ import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.foal.liuliang.bean.AjaxBean;
 import com.foal.liuliang.bean.LLDealOrderBean;
 import com.foal.liuliang.bean.PageBean;
 import com.foal.liuliang.service.LLVIPOrderService;
@@ -40,4 +41,12 @@ public class VIPAction extends AdminBaseAction implements ModelDriven<LLDealOrde
         this.setAttrToRequest("pageBean", pageBean);
         return SUCCESS;
     }
+	
+	@Action("check_vip_order")
+	public String checkShop() {
+		llOrderBean.setOperator(this.getSessionServerUser());
+        int status = this.llVIPOrderService.checkVIPOrder(llOrderBean);
+		this.ajaxWrite(new AjaxBean(true, String.valueOf(status)));
+        return null;
+	}
 }

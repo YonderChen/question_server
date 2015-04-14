@@ -20,7 +20,7 @@
 			</tr>
 			<tr>
 				<td>
-					<b style="font-style: normal; color: gray; font-size: 10px;"><script>document.write("${record.createTime }".substring(0, 16));</script></b>
+					<b style="font-style: normal; color: gray; font-size: 10px;"><s:date name="#request.record.createTime" format="yyyy-MM-dd HH:mm:ss"/></b>
 				</td>
 				<td align="right">
 					<a href="http://121.43.150.13/QuestionServer/home.html"><b style="font-style: normal; color: blue; font-size: 10px;">遇见你, 听说你</b></a>

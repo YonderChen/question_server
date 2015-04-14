@@ -39,6 +39,7 @@ public class ServerUser implements Serializable {
 	private int status;
 	private String lastLoginIp;
 	private int score;
+	private Date vipEndTime;
 
 	private String roleName;
 
@@ -177,6 +178,19 @@ public class ServerUser implements Serializable {
 		this.score = score;
 	}
 
+	public void incScore(int incScore) {
+		this.score += incScore;
+	}
+
+	@Column(name = "vip_end_time_")
+	public Date getVipEndTime() {
+		return vipEndTime;
+	}
+
+	public void setVipEndTime(Date vipEndTime) {
+		this.vipEndTime = vipEndTime;
+	}
+
 	@Transient
 	public String getRoleName() {
 		return roleName;
@@ -190,32 +204,22 @@ public class ServerUser implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime
-				* result
-				+ ((assistantPassword == null) ? 0 : assistantPassword
-						.hashCode());
-		result = prime * result
-				+ ((createTime == null) ? 0 : createTime.hashCode());
-		result = prime
-				* result
-				+ ((encryptedPassword == null) ? 0 : encryptedPassword
-						.hashCode());
-		result = prime * result
-				+ ((lastLoginIp == null) ? 0 : lastLoginIp.hashCode());
-		result = prime * result
-				+ ((lastLoginTime == null) ? 0 : lastLoginTime.hashCode());
-		result = prime * result
-				+ ((modifyTime == null) ? 0 : modifyTime.hashCode());
+		result = prime * result + ((assistantPassword == null) ? 0 : assistantPassword.hashCode());
+		result = prime * result + ((createTime == null) ? 0 : createTime.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((encryptedPassword == null) ? 0 : encryptedPassword.hashCode());
+		result = prime * result + ((lastLoginIp == null) ? 0 : lastLoginIp.hashCode());
+		result = prime * result + ((lastLoginTime == null) ? 0 : lastLoginTime.hashCode());
+		result = prime * result + ((modifyTime == null) ? 0 : modifyTime.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((parent == null) ? 0 : parent.hashCode());
 		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
-		result = prime * result
-				+ ((roleName == null) ? 0 : roleName.hashCode());
+		result = prime * result + ((roleName == null) ? 0 : roleName.hashCode());
+		result = prime * result + score;
 		result = prime * result + status;
 		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
-		result = prime * result
-				+ ((username == null) ? 0 : username.hashCode());
-		result = prime * score + score;
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		result = prime * result + ((vipEndTime == null) ? 0 : vipEndTime.hashCode());
 		return result;
 	}
 
@@ -237,6 +241,11 @@ public class ServerUser implements Serializable {
 			if (other.createTime != null)
 				return false;
 		} else if (!createTime.equals(other.createTime))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
 			return false;
 		if (encryptedPassword == null) {
 			if (other.encryptedPassword != null)
@@ -278,6 +287,8 @@ public class ServerUser implements Serializable {
 				return false;
 		} else if (!roleName.equals(other.roleName))
 			return false;
+		if (score != other.score)
+			return false;
 		if (status != other.status)
 			return false;
 		if (userId == null) {
@@ -290,7 +301,10 @@ public class ServerUser implements Serializable {
 				return false;
 		} else if (!username.equals(other.username))
 			return false;
-		if (score != other.score)
+		if (vipEndTime == null) {
+			if (other.vipEndTime != null)
+				return false;
+		} else if (!vipEndTime.equals(other.vipEndTime))
 			return false;
 		return true;
 	}

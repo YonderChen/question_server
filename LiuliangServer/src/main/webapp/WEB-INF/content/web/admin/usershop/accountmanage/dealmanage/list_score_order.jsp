@@ -38,7 +38,7 @@
 							${order.dealId}
 						</td>
 						<td>
-							${order.createTime}
+							<s:date name="createTime" format="yyyy-MM-dd HH:mm:ss"/>
 						</td>
 						<td>
 							<s:if test="status == 0">待审核</s:if>

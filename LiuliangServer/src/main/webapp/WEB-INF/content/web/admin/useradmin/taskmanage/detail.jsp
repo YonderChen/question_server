@@ -58,7 +58,9 @@
 	  </tr>
 	  <tr>
 	    <td align="right"><b>创建时间：</b></td>
-	    <td>${lltask.createTime } </td>
+	    <td>
+			<s:date name="#request.lltask.createTime" format="yyyy-MM-dd HH:mm:ss"/>
+		</td>
 	  </tr>
 	</table>
 </div>

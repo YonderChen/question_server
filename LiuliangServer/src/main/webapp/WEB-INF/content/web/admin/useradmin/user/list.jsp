@@ -8,11 +8,14 @@
                         <table width="95%" class="tablelist">
 				<thead>
 					<tr>
-						<th width="15%">
+						<th width="10%">
 							用户名
 						</th>
+						<th width="15%">
+							会员到期时间
+						</th>
 						<th width="10%">
-							姓名
+							剩余积分
 						</th>
 						<th width="10%">
 							联系电话
@@ -23,10 +26,10 @@
 						<th width="15%">
 							最近登录时间
 						</th>
-						<th width="15%">
+						<th width="10%">
 							所属角色
 						</th>
-						<th width="10%">
+						<th width="5%">
 							状态
 						</th>
 						<th width="10%">
@@ -41,7 +44,10 @@
 							${user.username}
 						</td>
 						<td>
-							${user.name}
+							<s:date name="vipEndTime" format="yyyy-MM-dd HH:mm:ss"/>
+						</td>
+						<td>
+							${user.score}
 						</td>
 						<td>
 							${user.phone}

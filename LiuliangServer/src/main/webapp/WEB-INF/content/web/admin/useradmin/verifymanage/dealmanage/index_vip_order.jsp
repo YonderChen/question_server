@@ -51,6 +51,39 @@
 		});
 	}
 	
+	function check_vip_order(orderId, status) {
+		var url = "${ctx}/web/admin/useradmin/verifymanage/dealmanage/check_vip_order";
+		$.ajax( {
+			url : url,
+			type : 'post',
+			data : {
+				orderId : orderId,
+				status : status
+			},
+			dataType : 'text',
+			timeout : 60000,
+			error : function(e) {
+				alert("连接服务器超时,请稍后再试.");
+			},
+			success : function(result) {
+				if (!isOutTime(result)) {
+					result = eval("("+result+")");
+					if (result.success) {
+						var status_desc = "待审核";
+						if(result.msg == "1"){
+							status_desc = "审核通过";
+						} else {
+							status_desc = "审核失败";
+						}
+						$("#status_"+orderId).html(status_desc);
+						$("#op_"+orderId).html("无");
+						alert("操作成功");
+					}
+				}
+			}
+		});
+	}
+	
 </script>
 	</head>
 	<body>

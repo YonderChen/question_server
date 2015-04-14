@@ -17,14 +17,17 @@
 						<th width="10%">
 							价格
 						</th>
-						<th width="30%">
+						<th width="25%">
 							转账交易号
 						</th>
 						<th width="20%">
 							创建时间
 						</th>
-						<th width="20%">
+						<th width="10%">
 							状态
+						</th>
+						<th width="15%">
+							操作
 						</th>
 					</tr>
 				</thead>
@@ -44,13 +47,22 @@
 							${order.dealId}
 						</td>
 						<td>
-							${order.createTime}
+							<s:date name="createTime" format="yyyy-MM-dd HH:mm:ss"/>
 						</td>
-						<td>
+						<td id="status_${order.orderId}">
 							<s:if test="status == 0">待审核</s:if>
 							<s:else>
 								<s:if test="status == 1">审核通过</s:if>
 								<s:else>审核失败</s:else>
+							</s:else>
+						</td>
+						<td id="op_${order.orderId}">
+							<s:if test="status == 0">
+								<button class="btn btn-link" type="button" onclick="check_vip_order('${order.orderId}', 1);" data-toggle="button" data-loading-text="<i class='icon-pencil'></i>&nbsp;通过"><i class="icon-pencil"></i>&nbsp;通过</button>
+								<button class="btn btn-link" type="button" onclick="check_vip_order('${order.orderId}', -1);" data-toggle="button" data-loading-text="<i class='icon-pencil'></i>&nbsp;拒绝"><i class="icon-pencil"></i>&nbsp;拒绝</button>
+							</s:if>
+							<s:else>
+								无
 							</s:else>
 						</td>
 					</tr>

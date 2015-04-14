@@ -36,6 +36,7 @@ public class LLTaskService extends DaoSupport {
 			+ Constant.VisitTimeCostScoreMap.get(String.valueOf(llTaskBean.getVisitTimeType()))
 			+ Constant.QuickVerifyCostScore + Constant.QuickExecuteCostScore;
 		
+		//验证vip是否到期
 		//店铺审核验证处理
 		//扣除积分验证处理
 		
