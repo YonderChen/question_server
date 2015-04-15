@@ -41,10 +41,12 @@
 			error : function(e) {
 				$("#ajaxSearchId").html("<div class='no-found'>连接服务器超时,请稍后再试.</div>");
 				$("#searchBtn").button('reset');
+				$(".active").removeClass('active');
 			},
 			success : function(result) {
+				$("#searchBtn").button('reset');
+				$(".active").removeClass('active');
 				if (!isOutTime(result)) {
-					$("#searchBtn").button('reset');
 					$("#ajaxSearchId").html(result);
 				}
 			}

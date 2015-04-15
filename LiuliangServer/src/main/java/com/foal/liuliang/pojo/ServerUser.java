@@ -182,6 +182,10 @@ public class ServerUser implements Serializable {
 		this.score += incScore;
 	}
 
+	public void costScore(int costScore) {
+		this.score -= costScore;
+	}
+
 	@Column(name = "vip_end_time_")
 	public Date getVipEndTime() {
 		return vipEndTime;
@@ -191,6 +195,14 @@ public class ServerUser implements Serializable {
 		this.vipEndTime = vipEndTime;
 	}
 
+	public boolean checkVIPValid() {
+		//验证vip是否在有效期内
+		if (this.getVipEndTime() == null) {
+			return false;
+		}
+		return new Date().getTime() <= this.getVipEndTime().getTime();
+	}
+	
 	@Transient
 	public String getRoleName() {
 		return roleName;

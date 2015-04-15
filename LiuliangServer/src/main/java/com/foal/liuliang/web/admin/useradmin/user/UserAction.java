@@ -54,7 +54,7 @@ public class UserAction extends AdminBaseAction implements ModelDriven<ServerUse
     @Action("edit_input")
     public String editInput() {
     	ServerUser user = this.serverUserService.getServerUser(serverUserBean.getUserId());
-    	if (this.getSessionServerUser().getUserId().equals(Constant.ADMIN_ID)) {
+    	if (this.getSessionServerUser().getUserId().equals(Constant.ADMIN_ID) && !user.getUserId().equals(Constant.ADMIN_ID)) {
     		this.setAttrToRequest("roleIds", this.roleService.queryRoleId(serverUserBean.getUserId()));
         	this.setAttrToRequest("roleList", this.roleService.queryRole());
         	this.setAttrToRequest("isAdmin", true);

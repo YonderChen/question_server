@@ -40,10 +40,12 @@
 			error : function(e) {
 				$("#ajaxSearchId").html("<div class='no-found'>连接服务器超时,请稍后再试.</div>");
 				$("#searchBtn").button('reset');
+				$(".active").removeClass('active');
 			},
 			success : function(result) {
+				$("#searchBtn").button('reset');
+				$(".active").removeClass('active');
 				if (!isOutTime(result)) {
-					$("#searchBtn").button('reset');
 					$("#ajaxSearchId").html(result);
 				}
 			}
@@ -68,11 +70,13 @@
 				$("#userDetail").html("<div class='no-found'>连接服务器超时,请稍后再试.</div>");
 				$(".btn-cancel").button('reset');
 				$(".btn-primary").button('reset');
+				$(".active").removeClass('active');
 			},
 			success : function(result) {
+				$(".btn-cancel").button('reset');
+				$(".btn-primary").button('reset');
+				$(".active").removeClass('active');
 				if (!isOutTime(result)) {
-					$(".btn-cancel").button('reset');
-					$(".btn-primary").button('reset');
 					$("#userDetail").html(result);
 				}
 			}
@@ -97,11 +101,13 @@
 				$("#editDetail").html("<div class='no-found'>连接服务器超时,请稍后再试.</div>");
 				$(".btn-cancel").button('reset');
 				$(".btn-primary").button('reset');
+				$(".active").removeClass('active');
 			},
 			success : function(result) {
+				$(".btn-cancel").button('reset');
+				$(".btn-primary").button('reset');
+				$(".active").removeClass('active');
 				if (!isOutTime(result)) {
-					$(".btn-cancel").button('reset');
-					$(".btn-primary").button('reset');
 					$("#editDetail").html(result);
 				}
 			}
@@ -177,12 +183,14 @@
 			error: function(e) {
 				$(".btn-cancel").button('reset');
 				$(".btn-primary").button('reset');
+				$(".active").removeClass('active');
 				alert("连接服务器超时,请稍后再试.");
 			},
 			success: function(result){
+				$(".btn-cancel").button('reset');
+				$(".btn-primary").button('reset');
+				$(".active").removeClass('active');
 				if (!isOutTime(result)) {
-					$(".btn-cancel").button('reset');
-					$(".btn-primary").button('reset');
 					result = eval("("+result+")");
 					if (result.success) {
 						$('#editModal').modal('hide');
@@ -214,11 +222,13 @@
 				$("#addDetail").html("<div class='no-found'>连接服务器超时,请稍后再试.</div>");
 				$(".btn-cancel").button('reset');
 				$(".btn-primary").button('reset');
+				$(".active").removeClass('active');
 			},
 			success : function(result) {
 				if (!isOutTime(result)) {
 					$(".btn-cancel").button('reset');
 					$(".btn-primary").button('reset');
+					$(".active").removeClass('active');
 					$("#addDetail").html(result);
 				}
 			}
@@ -262,12 +272,14 @@
 			error: function(e) {
 				$(".btn-cancel").button('reset');
 				$(".btn-primary").button('reset');
+				$(".active").removeClass('active');
 				alert("连接服务器超时,请稍后再试.");
 			},
 			success: function(result){
-				if (!isOutTime(result)) {
-					$(".btn-cancel").button('reset');
-					$(".btn-primary").button('reset');
+				$(".btn-cancel").button('reset');
+				$(".btn-primary").button('reset');
+				$(".active").removeClass('active')
+				if (!isOutTime(result)) {;
 					result = eval("("+result+")");
 					if (result.success) {
 						$('#addModal').modal('hide');

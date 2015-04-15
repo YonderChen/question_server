@@ -68,8 +68,12 @@
 			timeout:60000,
 			error: function(e) {
 				alert("连接服务器超时,请稍后再试.");
+				$(".btn").button('reset');
+				$(".active").removeClass('active');
 			},
 			success: function(result){
+				$(".btn").button('reset');
+				$(".active").removeClass('active');
 				if (!isOutTime(result)) {
 					result = eval("("+result+")");
 					alert(result.msg);

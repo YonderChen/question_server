@@ -58,7 +58,7 @@ public class ServerUserService extends DaoSupport {
 	}
 	
 	public PageBean queryServerUser(ServerUserBean serverUserBean) {
-        String queryHql = "from ServerUser as s where s.parent.userId is not null";
+        String queryHql = "from ServerUser as s where 1 = 1";
         Map paramMap = new HashMap();
         if (!StringUtil.isEmpty(serverUserBean.getName())) {
             queryHql += " and s.name like :name";
@@ -88,7 +88,7 @@ public class ServerUserService extends DaoSupport {
 		user.setStatus(userBean.getStatus());
 		user.setModifyTime(new Date());
 		this.hibernateDao.update(user);
-		if (userBean.getOperator().getUserId().equals(Constant.ADMIN_ID)) {
+		if (userBean.getOperator().getUserId().equals(Constant.ADMIN_ID) && !userBean.getUserId().equals(Constant.ADMIN_ID)) {
 			List list = this.hibernateDao.queryList("from UserRole as u where u.pk.serverUser.userId = ?", userBean.getUserId());
 			this.hibernateDao.deleteAll(list);
 			String[] roleId = userBean.getRoleIds().split(",");

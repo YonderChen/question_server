@@ -167,9 +167,6 @@ public class LLShopService extends DaoSupport {
     }
 	
 	public void add(LLShopBean shopBean) {
-		//验证vip是否到期
-		
-		
 		LLShop llShop = new LLShop();
 		llShop.setServerUser(shopBean.getOperator());
 		llShop.setBindPlat(shopBean.getBindPlat());
@@ -226,5 +223,9 @@ public class LLShopService extends DaoSupport {
         this.hibernateDao.update(llShop);
         return llShop.getStatus();
     }
+	
+	public LLShop getShop(String shopId) {
+		return this.hibernateDao.get(LLShop.class, shopId);
+	}
 }
 

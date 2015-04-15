@@ -13,6 +13,7 @@ import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.dao.DaoSupport;
 import com.foal.liuliang.pojo.LLShop;
 import com.foal.liuliang.pojo.LLTask;
+import com.foal.liuliang.pojo.ServerUser;
 import com.foal.liuliang.util.StringTools;
 import com.foal.liuliang.util.StringUtil;
 
@@ -24,7 +25,7 @@ public class LLTaskService extends DaoSupport {
 		return this.hibernateDao.get(LLTask.class, taskId);
 	}
 	
-	public void add(LLTaskBean llTaskBean) {
+	public boolean add(LLTaskBean llTaskBean, ServerUser user) {
 		int countOrderOneDay = llTaskBean.getOrderNumberOneDay1() 
 			+ llTaskBean.getOrderNumberOneDay2() 
 			+ llTaskBean.getOrderNumberOneDay3() 
@@ -33,13 +34,18 @@ public class LLTaskService extends DaoSupport {
 		int countOrder = countOrderOneDay * llTaskBean.getDurationDay();
 		int costScore = countOrder * Constant.OneVisitCostScore 
 			+ Constant.PageStayCostScoreMap.get(String.valueOf(llTaskBean.getPageStayType()))
-			+ Constant.VisitTimeCostScoreMap.get(String.valueOf(llTaskBean.getVisitTimeType()))
-			+ Constant.QuickVerifyCostScore + Constant.QuickExecuteCostScore;
-		
-		//验证vip是否到期
-		//店铺审核验证处理
-		//扣除积分验证处理
-		
+			+ Constant.VisitTimeCostScoreMap.get(String.valueOf(llTaskBean.getVisitTimeType()));
+		if (llTaskBean.getIsQuickVerify() > 0) {
+			costScore += Constant.QuickVerifyCostScore;
+		}
+		if (llTaskBean.getIsQuickExecute() > 0) {
+			costScore += Constant.QuickExecuteCostScore;
+		}
+		if (user.getScore() < costScore) {//积分不足
+			return false;
+		}
+		user.incScore(0 - costScore);
+		this.hibernateDao.update(user);
 		llTaskBean.setCostScore(costScore);
 		LLTask llTask = new LLTask();
 		llTask.setServerUser(llTaskBean.getOperator());
@@ -87,6 +93,7 @@ public class LLTaskService extends DaoSupport {
 		llTask.setCreateTime(new Date());
 		llTask.setStatus(Constant.Status.Create);
         this.hibernateDao.save(llTask);
+        return true;
     }
 	
 	public PageBean queryLLTask(LLTaskBean llTaskBean) {

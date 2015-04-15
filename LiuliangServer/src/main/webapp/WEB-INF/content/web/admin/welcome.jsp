@@ -58,12 +58,14 @@
 			error: function(e) {
 				$(".btn-cancel").button('reset');
 				$(".btn-primary").button('reset');
+				$(".active").removeClass('active');
 				alert("连接服务器超时,请稍后再试.");
 			},
 			success: function(result){
+				$(".btn-cancel").button('reset');
+				$(".btn-primary").button('reset');
+				$(".active").removeClass('active');
 				if (!isOutTime(result)) {
-					$(".btn-cancel").button('reset');
-					$(".btn-primary").button('reset');
 					result = eval("("+result+")");
 					if (result.success) {
 						$("#oldPassword").val("");
@@ -106,12 +108,14 @@
 			error: function(e) {
 				$(".btn-cancel").button('reset');
 				$(".btn-primary").button('reset');
+				$(".active").removeClass('active');
 				alert("连接服务器超时,请稍后再试.");
 			},
 			success: function(result){
+				$(".btn-cancel").button('reset');
+				$(".btn-primary").button('reset');
+				$(".active").removeClass('active');
 				if (!isOutTime(result)) {
-					$(".btn-cancel").button('reset');
-					$(".btn-primary").button('reset');
 					result = eval("("+result+")");
 					if (result.success) {
 						$('#editInfoModal').modal('hide');

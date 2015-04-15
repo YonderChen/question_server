@@ -55,7 +55,6 @@ public class TaskAction extends AdminBaseAction implements ModelDriven<LLTaskBea
 	@Action("add")
 	public String add() {
 		try {
-			llTaskBean.setOperator(this.getSessionServerUser());
 			String fileSuffix = ResourceTools.getFileSuffix(llTaskBean.getGoodsImgFileFileName());
 			if(!ResourceTools.checkSuffix(fileSuffix, ResourceTools.getImageSuffixs())) {
 				this.ajaxWrite(new AjaxBean(false, "请选择正确的图片"));
@@ -70,9 +69,28 @@ public class TaskAction extends AdminBaseAction implements ModelDriven<LLTaskBea
 			return null;
 		}
 		try{
-			llTaskService.add(llTaskBean);
-			this.ajaxWrite(new AjaxBean(true, "任务发布成功"));
-	        return null;
+			llTaskBean.setOperator(this.refreshAndGetSessionServerUser());
+			//验证vip是否到期
+			if (!getSessionServerUser().checkVIPValid()) {
+				this.ajaxWrite(new AjaxBean(false, "vip有效期已过，请先续费vip"));
+				return null;
+			} 
+			//店铺审核验证处理
+			LLShop shop = llShopService.getShop(llTaskBean.getShopId());
+			if (shop == null) {
+				this.ajaxWrite(new AjaxBean(false, "找不到该店铺"));
+				return null;
+			}
+			if (shop.getStatus() != Constant.Status.Success) {
+				this.ajaxWrite(new AjaxBean(false, "该店铺未审核通过，请等待审核通过后再次尝试"));
+				return null;
+			}
+			if (llTaskService.add(llTaskBean, getSessionServerUser())) {
+				this.ajaxWrite(new AjaxBean(true, "任务发布成功"));
+			} else {
+				this.ajaxWrite(new AjaxBean(false, "您的积分不足，请先充值后再次尝试"));
+			}
+			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			this.ajaxWrite(new AjaxBean(false, "任务发布失败"));

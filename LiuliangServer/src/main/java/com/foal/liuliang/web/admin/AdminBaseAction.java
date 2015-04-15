@@ -1,6 +1,9 @@
 package com.foal.liuliang.web.admin;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.foal.liuliang.pojo.ServerUser;
+import com.foal.liuliang.service.ServerUserService;
 import com.foal.liuliang.web.BaseAction;
 
 public class AdminBaseAction extends BaseAction {
@@ -9,6 +12,9 @@ public class AdminBaseAction extends BaseAction {
 	 */
 	private static final long serialVersionUID = 8033121388697166177L;
 	public static String SESSION_USERINFO_KEY = "sessionServerUserInfo";
+
+	@Autowired
+	private ServerUserService serverUserService;
 	
 	protected ServerUser getSessionServerUser() {
 		ServerUser user = (ServerUser)getAttrFromSession(SESSION_USERINFO_KEY);
@@ -17,6 +23,19 @@ public class AdminBaseAction extends BaseAction {
 	
 	protected void setSessionServerUser(ServerUser user) {
 		this.setAttrToSession(SESSION_USERINFO_KEY, user);
+	}
+	/**
+	 * 刷新数据库最新的用户数据到缓存，并获取用户信息
+	 * @return
+	 */
+	protected ServerUser refreshAndGetSessionServerUser() {
+		ServerUser user = getSessionServerUser();
+		if (user == null) {
+			return null;
+		}
+		ServerUser newUserData = serverUserService.getServerUser(user.getUserId());
+		setSessionServerUser(newUserData);
+		return newUserData;
 	}
 	
 }

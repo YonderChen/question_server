@@ -54,13 +54,15 @@
 			timeout:60000,
 			error: function(e) {
 				$("#loginBtn").button('reset');
+				$(".active").removeClass('active');
 				alert("连接服务器超时,请稍后再试.");
 			},
 			success: function(result){
+				$("#loginBtn").button('reset');
+				$(".active").removeClass('active');
 				if (result.success) {
 					window.location.href = result.redirectUrl;
 				} else {
-					$("#loginBtn").button('reset');
 					alert(result.msg);
 				}
 			}

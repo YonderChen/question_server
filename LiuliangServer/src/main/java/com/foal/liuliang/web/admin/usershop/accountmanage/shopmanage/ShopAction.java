@@ -63,7 +63,6 @@ public class ShopAction extends AdminBaseAction implements ModelDriven<LLShopBea
 	
 	@Action("add")
 	public String add() {
-		llShopBean.setOperator(this.getSessionServerUser());
 		llShopBean.setVerifyCode(this.getAttrFromSession("goodsVerifyCode").toString());
 		if (!this.llShopService.checkShopUrl(llShopBean)) {
 			this.ajaxWrite(new AjaxBean(false, "请输入正确的店铺地址"));
@@ -71,11 +70,17 @@ public class ShopAction extends AdminBaseAction implements ModelDriven<LLShopBea
 		}
 		if (!this.llShopService.checkGoodsUrl(llShopBean)) {
 			this.ajaxWrite(new AjaxBean(false, "请输入正确的商品地址"));
+			return null;
+		} 
+		llShopBean.setOperator(this.refreshAndGetSessionServerUser());
+		if (!getSessionServerUser().checkVIPValid()) {
+			this.ajaxWrite(new AjaxBean(false, "vip有效期已过，请先续费vip"));
+			return null;
 		} else {
 			this.llShopService.add(llShopBean);
 			this.ajaxWrite(new AjaxBean(true, "绑定成功.请耐心等待店铺审核工作"));
+	        return null;
 		}
-        return null;
 	}
 
 	@Action("list")
