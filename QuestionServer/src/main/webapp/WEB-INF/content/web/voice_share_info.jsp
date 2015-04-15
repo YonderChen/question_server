@@ -49,7 +49,7 @@ $(document).ready(function(){
 </style>
 	</head>
 	<body>
-	<div style="margin-left: 10px; margin-right: 10px; min-width: 320px">
+	<div style="margin-left: 10px; margin-right: 10px; min-width: 270px">
 		<table width="100%">
 			<tr>
 				<td colspan="2">
