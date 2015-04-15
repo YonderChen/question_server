@@ -154,6 +154,18 @@
 				用户名：<b>${sessionServerUserInfo.username }</b><br>
 				电子邮箱：<b>${sessionServerUserInfo.email }</b><br>
 				联系电话：<b>${sessionServerUserInfo.phone }</b><br>
+				<s:if test="#request.isShopUser == 1">
+					VIP到期时间：
+					<s:if test="#session.sessionServerUserInfo.vipEndTime == null"><b style="color: red;">您还不是VIP</b></s:if>
+					<s:else>
+						<s:if test="#session.sessionServerUserInfo.vipEndTime.time < #request.nowDate.time"><b style="color: red;">VIP已过期</b></s:if>
+						<s:else>
+							<b><s:date name="#session.sessionServerUserInfo.vipEndTime" format="yyyy-MM-dd HH:mm:ss"/></b>
+						</s:else>
+					</s:else>
+					<br>
+					剩余积分：<b>${sessionServerUserInfo.score }</b><br>
+				</s:if>
 			</div>
 	
 			<div class="welinfo">

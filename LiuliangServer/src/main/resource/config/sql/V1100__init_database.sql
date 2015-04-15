@@ -165,8 +165,8 @@ CREATE TABLE `t_server_user` (
 --  Records of `t_server_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_server_user` VALUES ('402881e846e4b3910146e4b8ce6c0004', 'admin', 'T0tQNVM=', '6cff5807cf61610da2446669acd09838', '超级管理员', '15000000000', 'admin@abc.com', null, '2014-12-10 11:11:11', '2015-03-27 15:32:39', '2015-03-27 15:49:26', '1', '127.0.0.1', 0);
-INSERT INTO `t_server_user` VALUES ('402882044c981aee014c981b344a0001', 'useradmin', 'T0tQNVM=', '6cff5807cf61610da2446669acd09838', '管理员', '15000000000', 'useradmin@abc.com', '402881e846e4b3910146e4b8ce6c0004', '2014-12-10 11:11:11', '2015-03-27 15:32:39', '2015-03-27 15:49:26', '1', '127.0.0.1', 0);
+INSERT INTO `t_server_user` VALUES ('402881e846e4b3910146e4b8ce6c0004', 'admin', 'T0tQNVM=', '6cff5807cf61610da2446669acd09838', '超级管理员', '15000000000', 'admin@abc.com', null, '2014-12-10 11:11:11', '2015-03-27 15:32:39', '2015-03-27 15:49:26', '1', '127.0.0.1', 0, NULL);
+INSERT INTO `t_server_user` VALUES ('402882044c981aee014c981b344a0001', 'useradmin', 'T0tQNVM=', '6cff5807cf61610da2446669acd09838', '管理员', '15000000000', 'useradmin@abc.com', '402881e846e4b3910146e4b8ce6c0004', '2014-12-10 11:11:11', '2015-03-27 15:32:39', '2015-03-27 15:49:26', '1', '127.0.0.1', 0, NULL);
 COMMIT;
 
 -- ----------------------------

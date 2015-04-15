@@ -41,11 +41,13 @@ public class LLTaskService extends DaoSupport {
 		if (llTaskBean.getIsQuickExecute() > 0) {
 			costScore += Constant.QuickExecuteCostScore;
 		}
+		ServerUser serverUser = this.hibernateDao.get(ServerUser.class, user.getUserId());
 		if (user.getScore() < costScore) {//积分不足
 			return false;
 		}
-		user.incScore(0 - costScore);
-		this.hibernateDao.update(user);
+		user.costScore(costScore);
+		serverUser.costScore(costScore);
+		this.hibernateDao.update(serverUser);
 		llTaskBean.setCostScore(costScore);
 		LLTask llTask = new LLTask();
 		llTask.setServerUser(llTaskBean.getOperator());
