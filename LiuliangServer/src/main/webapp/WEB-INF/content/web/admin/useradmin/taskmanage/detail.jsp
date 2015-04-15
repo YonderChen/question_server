@@ -5,7 +5,7 @@
 </s:if>
 <div>
 	<h4>基础信息</h4>
-	<table width="100%" border="1">
+	<table width="100%" border="1" style="table-layout:fixed; word-wrap:break-word;">
 	  <tr>
 	    <td align="right" width="30%"><b>平台：</b></td>
 	    <td>
@@ -66,7 +66,7 @@
 </div>
 <div>
 	<h4>增值服务</h4>
-	<table width="100%" border="1">
+	<table width="100%" border="1" style="table-layout:fixed; word-wrap:break-word;">
 	  <tr>
 	    <td align="right" width="30%"><b>页面停留时间：</b></td>
 	    <td>
@@ -88,10 +88,10 @@
 	    		全天平均分布
 	    	</s:if>
 	    	<s:if test="#request.lltask.visitTimeType == 1">
-	    		随机分布（50积分）
+	    		随机分布
 	    	</s:if>
 	    	<s:if test="#request.lltask.visitTimeType == 2">
-	    		网购用户习惯曲线分布（60积分）
+	    		网购用户习惯曲线分布
 	    	</s:if>
 		</td>
 	  </tr>

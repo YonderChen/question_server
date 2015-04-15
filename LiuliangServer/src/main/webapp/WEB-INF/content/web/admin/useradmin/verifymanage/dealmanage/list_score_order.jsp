@@ -5,7 +5,7 @@
 </s:if>
 <s:else>
 
-                        <table width="95%" class="tablelist">
+                        <table width="95%" class="tablelist" style="table-layout:fixed; word-wrap:break-word;">
 				<thead>
 					<tr>
 						<th width="10%">

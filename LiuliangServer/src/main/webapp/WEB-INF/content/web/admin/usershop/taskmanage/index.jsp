@@ -69,11 +69,13 @@
 			timeout : 60000,
 			error : function(e) {
 				$("#addDetail").html("<div class='no-found'>连接服务器超时,请稍后再试.</div>");
-				$(".btn").button('reset');
+				$(".btn-cancel").button('reset');
+				$(".btn-primary").button('reset');
 				$(".active").removeClass('active');
 			},
 			success : function(result) {
-				$(".btn").button('reset');
+				$(".btn-cancel").button('reset');
+				$(".btn-primary").button('reset');
 				$(".active").removeClass('active');
 				if (!isOutTime(result)) {
 					$("#detailDiv").html(result);

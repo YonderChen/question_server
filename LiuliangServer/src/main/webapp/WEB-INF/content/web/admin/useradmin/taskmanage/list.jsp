@@ -5,10 +5,10 @@
 </s:if>
 <s:else>
 
-                        <table width="95%" class="tablelist">
+                        <table width="95%" class="tablelist" style="table-layout:fixed; word-wrap:break-word;">
 				<thead>
 					<tr>
-						<th width="5%">
+						<th width="10%">
 							用户名
 						</th>
 						<th width="10%">
@@ -17,7 +17,7 @@
 						<th width="5%">
 							平台
 						</th>
-						<th width="20%">
+						<th width="15%">
 							店铺
 						</th>
 						<th width="20%">
