@@ -59,6 +59,9 @@ public class ServerUserService extends DaoSupport {
 	
 	public PageBean queryServerUser(ServerUserBean serverUserBean) {
         String queryHql = "from ServerUser as s where 1 = 1";
+        if (!serverUserBean.getOperator().getUserId().equals(Constant.ADMIN_ID)) {
+			queryHql += " and s.parent.userId is not null";
+		}
         Map paramMap = new HashMap();
         if (!StringUtil.isEmpty(serverUserBean.getName())) {
             queryHql += " and s.name like :name";

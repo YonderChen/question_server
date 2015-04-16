@@ -42,6 +42,7 @@ public class UserAction extends AdminBaseAction implements ModelDriven<ServerUse
 
     @Action("list")
     public String list() {
+    	serverUserBean.setOperator(getSessionServerUser());
         PageBean pageBean = this.serverUserService.queryServerUser(serverUserBean);
 		for (int i = 0; i < pageBean.getList().size(); i++) {
 			ServerUser user = (ServerUser)pageBean.getList().get(i);
