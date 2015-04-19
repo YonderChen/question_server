@@ -12,11 +12,11 @@ import com.foal.liuliang.bean.RoleBean;
 import com.foal.liuliang.pojo.Menu;
 import com.foal.liuliang.service.RoleService;
 import com.foal.liuliang.service.ServerUserService;
-import com.foal.liuliang.web.admin.AdminBaseAction;
+import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
 @InterceptorRefs( { @InterceptorRef("interceptor-admin") })
-public class RoleAction extends AdminBaseAction implements ModelDriven<RoleBean>{
+public class RoleAction extends UserBaseAction implements ModelDriven<RoleBean>{
 
 	/**
 	 * 

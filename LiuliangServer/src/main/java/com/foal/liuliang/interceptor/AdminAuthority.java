@@ -11,7 +11,7 @@ import com.foal.liuliang.pojo.ServerUser;
 import com.foal.liuliang.service.RoleService;
 import com.foal.liuliang.util.StringTools;
 import com.foal.liuliang.util.StringUtil;
-import com.foal.liuliang.web.admin.AdminBaseAction;
+import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 
@@ -29,7 +29,7 @@ public class AdminAuthority extends Authority {
 	 * 默认构造器
 	 */
 	public AdminAuthority() {
-		this.setAuthorityUrl("admin_login");// 设置返回的配置路径
+		this.setAuthorityUrl("shop_login");// 设置返回的配置路径
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class AdminAuthority extends Authority {
 		ActionContext ctx = AI.getInvocationContext();
 		// 取出名为user的Session属性
 		String requestUrl = ServletActionContext.getRequest().getRequestURI();
-		ServerUser loginUser = (ServerUser)ctx.getSession().get(AdminBaseAction.SESSION_USERINFO_KEY);
+		ServerUser loginUser = (ServerUser)ctx.getSession().get(UserBaseAction.SESSION_USERINFO_KEY);
 		// 如果有登陆,通过认证
 		if (loginUser != null) {
 			if (requestUrl.equals(Constant.PRO_CTX_VALUE + "/web/admin/welcome") ||
@@ -71,7 +71,11 @@ public class AdminAuthority extends Authority {
 			return true;
 		} else {
 			logger.info("登录超时,返回到登录界面");
-			this.setAuthorityUrl("admin_login");
+			if (requestUrl.indexOf("/web/admin") > 0) {//管理员界面
+				this.setAuthorityUrl("admin_login");// 设置返回的配置路径
+			} else {
+				this.setAuthorityUrl("shop_login");
+			}
 			return false;
 		}
 	}

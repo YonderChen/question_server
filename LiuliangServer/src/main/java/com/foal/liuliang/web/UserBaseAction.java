@@ -1,12 +1,11 @@
-package com.foal.liuliang.web.admin;
+package com.foal.liuliang.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.foal.liuliang.pojo.ServerUser;
 import com.foal.liuliang.service.ServerUserService;
-import com.foal.liuliang.web.BaseAction;
 
-public class AdminBaseAction extends BaseAction {
+public class UserBaseAction extends BaseAction {
 	/**
 	 * 
 	 */

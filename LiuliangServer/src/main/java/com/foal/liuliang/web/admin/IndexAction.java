@@ -11,9 +11,10 @@ import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.pojo.Menu;
 import com.foal.liuliang.pojo.ServerUser;
 import com.foal.liuliang.service.ServerUserService;
+import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
-public class IndexAction extends AdminBaseAction implements ModelDriven<ServerUserBean>{
+public class IndexAction extends UserBaseAction implements ModelDriven<ServerUserBean>{
 
 	/**
 	 * 

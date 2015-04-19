@@ -10,11 +10,11 @@ import com.foal.liuliang.bean.PageBean;
 import com.foal.liuliang.pojo.LLTask;
 import com.foal.liuliang.service.LLShopService;
 import com.foal.liuliang.service.LLTaskService;
-import com.foal.liuliang.web.admin.AdminBaseAction;
+import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
 @InterceptorRefs( { @InterceptorRef("interceptor-admin") })
-public class TaskAction extends AdminBaseAction implements ModelDriven<LLTaskBean>{
+public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean>{
 
 	/**
 	 * 

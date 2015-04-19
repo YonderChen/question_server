@@ -157,6 +157,7 @@ CREATE TABLE `t_server_user` (
   `status_` int(11) DEFAULT NULL,
   `last_login_ip_` varchar(20) DEFAULT NULL,
   `score_` int(11) NOT NULL COMMENT '用户当前积分',
+  `score_used_` int(11) NOT NULL COMMENT '用户当前已用积分',
   `vip_end_time_` datetime DEFAULT NULL COMMENT 'vip结束时间',
   PRIMARY KEY (`user_id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

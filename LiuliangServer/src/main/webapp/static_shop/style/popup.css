@@ -1,0 +1,67 @@
+/* 个人中心撤销任务弹窗 */
+.business-popup-under{opacity:0.2;}
+.business-small-popup{width:458px; overflow:hidden; position:absolute; z-index:99999; top:100px;left:40%; display:none;}
+.business-small-popup .top{height:10px; width:100%; float:left; background:url(../images/popup/center_popup_top.png) no-repeat;}
+.business-small-popup .main{ background:url(../images/popup/center_popup_main.png) repeat-y; float:left; width:100%;}
+.business-small-popup .bottom{height:10px; width:100%; float:left; background:url(../images/popup/center_popup_bottom.png) no-repeat;}
+.popup-close{width:15px;height:15px; display:inline-block; background:url(../images/popup/popup-close.gif) no-repeat; position:absolute; z-index:99; top:20px; right:20px; left:auto; cursor:pointer;}
+.business-small-popup .main-box{padding:15px 18px; }
+
+.business-small-popup h1{font-size:18px; height:40px; line-height:40px; margin-left:20px; font-weight:bold; color:#555;}
+.business-small-popup .con{margin-left:20px; color:#555; line-height:20px; margin-bottom:10px;}
+.business-small-popup .con span{color:#FD0202;}
+.business-small-popup .con.btnsbox{ padding:10px 0 0;}
+.business-small-popup .con.btnsbox a{ margin:0 5px; font-size:16px; text-align:center; display:inline-block; width:55px; height:24px; line-height:24px; background:#2b9bfa; border-radius:5px; color:#fff;}
+.business-small-popup .con.btnsbox a:hover{background:#1492fd;}
+
+
+/* 修改任务弹窗样式 */
+.update-trade-popup{width:732px; overflow:hidden; position:absolute; z-index:99999; top:100px;left:33%; display:none;}
+.update-trade-popup .top{height:15px; width:100%; float:left; background:url(../images/popup/update_popup_top.png) no-repeat;}
+.update-trade-popup .main{ background:url(../images/popup/update_popup_main.png) repeat-y; float:left; width:100%;}
+.update-trade-popup .bottom{height:15px; width:100%; float:left; background:url(../images/popup/update_popup_bottom.png) no-repeat;}
+.update-trade-popup h1{font-size:16px; height:40px; width:650px; padding-right:20px; margin:0 auto; line-height:40px; font-weight:bold; color:#555; border-bottom:1px solid #DDD;}
+.update-trade-popup h1 p{display:inline-block; float:right; font-size:12px; color:#555; font-weight:normal;}
+.update-trade-popup h1 span{color:#f00;}
+
+.update-trade-popup .con{margin-left:20px; color:#555; line-height:20px; margin-bottom:10px;}
+.update-trade-popup .con span{color:#FD0202;}
+.update-trade-popup .con.btnsbox{ padding:10px 0 0;}
+.update-trade-popup .con.btnsbox a{ margin:0 5px; font-size:16px; text-align:center; display:inline-block; width:55px; height:24px; line-height:24px; background:#0077DD; border-radius:5px; color:#fff;}
+.update-trade-info{width:650px; margin:0 auto; border-bottom:1px solid #DDD; min-height:200px; overflow:hidden; padding-right:20px;}
+.update-trade-info p{width:600px; margin:10px 0 10px 10px; color:#555; font-size:14px; line-height:20px;}
+.update-trade-info p span{color:#f00;}
+.keyword div{color:#555; margin:20px 10px; font-size:14px; padding-left:5px;}
+.keyword div span{margin-left:10px;}
+.keyword div .text{width:133px; height:25px; border:1px solid #BFBFBF; line-height:25px; padding-left:5px; color:#555;}
+.keyword .step-list-add{ font-size: 14px; height: 18px; line-height: 18px; padding: 15px 30px 20px;}
+.keyword .step-list-add a{color:#1F9CD8; font-size:14px; line-height:18px;}
+.keyword .step-list-add a img{ margin:2px 6px 0 0; float:left;}
+.total-integral{width:650px; margin:20px auto; overflow:hidden;}
+.total-integral p{width:600px; margin:5px 0 5px 10px; color:#555; font-size:14px; line-height:20px;}
+.total-integral p span{color:#f00;}
+.update-trade-popup .main-box{margin-bottom:30px;}
+.update-trade-popup .main-box .btnsbox .submit{display:inline-block; width:75px; height:30px; font-size:16px; color:#fff; line-height:30px; text-align:center; background:#2b9bfa;}
+.update-trade-popup .main-box .btnsbox .submit:hover{background:#1492fd;}
+.update-trade-popup .main-box .btnsbox .reset{display:inline-block; width:50px; margin-left:10px; height:30px; line-height:30px; font-size:16px; color:#24ADEB; background:none;}
+.update-trade-popup .main-box .btnsbox .reset:hover{color:#E95912;}
+.update-trade-popup .main-box .btnsbox span{display:inline-block; margin-left:10px; font-size:12px;}
+.update-trade-popup .main-box .btnsbox .pay-integral{display:inline-block; width:70px; font-size:12px; color:#0077DD; background:none; border-radius:0; margin:0;}
+
+
+
+
+
+.business-small-popup .con-left{ background:url(../images/popup/tips.gif);float:left; width:50px; height:50px; margin:10px 10px 0;}
+.business-small-popup .con-txt{ text-align:left; line-height:35px;}
+.business-small-popup .buttons-tips-confirm {background-position:-311px -946px; height:40px; width:180px;}
+.business-small-popup .buttons-tips-confirm:hover {background-position:-311px -1000px; height:40px; width:180px;}
+.business-small-popup a.buttons-tips-close{color:#1EA1D0;font-size:16px;}
+.business-small-popup .tips{ margin-top:30px;}
+.business-small-popup .tips a{ margin:-12px 0;}
+
+.business-small-popup .J_small_tipsCON{ display:none;}
+.business-small-popup .J_big_tipsCON{ display:none; width:678px;}
+.business-small-popup .big-main{ background:url(../images/popup/popup_big_main.png) repeat-y; float:left; width:100%;}
+.business-small-popup .top-main{ background:url(../images/popup/popup_big_top.png) no-repeat; float:left; width:100%; height:6px;}
+.business-small-popup .bottom-main{ background:url(../images/popup/popup_big_bottom.png) no-repeat; float:left; width:100%;}

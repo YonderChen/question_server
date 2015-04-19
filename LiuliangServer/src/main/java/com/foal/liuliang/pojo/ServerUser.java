@@ -39,6 +39,7 @@ public class ServerUser implements Serializable {
 	private int status;
 	private String lastLoginIp;
 	private int score;
+	private int scoreUsed;
 	private Date vipEndTime;
 
 	private String roleName;
@@ -186,6 +187,19 @@ public class ServerUser implements Serializable {
 		this.score -= costScore;
 	}
 
+	@Column(name = "score_used_")
+	public int getScoreUsed() {
+		return scoreUsed;
+	}
+
+	public void setScoreUsed(int scoreUsed) {
+		this.scoreUsed = scoreUsed;
+	}
+
+	public void incScoreUsed(int incScoreUsed) {
+		this.scoreUsed += incScoreUsed;
+	}
+
 	@Column(name = "vip_end_time_")
 	public Date getVipEndTime() {
 		return vipEndTime;
@@ -228,6 +242,7 @@ public class ServerUser implements Serializable {
 		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
 		result = prime * result + ((roleName == null) ? 0 : roleName.hashCode());
 		result = prime * result + score;
+		result = prime * result + scoreUsed;
 		result = prime * result + status;
 		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
@@ -300,6 +315,8 @@ public class ServerUser implements Serializable {
 		} else if (!roleName.equals(other.roleName))
 			return false;
 		if (score != other.score)
+			return false;
+		if (scoreUsed != other.scoreUsed)
 			return false;
 		if (status != other.status)
 			return false;

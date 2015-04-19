@@ -10,11 +10,11 @@ import com.foal.liuliang.bean.LLShopBean;
 import com.foal.liuliang.bean.PageBean;
 import com.foal.liuliang.service.LLShopService;
 import com.foal.liuliang.util.RandomTools;
-import com.foal.liuliang.web.admin.AdminBaseAction;
+import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
 @InterceptorRefs( { @InterceptorRef("interceptor-admin") })
-public class ShopAction extends AdminBaseAction implements ModelDriven<LLShopBean>{
+public class ShopAction extends UserBaseAction implements ModelDriven<LLShopBean>{
 
 	/**
 	 * 

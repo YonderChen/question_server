@@ -46,7 +46,9 @@ public class LLTaskService extends DaoSupport {
 			return false;
 		}
 		user.costScore(costScore);
+		user.incScoreUsed(costScore);
 		serverUser.costScore(costScore);
+		serverUser.incScoreUsed(costScore);
 		this.hibernateDao.update(serverUser);
 		llTaskBean.setCostScore(costScore);
 		LLTask llTask = new LLTask();

@@ -1,0 +1,237 @@
+body {
+	margin: 0px; padding: 0px;
+}
+div {
+	margin: 0px; padding: 0px;
+}
+dl {
+	margin: 0px; padding: 0px;
+}
+dt {
+	margin: 0px; padding: 0px;
+}
+dd {
+	margin: 0px; padding: 0px;
+}
+ul {
+	margin: 0px; padding: 0px;
+}
+ol {
+	margin: 0px; padding: 0px;
+}
+li {
+	margin: 0px; padding: 0px;
+}
+h1 {
+	margin: 0px; padding: 0px;
+}
+h2 {
+	margin: 0px; padding: 0px;
+}
+h3 {
+	margin: 0px; padding: 0px;
+}
+h4 {
+	margin: 0px; padding: 0px;
+}
+h5 {
+	margin: 0px; padding: 0px;
+}
+form {
+	margin: 0px; padding: 0px;
+}
+input {
+	margin: 0px; padding: 0px;
+}
+textarea {
+	margin: 0px; padding: 0px;
+}
+p {
+	margin: 0px; padding: 0px;
+}
+th {
+	margin: 0px; padding: 0px;
+}
+td {
+	margin: 0px; padding: 0px;
+}
+img {
+	margin: 0px; padding: 0px;
+}
+a {
+	margin: 0px; padding: 0px;
+}
+body {
+	margin: 0px auto; font-size: 12px; background-color: rgb(242, 242, 242);
+}
+table {
+	border-collapse: collapse; border-spacing: 0;
+}
+img {
+	border: 0px currentColor; border-image: none;
+}
+ol {
+	list-style: none;
+}
+ul {
+	list-style: none;
+}
+li {
+	list-style: none;
+}
+a {
+	text-decoration: none;
+}
+em {
+	font-style: normal;
+}
+.top {
+	background: url("../images/topbg.jpg") repeat-x; width: 100%; height: 77px; margin-top: 30px;
+}
+.top .logo {
+	margin: 0px auto; width: 1000px; height: 70px;
+}
+.renqifu_con {
+	margin: 0px auto; width: 1000px; height: 470px;
+}
+.imglist {
+	width: 512px; height: 400px; float: left;
+}
+.renqifu_login {
+	width: 100%; height: 385px; padding-top: 65px; margin-bottom: 10px;
+}
+#slider3 .conbox div {
+	width: 512px; height: 270px;
+}
+.slider {
+	width: 512px; height: 331px; overflow: hidden; margin-bottom: 10px; position: relative;
+}
+.conbox {
+	position: absolute;
+}
+.switcher {
+	right: 100px; bottom: 20px; float: right; position: absolute; z-index: 99;
+}
+.switcher a {
+	background: url("../images/promotionsa.png") no-repeat; margin: 4px; width: 14px; height: 14px; float: left; cursor: pointer;
+}
+.switcher a.cur {
+	background: url("../images/promotionsas.png") no-repeat; width: 14px; height: 14px;
+}
+.switcher a:hover {
+	background: url("../images/promotionsas.png") no-repeat; width: 14px; height: 14px;
+}
+.sliders {
+	width: 250px; height: 283px; overflow: hidden; position: relative;
+}
+.conboxs {
+	position: absolute;
+}
+.switchers {
+	top: 0px; right: 13px; float: right; position: absolute; z-index: 99;
+}
+.switchers a {
+	background: url("../images/switchers.png") no-repeat; margin: 10px 5px; width: 9px; height: 9px; float: left;
+}
+.switchers a.cur {
+	background: url("../images/switchersa.png") no-repeat; width: 9px; height: 9px;
+}
+.switchers a:hover {
+	background: url("../images/switchersa.png") no-repeat; width: 9px; height: 9px;
+}
+.sliders2 {
+	width: 250px; height: 283px; overflow: hidden; position: relative;
+}
+.conboxs2 {
+	position: absolute;
+}
+.switchers2 {
+	top: 0px; right: 13px; float: right; position: absolute; z-index: 99;
+}
+.switchers2 a {
+	background: url("../images/switchers.png") no-repeat; margin: 10px 5px; width: 9px; height: 9px; float: left;
+}
+.switchers2 a.cur {
+	background: url("../images/switchersa.png") no-repeat; width: 9px; height: 9px;
+}
+.switchers2 a:hover {
+	background: url("../images/switchersa.png") no-repeat; width: 9px; height: 9px;
+}
+.clickapply {
+	background: url("../images/clickapply.jpg") no-repeat; margin: 18px auto; width: 1000px; height: 80px;
+}
+.clickapply a {
+	margin: 27px 61px 0px 0px; width: 110px; height: 35px; float: right; display: inline-block;
+}
+.login {
+	width: 418px; overflow: hidden; float: right; min-height: 320px;
+}
+.logintop {
+	background: url("../images/logintop.jpg") no-repeat; width: 100%; height: 12px;
+}
+.logincen {
+	background: url("../images/logincen.jpg") repeat-y; padding: 5px 15px; overflow: hidden; min-height: 200px;
+}
+.loginbott {
+	background: url("../images/loginbott.jpg") no-repeat; width: 100%; height: 12px;
+}
+.logincen h3 {
+	padding: 20px 0px 20px 30px; height: 30px; color: rgb(32, 156, 215); line-height: 30px; font-size: 30px; font-weight: bold;
+}
+.logincen .error {
+	margin-left: 100px;
+}
+.logincen .login_input {
+	margin: 10px auto 5px; width: 363px; min-height: 35px;
+}
+.logincen .login_input label {
+	width: 80px; height: 30px; text-align: right; color: rgb(58, 58, 58); line-height: 30px; display: inline-block;
+}
+.logincen .login_input input {
+	border-radius: 3px; border: 1px solid rgb(207, 207, 207); border-image: none; width: 215px; height: 33px; color: rgb(86, 86, 86); line-height: 33px; padding-left: 6px;
+}
+.logincen .login_input .error {
+	margin-left: 87px;
+}
+.login_button {
+	margin: 20px 0px 30px 100px; width: 295px; height: 43px;
+}
+.login_button input {
+	background: rgb(43, 155, 250); border-radius: 5px; width: 135px; height: 40px; text-align: center; color: rgb(255, 255, 255); line-height: 43px; font-family: "微软雅黑"; font-size: 20px; font-weight: bold; float: left; display: block; cursor: pointer;
+}
+.login_button input:hover {
+	background: rgb(20, 146, 253);
+}
+.lobin_button input:active {
+	background: red;
+}
+.login_button div {
+	width: 150px; height: 15px; line-height: 15px; margin-top: 15px; float: right;
+}
+.login_button a {
+	padding: 0px 5px; height: 15px; text-align: center; color: rgb(0, 119, 221); line-height: 15px; float: left; display: inline-block;
+}
+.login_button p {
+	background: rgb(128, 128, 128); width: 2px; height: 15px; float: left; display: block;
+}
+.code {
+	margin: 10px auto 5px; width: 265px; height: 35px;
+}
+.code_input {
+	border: 1px solid rgb(183, 183, 183); border-image: none; width: 80px; height: 33px; margin-right: 20px; float: left;
+}
+.code_input input {
+	border: 1px solid rgb(238, 238, 238); border-image: none; width: 78px; height: 31px; line-height: 31px; float: left;
+}
+.codes {
+	background: rgb(249, 253, 238); border: 1px solid rgb(228, 249, 212); border-image: none; width: 80px; height: 35px; text-align: center; color: green; line-height: 35px; letter-spacing: 3px; font-family: Arial,宋体; font-style: italic; font-weight: bolder; float: left;
+}
+#password {
+	background: url("../images/input_icons.png") no-repeat 3px -5px; padding-left: 25px;
+}
+#username {
+	background: url("../images/input_icons.png") no-repeat 3px -98px; padding-left: 25px;
+}
+.footer {
+	width: 100%; height: 80px; text-align: center; color: rgb(56, 56, 56); line-height: 80px; font-family: "微软雅黑";
+}

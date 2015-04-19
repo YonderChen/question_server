@@ -15,10 +15,11 @@ import com.foal.liuliang.pojo.ServerUser;
 import com.foal.liuliang.service.RoleService;
 import com.foal.liuliang.service.ServerUserService;
 import com.foal.liuliang.util.StringUtil;
+import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
 @InterceptorRefs( { @InterceptorRef("interceptor-admin") })
-public class WelcomeAction extends AdminBaseAction implements ModelDriven<ServerUserBean> {
+public class WelcomeAction extends UserBaseAction implements ModelDriven<ServerUserBean> {
 
 	/**
 	 * 

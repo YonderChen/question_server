@@ -9,11 +9,11 @@ import com.foal.liuliang.bean.AjaxBean;
 import com.foal.liuliang.bean.LLDealOrderBean;
 import com.foal.liuliang.bean.PageBean;
 import com.foal.liuliang.service.LLVIPOrderService;
-import com.foal.liuliang.web.admin.AdminBaseAction;
+import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
 @InterceptorRefs( { @InterceptorRef("interceptor-admin") })
-public class VIPAction extends AdminBaseAction implements ModelDriven<LLDealOrderBean>{
+public class VIPAction extends UserBaseAction implements ModelDriven<LLDealOrderBean>{
 
 	/**
 	 * 

@@ -6,11 +6,11 @@ import org.apache.struts2.convention.annotation.InterceptorRefs;
 
 import com.foal.liuliang.bean.Page;
 import com.foal.liuliang.bean.ServerUserBean;
-import com.foal.liuliang.web.admin.AdminBaseAction;
+import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
 @InterceptorRefs( { @InterceptorRef("interceptor-admin") })
-public class AccountAction extends AdminBaseAction implements ModelDriven<Page>{
+public class AccountAction extends UserBaseAction implements ModelDriven<Page>{
 	
 	/**
 	 * 

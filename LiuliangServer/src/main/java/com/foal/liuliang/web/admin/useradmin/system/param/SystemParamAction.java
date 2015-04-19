@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.foal.liuliang.bean.AjaxBean;
 import com.foal.liuliang.bean.SystemParamBean;
 import com.foal.liuliang.service.SystemParamService;
-import com.foal.liuliang.web.admin.AdminBaseAction;
+import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
 @InterceptorRefs( { @InterceptorRef("interceptor-admin") })
-public class SystemParamAction extends AdminBaseAction implements ModelDriven<SystemParamBean> {
+public class SystemParamAction extends UserBaseAction implements ModelDriven<SystemParamBean> {
 	/**
 	 * 
 	 */

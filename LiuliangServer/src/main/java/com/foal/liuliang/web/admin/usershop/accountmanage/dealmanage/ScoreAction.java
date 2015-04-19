@@ -10,11 +10,11 @@ import com.foal.liuliang.bean.LLDealOrderBean;
 import com.foal.liuliang.bean.PageBean;
 import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.service.LLScoreOrderService;
-import com.foal.liuliang.web.admin.AdminBaseAction;
+import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
 @InterceptorRefs( { @InterceptorRef("interceptor-admin") })
-public class ScoreAction extends AdminBaseAction implements ModelDriven<LLDealOrderBean>{
+public class ScoreAction extends UserBaseAction implements ModelDriven<LLDealOrderBean>{
 
 	/**
 	 * 
