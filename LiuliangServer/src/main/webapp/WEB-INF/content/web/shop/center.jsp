@@ -4,7 +4,7 @@
 <!-- saved from url=(0032)http://www.liuliangfu.com/center -->
 <html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
     <meta http-equiv="expires" content="0">
@@ -17,74 +17,16 @@
 	<link rel="stylesheet" href="${ctx}/static_shop/style/common.css">
     <link rel="stylesheet" href="${ctx}/static_shop/style/person_center.css">
     <link rel="stylesheet" href="${ctx}/static_shop/style/popup.css">
+</head>
 <body>
-<div class="state" style="background:#F2F2F2;">
-    <div class="wrap">
-    	        <a href="http://www.liuliangfu.com/center/userinfo">${sessionServerUserInfo.username }</a> ｜ <a href="${ctx }/web/shop/logout">退出</a>
-        <span class="fr"><a href="http://www.liuliangfu.com/help/help_center_pro?left_list_id=100" target="_blank">帮助中心</a></span>
-        <span class="fr" style="margin-right:40px;">积分: ${sessionServerUserInfo.score } 点</span>
-        <span class="fr" style="margin-right:40px;">
-            <a href="http://www.liuliangfu.com/pay/pay_score">购买积分</a> ｜ <a href="http://www.liuliangfu.com/pay/pay_group">续费会员</a>
-        </span>
-		    </div>
-</div>
-<div class="header">
-    <div class="wrap">
-        <a class="logo fl" href="http://www.liuliangfu.com/" style="margin-top:7px;"><img src="${ctx}/static_shop/images/logo.png"></a>
-        <menu class="business-menu fr" style="width:500px;">
-            <!-- <a href="/" target="_blank">首页</a> -->
-            <a href="http://www.liuliangfu.com/pay/pay_score" target="_blank">购买积分</a>
-            <a href="http://www.liuliangfu.com/trade/step_one" target="_blank">发布任务流量</a>
-            <a href="http://www.liuliangfu.com/center/invite_business?left-list-id=7" target="_blank">邀请返利</a>
-            <a href="http://www.liuliangfu.com/help/novice" target="_blank">新商家必读</a>
-            <a href="./流量符-个人中心，汇聚更多流量_files/流量符-个人中心，汇聚更多流量.html">个人中心</a>
-        </menu>
-    </div>
-</div>
+			<jsp:include page="top.jsp" flush="true"></jsp:include>
 <div class="breadcrumbs">
     <div class="wrap"><a href="http://www.liuliangfu.com/">首页</a> &gt; <a href="http://www.liuliangfu.com/center#">个人中心</a></div>
 </div>
-
-	<div style="width:1000px; margin:5px auto;">
-		<a href="http://www.liuliangfu.com/help/help_center_notice?notice_id=10" target="_blank">
-			<img src="${ctx}/static_shop/images/banner417.png" height="65" width="1000">
-		</a>
-	</div>
-    <div style="width:1000px; margin:5px auto;">
-	    <a href="http://www.liuliangfu.com/help/propaganda" target="_blank">
-	    	<img src="${ctx}/static_shop/images/banner4161.png" height="65" width="1000">
-	    </a>
-    </div>
-    <div style="width:1000px; margin:5px auto;">
-	    <a href="http://www.liuliangfu.com/help/raiders" target="_blank">
-	    	<img src="${ctx}/static_shop/images/banner4162.png" width="495" height="65">
-	    </a>
-    	<a href="http://www.liuliangfu.com/help/propagandas" target="_blank" style="float:right;">
-    		<img src="${ctx}/static_shop/images/banner4163.png" width="495" height="65">
-    	</a>
-    </div>
+			<jsp:include page="banner.jsp" flush="true"></jsp:include>
     
     <div class="wrap clearfix">
-	<div class="left">
-    <dl style="border-top:none;">
-        <dt>流量管理</dt>
-        <dd>
-            <a target="_self" href="http://www.liuliangfu.com/center/trade_manage?left-list-id=1">任务管理</a>
-        </dd>
-        <dd>
-            <a target="_self" href="http://www.liuliangfu.com/center/integral_record?left-list-id=2">积分记录</a>
-        </dd>
-    </dl>
-    
-    <dl>
-        <dt>账户管理</dt>
-        <dd><a target="_self" href="http://www.liuliangfu.com/center/userinfo?left-list-id=3">基本信息</a></dd>
-        <dd><a target="_self" href="http://www.liuliangfu.com/bind/bind_shop">绑定店铺</a></dd>
-        <dd><a target="_self" href="http://www.liuliangfu.com/pay/pay_group">续费会员</a></dd>
-        <dd><a target="_self" href="http://www.liuliangfu.com/pay/pay_score">购买积分</a></dd>
-        <dd><a target="_self" href="http://www.liuliangfu.com/center/invite_business?left-list-id=7">邀请商家</a></dd>
-    </dl>
-</div>    
+			<jsp:include page="left.jsp" flush="true"></jsp:include> 
 	<div class="right">
     	<!-- 右侧顶部账号积分等信息 start -->
     	<div class="righttop">
