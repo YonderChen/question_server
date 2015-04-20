@@ -35,6 +35,11 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 		return SUCCESS;
 	}
 	
+	@Action("register_index")
+	public String registerIndex() {
+		return SUCCESS;
+	}
+	
 	@Action("register")
 	public String register() {
 		StringBuffer sb = new StringBuffer();

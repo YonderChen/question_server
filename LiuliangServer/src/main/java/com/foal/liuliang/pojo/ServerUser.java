@@ -41,6 +41,7 @@ public class ServerUser implements Serializable {
 	private int score;
 	private int scoreUsed;
 	private Date vipEndTime;
+	private String userqq;
 
 	private String roleName;
 
@@ -216,7 +217,16 @@ public class ServerUser implements Serializable {
 		}
 		return new Date().getTime() <= this.getVipEndTime().getTime();
 	}
-	
+
+	@Column(name = "user_qq_")
+	public String getUserqq() {
+		return userqq;
+	}
+
+	public void setUserqq(String userqq) {
+		this.userqq = userqq;
+	}
+
 	@Transient
 	public String getRoleName() {
 		return roleName;
@@ -246,6 +256,7 @@ public class ServerUser implements Serializable {
 		result = prime * result + status;
 		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		result = prime * result + ((userqq == null) ? 0 : userqq.hashCode());
 		result = prime * result + ((vipEndTime == null) ? 0 : vipEndTime.hashCode());
 		return result;
 	}
@@ -329,6 +340,11 @@ public class ServerUser implements Serializable {
 			if (other.username != null)
 				return false;
 		} else if (!username.equals(other.username))
+			return false;
+		if (userqq == null) {
+			if (other.userqq != null)
+				return false;
+		} else if (!userqq.equals(other.userqq))
 			return false;
 		if (vipEndTime == null) {
 			if (other.vipEndTime != null)

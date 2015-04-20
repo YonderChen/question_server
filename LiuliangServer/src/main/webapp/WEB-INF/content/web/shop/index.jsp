@@ -95,16 +95,10 @@
 	</script>
 	</head>
 	<body>
-		<iframe style="display: none;"></iframe>
 		<div class="state" style="background: #F2F2F2;">
 			<div class="wrap">
-				<a href="http://www.liuliangfu.com/user/register">注册</a> ｜
-				<a
-					href="${ctx}/static_shop/流量符-最专业的淘宝刷流量平台，提升网站流量和排名，真实搜索流量，刷人气.html">登录</a>
-				<span class="fr"><a
-					href="http://www.liuliangfu.com/help/help_center_pro?left_list_id=100"
-					target="_blank">帮助中心</a>
-				</span>
+				<a href="${ctx }/web/shop/register_index">注册</a> ｜ <a href="#">登录</a>
+        <span class="fr"><a href="${ctx}/help/help_center.jsp" target="_blank">帮助中心</a></span>
 			</div>
 		</div>
 
@@ -194,15 +188,6 @@
 			</div>
 		</div>
 
-		<script language="javascript"
-			src="${ctx}/static_shop/js/jquery-1.7.2.js">
-		</script>
-		<div class="footer">
-			<div>
-				Copyright (c) 2015 Liuliang*** Inc. All Rights.
-				<a href="http://www.miitbeian.gov.cn/" target="_blank" style="color: #000000;">苏ICP备******号-*</a>
-				<!-- <a href="http://www.anquan.org/s/www.renqifu.com" name="mCjpeW3arepiX4qyXbu3uXd5998GIHXei6m7162beGTVpCrKl6" >安全联盟</a> -->
-			</div>
-		</div>
+			<jsp:include page="/include/footer.jsp" flush="true"></jsp:include>
 	</body>
 </html>

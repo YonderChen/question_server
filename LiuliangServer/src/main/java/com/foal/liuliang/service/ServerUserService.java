@@ -150,6 +150,7 @@ public class ServerUserService extends DaoSupport {
 		user.setModifyTime(new Date());
 		user.setParent(userBean.getOperator());
 		user.setCreateTime(new Date());
+		user.setUserqq(userBean.getUserqq());
 		String[] passwords = StringUtil.generatePassword(userBean.getPassword());
 		user.setAssistantPassword(passwords[1]);
 		user.setEncryptedPassword(passwords[0]);

@@ -11,6 +11,7 @@ public class ServerUserBean extends Page {
 	private String roleIds;
 	private String oldPassword;
 	private String newPassword;
+	private String userqq;
 	private int status;
 
 	public String getUsername() {
@@ -99,6 +100,14 @@ public class ServerUserBean extends Page {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public String getUserqq() {
+		return userqq;
+	}
+
+	public void setUserqq(String userqq) {
+		this.userqq = userqq;
 	}
 
 }

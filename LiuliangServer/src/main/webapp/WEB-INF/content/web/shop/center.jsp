@@ -19,14 +19,14 @@
     <link rel="stylesheet" href="${ctx}/static_shop/style/popup.css">
 </head>
 <body>
-			<jsp:include page="top.jsp" flush="true"></jsp:include>
+			<jsp:include page="/include/top.jsp" flush="true"></jsp:include>
 <div class="breadcrumbs">
     <div class="wrap"><a href="http://www.liuliangfu.com/">首页</a> &gt; <a href="http://www.liuliangfu.com/center#">个人中心</a></div>
 </div>
-			<jsp:include page="banner.jsp" flush="true"></jsp:include>
+			<jsp:include page="/include/banner.jsp" flush="true"></jsp:include>
     
     <div class="wrap clearfix">
-			<jsp:include page="left.jsp" flush="true"></jsp:include> 
+			<jsp:include page="/include/left.jsp" flush="true"></jsp:include> 
 	<div class="right">
     	<!-- 右侧顶部账号积分等信息 start -->
     	<div class="righttop">
@@ -334,13 +334,8 @@
 
 <div class="business-popup-under J_popBG"></div>
 <div class="business-popup J_popCON none"></div>
-		<div class="footer">
-			<div>
-				Copyright (c) 2015 Liuliang*** Inc. All Rights.
-				<a href="http://www.miitbeian.gov.cn/" target="_blank" style="color: #000000;">苏ICP备******号-*</a>
-				<!-- <a href="http://www.anquan.org/s/www.renqifu.com" name="mCjpeW3arepiX4qyXbu3uXd5998GIHXei6m7162beGTVpCrKl6" >安全联盟</a> -->
-			</div>
-		</div>
+
+			<jsp:include page="/include/footer.jsp" flush="true"></jsp:include>
 
 <script>
 $(function (){

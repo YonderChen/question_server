@@ -2,7 +2,8 @@
 <div class="state" style="background:#F2F2F2;">
     <div class="wrap">
     	        <a href="http://www.liuliangfu.com/center/userinfo">${sessionServerUserInfo.username }</a> ｜ <a href="${ctx }/web/shop/logout">退出</a>
-        <span class="fr"><a href="http://www.liuliangfu.com/help/help_center_pro?left_list_id=100" target="_blank">帮助中心</a></span>
+        
+        <span class="fr"><a href="${ctx}/help/help_center.jsp" target="_blank">帮助中心</a></span>
         <span class="fr" style="margin-right:40px;">积分: ${sessionServerUserInfo.score } 点</span>
         <span class="fr" style="margin-right:40px;">
             <a href="http://www.liuliangfu.com/pay/pay_score">购买积分</a> ｜ <a href="http://www.liuliangfu.com/pay/pay_group">续费会员</a>
