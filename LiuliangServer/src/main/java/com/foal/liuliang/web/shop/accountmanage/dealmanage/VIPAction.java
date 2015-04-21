@@ -1,4 +1,6 @@
-package com.foal.liuliang.web.admin.usershop.accountmanage.dealmanage;
+package com.foal.liuliang.web.shop.accountmanage.dealmanage;
+
+import java.util.Date;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
@@ -19,7 +21,7 @@ public class VIPAction extends UserBaseAction implements ModelDriven<LLDealOrder
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6845704668780315015L;
+	private static final long serialVersionUID = -1082183931451271908L;
 
 	private LLDealOrderBean llOrderBean = new LLDealOrderBean();
 
@@ -32,6 +34,7 @@ public class VIPAction extends UserBaseAction implements ModelDriven<LLDealOrder
 
 	@Action("renewalvip")
 	public String renewalvip() {
+		this.setAttrToRequest("nowDate", new Date());
 		return SUCCESS;
 	}
 	

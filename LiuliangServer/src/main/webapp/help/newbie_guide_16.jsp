@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="../static_shop/style/help_center.css">
 </head>
 <body>
-			<jsp:include page="/include/top_unlogin.jsp" flush="true"></jsp:include>
+			<jsp:include page="/include/top.jsp" flush="true"></jsp:include>
 <div class="breadcrumbs">
     <div class="wrap"><a href=${ctx }>首页</a> &gt; <a href="${ctx}/help/help_center.jsp?left_list_id=-1">新手指南</a></div>
 </div>
@@ -42,7 +42,7 @@
 	</div>
 </div>
 
-			<jsp:include page='/include/footer.jsp' flush="true"></jsp:include>
+			<jsp:include page="/include/footer.jsp" flush="true"></jsp:include>
 
 
 </body></html>

@@ -128,6 +128,22 @@ public class ServerUserService extends DaoSupport {
 		this.hibernateDao.update(user);
 		return user;
 	}
+	
+	public ServerUser updateServerUserQQ(ServerUserBean userBean) {
+		ServerUser user = this.getServerUser(userBean.getUserId());
+		user.setUserqq(userBean.getUserqq());
+		user.setModifyTime(new Date());
+		this.hibernateDao.update(user);
+		return user;
+	}
+	
+	public ServerUser updateServerUserPhone(ServerUserBean userBean) {
+		ServerUser user = this.getServerUser(userBean.getUserId());
+		user.setPhone(userBean.getPhone());
+		user.setModifyTime(new Date());
+		this.hibernateDao.update(user);
+		return user;
+	}
 
 	public boolean addServerUser(ServerUserBean userBean, StringBuffer sb) {
 		String queryHql = "from ServerUser as t where t.username = ?";

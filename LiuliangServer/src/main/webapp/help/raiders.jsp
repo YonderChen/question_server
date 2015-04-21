@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="../static_shop/style/help_center.css">
 </head>
 <body style="background:#FBF0C2;">
-			<jsp:include page="/include/top_unlogin.jsp" flush="true"></jsp:include>
+			<jsp:include page="/include/top.jsp" flush="true"></jsp:include>
 <div class="breadcrumbs">
     <div class="wrap"><a href=${ctx }>首页</a> &gt; <a href="${ctx}/help/help_center.jsp?left_list_id=0">网站公告</a></div>
 </div>
@@ -80,7 +80,7 @@
     <p class="p2 h-fun-pb12"><span>刷完单之后的2~5天里，仍然需要引一点流量进店</span>，维持一个良好的数据反馈，同时增加刷单的安全性。引入的流量不用太多，因为 也要控制转化率，引流量也是有利于维持一段时间的搜索排名，间接带动真实订单的转化。</p>
     <p class="p3">今天就分享这么多，预祝各位商家生意兴隆、财源广进！流量符愿与您携手共创 2015 的新辉煌！</p>
 </div>
-			<jsp:include page='/include/footer.jsp' flush="true"></jsp:include>
+			<jsp:include page="/include/footer.jsp" flush="true"></jsp:include>
 
 
 </body></html>

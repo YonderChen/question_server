@@ -48,18 +48,22 @@
                         -->
                         
 					<s:if test="#session.sessionServerUserInfo.vipEndTime == null">
-                    	<a href="http://www.liuliangfu.com/pay/pay_group" target="_blank">&nbsp;&nbsp;&nbsp;充值VIP</a>
+                    	<a href="${ctx }/web/shop/accountmanage/dealmanage/renewalvip" target="_blank">&nbsp;&nbsp;&nbsp;开通VIP会员</a>
                     </s:if>
 					<s:else>
 						<span class="span2">到期时间：<s:date name="#session.sessionServerUserInfo.vipEndTime" format="yyyy-MM-dd"/></span>
-						<a href="http://www.liuliangfu.com/pay/pay_group" target="_blank">续费VIP会员</a>
+						<a href="${ctx }/web/shop/accountmanage/dealmanage/renewalvip" target="_blank">续费VIP会员</a>
                     </s:else>
                 </div>
                 <div class="user_grader business-left">
                     <span>安全等级：</span>
-                    <a class="icon-setting phone" href="http://www.liuliangfu.com/center/userinfo/mobile"></a>
-                    <a class="icon-setting mess" href="http://www.liuliangfu.com/center/userinfo/email"></a>
-                    <a class="icon-setting money" href="http://www.liuliangfu.com/center/userinfo/pwd"></a>
+					<s:if test="#session.sessionServerUserInfo.phone != null">
+                    	<a class="icon-setting phone" href="${ctx}/web/shop/userinfo?menu=phone"></a>
+                    </s:if>
+					<s:if test="#session.sessionServerUserInfo.email != null">
+                    	<a class="icon-setting mess" href="${ctx}/web/shop/userinfo?menu=qq"></a>
+                    </s:if>
+                    <a class="icon-setting money" href="${ctx}/web/shop/userinfo?menu=pwd"></a>
                 </div>
                 
             </div>

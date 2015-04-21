@@ -15,7 +15,7 @@
         <dt>账户管理</dt>
         <dd><a target="_self" href="${ctx }/web/shop/userinfo">基本信息</a></dd>
         <dd><a target="_self" href="http://www.liuliangfu.com/bind/bind_shop">绑定店铺</a></dd>
-        <dd><a target="_self" href="http://www.liuliangfu.com/pay/pay_group">续费会员</a></dd>
-        <dd><a target="_self" href="http://www.liuliangfu.com/pay/pay_score">购买积分</a></dd>
+        <dd><a target="_self" href="${ctx }/web/shop/accountmanage/dealmanage/renewalvip">续费会员</a></dd>
+        <dd><a target="_self" href="${ctx }/web/shop/accountmanage/dealmanage/get_score">购买积分</a></dd>
     </dl>
 </div>    

@@ -19,7 +19,7 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 2232740916395520190L;
+	private static final long serialVersionUID = 6326182089465782556L;
 
 	private ServerUserBean userBean = new ServerUserBean();
 	
@@ -28,11 +28,6 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 
 	public ServerUserBean getModel() {
 		return this.userBean;
-	}
-	
-	@Action("index")
-	public String index() {
-		return SUCCESS;
 	}
 	
 	@Action("register_index")
@@ -92,37 +87,12 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 			this.ajaxWrite(ajaxBean);
 			return null;
 		}
-		this.setAttrToSession("menuHtml", this.getMenuHtml(menuList));
-		this.setAttrToSession("menuList", this.serverUserService.queryAllMenu());
 		String redirectUrl = Constant.PRO_CTX_VALUE + "/web/shop/center";
 		this.setAttrToSession("redirectUrl", redirectUrl);
 		ajaxBean = new AjaxBean(true);
 		ajaxBean.setRedirectUrl(redirectUrl);
 		this.ajaxWrite(ajaxBean);
 		return null;
-	}
-	
-	private String getMenuHtml(List<Menu> menuList) {
-		StringBuffer sb = new StringBuffer();
-		Menu parent = null;
-		for (int i = 0; i < menuList.size(); i++) {
-			Menu menu = menuList.get(i);
-			if (menu.getLevel() == 0) {
-				if (parent != null) {
-					sb.append("</ul></dd>");
-				}
-				parent = menu;
-				sb.append("<dd>");
-				sb.append("<div class='title'>");
-				sb.append("<span><img src='" + Constant.PRO_CTX_VALUE + "/images/" + menu.getIcon() + "' /></span>" + menu.getText());
-				sb.append("</div>");
-				sb.append("<ul class='menuson'>");
-			} else if (menu.getLevel() == 1) {
-				sb.append("<li><cite></cite><a href='" + Constant.PRO_CTX_VALUE + "/" + menu.getHrefUrl() + "' target='"+menu.getTarget()+"'>"+menu.getText()+"</a><i></i></li>");
-			}
-		}
-		sb.append("</ul></dd>");
-		return sb.toString();
 	}
 	
 	@Action("logout")

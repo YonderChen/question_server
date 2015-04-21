@@ -13,6 +13,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="${ctx}/images/favicon.ico" media="screen">
 	<script type="text/javascript" src="${ctx}/js/base.js"></script>
   	<script type="text/javascript" src="${ctx}/js/jquery.js"></script>
+  	<script type="text/javascript" src="${ctx}/js/jquery-form.js"></script>
 	<link rel="stylesheet" href="${ctx}/static_shop/style/common.css">
     <link rel="stylesheet" href="${ctx}/static_shop/style/person_center.css">
     <link rel="stylesheet" href="${ctx}/static_shop/style/popup.css">
@@ -38,11 +39,11 @@
                     <div class="business-info-list-hd">
                       <span>登录密码</span>
                       <b class="set">已设置</b>
-                      <a class="fr" href="javascript:;">修改</a>
+                      <a class="fr" id="pwd_edit_a" href="javascript:;">修改</a>
                     </div>
-                    <div class="business-info-list-bd" style="display:none;">
+                    <div id="pwd_edit_div" class="business-info-list-bd" style="display:none;">
                     
-                        <form action="/center/set_pwd" method="post" name="user-adderss" id="from-userpwd">
+                        <form action="#" method="post" name="user-adderss" id="from-userpwd">
                         <input name="op" type="hidden" value="pwd">
                         <div class="user-info-form user-login-box">
                             <p class="setTips">为了您的账号安全，请定期更换登陆密码，并确保登录密码设置与提现密码不一样。</p>
@@ -51,7 +52,7 @@
                               <div class="inp">
                                 <em class="inpbox">
                                   <i class="icon-P"></i>
-                                  <input type="password" placeholder="请输入密码" autocomplete="off" cname="one" class="txt placebox" name="old_pwd" regname="loginpassword" emptyerr="密码不能为空">
+                                  <input type="password" id="oldPassword" placeholder="请输入密码" autocomplete="off" cname="one" class="txt placebox" name="old_pwd" regname="loginpassword" emptyerr="密码不能为空">
                                 </em>
                                                               </div>
                             </div>
@@ -60,7 +61,7 @@
                               <div class="inp">
                                 <em class="inpbox">
                                   <i class="icon-P"></i>
-                                  <input type="password" placeholder="请输入密码" cname="one" class="txt placebox" name="new_pwd1" confirmationpass="password" regname="loginpassword" emptyerr="密码不能为空">
+                                  <input type="password" id="newPassword" placeholder="请输入密码" cname="one" class="txt placebox" name="new_pwd1" confirmationpass="password" regname="loginpassword" emptyerr="密码不能为空">
                                 </em>
                               </div>
                             </div>  
@@ -69,16 +70,62 @@
                               <div class="inp">
                                 <em class="inpbox">
                                   <i class="icon-P"></i>
-                                  <input type="password" placeholder="请输入确认密码" cname="one" class="txt placebox" name="new_pwd2" confirmation="password" regname="loginpassword" emptyerr="确认密码不能为空" confirmationerr="输入密码不一致,请重新填写">
+                                  <input type="password" id="newPassword_c" placeholder="请输入确认密码" cname="one" class="txt placebox" name="new_pwd2" confirmation="password" regname="loginpassword" emptyerr="确认密码不能为空" confirmationerr="输入密码不一致,请重新填写">
                                 </em>          
                               </div>
                             </div>
                             <p class="item itembtnp">
-                              <a href="javascript:;" class="itembtn">确认修改</a>
+                              <a href="javascript:editPass();" class="itembtn">确认修改</a>
                                                           </p>                                   
                         </div>
                         </form>
-                        
+<script type="text/javascript"> 
+
+	function editPass() {
+		if ($("#oldPassword").val().trim() == "") {
+			alert("原始密码不能为空");
+			$("#oldPassword").select();
+			return;
+		}
+		if ($("#newPassword").val().trim() == "") {
+			alert("新密码不能为空");
+			$("#newPassword").select();
+			return;
+		}
+		if ($("#newPassword").val().trim() != $("#newPassword_c").val().trim()) {
+			alert("两次新密码不一致");
+			$("#newPassword_c").select();
+			return;
+		}
+		var url = "${ctx}/web/shop/edit_pass";
+		$.ajax({
+			url:url,
+			type:'post',
+			data:{
+				oldPassword: $("#oldPassword").val().trim(),
+				newPassword:$("#newPassword").val().trim()
+			},
+			dataType:'text',
+			timeout:60000,
+			error: function(e) {
+				alert("连接服务器超时,请稍后再试.");
+			},
+			success: function(result){
+				result = eval("("+result+")");
+				if (result.success) {
+					$("#oldPassword").val("");
+					$("#newPassword").val("");
+					$("#newPassword_c").val("");
+				} else {
+					$("#newPassword").val("");
+					$("#newPassword_c").val("");
+					$("#oldPassword").select();
+				}
+				alert(result.msg);
+			}
+		});
+	}
+</script>
                     </div>           
                 </div>
                 
@@ -90,12 +137,12 @@
                           <div class="business-info-list-small-list">
                             <div class="business-info-list-small-list-hd">
                               <span>QQ</span>
-                              <b>${sessionServerUserInfo.userqq}</b>
-                              <a class="fr" href="javascript:;">修改</a>                       
+                              <b id="user_qq_info">${sessionServerUserInfo.userqq}</b>
+                              <a class="fr" id="qq_edit_a" href="javascript:;">修改</a>                       
                             </div>
-                            <div class="business-info-list-small-list-bd" style="display:none;">
+                            <div id="qq_edit_div" class="business-info-list-small-list-bd" style="display:none;">
                             <!-- 修改QQ -->
-                            <form action="/center/set_qq" method="post" name="user-adderss" id="from-userqq">
+                            <form action="#" method="post" name="user-adderss" id="from-userqq">
                             <input name="op" type="hidden" value="qq">
                               <div class="user-info-form user-qq-box">
                                 <p class="setTips">为了便于与客服联系，请填写您的常用QQ</p>
@@ -109,11 +156,43 @@
                                                                       </div>
                                 </div>
                                 <p class="item itembtnp">
-                                  <a href="javascript:;" class="itembtn">确认修改</a>
+                                  <a href="javascript:edit_qq();" class="itembtn">确认修改</a>
                                                                   </p>                                                
                              </div>
                              </form>
                             
+<script type="text/javascript"> 
+
+	function edit_qq() {
+		if ($("#userqq").val().trim() == "") {
+			alert("QQ不能为空");
+			$("#userqq").select();
+			return;
+		}
+		var url = "${ctx}/web/shop/edit_qq";
+		$.ajax({
+			url:url,
+			type:'post',
+			data:{
+				userqq: $("#userqq").val().trim(),
+			},
+			dataType:'text',
+			timeout:60000,
+			error: function(e) {
+				alert("连接服务器超时,请稍后再试.");
+			},
+			success: function(result){
+				result = eval("("+result+")");
+				if (result.success) {
+					$("#user_qq_info").html($("#userqq").val());
+					$("#userqq").val("");
+				}
+				alert(result.msg);
+			}
+		});
+	}
+	
+</script>
                             <!-- 修改QQ结束 -->
                             </div>
                           </div>
@@ -131,17 +210,17 @@
                           <div class="business-info-list-small-list">
                             <div class="business-info-list-small-list-hd">
                               <span>手机</span>
-                              <b>${sessionServerUserInfo.phone}</b>
+                              <b id="user_phone_info">${sessionServerUserInfo.phone}</b>
                               
-                              <a class="fr" href="javascript:;">修改</a>
+                              <a class="fr" id="phone_edit_a" href="javascript:;">修改</a>
                               
                               <!-- <a class="fr" href="javascript:;">设置</a> -->
                                                 
                             </div>
-                            <div class="business-info-list-small-list-bd" style="display:none;">
+                            <div id="phone_edit_div" class="business-info-list-small-list-bd" style="display:none;">
                             <!-- 修改手机  -->
                                 <div class="user-info-form user-mobile-box">
-                                <form action="/center/set_mobile" method="post" name="user-adderss" id="from-mobile">
+                                <form action="#" method="post" name="user-adderss" id="from-mobile">
                                 <input name="op" type="hidden" value="tel">
                                    <p class="setTips">为了便于我们与您联系，请填写您的常用手机号</p>
                                     <div class="item clearfix">
@@ -154,9 +233,47 @@
                                                                               </div>
                                     </div> 
                                     <p class="item itembtnp">
-                                      <a href="javascript:;" class="itembtn">确认修改</a>
+                                      <a href="javascript:edit_phone();" class="itembtn">确认修改</a>
                                                                           </p> 
-                                </form>                                               
+                                </form>                
+<script type="text/javascript"> 
+$(function(){
+	var menu = getQueryString("menu");
+	if(menu != null) {
+		$("#" + menu + "_edit_div").show();
+	}
+})
+
+	function edit_phone() {
+		if ($("#usermoblie").val().trim() == "") {
+			alert("手机号不能为空");
+			$("#usermoblie").select();
+			return;
+		}
+		var url = "${ctx}/web/shop/edit_phone";
+		$.ajax({
+			url:url,
+			type:'post',
+			data:{
+				phone: $("#usermoblie").val().trim(),
+			},
+			dataType:'text',
+			timeout:60000,
+			error: function(e) {
+				alert("连接服务器超时,请稍后再试.");
+			},
+			success: function(result){
+				result = eval("("+result+")");
+				if (result.success) {
+					$("#user_phone_info").html($("#usermoblie").val());
+					$("#usermoblie").val("");
+				}
+				alert(result.msg);
+			}
+		});
+	}
+	
+</script>                               
                                  </div> 
                             <!-- 修改手机结束 -->	
                             </div>

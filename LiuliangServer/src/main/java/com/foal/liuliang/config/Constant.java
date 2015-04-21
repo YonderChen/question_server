@@ -56,13 +56,22 @@ public class Constant {
 	}
 	public static final Map<String, Integer> PriceScoreMap = new HashMap<String, Integer>();//购买积分，价格-积分
 	static {
-		PriceScoreMap.put("50", 500);
-		PriceScoreMap.put("100", 1200);
-		PriceScoreMap.put("500", 6000);
+		PriceScoreMap.put("1000", 10000);
+		PriceScoreMap.put("2000", 21818);
+		PriceScoreMap.put("5000", 60000);
+		PriceScoreMap.put("10000", 133333);
+		PriceScoreMap.put("20000", 300000);
+		PriceScoreMap.put("30000", 450000);
+	}
+	public static final Map<String, Integer> VIPTimePriceMap = new HashMap<String, Integer>();//VIP续费月数，价格
+	static {
+		VIPTimePriceMap.put("6", 120);
+		VIPTimePriceMap.put("9", 180);
+		VIPTimePriceMap.put("12", 216);
+		VIPTimePriceMap.put("24", 398);
 	}
 	public static int QuickVerifyCostScore = 50;//优先审单花费积分
 	public static int QuickExecuteCostScore = 50;//优先执行花费积分
-	public static int VIPPriceRate = 50;//会员续费每个月价钱
 
 	public static final String OneVisitCostScoreKey = "oneVisitCostScore";
 	public static final String PageStayCostScoreMapKey = "pageStayCostScoreMap";
@@ -73,9 +82,10 @@ public class Constant {
 	public static final String VisitTimeCostScore2Key = "visitTimeCostScore2";
 	public static final String QuickVerifyCostScoreKey = "quickVerifyCostScore";
 	public static final String QuickExecuteCostScoreKey = "quickExecuteCostScore";
-	public static final String PriceScoreMapKey = "priceScoreMap";//购买积分价格参数，积分/价格
+	public static final String PriceScoreMapKey = "priceScoreMap";//购买积分价格参数，价格/积分
+	public static final String VIPTimePriceMapKey = "vipTimePriceMap";//VIP续费月数价格参数，月数/价格
 	public static final String PriceScore50Key = "priceScore50";//购买积分价格参数，50
 	public static final String PriceScore100Key = "priceScore100";//购买积分价格参数，100
 	public static final String PriceScore500Key = "priceScore500";//购买积分价格参数，500
-	public static final String VIPPriceRateKey = "VIPPriceRate";//购买积分价格参数，积分/价格
+	
 }

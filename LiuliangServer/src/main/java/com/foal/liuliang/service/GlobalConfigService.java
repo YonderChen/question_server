@@ -40,11 +40,6 @@ public class GlobalConfigService extends DaoSupport {
 	}
 
 	public void initBusinessParam(ServletContext context) {
-		Constant.VIPPriceRate = systemParamService.getIntSystemParam(Constant.VIPPriceRateKey);//会员续费每个月价钱
-		Constant.PriceScoreMap.put("50", systemParamService.getIntSystemParam(Constant.PriceScore50Key));
-		Constant.PriceScoreMap.put("100", systemParamService.getIntSystemParam(Constant.PriceScore100Key));
-		Constant.PriceScoreMap.put("500", systemParamService.getIntSystemParam(Constant.PriceScore500Key));
-		
 		Constant.OneVisitCostScore = systemParamService.getIntSystemParam(Constant.OneVisitCostScoreKey);//每个流浪花费积分
 		Constant.PageStayCostScoreMap.put("0", 0);
 		Constant.PageStayCostScoreMap.put("1", systemParamService.getIntSystemParam(Constant.PageStayCostScore1Key));
@@ -61,7 +56,7 @@ public class GlobalConfigService extends DaoSupport {
 		context.setAttribute(Constant.QuickVerifyCostScoreKey, Constant.QuickVerifyCostScore);
 		context.setAttribute(Constant.QuickExecuteCostScoreKey, Constant.QuickExecuteCostScore);
 		context.setAttribute(Constant.PriceScoreMapKey, Constant.PriceScoreMap);
-		context.setAttribute(Constant.VIPPriceRateKey, Constant.VIPPriceRate);
+		context.setAttribute(Constant.VIPTimePriceMapKey, Constant.VIPTimePriceMapKey);
 	}
 	
 }

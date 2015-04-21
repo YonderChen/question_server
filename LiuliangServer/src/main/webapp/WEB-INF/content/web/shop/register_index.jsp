@@ -101,7 +101,7 @@
 	</script>
 </head>
 <body>
-			<jsp:include page="/include/top_unlogin.jsp" flush="true"></jsp:include>
+			<jsp:include page="/include/top.jsp" flush="true"></jsp:include>
 <div class="breadcrumbs">
 	<div class="wrap"><a href="${ctx}">首页</a> &gt; <a href="${ctx}/web/shop/register_index">注册</a> &gt; <a href="${ctx}/web/shop/register_index">填写注册信息</a></div>
 </div>

@@ -197,11 +197,6 @@ INSERT INTO `t_system_param` VALUES ('visitTimeCostScore2', '增值服务，流�
 INSERT INTO `t_system_param` VALUES ('quickVerifyCostScore', '增值服务，优先审核花费积分数', '50', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
 INSERT INTO `t_system_param` VALUES ('quickExecuteCostScore', '增值服务，优先执行花费积分数', '50', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
 
-INSERT INTO `t_system_param` VALUES ('VIPPriceRate', 'VIP续费，续费VIP每个月的价格（元）', '50', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
-INSERT INTO `t_system_param` VALUES ('priceScore50', '购买积分，50元获得的积分数', '500', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
-INSERT INTO `t_system_param` VALUES ('priceScore100', '购买积分，100元获得的积分数', '1200', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
-INSERT INTO `t_system_param` VALUES ('priceScore500', '购买积分，500元获得的积分数', '6000', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
-
 -- ----------------------------
 -- Table structure for t_user_role
 -- ----------------------------

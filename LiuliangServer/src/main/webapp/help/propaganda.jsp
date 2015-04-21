@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="../static_shop/style/help_center.css">
 </head>
 <body style="background:#FBF0C2;">
-			<jsp:include page="/include/top_unlogin.jsp" flush="true"></jsp:include>
+			<jsp:include page="/include/top.jsp" flush="true"></jsp:include>
 <div class="breadcrumbs">
     <div class="wrap"><a href=${ctx }>首页</a> &gt; <a href="${ctx}/help/help_center.jsp?left_list_id=0">网站公告</a></div>
 </div>
@@ -80,7 +80,7 @@
             <div>更多常见问题，<a href="/help/help_center_pro?left_list_id=100">点击此处查看链接</a></div>
         </div>
     </div>
-			<jsp:include page='/include/footer.jsp' flush="true"></jsp:include>
+			<jsp:include page="/include/footer.jsp" flush="true"></jsp:include>
 
 
 </body></html>
