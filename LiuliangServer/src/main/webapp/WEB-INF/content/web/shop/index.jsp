@@ -1,7 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <!DOCTYPE html>
-<!-- saved from url=(0036)http://www.liuliangfu.com/user/login -->
 <html lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -98,13 +97,13 @@
 		<div class="state" style="background: #F2F2F2;">
 			<div class="wrap">
 				<a href="${ctx }/web/shop/register_index">注册</a> ｜ <a href="#">登录</a>
-        <span class="fr"><a href="${ctx}/help/help_center.jsp" target="_blank">帮助中心</a></span>
+        <span class="fr"><a href="${ctx}/help/help_center.jsp?left_list_id=-2" target="_blank">帮助中心</a></span>
 			</div>
 		</div>
 
 		<div class="header">
 			<div class="wrap">
-				<a class="logo fl" href="http://www.liuliangfu.com/"
+				<a class="logo fl" href="${ctx}"
 					style="margin-top: 7px;"><img
 						src="${ctx}/static_shop/images/logo.png">
 				</a>
@@ -119,7 +118,7 @@
 					<div id="slider3" class="slider">
 						<div class="conbox">
 							<div style="position: absolute; z-index: 9; opacity: 1;">
-								<a href="http://www.liuliangfu.com/"><img
+								<a href="${ctx}"><img
 										src="${ctx}/static_shop/images/imglist1.jpg"
 										height="315" width="513" alt="">
 								</a>
@@ -175,7 +174,7 @@
 								<!-- 需要验证码时换为此button  上面的button隐藏 -->
 								<input type="button" name="button" class="loginbtn" value="登  录" id="Button1" onclick="login();">
 								<div>
-									<a href="http://www.liuliangfu.com/user/register">注册账号</a>
+									<a href="${ctx}/web/shop/register_index">注册账号</a>
 									<p></p>
 									<a href="http://www.liuliangfu.com/user/find_passwd">忘记密码？</a>
 								</div>

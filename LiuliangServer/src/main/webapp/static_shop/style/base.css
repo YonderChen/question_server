@@ -2,7 +2,7 @@
 
 @charset "utf-8";
 
-/* é˜²æ­¢ç”¨æˆ·è‡ªå®šä¹‰èƒŒæ™¯é¢œè‰²å¯¹ç½‘é¡µçš„å½±å“ï¼Œæ·»åŠ è®©ç”¨æˆ·å¯ä»¥è‡ªå®šä¹‰å­—ä½“ */
+/* 防止用户自定义背景颜色对网页的影响，添加让用户可以自定义字体 */
 html {
     color:#666;
     background:#fff;
@@ -10,35 +10,35 @@ html {
     -ms-text-size-adjust: 100%;
 }
 
-/* å†…å¤–è¾¹è·é€šå¸¸è®©å„ä¸ªæµè§ˆå™¨æ ·å¼çš„è¡¨çŽ°ä½ç½®ä¸åŒ */
+/* 内外边距通常让各个浏览器样式的表现位置不同 */
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
     margin:0;padding:0;
 }
 
-/* é‡è®¾ HTML5 æ ‡ç­¾, IE éœ€è¦åœ¨ js ä¸­ createElement(TAG) */
+/* 重设 HTML5 标签, IE 需要在 js 中 createElement(TAG) */
 article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
     display:block;
 }
 
-/* HTML5 åª’ä½“æ–‡ä»¶è·Ÿ img ä¿æŒä¸€è‡´ */
+/* HTML5 媒体文件跟 img 保持一致 */
 audio,canvas,video {
     display: inline-block;*display: inline;*zoom: 1;
 }
 
-/* è¦æ³¨æ„è¡¨å•å…ƒç´ å¹¶ä¸ç»§æ‰¿çˆ¶çº§ font çš„é—®é¢˜ */
+/* 要注意表单元素并不继承父级 font 的问题 */
 body,button,input,select,textarea {
-    font:14px/1.5 'å¾®è½¯é›…é»‘','YaHei',tahoma,arial,"Hiragino Sans GB",\5b8b\4f53;
+    font:14px/1.5 '微软雅黑','YaHei',tahoma,arial,"Hiragino Sans GB",\5b8b\4f53;
 }
 input,select,textarea {
     font-size:100%;
 }
 
-/* åŽ»æŽ‰å„Table cell çš„è¾¹è·å¹¶è®©å…¶è¾¹é‡åˆ */
+/* 去掉各Table cell 的边距并让其边重合 */
 table {
     border-collapse:collapse;border-spacing:0;
 }
 
-/* IE bug fixed: th ä¸ç»§æ‰¿ text-align*/
+/* IE bug fixed: th 不继承 text-align*/
 th {
     text-align:inherit;
 }
@@ -46,22 +46,22 @@ th {
   background:#f0f0f0;
 }
 
-/* åŽ»é™¤é»˜è®¤è¾¹æ¡† */
+/* 去除默认边框 */
 fieldset,img {
     border:0;
 }
 
-/* ie6 7 8(q) bug æ˜¾ç¤ºä¸ºè¡Œå†…è¡¨çŽ° */
+/* ie6 7 8(q) bug 显示为行内表现 */
 iframe {
     display:block;
 }
 
-/* åŽ»æŽ‰ firefox ä¸‹æ­¤å…ƒç´ çš„è¾¹æ¡† */
+/* 去掉 firefox 下此元素的边框 */
 abbr,acronym {
     border:0;font-variant:normal;
 }
 
-/* ä¸€è‡´çš„ del æ ·å¼ */
+/* 一致的 del 样式 */
 del {
     text-decoration:line-through;
 }
@@ -71,17 +71,17 @@ address,caption,cite,code,dfn,em,th,var {
     font-weight:500;
 }
 
-/* åŽ»æŽ‰åˆ—è¡¨å‰çš„æ ‡è¯†, li ä¼šç»§æ‰¿ */
+/* 去掉列表前的标识, li 会继承 */
 ol,ul {
     list-style:none;
 }
 
-/* å¯¹é½æ˜¯æŽ’ç‰ˆæœ€é‡è¦çš„å› ç´ , åˆ«è®©ä»€ä¹ˆéƒ½å±…ä¸­ */
+/* 对齐是排版最重要的因素, 别让什么都居中 */
 caption,th {
     text-align:left;
 }
 
-/* æ¥è‡ªyahoo, è®©æ ‡é¢˜éƒ½è‡ªå®šä¹‰, é€‚åº”å¤šä¸ªç³»ç»Ÿåº”ç”¨ */
+/* 来自yahoo, 让标题都自定义, 适应多个系统应用 */
 h1,h2,h3,h4,h5,h6 {
     font-size:100%;
     font-weight:500;
@@ -91,25 +91,25 @@ q:before,q:after {
     content:'';
 }
 
-/* ç»Ÿä¸€ä¸Šæ ‡å’Œä¸‹æ ‡ */
+/* 统一上标和下标 */
 sub, sup {
     font-size: 75%; line-height: 0; position: relative; vertical-align: baseline;
 }
 sup { top: -0.5em; }
 sub { bottom: -0.25em; }
 
-/* æ­£å¸¸é“¾æŽ¥ æœªè®¿é—® */
+/* 正常链接 未访问 */
 a:link {
     /* color: #08c; */
 }
 
-/* é¼ æ ‡æ‚¬åœ */
+/* 鼠标悬停 */
 a:hover {
     color: #08c;
     text-decoration: underline;
 }
 
-/* é»˜è®¤ä¸æ˜¾ç¤ºä¸‹åˆ’çº¿ï¼Œä¿æŒé¡µé¢ç®€æ´ */
+/* 默认不显示下划线，保持页面简洁 */
 ins,a {
     text-decoration:none;
 }
@@ -118,7 +118,7 @@ body {
   min-width: 960px;
 }
 
-/* æ¸…ç†æµ®åŠ¨ */
+/* 清理浮动 */
 .fn-clear:after {
     visibility:hidden;
     display:block;
@@ -131,12 +131,12 @@ body {
     zoom:1; /* for IE6 IE7 */
 }
 
-/* éšè—, é€šå¸¸ç”¨æ¥ä¸Ž JS é…åˆ */
+/* 隐藏, 通常用来与 JS 配合 */
 body .fn-hide {
     display:none;
 }
 
-/* è®¾ç½®å†…è”, å‡å°‘æµ®åŠ¨å¸¦æ¥çš„bug */
+/* 设置内联, 减少浮动带来的bug */
 .fn-left,.fn-right {
     display:inline;
 }
@@ -147,14 +147,14 @@ body .fn-hide {
     float:right;
 }
 
-/* å•è¡Œæ–‡å­—æº¢å‡ºæ—¶å‡ºçŽ°çœç•¥å·ï¼Œéœ€è®¾å®šå®½åº¦ */
+/* 单行文字溢出时出现省略号，需设定宽度 */
 .fn-text-overflow {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-/* ç®€å•çš„æ¸å˜ */
+/* 简单的渐变 */
 .fn-linear {
     background: -webkit-gradient(linear, left top, left bottom, from(#fcfcfc), to(#f1f1f1));
     background: -moz-linear-gradient(top, #fcfcfc, #f1f1f1);
@@ -163,7 +163,7 @@ body .fn-hide {
     background: linear-gradient(top, #fcfcfc, #f1f1f1);
 }
 
-/* æµ…è‰²çš„æ¸å˜ */
+/* 浅色的渐变 */
 .fn-linear-light {
     background: -webkit-gradient(linear, left top, left bottom, from(#fcfcfc), to(#f9f9f9));
     background: -moz-linear-gradient(top, #fcfcfc, #f9f9f9);
@@ -172,7 +172,7 @@ body .fn-hide {
     background: linear-gradient(top, #fcfcfc, #f9f9f9);
 }
 
-/* äººæ°‘å¸ç¬¦å· */
+/* 人民币符号 */
 .fn-rmb {
     font-family: arial;
     font-style: normal;
@@ -180,7 +180,7 @@ body .fn-hide {
 }
 
 
-/* chrome ä¸‹å­—ä½“è¿‡å°çš„é—®é¢˜ */
+/* chrome 下字体过小的问题 */
 .fn-webkit-adjust {
     -webkit-text-size-adjust: none;
 }
@@ -539,9 +539,9 @@ body .fn-hide {
   zoom: 1;
 }
 /**
-  Remove links dashed when clicked      
+  Remove links dashed when clicked		
 */
 a {
-    outline:none;
-    blr:expression(this.onFocus=this.blur())
+	outline:none;
+	blr:expression(this.onFocus=this.blur())
 }

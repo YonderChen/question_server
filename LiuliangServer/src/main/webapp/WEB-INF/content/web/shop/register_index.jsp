@@ -1,7 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <!DOCTYPE html>
-<!-- saved from url=(0039)http://www.liuliangfu.com/user/register -->
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -102,28 +101,9 @@
 	</script>
 </head>
 <body>
-<div class="state" style="background:#F2F2F2;">
-    <div class="wrap">
-    	        <a href="#">注册</a> ｜ <a href="${ctx}/web/shop/index">登录</a>
-        <span class="fr"><a href="${ctx}/help/help_center.jsp" target="_blank">帮助中心</a></span>
-    	    </div>
-</div>
-
-<div class="header">
-    <div class="wrap">
-        <a class="logo fl" href="http://www.liuliangfu.com/" style="margin-top:7px;"><img src="${ctx}/static_shop/images/logo.png"></a>
-        <menu class="business-menu fr" style="width:500px;">
-            <!-- <a href="/" target="_blank">首页</a> -->
-            <a href="http://www.liuliangfu.com/pay/pay_score" target="_blank">购买积分</a>
-            <a href="http://www.liuliangfu.com/trade/step_one" target="_blank">发布任务流量</a>
-            <a href="http://www.liuliangfu.com/center/invite_business?left-list-id=7" target="_blank">邀请返利</a>
-            <a href="http://www.liuliangfu.com/help/novice" target="_blank">新商家必读</a>
-            <a href="http://www.liuliangfu.com/center">个人中心</a>
-        </menu>
-    </div>
-</div>
+			<jsp:include page="/include/top_unlogin.jsp" flush="true"></jsp:include>
 <div class="breadcrumbs">
-	<div class="wrap"><a href="http://www.liuliangfu.com/">首页</a> &gt; <a href="http://www.liuliangfu.com/user/register#">注册</a> &gt; <a href="http://www.liuliangfu.com/user/register#">填写注册信息</a></div>
+	<div class="wrap"><a href="${ctx}">首页</a> &gt; <a href="${ctx}/web/shop/register_index">注册</a> &gt; <a href="${ctx}/web/shop/register_index">填写注册信息</a></div>
 </div>
 <div class="container">
     <div class="Shadowbox">

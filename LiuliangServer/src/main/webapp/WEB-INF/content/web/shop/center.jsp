@@ -1,7 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <!DOCTYPE html>
-<!-- saved from url=(0032)http://www.liuliangfu.com/center -->
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,7 +20,7 @@
 <body>
 			<jsp:include page="/include/top.jsp" flush="true"></jsp:include>
 <div class="breadcrumbs">
-    <div class="wrap"><a href="http://www.liuliangfu.com/">首页</a> &gt; <a href="http://www.liuliangfu.com/center#">个人中心</a></div>
+    <div class="wrap"><a href="${ctx}">首页</a> &gt; <a href="${ctx }/web/shop/center">个人中心</a></div>
 </div>
 			<jsp:include page="/include/banner.jsp" flush="true"></jsp:include>
     
@@ -95,31 +94,31 @@
                 </div>
                 <table style="margin-top:6px;width:100%" class="notice-table">
                                         <tbody><tr style="height:35px; color:#555; font-size:14px;">
-                      <td><a href="http://www.liuliangfu.com/help/help_center_notice?notice_id=11" target="_blank">【教程】商家如何设置引流的关键词</a></td>
+                      <td><a href="${ctx }/help/help_center_notice_11.jsp" target="_blank">【教程】商家如何设置引流的关键词</a></td>
                       <td style="width:90px;text-align:center;">2015/04/17</td>
                     </tr>
                                         <tr style="height:35px; color:#555; font-size:14px;">
-                      <td><a href="http://www.liuliangfu.com/help/help_center_notice?notice_id=9" target="_blank">【重要】访客IP地区的相对集中不会影响店铺的点击率</a></td>
+                      <td><a href="${ctx }/help/help_center_notice_9.jsp" target="_blank">【重要】访客IP地区的相对集中不会影响店铺的点击率</a></td>
                       <td style="width:90px;text-align:center;">2015/04/15</td>
                     </tr>
                                         <tr style="height:35px; color:#555; font-size:14px;">
-                      <td><a href="http://www.liuliangfu.com/help/help_center_notice?notice_id=2" target="_blank">流量符商家会员必读</a></td>
+                      <td><a href="${ctx }/help/help_center_notice_2.jsp" target="_blank">流量符商家会员必读</a></td>
                       <td style="width:90px;text-align:center;">2015/04/15</td>
                     </tr>
                                         <tr style="height:35px; color:#555; font-size:14px;">
-                      <td><a href="http://www.liuliangfu.com/help/help_center_notice?notice_id=4" target="_blank">网站购买会员的价格调整公告</a></td>
+                      <td><a href="${ctx }/help/help_center_notice_4.jsp" target="_blank">网站购买会员的价格调整公告</a></td>
                       <td style="width:90px;text-align:center;">2015/04/14</td>
                     </tr>
                                         <tr style="height:35px; color:#555; font-size:14px;">
-                      <td><a href="http://www.liuliangfu.com/help/propaganda" target="_blank">什么才是真实有效的搜索点击流量？</a></td>
+                      <td><a href="${ctx }/help/propaganda.jsp" target="_blank">什么才是真实有效的搜索点击流量？</a></td>
                       <td style="width:90px;text-align:center;">2015/04/14</td>
                     </tr>
                                         <tr style="height:35px; color:#555; font-size:14px;">
-                      <td><a href="http://www.liuliangfu.com/help/raiders" target="_blank">怎样用我们的流量才会更有效果？</a></td>
+                      <td><a href="${ctx }/help/raiders.jsp" target="_blank">怎样用我们的流量才会更有效果？</a></td>
                       <td style="width:90px;text-align:center;">2015/04/14</td>
                     </tr>
                                         <tr style="height:35px; color:#555; font-size:14px;">
-                      <td><a href="http://www.liuliangfu.com/help/propagandas" target="_blank">解析虚假流量如何导致商品降权</a></td>
+                      <td><a href="${ctx }/help/propagandas.jsp" target="_blank">解析虚假流量如何导致商品降权</a></td>
                       <td style="width:90px;text-align:center;">2015/04/14</td>
                     </tr>
                                     </tbody></table>
