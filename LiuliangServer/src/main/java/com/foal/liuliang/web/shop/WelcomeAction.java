@@ -89,6 +89,11 @@ public class WelcomeAction extends UserBaseAction implements ModelDriven<ServerU
 		return SUCCESS;
 	}
 
+	@Action("userinfo")
+	public String userinfo() {
+		return SUCCESS;
+	}
+
 	@Action("center")
 	public String center() {
 		return SUCCESS;
