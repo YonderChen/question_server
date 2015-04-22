@@ -12,6 +12,7 @@ import com.foal.liuliang.bean.PageBean;
 import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.dao.DaoSupport;
 import com.foal.liuliang.pojo.LLScoreOrder;
+import com.foal.liuliang.pojo.LLScoreRecord;
 import com.foal.liuliang.util.StringUtil;
 
 @SuppressWarnings("unchecked")
@@ -48,8 +49,19 @@ public class LLScoreOrderService extends DaoSupport {
 		if(llOrderBean.getStatus() == Constant.Status.Success){
 			order.setStatus(Constant.Status.Success);
 			//给用户增加积分
+			Date now = new Date();
 			order.getServerUser().incScore(order.getNum());
+			order.getServerUser().setModifyTime(now);
 			this.hibernateDao.update(order.getServerUser());
+			
+			LLScoreRecord record = new LLScoreRecord();
+			record.setServerUser(order.getServerUser());
+			record.setNum(order.getNum());
+			record.setType(Constant.ScoreRecordType.Buy);
+			record.setRemain(order.getServerUser().getScore());
+			record.setCreateTime(now);
+			record.setRemark("");
+			this.hibernateDao.save(record);
 		} else if (llOrderBean.getStatus() == Constant.Status.Create) {
 			order.setStatus(Constant.Status.Create);
 		} else {

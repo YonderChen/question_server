@@ -22,8 +22,6 @@
 <div class="breadcrumbs">
     <div class="wrap"><a href="${ctx}">首页</a> &gt; <a href="${ctx }/web/shop/center">个人中心</a></div>
 </div>
-			<jsp:include page="/include/banner.jsp" flush="true"></jsp:include>
-    
     <div class="wrap clearfix">
 			<jsp:include page="/include/left.jsp" flush="true"></jsp:include> 
 	<div class="business-right">

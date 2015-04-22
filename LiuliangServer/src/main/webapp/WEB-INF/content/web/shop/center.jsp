@@ -73,11 +73,11 @@
                 <div class="available_left">
                     <div class="available_yj">
                         <strong>可用积分：</strong><span><strong>${sessionServerUserInfo.score }</strong>点</span>
-                        <a href="http://www.liuliangfu.com/pay/pay_score" target="_blank">购买积分</a>
+                        <a href="${ctx}/web/shop/accountmanage/dealmanage/get_score" target="_blank">购买积分</a>
                     </div>
                     <div class="available_yj">
                         <strong>已用积分：</strong><span><strong>${sessionServerUserInfo.scoreUsed }</strong>点</span>
-                        <a href="http://www.liuliangfu.com/center/integral_record" target="_blank">积分记录</a>
+                        <a href="${ctx}/web/shop/accountmanage/dealmanage/score_record" target="_blank">积分记录</a>
                     </div>
                     
                 </div>

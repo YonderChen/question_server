@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.foal.liuliang.bean.AjaxBean;
 import com.foal.liuliang.bean.LLDealOrderBean;
-import com.foal.liuliang.bean.PageBean;
 import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.service.LLScoreOrderService;
 import com.foal.liuliang.util.GsonTools;
@@ -50,17 +49,4 @@ public class ScoreAction extends UserBaseAction implements ModelDriven<LLDealOrd
         return null;
 	}
 
-	@Action("index_score_order")
-    public String indexScoreOrder() {
-        return SUCCESS;
-    }
-
-	@Action("list_score_order")
-    public String list() {
-		llOrderBean.setUserId(getSessionServerUser().getUserId());
-		PageBean pageBean = this.llScoreOrderService.queryLLScoreOrder(llOrderBean);
-		this.setAttrToRequest("pageBean", pageBean);
-        return SUCCESS;
-    }
-	
 }

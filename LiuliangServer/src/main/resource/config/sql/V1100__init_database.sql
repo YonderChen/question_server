@@ -236,6 +236,21 @@ CREATE TABLE `ll_score_order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Table structure for ll_score_record
+-- ----------------------------
+DROP TABLE IF EXISTS `ll_score_record`;
+CREATE TABLE `ll_score_record` (
+  `record_id_` varchar(64) NOT NULL COMMENT '积分变动记录id',
+  `user_id_` varchar(64) NOT NULL COMMENT '购买用户',
+  `num_` int(11) NOT NULL COMMENT '积分数目',
+  `type_` int(11) NOT NULL COMMENT '变动类型，1：购买，2：消费',
+  `remain_` int(11) NOT NULL COMMENT '剩余积分',
+  `create_time_` datetime DEFAULT NULL COMMENT '创建时间',
+  `remark_` varchar(64) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`record_id_`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Table structure for ll_score_order
 -- ----------------------------
 DROP TABLE IF EXISTS `ll_vip_order`;

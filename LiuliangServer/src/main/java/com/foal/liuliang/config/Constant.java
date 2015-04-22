@@ -40,6 +40,11 @@ public class Constant {
 		public static final String Tmall = "tmall";
 		public static final String Jd = "jd";
 	}
+	
+	public static class ScoreRecordType {
+		public static final int Buy = 1;//购买
+		public static final int Cost = 2;//消费
+	}
 
 	public static int OneVisitCostScore = 3;//每个流浪花费积分
 	public static final Map<String, Integer> PageStayCostScoreMap = new HashMap<String, Integer>();//页面停留时间优化花费积分

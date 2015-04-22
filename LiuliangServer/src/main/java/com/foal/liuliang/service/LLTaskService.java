@@ -11,6 +11,7 @@ import com.foal.liuliang.bean.LLTaskBean;
 import com.foal.liuliang.bean.PageBean;
 import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.dao.DaoSupport;
+import com.foal.liuliang.pojo.LLScoreRecord;
 import com.foal.liuliang.pojo.LLShop;
 import com.foal.liuliang.pojo.LLTask;
 import com.foal.liuliang.pojo.ServerUser;
@@ -45,11 +46,25 @@ public class LLTaskService extends DaoSupport {
 		if (user.getScore() < costScore) {//积分不足
 			return false;
 		}
+		
+		Date now = new Date();
+		
 		user.costScore(costScore);
 		user.incScoreUsed(costScore);
 		serverUser.costScore(costScore);
 		serverUser.incScoreUsed(costScore);
+		serverUser.setModifyTime(now);
 		this.hibernateDao.update(serverUser);
+		
+		LLScoreRecord record = new LLScoreRecord();
+		record.setServerUser(serverUser);
+		record.setNum(costScore);
+		record.setType(Constant.ScoreRecordType.Cost);
+		record.setRemain(serverUser.getScore());
+		record.setCreateTime(now);
+		record.setRemark("");
+		this.hibernateDao.save(record);
+		
 		llTaskBean.setCostScore(costScore);
 		LLTask llTask = new LLTask();
 		llTask.setServerUser(llTaskBean.getOperator());
@@ -94,7 +109,7 @@ public class LLTaskService extends DaoSupport {
 		llTask.setIsQuickVerify(llTaskBean.getIsQuickVerify());
 		llTask.setIsQuickExecute(llTaskBean.getIsQuickExecute());
 		llTask.setCostScore(llTaskBean.getCostScore());
-		llTask.setCreateTime(new Date());
+		llTask.setCreateTime(now);
 		llTask.setStatus(Constant.Status.Create);
         this.hibernateDao.save(llTask);
         return true;

@@ -65,7 +65,6 @@
 <div class="breadcrumbs">
     <div class="wrap"><a href="${ctx}">首页</a> &gt; <a href="${ctx }/web/shop/accountmanage/dealmanage/get_score">购买积分</a></div>
 </div>
-			<jsp:include page="/include/banner.jsp" flush="true"></jsp:include>
     <div class="container">
     <div class="Shadowbox">
         <div class="Shadowboxp"></div>
