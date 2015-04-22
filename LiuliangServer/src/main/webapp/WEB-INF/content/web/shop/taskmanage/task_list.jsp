@@ -22,7 +22,7 @@
 <body>
 			<jsp:include page="/include/top.jsp" flush="true"></jsp:include>
 <div class="breadcrumbs">
-    <div class="wrap"><a href="${ctx}">首页</a> &gt; <a href="${ctx }/web/shop/taskmanage/task_list">管理任务</a></div>
+    <div class="wrap"><a href="${ctx}">首页</a> &gt; <a href="${ctx }/web/shop/taskmanage/task_list?left-list-id=1">管理任务</a></div>
 </div>
     <div class="wrap clearfix">
 			<jsp:include page="/include/left.jsp" flush="true"></jsp:include> 

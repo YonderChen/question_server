@@ -93,4 +93,5 @@ public class Constant {
 	public static final String PriceScore100Key = "priceScore100";//购买积分价格参数，100
 	public static final String PriceScore500Key = "priceScore500";//购买积分价格参数，500
 	
+	public static final int PlatBindShopMaxNum = 10;
 }

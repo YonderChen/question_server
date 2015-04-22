@@ -82,7 +82,7 @@
 <body>
 			<jsp:include page="/include/top.jsp" flush="true"></jsp:include>
 <div class="breadcrumbs">
-    <div class="wrap"><a href="${ctx}">首页</a> &gt; <a href="${ctx }/web/shop/accountmanage/dealmanage/get_score">续费会员</a></div>
+    <div class="wrap"><a href="${ctx}">首页</a> &gt; <a href="${ctx }/web/shop/accountmanage/dealmanage/renewalvip">续费会员</a></div>
 </div>
     <div class="container">
     <div class="Shadowbox">

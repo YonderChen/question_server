@@ -21,7 +21,7 @@
 <body>
 			<jsp:include page="/include/top.jsp" flush="true"></jsp:include>
 <div class="breadcrumbs">
-    <div class="wrap"><a href="${ctx}">首页</a> &gt; <a href="${ctx }/web/shop/center">基本信息</a></div>
+    <div class="wrap"><a href="${ctx}">首页</a> &gt; <a href="${ctx }/web/shop/userinfo?left-list-id=3">基本信息</a></div>
 </div>
     <div class="wrap clearfix">
 			<jsp:include page="/include/left.jsp" flush="true"></jsp:include> 

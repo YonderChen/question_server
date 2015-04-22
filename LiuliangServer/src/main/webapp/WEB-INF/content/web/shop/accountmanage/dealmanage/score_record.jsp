@@ -22,7 +22,7 @@
 <body>
 			<jsp:include page="/include/top.jsp" flush="true"></jsp:include>
 <div class="breadcrumbs">
-    <div class="wrap"><a href="${ctx}">首页</a> &gt; <a href="${ctx }/web/shop/center">积分记录</a></div>
+    <div class="wrap"><a href="${ctx}">首页</a> &gt; <a href="${ctx }/web/shop/accountmanage/dealmanage/score_record?left-list-id=2">积分记录</a></div>
 </div>
     <div class="wrap clearfix">
 			<jsp:include page="/include/left.jsp" flush="true"></jsp:include> 

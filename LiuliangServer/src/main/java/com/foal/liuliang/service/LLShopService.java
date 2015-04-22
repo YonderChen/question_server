@@ -121,6 +121,25 @@ public class LLShopService extends DaoSupport {
 		return true;
 	}
 	
+	public boolean checkShopNum(LLShopBean llShopBean) {
+        String queryHql = "select count(*) from LLShop as s where s.serverUser.userId = :userId and s.bindPlat = :bindPlat and s.status in (" + Constant.Status.Success + "," + Constant.Status.Create + ") ";
+        Map paramMap = new HashMap();
+        paramMap.put("userId", llShopBean.getUserId());
+        paramMap.put("bindPlat", llShopBean.getBindPlat());
+        int count = this.hibernateDao.getAllRow(queryHql, paramMap);
+		return count < Constant.PlatBindShopMaxNum;
+	}
+	
+	public boolean checkShopBindName(LLShopBean llShopBean) {
+        String queryHql = "select count(*) from LLShop as s where s.serverUser.userId = :userId and s.bindPlat = :bindPlat and s.bindName = :bindName and s.status in (" + Constant.Status.Success + "," + Constant.Status.Create + ") ";
+        Map paramMap = new HashMap();
+        paramMap.put("userId", llShopBean.getUserId());
+        paramMap.put("bindPlat", llShopBean.getBindPlat());
+        paramMap.put("bindName", llShopBean.getBindName());
+        int count = this.hibernateDao.getAllRow(queryHql, paramMap);
+		return count == 0;
+	}
+	
 	public boolean checkVerifyCode(LLShopBean llShopBean) {
 		//检测验证码是否正确
 		String goodsName = "";
@@ -166,7 +185,7 @@ public class LLShopService extends DaoSupport {
 		return goodsName.contains(llShopBean.getVerifyCode());
     }
 	
-	public void add(LLShopBean shopBean) {
+	public void add(LLShopBean shopBean, int status) {
 		LLShop llShop = new LLShop();
 		llShop.setServerUser(shopBean.getOperator());
 		llShop.setBindPlat(shopBean.getBindPlat());
@@ -175,7 +194,7 @@ public class LLShopService extends DaoSupport {
 		llShop.setVerifyCode(shopBean.getVerifyCode());
 		llShop.setVerifyGoodsUrl(shopBean.getVerifyGoodsUrl());
 		llShop.setCreateTime(new Date());
-		llShop.setStatus(Constant.Status.Create);
+		llShop.setStatus(status);
         this.hibernateDao.save(llShop);
     }
 	

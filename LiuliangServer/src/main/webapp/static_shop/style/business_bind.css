@@ -1,0 +1,58 @@
+
+
+
+
+.business-bind-wrap{overflow: hidden;}
+.business-bind-wrap .business-bind-left{float: left;width: 136px;padding-right: 18px;;border-right: 1px solid #DDD;height: 100%;display: block;padding-bottom: 2000px;margin-bottom: -2000px;}
+.business-bind-wrap .business-bind-leftno{border-right:0 none;}
+.business-bind-wrap .business-bind-left h3{height: 30px;line-height: 30px;font-size: 16px;color: #555;padding-left: 12px;}
+.business-bind-wrap .business-bind-left ul  li{line-height: 18px;border-bottom: 1px solid #DDD;position: relative;height: 50px;}
+.business-bind-wrap .business-bind-left ul  li input{vertical-align: middle;margin-right: 5px;}
+.business-bind-wrap .business-bind-left ul  li a{display: block;padding: 16px 0;padding-left: 12px;}
+.business-bind-wrap .business-bind-left ul  li a:hover{text-decoration: none;}
+.business-bind-wrap .business-bind-left ul  li i{width: 5px;height: 8px; background: url(../images/business/icon_left.gif) no-repeat;position: absolute;right: -19px;top:21px;display: none}
+.business-bind-wrap .business-bind-left ul  li.active i{display: block;}
+.business-bind-wrap .business-bind-right{float: right;width: 735px;;padding-bottom: 2000px;margin-bottom: -2000px;padding-left:20px;padding-right: 20px; }
+.business-bind .business-notice{text-align: left;margin: 20px 0;padding-left: 16px;color:#dd7d00;}
+.business-bind .business-notice{line-height: 24px;}
+.business-bind .business-notice em{color:red;}
+
+
+.business-bind-box{padding: 20px 0 0 0;}
+.business-bind-full{ cursor:pointer;}
+.business-bind-full p{text-align: left;line-height: 20px;height: 20px;overflow: hidden; color:#00A3EF; font-size:16px;}
+.business-bind-full p span{color:#666; font-size:12px;}
+
+.business-bind-list h5{height: 30px;line-height: 30px;font-size: 14px;color: #555;}
+.business-bind-list h5 span{font-size: 16px;color: #333;}
+
+.business-bind-list .business-notice{ font-size:12px;}
+
+.business-bind-list .item .tit{width: 160px;}
+.business-bind-list .item .inpbox{padding-left: 0;}
+.business-bind-list .item .inpbox input.txt.w380{width: 380px;}
+.business-bind-list .item .inpbox input.txt.w320{width: 320px;}
+.business-bind-list .item em.tips{margin-left: 5px;color:#999;}
+.business-bind-list p.item{padding-left: 120px;}
+.savebtn{display:block; width:175px; height: 40px; line-height: 40px; background: #2b9bfa; margin-left:100px; border-radius:5px; font-weight:bold; font-size:16px; text-align:center; color:#fff;}
+.savebtn:hover{background:#1492fd;}
+.disabled{background-position:-442px -853px}
+
+.bindingshop-yzm p{color:#555; font-size:14px; line-height:50px;}
+.binding-yzm span{display:inline-block; width:128px; border:1px solid #D2D2D2; height:35px; line-height:35px; text-align:center; color:#BF7000; border-radius:3px;}
+.binding-yzm a{display:inline-block; margin-left:20px; line-height:35px; color:#07D; font-size:14px;}
+.binding-shopimg{overflow:hidden; border:1px solid #D2D2D2; padding:5px;}
+
+.business-bind-left h3{font-weight:bold;}
+.business-bind-right h1{font-weight:bold; font-size:20px; color:#555; line-height:25px;}
+
+.pay-problem h3{font-weight:bold;}
+.pay-problem p{font-size:12px; margin-top:0;}
+
+.binding-shop-list{margin:20px 0; overflow:hidden;}
+.binding-shop-list table{width:100%;}
+.binding-shop-list table td{height:40px; text-align:center; color:#555; font-size:14px;}
+.binding-shop-list table td a.binding-shop-up{text-decoration:none; margin-left:10px;}
+.binding-shop-list table td span.shop-url{width:350px; display:inline-block; margin:0 auto; color:#0077DD; text-decoration: underline;}
+.binding-shop-list p{color:#555; line-height:30px;}
+.shop-num{display:inline-block; color:#555; float:right; font-size:14px; font-weight:normal; margin-top:10px;}
