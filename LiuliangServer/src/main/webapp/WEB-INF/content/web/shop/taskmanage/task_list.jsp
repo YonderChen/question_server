@@ -22,14 +22,14 @@
 <body>
 			<jsp:include page="/include/top.jsp" flush="true"></jsp:include>
 <div class="breadcrumbs">
-    <div class="wrap"><a href="${ctx}">首页</a> &gt; <a href="${ctx }/web/shop/center">积分记录</a></div>
+    <div class="wrap"><a href="${ctx}">首页</a> &gt; <a href="${ctx }/web/shop/taskmanage/task_list">管理任务</a></div>
 </div>
     <div class="wrap clearfix">
 			<jsp:include page="/include/left.jsp" flush="true"></jsp:include> 
 	<div class="business-right">
           <div class="business-right-comm">
               <div class="business-info">
-                <div class="integral-record-hd">积分记录</div>
+                <div class="integral-record-hd">管理任务</div>
                 
                 <div class="business-info-bd">
                     <div class="integral-serch">

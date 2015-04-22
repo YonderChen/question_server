@@ -23,7 +23,8 @@
             <result name="admin_welcome">/admin_welcome.jsp</result>
             <result name="shop_login">/shop_login.jsp</result>
             <result name="shop_welcome">/shop_welcome.jsp</result>
-            <result name="visit_limit">/visit_limit.jsp</result>
+            <result name="visit_limit_admin">/visit_limit_admin.jsp</result>
+            <result name="visit_limit_shop">/visit_limit_shop.jsp</result>
         </global-results>
     </package>
     <!--默认加载类的后缀的名字 ,deafault:Action-->

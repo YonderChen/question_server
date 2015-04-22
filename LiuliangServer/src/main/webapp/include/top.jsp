@@ -40,10 +40,8 @@ $(function(){
     <div class="wrap">
         <a class="logo fl" href="${ctx }" style="margin-top:7px;"><img src="${ctx}/static_shop/images/logo.png"></a>
         <menu class="business-menu fr" style="width:500px;">
-            <!-- <a href="/" target="_blank">首页</a> -->
             <a href="${ctx }/web/shop/accountmanage/dealmanage/get_score" target="_blank">购买积分</a>
-            <a href="http://www.liuliangfu.com/trade/step_one" target="_blank">发布任务流量</a>
-            <a href="http://www.liuliangfu.com/center/invite_business?left-list-id=7" target="_blank">邀请返利</a>
+            <a href="${ctx }/web/shop/taskmanage/add_task" target="_blank">发布任务流量</a>
             <a href="${ctx }/help/novice.jsp" target="_blank">新商家必读</a>
             <a href="${ctx }/web/shop/center">个人中心</a>
         </menu>

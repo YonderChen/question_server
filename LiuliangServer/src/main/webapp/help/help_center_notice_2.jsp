@@ -37,7 +37,7 @@
                 <p><span style="font-weight:bold;">网站的流量有哪些作用：</span>我们的流量是可以真实的被淘宝搜索引擎统计到的优质流量，可以有效稀释店铺转化率、提升店铺品牌权重和关键词点击率、优化店铺的各项数据从而提升搜索排名！完美支持淘宝、天猫等主流电商平台，真正的刷单必备！</p>
                 <p><span style="font-weight:bold;">网站提供的流量安不安全：</span>我们的流量点击分布在全国各地，来源绝对安全；流量是搜索关键词进店的，自然搜索，方式安全；流量进店后，会有至少1~2分钟的停留时间，会被淘宝系统默认为优质流量，真实有效，安全稳定；同时也会给淘宝后台系统一个良好的数据反馈，从而优化店铺权重，提升搜索排名。</p><br>
                 <h3>网站的操作流程:</h3>
-                <p><a href="/user/register">注册账号</a> → <a href="/user/login">登陆账号</a> → <a href="/pay/pay_group">购买会员</a> → <a href="/bind/bind_shop">绑定店铺</a> → <a href="/pay/pay_score">购买积分</a> → <a href="/trade/step_one">发布流量任务</a></p>
+                <p><a href="${ctx }/web/shop/register_index">注册账号</a> → <a href="${ctx}/web/shop/index">登陆账号</a> → <a href="${ctx }/web/shop/accountmanage/dealmanage/renewalvip">购买会员</a> → <a href="${ctx }/web/shop/accountmanage/shopmanage/bind_shop">绑定店铺</a> → <a href="${ctx }/web/shop/accountmanage/dealmanage/get_score">购买积分</a> → <a href="${ctx }/web/shop/taskmanage/add_task">发布流量任务</a></p>
                 <h3>如何收费：<br><span style="font-weight:normal; display:inline-block; margin:5px 0 0 10px;">网站的收费分为两部分：<span class="red">购买会员</span>和<span class="red">购买积分</span>。购买会员是获得网站的使用资格；购买积分是用于发布流量任务。</span></h3><br>
                 <h3>购买会员：</h3>
                 <p><img src="${ctx}/static_shop/images/help_center/notice1.jpg"></p>

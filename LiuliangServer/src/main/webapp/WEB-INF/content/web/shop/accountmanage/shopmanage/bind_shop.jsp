@@ -21,15 +21,37 @@
 <body>
 			<jsp:include page="/include/top.jsp" flush="true"></jsp:include>
 <div class="breadcrumbs">
-    <div class="wrap"><a href="${ctx}">首页</a> &gt; <a href="${ctx }/web/shop/center">个人中心</a></div>
+    <div class="wrap"><a href="${ctx}">首页</a> &gt; <a href="${ctx }/web/shop/accountmanage/shopmanage/bind_shop">绑定店铺</a></div>
 </div>
-    <div class="wrap clearfix">
-			<jsp:include page="/include/left.jsp" flush="true"></jsp:include> 
-	<div class="business-right">
-      	<div class="business-right-comm">
-		</div>
-	</div>
-</div>
+    <div class="container">
+    <div class="Shadowbox">
+        <div class="Shadowboxp"></div>
+        <div class="register">
+        
+            <div class="register-title">
+            	<span class="bram-title">绑定店铺</span>
+                
+                <div class="Process">
+                    <ul class="clearfix">
+                        <li class="cur" style="width:25%"><em class="Processyes">1<i></i></em><span class="processspan">注册账号</span><strong></strong></li>
+                        <li class="cur" style="width:25%"><em class="Processyes">2<i></i></em><span class="processspan">购买会员</span><strong></strong></li>
+                        <li class="cur" style="width:25%"><em class="Processyes">3<i></i></em><span class="processspan">绑定店铺</span><strong></strong></li>
+                        <li class="" style="width:25%"><em class="Processing">4<i></i></em><span class="processspan">购买积分</span><strong></strong></li>
+                        <li class="Processlast" style="width:82px"><em>5<i></i></em><span>发布流量任务</span><strong></strong></li>
+                    </ul>
+                </div>
+            </div>    
+            <div class="register-main">
+              
+                  <div class="register">
+                    <div class="register_info">
+                    </div>
+                  </div>
+              </div>
+                  
+        </div>
+    </div>
+    </div>
 			<jsp:include page="/include/footer.jsp" flush="true"></jsp:include>
 
 

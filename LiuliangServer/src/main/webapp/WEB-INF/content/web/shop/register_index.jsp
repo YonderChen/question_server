@@ -124,7 +124,7 @@
             </div>    
             <div class="register-main">
             <div class="register-tabs">
-				<form autocomplete="off" action="/user/register" method="post">
+				<form autocomplete="off" action="#" method="post">
                 <input type="hidden" name="invite_id" value="0">
                 <input type="hidden" name="partner" value="0">
                 <div class="register-tabs-bd">

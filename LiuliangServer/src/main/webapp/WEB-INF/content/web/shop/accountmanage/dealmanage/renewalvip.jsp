@@ -90,7 +90,7 @@
         <div class="register">
         
 					<s:if test="#session.sessionServerUserInfo.vipEndTime == null">
-					<div class="register-title">
+						<div class="register-title">
                             	<span class="bram-title">购买VIP会员</span>
 				                <!-- 续费VIP会员 -->
 				                <!-- <span class="bram-title">续费VIP会员</span> -->
@@ -103,7 +103,7 @@
 				                        <li class="Processlast" style="width:82px"><em>5<i></i></em><span>发布流量任务</span><strong></strong></li>
 				                    </ul>
 				                </div>
-				                            </div>
+				           </div>
 					</s:if>
 					<s:else>
 						<div class="register-title">
@@ -129,7 +129,7 @@
                     <div class="register">
                     <div class="register_info">
                         
-                        <form id="pay_form" action="/pay/pay_group" method="post" target="_blank">
+                        <form id="pay_form" action="#" method="post" target="_blank">
                         <div class="select_buy">
                         
                             <h1>1.请选择续费时长</h1>

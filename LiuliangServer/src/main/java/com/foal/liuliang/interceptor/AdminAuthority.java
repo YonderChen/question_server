@@ -41,29 +41,38 @@ public class AdminAuthority extends Authority {
 		ServerUser loginUser = (ServerUser)ctx.getSession().get(UserBaseAction.SESSION_USERINFO_KEY);
 		// 如果有登陆,通过认证
 		if (loginUser != null) {
-			if (requestUrl.equals(Constant.PRO_CTX_VALUE + "/web/admin/welcome") ||
-					requestUrl.equals(Constant.PRO_CTX_VALUE + "/web/admin/main") ||
-					requestUrl.equals(Constant.PRO_CTX_VALUE + "/web/admin/edit_pass") ||
-					requestUrl.equals(Constant.PRO_CTX_VALUE + "/web/admin/edit_info")) {
-				return true;
-			}
-			if (StringUtil.checkPassword(Constant.INIT_PASSWORD, loginUser.getEncryptedPassword(), loginUser.getAssistantPassword())) {
-				logger.info("必须修改密码");
-				this.setAuthorityUrl("admin_welcome");
-				return false;
-			}
 			if (!Constant.ADMIN_ID.equals(loginUser.getUserId())) {	//不是超级管理员，验证路径权限
 				List<String> roleIds = roleService.queryRoleIds(loginUser.getUserId());
-				if(StringTools.contains(requestUrl, Constant.PRO_CTX_VALUE + "/web/admin/useradmin/")) {
+				if(StringTools.contains(requestUrl, Constant.PRO_CTX_VALUE + "/web/admin/")) {
 					if (!roleIds.contains(Constant.ROLE_ID_USER_ADMIN)) {
 						logger.info("权限错误");
-						this.setAuthorityUrl("visit_limit");
+						if (roleIds.contains(Constant.ROLE_ID_USER_SHOP)) {
+							this.setAuthorityUrl("visit_limit_shop");
+						} else {
+							this.setAuthorityUrl("admin_login");
+						}
 						return false;
 					}
-				} else if(StringTools.contains(requestUrl, Constant.PRO_CTX_VALUE + "/web/admin/usershop/")) {
+					if (requestUrl.equals(Constant.PRO_CTX_VALUE + "/web/admin/welcome") ||
+							requestUrl.equals(Constant.PRO_CTX_VALUE + "/web/admin/main") ||
+							requestUrl.equals(Constant.PRO_CTX_VALUE + "/web/admin/edit_pass") ||
+							requestUrl.equals(Constant.PRO_CTX_VALUE + "/web/admin/edit_info")) {
+						return true;
+					}
+					if (StringUtil.checkPassword(Constant.INIT_PASSWORD, loginUser.getEncryptedPassword(), loginUser.getAssistantPassword())) {
+						logger.info("必须修改密码");
+						this.setAuthorityUrl("admin_welcome");
+						return false;
+					}
+					return true;
+				} else if(StringTools.contains(requestUrl, Constant.PRO_CTX_VALUE + "/web/shop/")) {
 					if (!roleIds.contains(Constant.ROLE_ID_USER_SHOP)) {
 						logger.info("权限错误");
-						this.setAuthorityUrl("visit_limit");
+						if (roleIds.contains(Constant.ROLE_ID_USER_ADMIN)) {
+							this.setAuthorityUrl("visit_limit_admin");
+						} else {
+							this.setAuthorityUrl("shop_login");
+						}
 						return false;
 					}
 				}

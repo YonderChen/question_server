@@ -77,7 +77,7 @@
             <p>答：对的，会员费和购买积分是分开的，要发布流量任务的话，需要先购买积分，1访客=3积分。</p>
             <h2>6、你们网站的流量是软件推还是人工刷？</h2>
             <p>答：您在我们网站发布完任务后，会由系统推送流量，根据你的搜索关键词，找到商品点击进店，绝对真实有效。</p>
-            <div>更多常见问题，<a href="/help/help_center_pro?left_list_id=100">点击此处查看链接</a></div>
+            <div>更多常见问题，<a href="${ctx}/help/help_center.jsp?left_list_id=-2">点击此处查看链接</a></div>
         </div>
     </div>
 			<jsp:include page="/include/footer.jsp" flush="true"></jsp:include>

@@ -10,6 +10,7 @@ import com.foal.liuliang.bean.ServerUserBean;
 import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.pojo.Menu;
 import com.foal.liuliang.pojo.ServerUser;
+import com.foal.liuliang.service.RoleService;
 import com.foal.liuliang.service.ServerUserService;
 import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
@@ -25,6 +26,9 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 	
 	@Autowired
 	private ServerUserService serverUserService;
+	
+	@Autowired
+	private RoleService roleService;
 
 	public ServerUserBean getModel() {
 		return this.userBean;
@@ -76,6 +80,14 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 			ajaxBean = new AjaxBean(false, sb.toString());
 			this.ajaxWrite(ajaxBean);
 			return null;
+		}
+		if (!Constant.ADMIN_ID.equals(user.getUserId())) {	//不是超级管理员，验证路径权限
+			List<String> roleIds = roleService.queryRoleIds(user.getUserId());
+			if (!roleIds.contains(Constant.ROLE_ID_USER_SHOP)) {
+				ajaxBean = new AjaxBean(false, "您没有权限访问该页面");
+				this.ajaxWrite(ajaxBean);
+				return null;
+			}
 		}
 		this.setAttrToSession("loginLast", user.getLastLoginTime());
 		user.setLastLoginIp(this.getRequest().getRemoteAddr());
