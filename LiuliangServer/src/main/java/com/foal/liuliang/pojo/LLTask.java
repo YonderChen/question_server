@@ -27,6 +27,7 @@ public class LLTask implements Serializable {
 	private String taskId;
 	private ServerUser serverUser;
 	private LLShop llShop;
+	private int taskType;
 	private String goodsUrl;
 	private String goodsName;
 	private String goodsImg;
@@ -81,6 +82,15 @@ public class LLTask implements Serializable {
 
 	public void setLlShop(LLShop llShop) {
 		this.llShop = llShop;
+	}
+
+	@Column(name = "task_type_")
+	public int getTaskType() {
+		return taskType;
+	}
+
+	public void setTaskType(int taskType) {
+		this.taskType = taskType;
 	}
 
 	@Column(name = "goods_url_")

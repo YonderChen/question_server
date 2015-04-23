@@ -11,6 +11,7 @@ public class LLTaskRecordBean extends Page {
 	private String taskId;
 	private String userId;
 	private String shopId;
+	private String taskType;
 	private String goodsName;
 	private String status;
     private Date beginTime;
@@ -35,6 +36,12 @@ public class LLTaskRecordBean extends Page {
 	}
 	public void setShopId(String shopId) {
 		this.shopId = shopId;
+	}
+	public String getTaskType() {
+		return taskType;
+	}
+	public void setTaskType(String taskType) {
+		this.taskType = taskType;
 	}
 	public String getGoodsName() {
 		return goodsName;

@@ -144,6 +144,10 @@ public class LLTaskService extends DaoSupport {
             queryHql += " and s.llShop.shopId = :shopId";
             paramMap.put("shopId", llTaskRecordBean.getShopId() );
         }
+        if (!StringUtil.isEmpty(llTaskRecordBean.getTaskType())) {
+            queryHql += " and s.taskType = :taskType";
+            paramMap.put("taskType", NumberUtils.toInt(llTaskRecordBean.getTaskType(), 0) );
+        }
         if (!StringUtil.isEmpty(llTaskRecordBean.getStatus())) {
             queryHql += " and s.status = :status";
             paramMap.put("status", NumberUtils.toInt(llTaskRecordBean.getStatus(), 0) );

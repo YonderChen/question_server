@@ -16,6 +16,7 @@ import com.foal.liuliang.pojo.LLShop;
 import com.foal.liuliang.service.LLShopService;
 import com.foal.liuliang.service.LLTaskService;
 import com.foal.liuliang.util.FileUtil;
+import com.foal.liuliang.util.StringTools;
 import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -40,8 +41,31 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 		return llTaskBean;
 	}
 
-	@Action("add_task")
-	public String addTask() {
+	@Action("add_task_step_one")
+	public String addTaskStepOne() {
+		String bindPlat = llTaskBean.getBindPlat();
+		if (StringTools.isEmpty(bindPlat)) {
+			bindPlat = "taobao";
+		}
+		this.setAttrToRequest("bindPlat", bindPlat);
+		String shopId = llTaskBean.getShopId();
+		if (StringTools.isEmpty(shopId)) {
+			shopId = "";
+		}
+		this.setAttrToRequest("shopId", shopId);
+		this.setAttrToRequest("taobao_shop_num", llShopService.getShopNum(getSessionServerUser().getUserId(), "taobao"));
+		this.setAttrToRequest("tmall_shop_num", llShopService.getShopNum(getSessionServerUser().getUserId(), "tmall"));
+		this.setAttrToRequest("jd_shop_num", llShopService.getShopNum(getSessionServerUser().getUserId(), "jd"));
+		return SUCCESS;
+	}
+
+	@Action("add_task_step_two")
+	public String addTaskStepTwo() {
+		return SUCCESS;
+	}
+
+	@Action("add_task_step_three")
+	public String addTaskStepThree() {
 		return SUCCESS;
 	}
 
@@ -100,19 +124,74 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
     public String loadAddTaskShop() {
 		LLShopBean llShopBean = new LLShopBean();
 		llShopBean.setUserId(getSessionServerUser().getUserId());
-		llShopBean.setBindPlat(getRequest().getParameter("bindPlat"));
+		llShopBean.setBindPlat(llTaskBean.getBindPlat());
 		List list = this.llShopService.queryLLShopList(llShopBean);
 		StringBuilder sb = new StringBuilder();
-		sb.append("<option value=\"\">");
-		sb.append("请选择");
-		sb.append("</option>");
-		for (Object o : list) {
-			LLShop shop = (LLShop) o;
-			sb.append("<option value=\"");
-			sb.append(shop.getShopId());
-			sb.append("\">");
-			sb.append(shop.getBindName());
-			sb.append("</option>");
+		if (list.size() > 0) {
+			boolean hasShop = false;
+			for (Object o : list) {
+				LLShop shop = (LLShop) o;
+				if (shop.getShopId().equals(llTaskBean.getShopId())) {
+					hasShop = true;
+				}
+			}
+			sb.append("<ul class=\"clearfix\">");
+			int i = 0;
+			for (Object o : list) {
+				LLShop shop = (LLShop) o;
+				if (hasShop) {
+					if (shop.getShopId().equals(llTaskBean.getShopId())) {
+						sb.append("<li class=\"cur\">");
+					} else {
+						sb.append("<li>");
+					}
+				} else {
+					if (i == 0) {
+						sb.append("<li class=\"cur\">");
+					} else {
+						sb.append("<li>");
+					}
+				}
+				sb.append("<i></i>");
+				sb.append("<label style=\"display: inline-block; cursor: pointer;\">");
+				sb.append("<a> ");
+				sb.append("<input id=\"shop_radio_" + shop.getShopId() + "\" type=\"radio\" onclick=\"changeShop('" + shop.getShopId() + "');\" name=\"shop_id\" value=\"" + shop.getShopId() + "\"");
+				if (hasShop) {
+					if (shop.getShopId().equals(llTaskBean.getShopId())) {
+						sb.append(" checked=\"checked\"");
+					}
+				} else {
+					if (i == 0) {
+						sb.append(" checked=\"checked\"");
+					}
+				}
+				sb.append(" > ");
+				sb.append("<span>");
+				sb.append(shop.getBindName());
+				sb.append("</span></a></label></li>");
+				i++;
+			}
+			sb.append("</ul>");
+			int remain = Constant.PlatBindShopMaxNum - list.size();
+			if (remain > 0) {
+				sb.append("<p class=\"Release-shop-tip\">");
+				sb.append("<em>(还可绑定");
+				sb.append(remain < 0 ? 0 : remain);
+				sb.append("个店铺)</em><a href=\"" + Constant.PRO_CTX_VALUE + "/web/shop/accountmanage/shopmanage/bind_shop\" target=\"_blank\">+ 绑定更多店铺</a>");
+				sb.append("</p>");
+			} else {
+				sb.append("<p class=\"Release-shop-tip\">");
+				sb.append("<em>(店铺绑定个数已满)</em>");
+				sb.append("</p>");
+			}
+		} else {
+			sb.append("<div class=\"Release-shop-center\">");
+			sb.append("<p>您当前还未绑定店铺，无法发布任务</p>");
+			sb.append("<p>请先<a href=\"" + Constant.PRO_CTX_VALUE + "/web/shop/accountmanage/shopmanage/bind_shop\" target=\"_blank\">绑定店铺</a>后再发布任务</p>");
+			sb.append("</div>");
+			sb.append("<p class=\"Release-shop-tip\">");
+			sb.append("<a href=\"" + Constant.PRO_CTX_VALUE + "/web/shop/accountmanage/shopmanage/bind_shop\" target=\"_blank\">+ 绑定店铺</a>");
+			sb.append("</p>");
 		}
 		this.ajaxWrite(new AjaxBean(true, sb.toString()));
         return null;

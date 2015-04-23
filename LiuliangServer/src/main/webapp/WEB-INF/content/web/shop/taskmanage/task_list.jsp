@@ -65,6 +65,12 @@
                                 <option value="6">任务修改,待审核</option>
                             </select>
 
+                            <span>流量类型：</span>
+                            <select id="taskType" name="taskType">
+                                <option value="" selected="">请选择</option>
+                                <option value="0">自然搜索流量</option>
+                            </select>
+                            
                             <div style="height:10px; width:100%;"></div>
                             <span style="margin-left:0;">任务发布时间：</span>
                             <input style="width:100px; border:1px solid #CCC;" name="beginTime" value="<s:date name="#request.llTaskRecordBean.beginTime" format="yyyy-MM-dd"/>" onclick="WdatePicker()">
@@ -168,6 +174,7 @@ function initConditionForm(){
 	$("#bindPlat").val("${llTaskRecordBean.bindPlat}");
 	$("#queryKey").val("${llTaskRecordBean.queryKey}");
 	$("#status").val("${llTaskRecordBean.status}");
+	$("#taskType").val("${llTaskRecordBean.taskType}");
 }
 
 function search(){

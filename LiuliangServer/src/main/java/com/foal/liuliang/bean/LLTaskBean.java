@@ -12,6 +12,7 @@ public class LLTaskBean extends Page {
 	private String taskId;
 	private String userId;
 	private String shopId;
+	private String taskType;
 	private String goodsUrl;
 	private String goodsName;
 	private String goodsImg;
@@ -40,6 +41,8 @@ public class LLTaskBean extends Page {
     private String goodsImgFileFileName;
     private String goodsImgFileContentType;
 	
+    private String bindPlat;
+    
 	public String getTaskId() {
 		return taskId;
 	}
@@ -57,6 +60,12 @@ public class LLTaskBean extends Page {
 	}
 	public void setShopId(String shopId) {
 		this.shopId = shopId;
+	}
+	public String getTaskType() {
+		return taskType;
+	}
+	public void setTaskType(String taskType) {
+		this.taskType = taskType;
 	}
 	public String getGoodsUrl() {
 		return goodsUrl;
@@ -213,5 +222,11 @@ public class LLTaskBean extends Page {
 	}
 	public void setGoodsImgFileContentType(String goodsImgFileContentType) {
 		this.goodsImgFileContentType = goodsImgFileContentType;
+	}
+	public String getBindPlat() {
+		return bindPlat;
+	}
+	public void setBindPlat(String bindPlat) {
+		this.bindPlat = bindPlat;
 	}
 }

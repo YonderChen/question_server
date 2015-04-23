@@ -246,5 +246,13 @@ public class LLShopService extends DaoSupport {
 	public LLShop getShop(String shopId) {
 		return this.hibernateDao.get(LLShop.class, shopId);
 	}
+	
+	public int getShopNum(String userId, String bindPlat) {
+		String hql = "select count(*) from LLShop as s where s.serverUser.userId = :userId and s.bindPlat = :bindPlat";
+        Map paramMap = new HashMap();
+        paramMap.put("userId", userId);
+        paramMap.put("bindPlat", bindPlat);
+        return this.hibernateDao.getAllRow(hql, paramMap);
+	}
 }
 

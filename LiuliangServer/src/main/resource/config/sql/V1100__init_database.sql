@@ -294,6 +294,7 @@ CREATE TABLE `ll_task` (
   `task_id_` varchar(64) NOT NULL COMMENT '流量任务id',
   `user_id_` varchar(64) NOT NULL COMMENT '发布的用户id',
   `shop_id_` varchar(64) NOT NULL COMMENT '店铺id',
+  `task_type_` int(11) NOT NULL DEFAULT '0' COMMENT '流量类型',
   `goods_url_` varchar(500) NOT NULL COMMENT '商品url',
   `goods_name_` varchar(500) NOT NULL COMMENT '商品名称',
   `goods_img_` varchar(500) NOT NULL COMMENT '商品图片地址',
