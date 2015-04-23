@@ -33,7 +33,7 @@
                 
                 <div class="business-info-bd">
                     <div class="integral-serch">
-                        <form action="${ctx}/web/shop/accountmanage/dealmanage/score_record" method="post">
+                        <form id="condition_form" action="${ctx}/web/shop/accountmanage/dealmanage/score_record?left-list-id=2" method="get">
                             <div class="integral-search-type">
                                 <label>请选择类型：</label>
                                 <select id="type_select" name="type">
@@ -41,7 +41,6 @@
                                     <option value="1">购买</option>
                                     <option value="2">消费</option>
                                 </select>
-                                <input type="hidden" name="type_hidden" id="type_hidden" value="${type}">
                             </div>
                             <div class="integral-search-time">
                                 <label>起止时间：</label>
@@ -49,8 +48,8 @@
                                 至
                                 <input type="text" name="endTime" class="Wdate" onclick="WdatePicker()" value="<s:date name="#request.endTime" format="yyyy-MM-dd"/>">
                             </div>
-                            
-                            <input type="submit" class="integral-search-butt" value="提交查询">
+                            <input type="hidden" id="current_page" name="page" value="${pageBean.currentPage}">
+                            <input type="submit" class="integral-search-butt" onclick="resetPage()" value="提交查询">
                         </form>
                     </div>
                     <p class="integral-careful"><span>注意：</span>为了减少服务器负荷，只能查找最近一个月内的流量使用记录。
@@ -67,7 +66,7 @@
                         </tr>
                         </thead>
                         <tbody>
-							<s:if test="#request.pageBean.list.size > 0">
+							<s:if test="#request.pageBean.allRow > 0">
 								<s:iterator value="#request.pageBean.list" id="record">
 								<tr>
 									<td>
@@ -97,7 +96,9 @@
 		                        </tr>
 							</s:else>
                                             </tbody></table> 
-                    <div class="pager"></div>
+                    
+							
+					<jsp:include page="/include/pager.jsp" flush="true"></jsp:include>
                     
                 </div>
               </div>
@@ -109,8 +110,18 @@
 <script type="text/javascript"> 
 
 $(function(){
-	$("#type_select").val($("#type_hidden").val());
+	$("#type_select").val("${type}");
 })
+
+function resetPage(){
+	$("#current_page").val(1);
+}
+
+function searchPage(page){
+	$("#current_page").val(page);
+	$("#condition_form").submit();
+}
+
 </script>
 
 </body></html>

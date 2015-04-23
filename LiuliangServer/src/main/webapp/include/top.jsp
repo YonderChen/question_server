@@ -11,6 +11,19 @@ $(function(){
 		$("#has_login").show();
 	}
 })
+
+function isOutTime(result) {
+	if (result.indexOf("win.location.href='${ctx}/web/shop/index'") > 0) {
+		alert("登录超时,请重新登录.");
+		var win = window;
+		while (win != window.parent) {
+			win = window.parent;
+		}
+		win.location.href='${ctx}/web/shop/index';
+		return true;
+	}
+	return false;
+}
 </script>           
 
 <div id="has_login" style="display: none;">

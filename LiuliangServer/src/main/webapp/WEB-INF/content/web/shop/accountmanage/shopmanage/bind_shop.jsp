@@ -72,11 +72,13 @@
 				alert("连接服务器超时,请稍后再试.");
 			},
 			success: function(result){
-				result = eval("("+result+")");
-				if (result.success) {
-					$("#shop_list_info").html(result.msg);
-				} else {
-					alert(result.msg);
+				if (!isOutTime(result)) {
+					result = eval("("+result+")");
+					if (result.success) {
+						$("#shop_list_info").html(result.msg);
+					} else {
+						alert(result.msg);
+					}
 				}
 			}
 		});

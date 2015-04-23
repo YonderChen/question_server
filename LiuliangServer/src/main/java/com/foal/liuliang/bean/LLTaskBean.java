@@ -1,6 +1,7 @@
 package com.foal.liuliang.bean;
 
 import java.io.File;
+import java.util.Date;
 
 /**
  * @author cyd
@@ -31,6 +32,8 @@ public class LLTaskBean extends Page {
 	private int isQuickVerify;
 	private int isQuickExecute;
 	private int costScore;
+	private Date createTime;
+	private Date finishTime;
 	private int status;
 	
 	private File goodsImgFile;
@@ -174,6 +177,18 @@ public class LLTaskBean extends Page {
 	}
 	public void setCostScore(int costScore) {
 		this.costScore = costScore;
+	}
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+	public Date getFinishTime() {
+		return finishTime;
+	}
+	public void setFinishTime(Date finishTime) {
+		this.finishTime = finishTime;
 	}
 	public int getStatus() {
 		return status;

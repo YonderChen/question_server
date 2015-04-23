@@ -10,11 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.foal.liuliang.bean.AjaxBean;
 import com.foal.liuliang.bean.LLShopBean;
 import com.foal.liuliang.bean.LLTaskBean;
-import com.foal.liuliang.bean.PageBean;
 import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.jersey.resource.tools.ResourceTools;
 import com.foal.liuliang.pojo.LLShop;
-import com.foal.liuliang.pojo.LLTask;
 import com.foal.liuliang.service.LLShopService;
 import com.foal.liuliang.service.LLTaskService;
 import com.foal.liuliang.util.FileUtil;
@@ -98,21 +96,16 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 		}
 	}
 
-	@Action("list")
-    public String list() {
-		llTaskBean.setUserId(getSessionServerUser().getUserId());
-        PageBean pageBean = this.llTaskService.queryLLTask(llTaskBean);
-		this.setAttrToRequest("pageBean", pageBean);
-        return SUCCESS;
-    }
-
-	@Action("load_shop")
-    public String loadShop() {
+	@Action("load_add_task_shop")
+    public String loadAddTaskShop() {
 		LLShopBean llShopBean = new LLShopBean();
 		llShopBean.setUserId(getSessionServerUser().getUserId());
 		llShopBean.setBindPlat(getRequest().getParameter("bindPlat"));
 		List list = this.llShopService.queryLLShopList(llShopBean);
 		StringBuilder sb = new StringBuilder();
+		sb.append("<option value=\"\">");
+		sb.append("请选择");
+		sb.append("</option>");
 		for (Object o : list) {
 			LLShop shop = (LLShop) o;
 			sb.append("<option value=\"");
@@ -125,10 +118,4 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
         return null;
     }
 	
-	@Action("detail")
-    public String detail() {
-    	LLTask lltask = this.llTaskService.getLLTask(llTaskBean.getTaskId());
-    	this.setAttrToRequest("lltask", lltask);
-        return SUCCESS;
-    }
 }

@@ -56,11 +56,13 @@
 				alert("连接服务器超时,请稍后再试.");
 			},
 			success: function(result){
-				result = eval("("+result+")");
-				alert(result.msg);
-				if (result.success) {
-					$("#price").val("taobao");
-					$("#dealId").val("");
+				if (!isOutTime(result)) {
+					result = eval("("+result+")");
+					alert(result.msg);
+					if (result.success) {
+						$("#price").val("taobao");
+						$("#dealId").val("");
+					}
 				}
 			}
 		});

@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Service;
 
 import com.foal.liuliang.bean.LLTaskBean;
+import com.foal.liuliang.bean.LLTaskRecordBean;
 import com.foal.liuliang.bean.PageBean;
 import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.dao.DaoSupport;
@@ -125,6 +127,46 @@ public class LLTaskService extends DaoSupport {
         List list = this.hibernateDao.queryList(queryHql, llTaskBean.getPage(), llTaskBean.getPageSize(), paramMap);
         int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
 		return new PageBean(list, allRow, llTaskBean.getPage(), llTaskBean.getPageSize());
+    }
+	
+	public PageBean queryLLTaskRecord(LLTaskRecordBean llTaskRecordBean) {
+        String queryHql = "from LLTask as s where 1=1";
+        Map paramMap = new HashMap();
+        if (!StringUtil.isEmpty(llTaskRecordBean.getUserId())) {
+            queryHql += " and s.serverUser.userId = :userId";
+            paramMap.put("userId", llTaskRecordBean.getUserId() );
+        }
+        if (!StringUtil.isEmpty(llTaskRecordBean.getBindPlat())) {
+            queryHql += " and s.llShop.bindPlat = :bindPlat";
+            paramMap.put("bindPlat", llTaskRecordBean.getBindPlat() );
+        }
+        if (!StringUtil.isEmpty(llTaskRecordBean.getShopId())) {
+            queryHql += " and s.llShop.shopId = :shopId";
+            paramMap.put("shopId", llTaskRecordBean.getShopId() );
+        }
+        if (!StringUtil.isEmpty(llTaskRecordBean.getStatus())) {
+            queryHql += " and s.status = :status";
+            paramMap.put("status", NumberUtils.toInt(llTaskRecordBean.getStatus(), 0) );
+        }
+        if (llTaskRecordBean.getBeginTime() != null) {
+            queryHql += " and s.createTime >= :beginTime";
+            paramMap.put("beginTime", llTaskRecordBean.getBeginTime() );
+        }
+        if (llTaskRecordBean.getEndTime() != null) {
+            queryHql += " and s.createTime <= :endTime";
+            paramMap.put("endTime", llTaskRecordBean.getEndTime() );
+        }
+        if (!StringUtil.isEmpty(llTaskRecordBean.getTaskId())) {
+            queryHql += " and s.taskId = :taskId";
+            paramMap.put("taskId", llTaskRecordBean.getTaskId() );
+        }
+        if (!StringUtil.isEmpty(llTaskRecordBean.getGoodsName())) {
+            queryHql += " and s.goodsName = :goodsName";
+            paramMap.put("goodsName", llTaskRecordBean.getGoodsName() );
+        }
+        List list = this.hibernateDao.queryList(queryHql, llTaskRecordBean.getPage(), llTaskRecordBean.getPageSize(), paramMap);
+        int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
+		return new PageBean(list, allRow, llTaskRecordBean.getPage(), llTaskRecordBean.getPageSize());
     }
 }
 
