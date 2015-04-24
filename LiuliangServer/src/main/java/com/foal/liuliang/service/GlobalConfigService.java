@@ -41,6 +41,7 @@ public class GlobalConfigService extends DaoSupport {
 
 	public void initBusinessParam(ServletContext context) {
 		Constant.OneVisitCostScore = systemParamService.getIntSystemParam(Constant.OneVisitCostScoreKey);//每个流浪花费积分
+		Constant.OneKeywordCostScore = systemParamService.getIntSystemParam(Constant.OneKeywordCostScoreKey);//每额外添加一个关键词需要的积分
 		Constant.PageStayCostScoreMap.put("0", 0);
 		Constant.PageStayCostScoreMap.put("1", systemParamService.getIntSystemParam(Constant.PageStayCostScore1Key));
 		Constant.PageStayCostScoreMap.put("2", systemParamService.getIntSystemParam(Constant.PageStayCostScore2Key));
@@ -51,6 +52,7 @@ public class GlobalConfigService extends DaoSupport {
 		Constant.QuickExecuteCostScore = systemParamService.getIntSystemParam(Constant.QuickExecuteCostScoreKey);//优先执行花费积分
 		
 		context.setAttribute(Constant.OneVisitCostScoreKey, Constant.OneVisitCostScore);
+		context.setAttribute(Constant.OneKeywordCostScoreKey, Constant.OneKeywordCostScore);
 		context.setAttribute(Constant.PageStayCostScoreMapKey, Constant.PageStayCostScoreMap);
 		context.setAttribute(Constant.VisitTimeCostScoreMapKey, Constant.VisitTimeCostScoreMap);
 		context.setAttribute(Constant.QuickVerifyCostScoreKey, Constant.QuickVerifyCostScore);

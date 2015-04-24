@@ -13,6 +13,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="${ctx}/images/favicon.ico" media="screen">
 	<script type="text/javascript" src="${ctx}/js/base.js"></script>
   	<script type="text/javascript" src="${ctx}/js/jquery.js"></script>
+   	<script type="text/javascript" src="${ctx}/js/calendar/WdatePicker.js"></script>
 	<link rel="stylesheet" href="${ctx}/static_shop/style/common.css">
     <link rel="stylesheet" href="${ctx}/static_shop/style/person_center.css">
     <link rel="stylesheet" href="${ctx}/static_shop/style/popup.css">
@@ -141,193 +142,136 @@
         
         
         <!-- 任务管理 start -->
-        <div class="tasklist">
+        <div class="tasklist">                
             <h1 style="font-size:2em; border:none;">任务管理</h1>
+                <ul class="business-tabs">
+                  <li class="active"><a href="/center/trade_manage">
+                  <span>所有任务（4）</span></a></li>
+                  <li><a href="/center/trade_manage/ing">
+                  <span>进行中的任务（0）</span></a></li>
+                  <li><a href="/center/trade_manage/fin">
+                  <span>已完成的任务（0）</span></a></li>
+                </ul>
+                <div class="business-info-bd">
+                    <div class="integral-serch">
+                        <form id="condition_form" action="${ctx }/web/shop/center" method="get">
+                        <div class="clearfix task-list" style="padding:18px 2px">
+                            <span style="margin-left:0;">平台：</span>
+                            <select class="J-binding-type" id="bindPlat" name="bindPlat" style="width: 100px;">
+                                <option value="">请选择</option>
+                                <option value="taobao">淘宝</option>
+                                <option value="tmall">天猫</option>
+                                <option value="jd">京东</option>
+                            </select>
+                            <span>店铺：</span>
+                            <select name="shopId" id="shopId" name="shopId" style="width: 150px;">
+                            </select>
+                            
+                            <span>任务状态：</span>
+                            <select id="status" name="status">
+                                <option value="" selected="">请选择</option>
+                                <option value="0">未发布</option>
+                                <option value="1">待审核</option>
+                                <option value="2">任务进行中</option>
+                                <option value="3">已完成</option>
+                                <option value="4">已取消</option>
+                                <option value="5">审核不通过</option>
+                                <option value="6">任务修改,待审核</option>
+                            </select>
 
-            <ul class="business-tabs">
-              <li class="active"><a href="http://www.liuliangfu.com/center/index">
-              <span>所有任务（4）</span></a></li>
-              <li><a href="http://www.liuliangfu.com/center/index/ing">
-              <span>进行中的任务（0）</span></a></li>
-              <li><a href="http://www.liuliangfu.com/center/index/fin">
-              <span>已完成的任务（0）</span></a></li>
-            </ul>
+                            <span>流量类型：</span>
+                            <select id="taskType" name="taskType">
+                                <option value="" selected="">请选择</option>
+                                <option value="0">自然搜索流量</option>
+                            </select>
+                            
+                            <div style="height:10px; width:100%;"></div>
+                            <span style="margin-left:0;">任务发布时间：</span>
+                            <input style="width:100px; border:1px solid #CCC;" name="beginTime" value="<s:date name="#request.llTaskRecordBean.beginTime" format="yyyy-MM-dd"/>" onclick="WdatePicker()">
+                            <span style="margin-left:0;">-</span>
+                            <input style="width:100px; border:1px solid #CCC;" name="endTime" value="<s:date name="#request.llTaskRecordBean.endTime" format="yyyy-MM-dd"/>" onclick="WdatePicker()">
 
-            <form action="http://www.liuliangfu.com/center/index/all" method="get" id="frm_tasks">
-            <div class="clearfix task-list" style="padding:18px 2px">
-                <span style="margin-left:0;">平台：</span>
-                <select class="J-binding-type" name="plat" style="width: 100px;">
-                    <option value="">请选择</option>
-                                        <option value="taobao">淘宝</option>
-                                        <option value="tmall">天猫</option>
-                                        <option value="jd">京东</option>
-                                    </select>
-                <span>店铺：</span>
-                <select class="J-binding-name" name="shop">
-                    <option value="">请选择</option>
-                                        <option value="182">迪尼贝儿旗舰店</option>
-                                    </select>
-                <span>任务类型：</span>
-                <select class="J-trade-type" name="trade_type">
-                    <option value="">请选择</option>
-                    <option value="1">自然搜索流量</option>
-                </select>
-                
-                <span>任务状态：</span>
-                <select name="trade_status">
-                    <option value="" selected="">请选择</option>
-                    <option value="0">未发布</option>
-                    <option value="1">待审核</option>
-                    <option value="2">任务进行中</option>
-                    <option value="3">已完成</option>
-                    <option value="4">已取消</option>
-                    <option value="5">审核不通过</option>
-                    <option value="6">任务修改,待审核</option>
-                </select>
+                            <span style="margin-left:16px;">高级搜索：</span>
+                            <select name="queryKey" id="queryKey" style="width: 100px;">
+                               <option value="" selected="">请选择</option>
+                               <option value="taskId">任务编号</option>
+                               <option value="goodsName">商品名</option>
+                            </select>
+                            <em style="margin-left:16px;display: inline-block;position: relative;zoom: 1;height: 20px;border: 1px solid #CCCCCC;border-radius: 2px;vertical-align: middle;">
+								<input name="queryValue" id="queryValue" type="text" style="height:20px;width:120px;" value="${llTaskRecordBean.queryValue}">
+                            </em>
+                            
+                            <input type="hidden" id="current_page" name="page" value="${pageBean.currentPage}">
+                            <a id="J-submiit-btn" class="business-mess-sent-btn" href="javascript:search();" style="margin-left:8px;">搜索</a>
+                        </div>
+                        </form>
+                    </div>
+                    
+                    <div class="task-list-title" style="margin-top: 60px;">
+                        <span style="width:30%;">商品</span><span style="width:10%;">总访客数</span><span style="width:18%;">每日计划访客数</span><span style="width:17%;">已完成天数/总天数</span><span style="width:15%;">状态</span><span style="width:10%;">操作</span>
+                    </div>
+                    <div class="business-tabs-tasklinesheet-more task-list-table" style="margin-top:10px;">
+                    
+							<s:if test="#request.pageBean.list.size > 0">
+								<s:iterator value="#request.pageBean.list" id="record">
+										<table border="0" bordercolor="#C9E7F7" cellspacing="0" cellpadding="0">
+											<tbody>
+												<tr>
+													<th colspan="6">
+														<span><i class="plat_small plat_${record.llShop.bindPlat}"></i>${record.llShop.bindName}&nbsp;&nbsp;任务编号：${record.taskId}<a href="/center/trade_detail/14223248481368" class="trade-detail" target="_blank">[详情]</a>&nbsp;&nbsp;发布时间：<s:date name="createTime" format="yyyy-MM-dd HH:mm:ss"/></span>
+													</th>
+												</tr>
+												<tr>
+													<td class="nb" style="width: 30%;">
+														<div class="intableProLists">
+															<img src="${ctx}${record.goodsImg}" width="50" height="50" class="img">
+															<p class="text">
+																${record.goodsName}
+															</p>
 
-                <div style="height:10px; width:100%;"></div>
-                <span style="margin-left:0;">任务发布时间：</span>
-                <input style="width:100px; border:1px solid #CCC;" name="st" value="" onclick="WdatePicker()">
-                <span style="margin-left:0;">-</span>
-                <input style="width:100px; border:1px solid #CCC;" name="et" value="" onclick="WdatePicker()">
+														</div>
+													</td>
+													<td style="font-size: 14px; width: 10%;">
+														${(record.orderNumberOneDay1 + record.orderNumberOneDay2 
+															+record.orderNumberOneDay3 + record.orderNumberOneDay4 
+															+ record.orderNumberOneDay5) * record.durationDay}
+													</td>
+													<td style="font-size: 14px; width: 18%;">
+														${record.orderNumberOneDay1 + record.orderNumberOneDay2 
+															+record.orderNumberOneDay3 + record.orderNumberOneDay4 
+															+ record.orderNumberOneDay5}
+													</td>
+													<td style="font-size: 14px; width: 15%;">
+														0 / ${record.durationDay}
+													</td>
+													<td style="font-size: 14px; width: 15%;">
+						                                <s:if test="status == 0">未发布</s:if>
+						                                <s:if test="status == 1">待审核</s:if>
+						                                <s:if test="status == 2">任务进行中</s:if>
+						                                <s:if test="status == 3">已完成</s:if>
+						                                <s:if test="status == 4">已取消</s:if>
+						                                <s:if test="status == 5">审核不通过</s:if>
+						                                <s:if test="status == 6">任务修改,待审核</s:if>
+													</td>
+													<td style="font-size: 14px; width: 12%;">
+														<a href="/trade/rechange/14223248481368" class="jx-trade">继续发布</a>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</s:iterator>
+							</s:if>
+							<s:else>
+	                        	<div>
+		                        	<span style="width:100%; text-align:center; font-size:16px; border:none; color:#555; padding-top:20px;">暂无记录</span>
+		                        </div>
+							</s:else>
+							
+						<jsp:include page="/include/pager.jsp" flush="true"></jsp:include>
+					</div>
+                    
+                </div>
 
-                <span style="margin-left:16px;">高级搜索：</span>
-                <select name="query_key" style="width: 100px;">
-                   <option value="" selected="">请选择</option>
-                   <option value="1">任务编号</option>
-                   <option value="2">商品名</option>
-                </select>
-                <em style="margin-left:16px;display: inline-block;position: relative;zoom: 1;height: 20px;border: 1px solid #CCCCCC;border-radius: 2px;vertical-align: middle;">
-                <input name="query_val" type="text" style="height:20px;width:120px;" value="">
-                </em>
-                
-                <a id="J-submiit-btn" class="business-mess-sent-btn" style="margin-left:8px;">搜索</a>
-            </div>
-            </form>
-            
-            <div class="task-list-title">
-            	<span style="width:30%;">商品</span><span style="width:10%;">总访客数</span><span style="width:18%;">每日计划访客数</span><span style="width:17%;">已完成天数/总天数</span><span style="width:15%;">状态</span><span style="width:10%;">操作</span>
-            </div>
-            <div class="business-tabs-tasklinesheet-more task-list-table" style="margin-top:10px;">
-            	                                <table border="0" bordercolor="#C9E7F7" cellspacing="0" cellpadding="0">
-                    <tbody><tr>
-                        <th colspan="6">
-                            <span><i class="plat_small plat_tmall"></i>迪尼贝儿旗舰店&nbsp;&nbsp;任务编号：14223248481368<a href="http://www.liuliangfu.com/center/trade_detail/14223248481368" class="trade-detail" target="_blank">[详情]</a>&nbsp;&nbsp;发布时间：2015-04-17 13:06:59</span>
-                            <!-- <span class="right_red" style="color:#0077DD; cursor:pointer;">增加每日访客数</span> -->
-                            <!-- <span class="right_red cancel-trade" name="123" style="color:#0077DD; cursor:pointer;">撤销任务</span> -->
-                        </th>
-                    </tr>
-                    <tr>
-                        <td class="nb" style="width:30%;">
-                            <div class="intableProLists">
-                                <img src="${ctx}/static_shop/images/1429247219-553094f33abac.jpg" width="50" height="50" class="img">
-                                <p class="text">迪尼贝儿新生儿纯棉包被婴儿抱被抱毯盖被子秋冬款加厚婴幼儿用品</p>
-                                
-                            </div>
-                        </td>
-                        <td style="font-size:14px; width:10%;">
-                        7000                        </td>
-                        <td style="font-size:14px; width:18%;">
-                        1000                        </td>
-                        <td style="font-size:14px; width:15%;">
-                         0 / 7                        </td>
-                        <td style="font-size:14px; width:15%;">
-                         未发布                        </td>
-                        <td style="font-size:14px; width:12%;">
-                                                        <a href="http://www.liuliangfu.com/trade/rechange/14223248481368" class="jx-trade">继续发布</a>
-                                                    </td>
-                    </tr>
-                </tbody></table>
-                                <table border="0" bordercolor="#C9E7F7" cellspacing="0" cellpadding="0">
-                    <tbody><tr>
-                        <th colspan="6">
-                            <span><i class="plat_small plat_tmall"></i>迪尼贝儿旗舰店&nbsp;&nbsp;任务编号：14284999491872<a href="http://www.liuliangfu.com/center/trade_detail/14284999491872" class="trade-detail" target="_blank">[详情]</a>&nbsp;&nbsp;发布时间：2015-04-12 12:51:18</span>
-                            <!-- <span class="right_red" style="color:#0077DD; cursor:pointer;">增加每日访客数</span> -->
-                            <!-- <span class="right_red cancel-trade" name="123" style="color:#0077DD; cursor:pointer;">撤销任务</span> -->
-                        </th>
-                    </tr>
-                    <tr>
-                        <td class="nb" style="width:30%;">
-                            <div class="intableProLists">
-                                <img src="${ctx}/static_shop/images/1428814278-5529f9c6e1624.jpg" width="50" height="50" class="img">
-                                <p class="text">迪尼贝儿宝宝枕头儿童加长卡通防偏头荞麦枕婴幼儿定型枕 加长版</p>
-                                
-                            </div>
-                        </td>
-                        <td style="font-size:14px; width:10%;">
-                        300                        </td>
-                        <td style="font-size:14px; width:18%;">
-                        30                        </td>
-                        <td style="font-size:14px; width:15%;">
-                         0 / 10                        </td>
-                        <td style="font-size:14px; width:15%;">
-                         未发布                        </td>
-                        <td style="font-size:14px; width:12%;">
-                                                        <a href="http://www.liuliangfu.com/trade/rechange/14284999491872" class="jx-trade">继续发布</a>
-                                                    </td>
-                    </tr>
-                </tbody></table>
-                                <table border="0" bordercolor="#C9E7F7" cellspacing="0" cellpadding="0">
-                    <tbody><tr>
-                        <th colspan="6">
-                            <span><i class="plat_small plat_tmall"></i>迪尼贝儿旗舰店&nbsp;&nbsp;任务编号：14281219031672<a href="http://www.liuliangfu.com/center/trade_detail/14281219031672" class="trade-detail" target="_blank">[详情]</a>&nbsp;&nbsp;发布时间：2015-04-04 12:31:43</span>
-                            <!-- <span class="right_red" style="color:#0077DD; cursor:pointer;">增加每日访客数</span> -->
-                            <!-- <span class="right_red cancel-trade" name="123" style="color:#0077DD; cursor:pointer;">撤销任务</span> -->
-                        </th>
-                    </tr>
-                    <tr>
-                        <td class="nb" style="width:30%;">
-                            <div class="intableProLists">
-                                <img src="${ctx}/static_shop/images/1428121903-551f692f24d62.jpg" width="50" height="50" class="img">
-                                <p class="text">衣服</p>
-                                
-                            </div>
-                        </td>
-                        <td style="font-size:14px; width:10%;">
-                        300                        </td>
-                        <td style="font-size:14px; width:18%;">
-                        30                        </td>
-                        <td style="font-size:14px; width:15%;">
-                         0 / 10                        </td>
-                        <td style="font-size:14px; width:15%;">
-                         未发布                        </td>
-                        <td style="font-size:14px; width:12%;">
-                                                        <a href="http://www.liuliangfu.com/trade/rechange/14281219031672" class="jx-trade">继续发布</a>
-                                                    </td>
-                    </tr>
-                </tbody></table>
-                                <table border="0" bordercolor="#C9E7F7" cellspacing="0" cellpadding="0">
-                    <tbody><tr>
-                        <th colspan="6">
-                            <span><i class="plat_small plat_tmall"></i>迪尼贝儿旗舰店&nbsp;&nbsp;任务编号：14223248408372<a href="http://www.liuliangfu.com/center/trade_detail/14223248408372" class="trade-detail" target="_blank">[详情]</a>&nbsp;&nbsp;发布时间：2015-01-27 10:14:00</span>
-                            <!-- <span class="right_red" style="color:#0077DD; cursor:pointer;">增加每日访客数</span> -->
-                            <!-- <span class="right_red cancel-trade" name="123" style="color:#0077DD; cursor:pointer;">撤销任务</span> -->
-                        </th>
-                    </tr>
-                    <tr>
-                        <td class="nb" style="width:30%;">
-                            <div class="intableProLists">
-                                <img src="${ctx}/static_shop/images/1422324840-54c6f468746b4.jpg" width="50" height="50" class="img">
-                                <p class="text">迪尼贝儿新生儿纯棉包被婴儿抱被抱毯盖被子秋冬款加厚婴幼儿用品</p>
-                                
-                            </div>
-                        </td>
-                        <td style="font-size:14px; width:10%;">
-                        7000                        </td>
-                        <td style="font-size:14px; width:18%;">
-                        1000                        </td>
-                        <td style="font-size:14px; width:15%;">
-                         0 / 7                        </td>
-                        <td style="font-size:14px; width:15%;">
-                         未发布                        </td>
-                        <td style="font-size:14px; width:12%;">
-                                                        <a href="http://www.liuliangfu.com/trade/rechange/14223248408372" class="jx-trade">继续发布</a>
-                                                    </td>
-                    </tr>
-                </tbody></table>
-                                
-                <div class="pager"></div>
-            </div>
         </div>
         <!-- 任务管理 end -->
         
@@ -340,30 +284,50 @@
 
 			<jsp:include page="/include/footer.jsp" flush="true"></jsp:include>
 
-<script>
-$(function (){
-	
-	//常见问题，网站公告点击效果
-	$('.notice-li').click(function(){
-		$(this).addClass('active').siblings().removeClass('active');
-		$('.notice-table').show();
-		$('.problem-table').hide();
-	})
-	$('.problem-li').click(function(){
-		$(this).addClass('active').siblings().removeClass('active');
-		$('.problem-table').show();
-		$('.notice-table').hide();
-	})
-	
-    $('#J-submiit-btn').click(function (){
-        $('#frm_tasks')[0].submit();
-    })
+<script type="text/javascript"> 
 
-    // $('.business-tabs li').click(function (){
-    //     $(this).addClass('active').siblings().removeClass('active');
-    // });
+$(function(){
+	initConditionForm();
+	loadShop();
 })
 
+function initConditionForm(){
+	$("#bindPlat").val("${llTaskRecordBean.bindPlat}");
+	$("#queryKey").val("${llTaskRecordBean.queryKey}");
+	$("#status").val("${llTaskRecordBean.status}");
+	$("#taskType").val("${llTaskRecordBean.taskType}");
+}
+
+function search(){
+	searchPage(1)
+}
+
+function searchPage(page){
+	$("#current_page").val(page);
+	$("#condition_form").submit();
+}
+
+function loadShop() {
+	var url = "${ctx}/web/shop/taskmanage/load_shop";
+	$.ajax( {
+		url : url,
+		type : 'post',
+		dataType : 'text',
+		timeout : 60000,
+		error : function(e) {
+			alert("连接服务器超时,加载店铺列表失败,请稍后再试.");
+		},
+		success : function(result) {
+			if (!isOutTime(result)) {
+				result = eval("("+result+")");
+				if (result.success) {
+					$("#shopId").html(result.msg);
+					$("#shopId").val("${llTaskRecordBean.shopId}");
+				}
+			}
+		}
+	});
+}
 </script>
 
 </body></html>

@@ -58,6 +58,8 @@ public class Constant {
 
 	public static int OneVisitCostScore = 3;//每个流浪花费积分
 	
+	public static int OneKeywordCostScore = 30;//每额外添加一个关键词需要的积分
+	
 	public static final int PageStayTypeDefault = 0;//页面停留时间默认类型
 	public static final int VisitTimeTypeDefault = 0;//流量访问时间默认类型
 	public static final int QuickVerifyDefault = 0;//优先审单默认值
@@ -95,6 +97,7 @@ public class Constant {
 	public static int QuickExecuteCostScore = 50;//优先执行花费积分
 
 	public static final String OneVisitCostScoreKey = "oneVisitCostScore";
+	public static final String OneKeywordCostScoreKey = "oneKeywordCostScore";
 	public static final String PageStayCostScoreMapKey = "pageStayCostScoreMap";
 	public static final String PageStayCostScore1Key = "pageStayCostScore1";
 	public static final String PageStayCostScore2Key = "pageStayCostScore2";
