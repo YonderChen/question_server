@@ -28,7 +28,7 @@ public class LLTaskService extends DaoSupport {
 		return this.hibernateDao.get(LLTask.class, taskId);
 	}
 	
-	public boolean add(LLTaskBean llTaskBean, ServerUser user) {
+	public void add(LLTaskBean llTaskBean, ServerUser user) {
 		int countOrderOneDay = llTaskBean.getOrderNumberOneDay1() 
 			+ llTaskBean.getOrderNumberOneDay2() 
 			+ llTaskBean.getOrderNumberOneDay3() 
@@ -44,28 +44,6 @@ public class LLTaskService extends DaoSupport {
 		if (llTaskBean.getIsQuickExecute() > 0) {
 			costScore += Constant.QuickExecuteCostScore;
 		}
-		ServerUser serverUser = this.hibernateDao.get(ServerUser.class, user.getUserId());
-		if (user.getScore() < costScore) {//积分不足
-			return false;
-		}
-		
-		Date now = new Date();
-		
-		user.costScore(costScore);
-		user.incScoreUsed(costScore);
-		serverUser.costScore(costScore);
-		serverUser.incScoreUsed(costScore);
-		serverUser.setModifyTime(now);
-		this.hibernateDao.update(serverUser);
-		
-		LLScoreRecord record = new LLScoreRecord();
-		record.setServerUser(serverUser);
-		record.setNum(costScore);
-		record.setType(Constant.ScoreRecordType.Cost);
-		record.setRemain(serverUser.getScore());
-		record.setCreateTime(now);
-		record.setRemark("");
-		this.hibernateDao.save(record);
 		
 		llTaskBean.setCostScore(costScore);
 		LLTask llTask = new LLTask();
@@ -111,11 +89,55 @@ public class LLTaskService extends DaoSupport {
 		llTask.setIsQuickVerify(llTaskBean.getIsQuickVerify());
 		llTask.setIsQuickExecute(llTaskBean.getIsQuickExecute());
 		llTask.setCostScore(llTaskBean.getCostScore());
-		llTask.setCreateTime(now);
-		llTask.setStatus(Constant.Status.Create);
+		llTask.setCreateTime(new Date());
+		llTask.setStatus(Constant.TaskStatus.Create);
+        this.hibernateDao.save(llTask);
+    }
+	
+	public boolean updatePublishTask(LLTask llTask, ServerUser user) {
+
+		int countOrderOneDay = llTask.getOrderNumberOneDay1() 
+			+ llTask.getOrderNumberOneDay2() 
+			+ llTask.getOrderNumberOneDay3() 
+			+ llTask.getOrderNumberOneDay4() 
+			+ llTask.getOrderNumberOneDay5();
+		int countOrder = countOrderOneDay * llTask.getDurationDay();
+		int costScore = countOrder * Constant.OneVisitCostScore 
+			+ Constant.PageStayCostScoreMap.get(String.valueOf(llTask.getPageStayType()))
+			+ Constant.VisitTimeCostScoreMap.get(String.valueOf(llTask.getVisitTimeType()));
+		if (llTask.getIsQuickVerify() > 0) {
+			costScore += Constant.QuickVerifyCostScore;
+		}
+		if (llTask.getIsQuickExecute() > 0) {
+			costScore += Constant.QuickExecuteCostScore;
+		}
+		ServerUser serverUser = this.hibernateDao.get(ServerUser.class, user.getUserId());
+		if (user.getScore() < costScore) {//积分不足
+			return false;
+		}
+		
+		Date now = new Date();
+		
+		user.costScore(costScore);
+		user.incScoreUsed(costScore);
+		serverUser.costScore(costScore);
+		serverUser.incScoreUsed(costScore);
+		serverUser.setModifyTime(now);
+		this.hibernateDao.update(serverUser);
+		
+		LLScoreRecord record = new LLScoreRecord();
+		record.setServerUser(serverUser);
+		record.setNum(costScore);
+		record.setType(Constant.ScoreRecordType.Cost);
+		record.setRemain(serverUser.getScore());
+		record.setCreateTime(now);
+		record.setRemark("");
+		this.hibernateDao.save(record);
+		
+		llTask.setStatus(Constant.TaskStatus.Verify);
         this.hibernateDao.save(llTask);
         return true;
-    }
+	}
 	
 	public PageBean queryLLTask(LLTaskBean llTaskBean) {
         String queryHql = "from LLTask as s where 1=1";

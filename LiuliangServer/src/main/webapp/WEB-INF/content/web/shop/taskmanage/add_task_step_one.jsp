@@ -87,13 +87,13 @@
 								</label>
 							</li>
 						</ul>
-						<input type="hidden" id="bindPlat" value="">
+						<input type="hidden" id="bindPlat" name="bindPlat" value="">
 					</div>
                    
                    <div class="new-Release-select-list Release-shop store_type_taobao">
                    		<div id="shopInfo">
 						</div>
-						<input type="hidden" id="shopId" value="${shopId}">
+						<input type="hidden" id="shopId" name="shopId" value="${shopId}">
                       </div>
 							<div class="new-Release-select-list Release-type Release-type-taobao">
 								<ul class="clearfix">
@@ -107,7 +107,7 @@
 									</li>
 								</ul>
 							</div>
-							<input type="hidden" id="taskType" value="0">
+							<input type="hidden" id="taskType" name="taskType" value="0">
 						</div>  
                   </form>
                   <div class="new-Release-btn">

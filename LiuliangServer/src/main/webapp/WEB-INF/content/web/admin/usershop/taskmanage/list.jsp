@@ -70,9 +70,11 @@
 						<td>
 							<s:if test="status == 0">未发布</s:if>
 							<s:if test="status == 1">待审核</s:if>
-							<s:if test="status == -1">审核失败</s:if>
 							<s:if test="status == 2">执行中</s:if>
-							<s:if test="status == 3">执行完毕</s:if>
+							<s:if test="status == 3">已完成</s:if>
+							<s:if test="status == 4">已取消</s:if>
+							<s:if test="status == 5">审核不通过</s:if>
+							<s:if test="status == 6">任务修改，待审核</s:if>
 						</td>
 						<td>
 							<button class="btn btn-link" type="button" onclick="detail('${task.taskId}');" data-toggle="button" data-loading-text="<i class='icon-pencil'></i>&nbsp;详情"><i class="icon-pencil"></i>&nbsp;详情</button>

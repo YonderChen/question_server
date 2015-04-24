@@ -35,6 +35,16 @@ public class Constant {
 		public static final int CheckFail = -1;
 	}
 	
+	public static class TaskStatus {
+        public static final int Create = 0;//未发布
+        public static final int Verify = 1;//待审核
+        public static final int Executing = 2;//执行中
+        public static final int Finish = 3;//已完成
+        public static final int Cancel = 4;//已取消
+        public static final int VerifyFaild = 5;//审核不通过
+        public static final int Changed = 6;//任务修改,待审核
+	}
+	
 	public static class BindPlat {
 		public static final String Taobao = "taobao";
 		public static final String Tmall = "tmall";
@@ -47,6 +57,12 @@ public class Constant {
 	}
 
 	public static int OneVisitCostScore = 3;//每个流浪花费积分
+	
+	public static final int PageStayTypeDefault = 0;//页面停留时间默认类型
+	public static final int VisitTimeTypeDefault = 0;//流量访问时间默认类型
+	public static final int QuickVerifyDefault = 0;//优先审单默认值
+	public static final int QuickExecuteDefault = 0;//优先执行默认值
+	
 	public static final Map<String, Integer> PageStayCostScoreMap = new HashMap<String, Integer>();//页面停留时间优化花费积分
 	static {
 		PageStayCostScoreMap.put("0", 0);

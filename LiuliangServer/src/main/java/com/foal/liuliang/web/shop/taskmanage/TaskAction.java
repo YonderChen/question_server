@@ -2,6 +2,7 @@ package com.foal.liuliang.web.shop.taskmanage;
 
 import java.util.List;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
@@ -13,6 +14,7 @@ import com.foal.liuliang.bean.LLTaskBean;
 import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.jersey.resource.tools.ResourceTools;
 import com.foal.liuliang.pojo.LLShop;
+import com.foal.liuliang.pojo.LLTask;
 import com.foal.liuliang.service.LLShopService;
 import com.foal.liuliang.service.LLTaskService;
 import com.foal.liuliang.util.FileUtil;
@@ -61,25 +63,37 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 
 	@Action("add_task_step_two")
 	public String addTaskStepTwo() {
+		if (StringTools.isEmpty(llTaskBean.getTaskId())) {
+			if (StringTools.isEmpty(llTaskBean.getBindPlat()) || StringTools.isEmpty(llTaskBean.getShopId())) {
+				this.alertAndRedirect(null, "/web/shop/taskmanage/add_task_step_one");
+				return null;
+			}
+			LLShop llShop = llShopService.getShop(llTaskBean.getShopId());
+			if (llShop == null || !StringTools.equalsStr(llShop.getBindPlat(), llTaskBean.getBindPlat())) {
+				this.alertAndRedirect(null, "/web/shop/taskmanage/add_task_step_one");
+				return null;
+			}
+			LLTask task = new LLTask();
+			task.setLlShop(llShop);
+			task.setTaskType(NumberUtils.toInt(llTaskBean.getTaskType(), 0));
+			this.setAttrToRequest("llTask", task);
+		} else {
+			LLTask task = llTaskService.getLLTask(llTaskBean.getTaskId());
+			if (task == null) {
+				this.alertAndRedirect(null, "/web/shop/taskmanage/add_task_step_one");
+				return null;
+			}
+			this.setAttrToRequest("llTask", task);
+		}
 		return SUCCESS;
 	}
 
 	@Action("add_task_step_three")
 	public String addTaskStepThree() {
-		return SUCCESS;
-	}
-
-	@Action("index")
-	public String index() {
-		return SUCCESS;
-	}
-	
-	@Action("add")
-	public String add() {
 		try {
 			String fileSuffix = ResourceTools.getFileSuffix(llTaskBean.getGoodsImgFileFileName());
 			if(!ResourceTools.checkSuffix(fileSuffix, ResourceTools.getImageSuffixs())) {
-				this.ajaxWrite(new AjaxBean(false, "请选择正确的图片"));
+				this.alertAndRedirect("请选择正确的图片", null);
 				return null;
 			}
 			String fileDirPath = Constant.TOMCAT_SERVICE_ADDRESS + Constant.UPLOAD_IMAGE_PATH;
@@ -87,9 +101,42 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 			llTaskBean.setGoodsImg(Constant.UPLOAD_IMAGE_PATH + fileName);
 		} catch (Exception e) {
 			e.printStackTrace();
-			this.ajaxWrite(new AjaxBean(false, "上传图片失败"));
+			this.alertAndRedirect("上传图片失败", "/web/shop/taskmanage/add_task_step_one");
 			return null;
 		}
+		try{
+			llTaskBean.setOperator(this.refreshAndGetSessionServerUser());
+			//验证vip是否到期
+			if (!getSessionServerUser().checkVIPValid()) {
+				this.alertAndRedirect("vip有效期已过，请先续费vip", "/web/shop/taskmanage/add_task_step_one");
+				return null;
+			} 
+			//店铺审核验证处理
+			LLShop shop = llShopService.getShop(llTaskBean.getShopId());
+			if (shop == null) {
+				this.alertAndRedirect("找不到该店铺", "/web/shop/taskmanage/add_task_step_one");
+				return null;
+			}
+			if (shop.getStatus() != Constant.Status.Success) {
+				this.alertAndRedirect("该店铺未审核通过，请等待审核通过后再次尝试", "/web/shop/taskmanage/add_task_step_one");
+				return null;
+			}
+			//设置流量优化默认值
+			llTaskBean.setPageStayType(Constant.PageStayTypeDefault);
+			llTaskBean.setVisitTimeType(Constant.VisitTimeTypeDefault);
+			llTaskBean.setIsQuickVerify(Constant.QuickVerifyDefault);
+			llTaskBean.setIsQuickExecute(Constant.QuickExecuteDefault);
+			llTaskService.add(llTaskBean, getSessionServerUser());
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.alertAndRedirect("任务添加失败", "/web/shop/taskmanage/add_task_step_one");
+			return null;
+		}
+	}
+
+	@Action("publish")
+	public String add() {
 		try{
 			llTaskBean.setOperator(this.refreshAndGetSessionServerUser());
 			//验证vip是否到期
@@ -107,7 +154,12 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 				this.ajaxWrite(new AjaxBean(false, "该店铺未审核通过，请等待审核通过后再次尝试"));
 				return null;
 			}
-			if (llTaskService.add(llTaskBean, getSessionServerUser())) {
+			LLTask task = llTaskService.getLLTask(llTaskBean.getTaskId());
+			task.setPageStayType(llTaskBean.getPageStayType());
+			task.setVisitTimeType(llTaskBean.getVisitTimeType());
+			task.setIsQuickVerify(llTaskBean.getIsQuickVerify());
+			task.setIsQuickExecute(llTaskBean.getIsQuickExecute());
+			if (llTaskService.updatePublishTask(task, getSessionServerUser())) {
 				this.ajaxWrite(new AjaxBean(true, "任务发布成功"));
 			} else {
 				this.ajaxWrite(new AjaxBean(false, "您的积分不足，请先充值后再次尝试"));
