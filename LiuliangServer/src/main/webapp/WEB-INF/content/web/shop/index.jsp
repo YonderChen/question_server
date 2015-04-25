@@ -165,7 +165,7 @@
 								<div class="login_input inp">
 			                        <label>验证码：</label>
 									<input type="text" class="txt placebox" style="width:100px;" name="uvcode" placeholder="请输入验证码" value="">
-									<img src="${ctx}/web/admin/code" id="img" onclick="changeCode();" title="换一张" style="position:relative;top:10px;">
+									<img src="${ctx}/web/shop/code" id="img" onclick="changeCode();" title="换一张" style="position:relative;top:10px;">
 								</div>
 						 	</div>
 
@@ -176,7 +176,7 @@
 								<div>
 									<a href="${ctx}/web/shop/register_index">注册账号</a>
 									<p></p>
-									<a href="http://www.liuliangfu.com/user/find_passwd">忘记密码？</a>
+									<a href="${ctx}/web/shop/find_passwd">忘记密码？</a>
 								</div>
 							</div>
 						</div>

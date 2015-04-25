@@ -80,6 +80,17 @@ public class ServerUserService extends DaoSupport {
 	public ServerUser getServerUser(String userId) {
 		return this.hibernateDao.get(ServerUser.class, userId);
 	}
+
+	public ServerUser getServerUserByEmail(String email) {
+        String queryHql = "from ServerUser as s where s.email = :email";
+        Map paramMap = new HashMap();
+        paramMap.put("email", email );
+        List list = this.hibernateDao.queryList(queryHql, paramMap);
+        if (list.size() == 0) {
+			return null;
+		}
+		return (ServerUser)list.get(0);
+	}
 	
 	public boolean updateServerUserInfo(ServerUserBean userBean) {
 		ServerUser user = this.getServerUser(userBean.getUserId());
@@ -113,6 +124,19 @@ public class ServerUserService extends DaoSupport {
 			return null;
 		}
 		String[] passwords = StringUtil.generatePassword(userBean.getNewPassword());
+		user.setAssistantPassword(passwords[1]);
+		user.setEncryptedPassword(passwords[0]);
+		user.setModifyTime(new Date());
+		this.hibernateDao.update(user);
+		return user;
+	}
+
+	public ServerUser updateServerUserPass(String userId, String newPassword) {
+		ServerUser user = this.getServerUser(userId);
+		if (user == null) {
+			return null;
+		}
+		String[] passwords = StringUtil.generatePassword(newPassword);
 		user.setAssistantPassword(passwords[1]);
 		user.setEncryptedPassword(passwords[0]);
 		user.setModifyTime(new Date());

@@ -49,10 +49,10 @@
                 
                 
                 <div class="issue-task-two"> 
-                    <div class="shop-type">任务类型已选择：<i class="plat_small plat_tmall"></i>
-                    <s:if test="#request.llTask.llShop.bindPlat == 'taobao'">淘宝</s:if>
-                    <s:if test="#request.llTask.llShop.bindPlat == 'tmall'">天猫</s:if>
-                    <s:if test="#request.llTask.llShop.bindPlat == 'jd'">京东</s:if> | ${llTask.llShop.bindName} | <s:if test="#request.llTask.taskType == 0">自然搜索流量</s:if><s:else>自然搜索流量</s:else><a class="back_step_one" href="javascript:pre_step();">返回编辑</a></div>
+                    <div class="shop-type">任务类型已选择：
+                    <s:if test="#request.llTask.llShop.bindPlat == 'taobao'"><i class="plat_small plat_taobao"></i>淘宝</s:if>
+                    <s:if test="#request.llTask.llShop.bindPlat == 'tmall'"><i class="plat_small plat_tmall"></i>天猫</s:if>
+                    <s:if test="#request.llTask.llShop.bindPlat == 'jd'"><i class="plat_small plat_jd"></i>京东</s:if> | ${llTask.llShop.bindName} | <s:if test="#request.llTask.taskType == 0">自然搜索流量</s:if><s:else>自然搜索流量</s:else><a class="back_step_one" href="javascript:pre_step();">返回编辑</a></div>
                     <input type="hidden" id="bindPlat" name="bindPlat" value="${llTask.llShop.bindPlat}">
                     <input type="hidden" id="shopId" name="shopId" value="${llTask.llShop.shopId}">
                     <input type="hidden" id="taskType" name="taskType" value="${llTask.taskType}">
@@ -159,7 +159,7 @@
 												onafterpaste="this.value=this.value.replace(/\D/g,'')">
 											&nbsp;访客/天
 											<span style="font-size: 12px; color: #666; margin: 0;">（最低10访客/天）</span>
-											<span class="red"><a style="color: blue;" onclick="div_keyword4_del()">删除</a></span>
+											<span class="red"><a style="color: blue;" onclick="div_keyword_del()">删除</a></span>
 											<span id="hd_kwd_info3" class="error" style="display: none;"></span>
 										</div>
 										<div id="div_keyword5" style="display: none;">
@@ -177,7 +177,7 @@
 												onafterpaste="this.value=this.value.replace(/\D/g,'')">
 											&nbsp;访客/天
 											<span style="font-size: 12px; color: #666; margin: 0;">（最低10访客/天）</span>
-											<span class="red"><a style="color: blue;" onclick="div_keyword5_del()">删除</a></span>
+											<span class="red"><a style="color: blue;" onclick="div_keyword_del()">删除</a></span>
 											<span id="hd_kwd_info3" class="error" style="display: none;"></span>
 										</div>
 									</div>
@@ -195,8 +195,11 @@
 									</p>
 									<div class="percentage">
 										<div>
-											<label>
+											<label id="searchSource_label_taobao">
 												电脑端淘宝自然搜索占比：
+											</label>
+											<label id="searchSource_label_jd">
+												电脑端京东自然搜索占比：
 											</label>
 											<input type="text"  id="searchSource" name="pc_percent" class="pctext"
 												value="${llTask.searchSource}"
@@ -204,7 +207,7 @@
 												onafterpaste="this.value=this.value.replace(/\D/g,'')">
 											%
 										</div>
-										<div>
+										<div id="searchSource_div_tmall">
 											<label>
 												电脑端天猫自然搜索占比：
 											</label>
@@ -213,8 +216,6 @@
 												onafterpaste="this.value=this.value.replace(/\D/g,'')">
 											%
 										</div>
-										<!-- <div><label>手机淘宝自然搜索占比：</label><input type="text" name="phone_percent" class="apptext" value="" onKeyUp="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" />%</div> -->
-										<!-- <div><label><input type="checkbox" name="perc" />天猫自然搜索占比：</label><input type="text" class="apptext" />%</div> -->
 									</div>
 									<div>
 										<span id="hd_percent" class="error"
@@ -283,10 +284,44 @@
 
 
 	$(document).ready(function(){
+		if($("#bindPlat").val() == "taobao" || $("#bindPlat").val() == "tmall"){
+			$("#searchSource_label_taobao").show();
+			$("#searchSource_label_jd").hide();
+		} else {
+			$("#searchSource_label_taobao").hide();
+			$("#searchSource_label_jd").show();
+			$("#searchSource_div_tmall").hide();
+			$("#searchSource").val(100);
+			$("#searchSource_cut").val(0);
+			$("#searchSource").attr("readonly","readonly");
+		}
+		
 		$("#durationDay").val($("input[name='pay_days'][checked]").val());
 	  	$("#searchSource").change(function(){
-	  		$("#searchSource_cut").val(100 - $("#searchSource").val());
+	  		if($("#searchSource").val().trim() == ""){
+	  			$("#searchSource").val(0);
+	  		}
+	  		if(parseInt($("#searchSource").val()) > 100){
+	  			$("#searchSource").val(100);
+	  		}
+	  		if(parseInt($("#searchSource").val()) < 0){
+	  			$("#searchSource").val(0);
+	  		}
+	  		$("#searchSource_cut").val(100 - parseInt($("#searchSource").val()));
 	  	})
+		if($("#orderNumberOneDay4").val().trim() != ""){
+			var num4 = parseInt($("#orderNumberOneDay4").val().trim())
+			if(num4 != 0){
+				$("#div_keyword4").show();
+			}
+		}
+		if($("#orderNumberOneDay5").val().trim() != ""){
+			var num4 = parseInt($("#orderNumberOneDay5").val().trim())
+			if(num4 != 0){
+				$("#div_keyword5").show();
+			}
+		}
+		cal_source();
 	});
 	
 	function cal_source(){
@@ -294,15 +329,19 @@
 		var add_kwd_score = 0;
 		var visit_day_num = parseInt($("#orderNumberOneDay1").val().trim()) + parseInt($("#orderNumberOneDay2").val().trim()) + parseInt($("#orderNumberOneDay3").val().trim());
 		
-		if($("#orderNumberOneDay4").val().trim() != "" && parseInt($("#orderNumberOneDay4").val().trim()) > 0){
+		if(!$("#div_keyword4").is(":hidden")){
 			add_kwd_num++;
 			add_kwd_score += parseInt("${oneKeywordCostScore }");
-			visit_day_num += parseInt($("#orderNumberOneDay4").val().trim());
+			if($("#orderNumberOneDay4").val().trim() != "" && parseInt($("#orderNumberOneDay4").val().trim()) > 0){
+				visit_day_num += parseInt($("#orderNumberOneDay4").val().trim());
+			}
 		}
-		if($("#orderNumberOneDay5").val().trim() != "" && parseInt($("#orderNumberOneDay5").val().trim()) > 0){
+		if(!$("#div_keyword5").is(":hidden")){
 			add_kwd_num++;
 			add_kwd_score += parseInt("${oneKeywordCostScore }");
-			visit_day_num += parseInt($("#orderNumberOneDay5").val().trim());
+			if($("#orderNumberOneDay5").val().trim() != "" && parseInt($("#orderNumberOneDay5").val().trim()) > 0){
+				visit_day_num += parseInt($("#orderNumberOneDay5").val().trim());
+			}
 		}
 		var sum_score = visit_day_num * parseInt($("#durationDay").val()) * parseInt("${oneVisitCostScore }");
 		var sum_score_xiaoji = add_kwd_score + sum_score;
@@ -343,20 +382,19 @@
 		cal_source();
 	}
 	
-	function div_keyword4_del(){
-		if(!$("#div_keyword4").is(":hidden")){
-			$("#div_keyword4").hide();
-		}
-		$("#keyword4").val("");
-		$("#orderNumberOneDay4").val("");
-	}
-	
-	function div_keyword5_del(){
+	function div_keyword_del(){
 		if(!$("#div_keyword5").is(":hidden")){
 			$("#div_keyword5").hide();
+			$("#keyword5").val("");
+			$("#orderNumberOneDay5").val("0");
+		} else {
+			if(!$("#div_keyword4").is(":hidden")){
+				$("#div_keyword4").hide();
+				$("#keyword4").val("");
+				$("#orderNumberOneDay4").val("0");
+			}
 		}
-		$("#keyword5").val("");
-		$("#orderNumberOneDay5").val("");
+		cal_source();
 	}
 	
 	function next_step() {
@@ -431,7 +469,7 @@
 			$("#orderNumberOneDay3").select();
 			return;
 		}
-		if($("#orderNumberOneDay4").val().trim() != ""){
+		if(!$("#div_keyword4").is(":hidden")){
 			var num4 = parseInt($("#orderNumberOneDay4").val().trim())
 			if(num4 < 10 && num4 > 0){
 				alert("关键词4每日访客数必须大于等于10");
@@ -439,7 +477,7 @@
 				return;
 			}
 		}
-		if($("#orderNumberOneDay5").val().trim() != ""){
+		if(!$("#div_keyword5").is(":hidden")){
 			var num5 = parseInt($("#orderNumberOneDay5").val().trim())
 			if(num5 < 10 && num5 > 0){
 				alert("关键词5每日访客数必须大于等于10");

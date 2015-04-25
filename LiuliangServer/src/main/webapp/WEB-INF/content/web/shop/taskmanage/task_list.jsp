@@ -31,12 +31,12 @@
               <div class="business-info">
                 <div class="integral-record-hd">任务管理</div>
                 <ul class="business-tabs">
-                  <li class="active"><a href="/center/trade_manage">
-                  <span>所有任务（4）</span></a></li>
-                  <li><a href="/center/trade_manage/ing">
+                  <li class="active"><a href="${ctx}/web/shop/taskmanage/task_list">
+                  <span>所有任务（${allLLTaskCount}）</span></a></li>
+                  <!-- <li><a href="/center/trade_manage/ing">
                   <span>进行中的任务（0）</span></a></li>
                   <li><a href="/center/trade_manage/fin">
-                  <span>已完成的任务（0）</span></a></li>
+                  <span>已完成的任务（0）</span></a></li> -->
                 </ul>
                 <div class="business-info-bd">
                     <div class="integral-serch">
@@ -104,7 +104,7 @@
 											<tbody>
 												<tr>
 													<th colspan="6">
-														<span><i class="plat_small plat_${record.llShop.bindPlat}"></i>${record.llShop.bindName}&nbsp;&nbsp;任务编号：${record.taskId}<a href="/center/trade_detail/14223248481368" class="trade-detail" target="_blank">[详情]</a>&nbsp;&nbsp;发布时间：<s:date name="createTime" format="yyyy-MM-dd HH:mm:ss"/></span>
+														<span><i class="plat_small plat_${record.llShop.bindPlat}"></i>${record.llShop.bindName}&nbsp;&nbsp;任务编号：${record.taskId}<a href="${ctx}/web/shop/taskmanage/task_detail?taskId=${record.taskId}" class="trade-detail" target="_blank">[详情]</a>&nbsp;&nbsp;发布时间：<s:date name="createTime" format="yyyy-MM-dd HH:mm:ss"/></span>
 													</th>
 												</tr>
 												<tr>
@@ -140,7 +140,7 @@
 						                                <s:if test="status == 6">任务修改,待审核</s:if>
 													</td>
 													<td style="font-size: 14px; width: 12%;">
-														<a href="/trade/rechange/14223248481368" class="jx-trade">继续发布</a>
+														<a href="${ctx }/web/shop/taskmanage/add_task_step_two?taskId=${record.taskId}" class="jx-trade">继续发布</a>
 													</td>
 												</tr>
 											</tbody>

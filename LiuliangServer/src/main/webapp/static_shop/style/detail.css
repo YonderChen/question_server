@@ -1,0 +1,39 @@
+/* 任务信息 */
+.task-detail{width:1000px; overflow:hidden; margin:0 auto;}
+.task-detail-left{width:392px; height:488px; overflow:hidden; float:left; border:1px solid #E0E0E0; border-radius:5px; background:#fff;}
+.task-detail-left h3{width:360px; height:45px; line-height:45px; padding-left:20px; border-bottom:1px solid #E7E7E7; font-size:16px; font-weight:bold; color:#444;}
+.task-detail-left p{color:#555; font-size:14px; line-height:30px; padding-left:20px;}
+.task-detail-left p span{color:#f00;}
+.task-detail-left .source{overflow:hidden; font-size:14px; color:#555; padding-left:20px;}
+.task-detail-left .source label{display:block; width:78px; float:left; line-height:25px;}
+.task-detail-left .source div{display:block; width:280px; float:left; line-height:25px;}
+
+.task-detail-right{width:598px; height:488px; overflow:hidden; float:right; border:1px solid #E0E0E0; border-radius:5px; background:#fff;}
+.task-state{padding:100px 0 0 40px;}
+.task-state h4{ height:34px; line-height:34px; margin:16px 0 26px; padding-left:40px; position:relative;}
+.task-state h4 i {background: url("../images/business/duibudui.png") no-repeat scroll 0 0 transparent; display: block; height: 34px; left: 0; position: absolute; top: 0; width: 34px; position:absolute;}
+.task-state .main-f a{display:inline-block; width:80px; height:28px; background:#2b9bfa; font-size:14px; color:#fff; line-height:28px; text-align:center; border-radius:3px; margin-right:5px;}
+.task-state .main-f a:hover{background:#1492fd;}
+
+
+/* 任务商品列表 */
+.task-list{width:998px; border:1px solid #E0E0E0; border-radius:5px; margin:0 auto; background:#fff; margin:8px auto; overflow:hidden;}
+.task-list h3{padding:10px 0 0 20px; font-size:16px; color:#444; font-weight:bold;}
+.task-list table{width:95%; margin:10px auto; font-size:14px; color:#555;}
+.task-list table td{padding:15px 0; text-align:center;}
+.task-list table td span{color:#f00;}
+.intableProList{overflow:hidden; padding:5px 0;}
+.intableProList img{float:left; width:50px; height:50px;}
+.intableProList p{color:#555; font-size:14px; height:auto; line-height:20px; padding:0 10px; width:500px; overflow:hidden; text-align:left;}
+
+
+/* 费用合计 */
+.task-detail-fee{width:998px; border:1px solid #E0E0E0; border-radius:5px; margin:0 auto; background:#fff; margin:0 auto; overflow:hidden;}
+.task-detail-fee h3{padding:30px 0 0 20px; font-size:16px; color:#444; font-weight:bold;}
+.task-detail-fee table{width:95%; margin:20px auto;}
+.task-detail-fee table th{text-align:center; font-size:14px; color:#191818; font-weight:normal; line-height:40px; height:40px;}
+.task-detail-fee table td{text-align:center; color:#555; font-size:14px; min-height:80px; border-bottom:1px solid #E7E7E7; padding:10px 0; line-height:30px;}
+.task-detail-fee table td p{text-align:left; padding-left:50px;}
+.task-detail-fee table td span{color:#f00;}
+.task-detail-bott{font-size:18px; text-align:right; margin:30px;}
+.task-detail-bott span{color:#f00;}

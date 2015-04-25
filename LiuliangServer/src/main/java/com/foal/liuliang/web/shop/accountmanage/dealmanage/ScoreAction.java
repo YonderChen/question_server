@@ -24,7 +24,7 @@ public class ScoreAction extends UserBaseAction implements ModelDriven<LLDealOrd
 	private LLDealOrderBean llOrderBean = new LLDealOrderBean();
 
 	@Autowired
-	LLScoreOrderService llScoreOrderService;
+	private LLScoreOrderService llScoreOrderService;
 	
 	public LLDealOrderBean getModel() {
 		return llOrderBean;

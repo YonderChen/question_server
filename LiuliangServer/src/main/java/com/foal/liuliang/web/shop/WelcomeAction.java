@@ -68,6 +68,8 @@ public class WelcomeAction extends UserBaseAction implements ModelDriven<LLTaskR
         PageBean pageBean = this.llTaskService.queryLLTaskRecord(llTaskRecordBean);
 		this.setAttrToRequest("pageBean", pageBean);
 		this.setAttrToRequest("llTaskRecordBean", llTaskRecordBean);
+		int allLLTaskCount = this.llTaskService.queryAllLLTaskRecordCount(llTaskRecordBean.getUserId());
+		this.setAttrToRequest("allLLTaskCount", allLLTaskCount);
 		return SUCCESS;
 	}
 }

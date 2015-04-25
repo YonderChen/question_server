@@ -26,7 +26,7 @@ public class VIPAction extends UserBaseAction implements ModelDriven<LLDealOrder
 	private LLDealOrderBean llOrderBean = new LLDealOrderBean();
 
 	@Autowired
-	LLVIPOrderService llVIPOrderService;
+	private LLVIPOrderService llVIPOrderService;
 	
 	public LLDealOrderBean getModel() {
 		return llOrderBean;

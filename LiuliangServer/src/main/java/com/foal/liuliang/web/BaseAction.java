@@ -116,4 +116,27 @@ public class BaseAction extends ActionSupport{
 		}
 	}
 	
+	protected void alertAndGoBack(String msg) {
+		PrintWriter out = null;
+		try {
+			HttpServletResponse response = this.getResponse();
+			response.setContentType("text/html;charset=UTF-8");
+			response.setHeader("Cache-Control", "no-cache");
+			response.setHeader("Pragma", "no-cache");
+            response.setHeader("Expires", "0");
+            out = response.getWriter();
+			if (msg != null) {
+				out.write("<script type='text/javascript'>alert('"+msg+"');</script>");
+			}
+			out.write("<script type='text/javascript'>window.location.href='javascript:window.history.back();'</script>");
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (out != null) {
+				out.flush();
+				out.close();
+			}
+		}
+	}
+	
 }

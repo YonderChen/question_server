@@ -28,25 +28,14 @@ public class LLTaskService extends DaoSupport {
 		return this.hibernateDao.get(LLTask.class, taskId);
 	}
 	
-	public void add(LLTaskBean llTaskBean, ServerUser user) {
-		int countOrderOneDay = llTaskBean.getOrderNumberOneDay1() 
-			+ llTaskBean.getOrderNumberOneDay2() 
-			+ llTaskBean.getOrderNumberOneDay3() 
-			+ llTaskBean.getOrderNumberOneDay4() 
-			+ llTaskBean.getOrderNumberOneDay5();
-		int countOrder = countOrderOneDay * llTaskBean.getDurationDay();
-		int costScore = countOrder * Constant.OneVisitCostScore 
-			+ Constant.PageStayCostScoreMap.get(String.valueOf(llTaskBean.getPageStayType()))
-			+ Constant.VisitTimeCostScoreMap.get(String.valueOf(llTaskBean.getVisitTimeType()));
-		if (llTaskBean.getIsQuickVerify() > 0) {
-			costScore += Constant.QuickVerifyCostScore;
+	public LLTask add(LLTaskBean llTaskBean, ServerUser user) {
+		LLTask llTask = null;
+		if (!StringTools.isEmpty(llTaskBean.getTaskId())) {
+			llTask = getLLTask(llTaskBean.getTaskId());
 		}
-		if (llTaskBean.getIsQuickExecute() > 0) {
-			costScore += Constant.QuickExecuteCostScore;
+		if (llTask == null) {
+			llTask = new LLTask();
 		}
-		
-		llTaskBean.setCostScore(costScore);
-		LLTask llTask = new LLTask();
 		llTask.setServerUser(llTaskBean.getOperator());
 		llTask.setLlShop(this.hibernateDao.get(LLShop.class, llTaskBean.getShopId()));
 		llTask.setGoodsUrl(llTaskBean.getGoodsUrl());
@@ -88,29 +77,41 @@ public class LLTaskService extends DaoSupport {
 		llTask.setVisitTimeType(llTaskBean.getVisitTimeType());
 		llTask.setIsQuickVerify(llTaskBean.getIsQuickVerify());
 		llTask.setIsQuickExecute(llTaskBean.getIsQuickExecute());
-		llTask.setCostScore(llTaskBean.getCostScore());
+		calCostScore(llTask);
 		llTask.setCreateTime(new Date());
 		llTask.setStatus(Constant.TaskStatus.Create);
         this.hibernateDao.save(llTask);
+        return llTask;
     }
 	
-	public boolean updatePublishTask(LLTask llTask, ServerUser user) {
-
+	public int calCostScore(LLTask llTask) {
 		int countOrderOneDay = llTask.getOrderNumberOneDay1() 
-			+ llTask.getOrderNumberOneDay2() 
-			+ llTask.getOrderNumberOneDay3() 
-			+ llTask.getOrderNumberOneDay4() 
-			+ llTask.getOrderNumberOneDay5();
-		int countOrder = countOrderOneDay * llTask.getDurationDay();
-		int costScore = countOrder * Constant.OneVisitCostScore 
-			+ Constant.PageStayCostScoreMap.get(String.valueOf(llTask.getPageStayType()))
-			+ Constant.VisitTimeCostScoreMap.get(String.valueOf(llTask.getVisitTimeType()));
-		if (llTask.getIsQuickVerify() > 0) {
+		+ llTask.getOrderNumberOneDay2() 
+		+ llTask.getOrderNumberOneDay3() 
+		+ llTask.getOrderNumberOneDay4() 
+		+ llTask.getOrderNumberOneDay5();//每日总访客数
+		int countOrder = countOrderOneDay * llTask.getDurationDay();//总访客数
+		int costScore = countOrder * Constant.OneVisitCostScore;//基础流量积分
+		costScore += Constant.PageStayCostScoreMap.get(String.valueOf(llTask.getPageStayType()));//优化类型，页面停留时间优化花费积分
+		costScore += Constant.VisitTimeCostScoreMap.get(String.valueOf(llTask.getVisitTimeType()));//优化类型，流量访问时间优化花费积分
+		if (llTask.getIsQuickVerify() > 0) {//优化类型，是否优先验证附加积分
 			costScore += Constant.QuickVerifyCostScore;
 		}
-		if (llTask.getIsQuickExecute() > 0) {
+		if (llTask.getIsQuickExecute() > 0) {//优化类型，是否优先执行附加积分
 			costScore += Constant.QuickExecuteCostScore;
 		}
+		if (llTask.getOrderNumberOneDay4() > 0) {//额外关键词，附加积分
+			costScore += Constant.OneKeywordCostScore;
+		}
+		if (llTask.getOrderNumberOneDay5() > 0) {//额外关键词，附加积分
+			costScore += Constant.OneKeywordCostScore;
+		}
+		llTask.setCostScore(costScore);
+		return costScore;
+	}
+	
+	public boolean updatePublishTask(LLTask llTask, ServerUser user) {
+		int costScore = calCostScore(llTask);
 		ServerUser serverUser = this.hibernateDao.get(ServerUser.class, user.getUserId());
 		if (user.getScore() < costScore) {//积分不足
 			return false;
@@ -135,7 +136,7 @@ public class LLTaskService extends DaoSupport {
 		this.hibernateDao.save(record);
 		
 		llTask.setStatus(Constant.TaskStatus.Verify);
-        this.hibernateDao.save(llTask);
+        this.hibernateDao.update(llTask);
         return true;
 	}
 	
@@ -193,6 +194,14 @@ public class LLTaskService extends DaoSupport {
         List list = this.hibernateDao.queryList(queryHql, llTaskRecordBean.getPage(), llTaskRecordBean.getPageSize(), paramMap);
         int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
 		return new PageBean(list, allRow, llTaskRecordBean.getPage(), llTaskRecordBean.getPageSize());
+    }
+	
+	public int queryAllLLTaskRecordCount(String userId) {
+        String queryHql = "from LLTask as s where s.serverUser.userId = :userId";
+        Map paramMap = new HashMap();
+        paramMap.put("userId", userId );
+        int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
+		return allRow;
     }
 }
 

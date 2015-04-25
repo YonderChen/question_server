@@ -25,7 +25,7 @@ public class ScoreRecordAction extends UserBaseAction implements ModelDriven<LLS
 	private LLScoreRecordBean llscoreRecordBean = new LLScoreRecordBean();
 
 	@Autowired
-	LLScoreRecordService llScoreRecordService;
+	private LLScoreRecordService llScoreRecordService;
 	
 	public LLScoreRecordBean getModel() {
 		return llscoreRecordBean;

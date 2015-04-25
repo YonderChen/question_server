@@ -189,6 +189,9 @@ CREATE TABLE `t_system_param` (
 -- Records of t_system_param
 -- ----------------------------
 INSERT INTO `t_system_param` VALUES ('initPassword', '新用户初始化密码', '123456', '2014-12-18 09:34:22', '2014-12-18 09:42:22');
+INSERT INTO `t_system_param` VALUES ('emailStmpServer', '邮件服务器', 'stmp.163.com', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
+INSERT INTO `t_system_param` VALUES ('emailUsername', '系统邮箱用户名', 'liuliang_server@163.com', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
+INSERT INTO `t_system_param` VALUES ('emailPassword', '系统邮箱密码', 'liuliang654321', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
 INSERT INTO `t_system_param` VALUES ('oneVisitCostScore', '每个流量花费积分数', '3', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
 INSERT INTO `t_system_param` VALUES ('oneKeywordCostScore', '每额外添加一个关键词话费的积分数', '30', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
 INSERT INTO `t_system_param` VALUES ('pageStayCostScore1', '增值服务，页面停留60~120秒花费积分数', '40', '2015-04-03 09:34:22', '2015-04-03 09:42:22');

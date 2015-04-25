@@ -32,10 +32,10 @@ public class TaskRecordAction extends UserBaseAction implements ModelDriven<LLTa
 	private LLTaskRecordBean llTaskRecordBean = new LLTaskRecordBean();
 	
 	@Autowired
-	LLTaskService llTaskService;
+	private LLTaskService llTaskService;
 	
 	@Autowired
-	LLShopService llShopService;
+	private LLShopService llShopService;
 	
 	public LLTaskRecordBean getModel() {
 		return llTaskRecordBean;
@@ -72,6 +72,8 @@ public class TaskRecordAction extends UserBaseAction implements ModelDriven<LLTa
         PageBean pageBean = this.llTaskService.queryLLTaskRecord(llTaskRecordBean);
 		this.setAttrToRequest("pageBean", pageBean);
 		this.setAttrToRequest("llTaskRecordBean", llTaskRecordBean);
+		int allLLTaskCount = this.llTaskService.queryAllLLTaskRecordCount(llTaskRecordBean.getUserId());
+		this.setAttrToRequest("allLLTaskCount", allLLTaskCount);
         return SUCCESS;
     }
 

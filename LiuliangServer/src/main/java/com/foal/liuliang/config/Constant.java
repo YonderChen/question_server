@@ -28,6 +28,18 @@ public class Constant {
 	
 	public static final String ROLE_ID_USER_ADMIN = "100001";
 	public static final String ROLE_ID_USER_SHOP = "100002";
+
+	public static final String EMAIL_STMP_SERVER_KEY = "emailStmpServer";
+	public static final String EMAIL_USERNAME_KEY = "emailUsername";
+	public static final String EMAIL_PASSWORD_KEY = "emailPassword";
+	
+	public static String EMAIL_STMP_SERVER = "stmp.163.com";
+	public static String EMAIL_USERNAME = "liuliang_server@163.com";
+	public static String EMAIL_PASSWORD = "liuliang654321";
+
+	public static String SIGN_KEY = "liuliang654321";
+	
+	public static long ResetPwdUrlEffectiveTime = 48 * 60 * 60 * 1000;
 	
 	public static class Status {
 		public static final int Create = 0;

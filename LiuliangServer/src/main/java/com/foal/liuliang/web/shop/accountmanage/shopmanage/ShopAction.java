@@ -28,7 +28,7 @@ public class ShopAction extends UserBaseAction implements ModelDriven<LLShopBean
 	private LLShopBean llShopBean = new LLShopBean();
 	
 	@Autowired
-	LLShopService llShopService;
+	private LLShopService llShopService;
 	
 	public LLShopBean getModel() {
 		return llShopBean;

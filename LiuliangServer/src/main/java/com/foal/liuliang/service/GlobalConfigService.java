@@ -35,6 +35,10 @@ public class GlobalConfigService extends DaoSupport {
 	}
 
 	public void initSystemParam(ServletContext context) {
+		Constant.EMAIL_STMP_SERVER = systemParamService.getStringSystemParam(Constant.EMAIL_STMP_SERVER_KEY);
+		Constant.EMAIL_USERNAME = systemParamService.getStringSystemParam(Constant.EMAIL_USERNAME_KEY);
+		Constant.EMAIL_PASSWORD = systemParamService.getStringSystemParam(Constant.EMAIL_PASSWORD_KEY);
+
 		Constant.INIT_PASSWORD = systemParamService.getStringSystemParam(Constant.INIT_PASSWORD_KEY);
 		initBusinessParam(context);
 	}

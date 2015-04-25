@@ -34,10 +34,10 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 	private LLTaskBean llTaskBean = new LLTaskBean();
 	
 	@Autowired
-	LLTaskService llTaskService;
+	private LLTaskService llTaskService;
 	
 	@Autowired
-	LLShopService llShopService;
+	private LLShopService llShopService;
 	
 	public LLTaskBean getModel() {
 		return llTaskBean;
@@ -65,12 +65,12 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 	public String addTaskStepTwo() {
 		if (StringTools.isEmpty(llTaskBean.getTaskId())) {
 			if (StringTools.isEmpty(llTaskBean.getBindPlat()) || StringTools.isEmpty(llTaskBean.getShopId())) {
-				this.alertAndRedirect(null, "/web/shop/taskmanage/add_task_step_one");
+				this.alertAndRedirect(null, "web/shop/taskmanage/add_task_step_one");
 				return null;
 			}
 			LLShop llShop = llShopService.getShop(llTaskBean.getShopId());
 			if (llShop == null || !StringTools.equalsStr(llShop.getBindPlat(), llTaskBean.getBindPlat())) {
-				this.alertAndRedirect(null, "/web/shop/taskmanage/add_task_step_one");
+				this.alertAndRedirect(null, "web/shop/taskmanage/add_task_step_one");
 				return null;
 			}
 			LLTask task = new LLTask();
@@ -80,7 +80,7 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 		} else {
 			LLTask task = llTaskService.getLLTask(llTaskBean.getTaskId());
 			if (task == null) {
-				this.alertAndRedirect(null, "/web/shop/taskmanage/add_task_step_one");
+				this.alertAndRedirect(null, "web/shop/taskmanage/add_task_step_one");
 				return null;
 			}
 			this.setAttrToRequest("llTask", task);
@@ -93,7 +93,7 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 		try {
 			String fileSuffix = ResourceTools.getFileSuffix(llTaskBean.getGoodsImgFileFileName());
 			if(!ResourceTools.checkSuffix(fileSuffix, ResourceTools.getImageSuffixs())) {
-				this.alertAndRedirect("请选择正确的图片", null);
+				this.alertAndGoBack("请选择正确的图片");
 				return null;
 			}
 			String fileDirPath = Constant.TOMCAT_SERVICE_ADDRESS + Constant.UPLOAD_IMAGE_PATH;
@@ -101,24 +101,24 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 			llTaskBean.setGoodsImg(Constant.UPLOAD_IMAGE_PATH + fileName);
 		} catch (Exception e) {
 			e.printStackTrace();
-			this.alertAndRedirect("上传图片失败", "/web/shop/taskmanage/add_task_step_one");
+			this.alertAndRedirect("上传图片失败", "web/shop/taskmanage/add_task_step_one");
 			return null;
 		}
 		try{
 			llTaskBean.setOperator(this.refreshAndGetSessionServerUser());
 			//验证vip是否到期
 			if (!getSessionServerUser().checkVIPValid()) {
-				this.alertAndRedirect("vip有效期已过，请先续费vip", "/web/shop/taskmanage/add_task_step_one");
+				this.alertAndRedirect("vip有效期已过，请先续费vip", "web/shop/taskmanage/add_task_step_one");
 				return null;
 			} 
 			//店铺审核验证处理
 			LLShop shop = llShopService.getShop(llTaskBean.getShopId());
 			if (shop == null) {
-				this.alertAndRedirect("找不到该店铺", "/web/shop/taskmanage/add_task_step_one");
+				this.alertAndRedirect("找不到该店铺", "web/shop/taskmanage/add_task_step_one");
 				return null;
 			}
 			if (shop.getStatus() != Constant.Status.Success) {
-				this.alertAndRedirect("该店铺未审核通过，请等待审核通过后再次尝试", "/web/shop/taskmanage/add_task_step_one");
+				this.alertAndRedirect("该店铺未审核通过，请等待审核通过后再次尝试", "web/shop/taskmanage/add_task_step_one");
 				return null;
 			}
 			//设置流量优化默认值
@@ -126,17 +126,39 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 			llTaskBean.setVisitTimeType(Constant.VisitTimeTypeDefault);
 			llTaskBean.setIsQuickVerify(Constant.QuickVerifyDefault);
 			llTaskBean.setIsQuickExecute(Constant.QuickExecuteDefault);
-			llTaskService.add(llTaskBean, getSessionServerUser());
+			if (StringTools.isEmpty(llTaskBean.getKeyword4().trim()) || llTaskBean.getOrderNumberOneDay4() < 0) {
+				llTaskBean.setOrderNumberOneDay4(0);
+			}
+			if (StringTools.isEmpty(llTaskBean.getKeyword5().trim()) || llTaskBean.getOrderNumberOneDay5() < 0) {
+				llTaskBean.setOrderNumberOneDay5(0);
+			}
+			if (llTaskBean.getOrderNumberOneDay1() < 10) {
+				llTaskBean.setOrderNumberOneDay1(10);
+			}
+			if (llTaskBean.getOrderNumberOneDay2() < 10) {
+				llTaskBean.setOrderNumberOneDay2(10);
+			}
+			if (llTaskBean.getOrderNumberOneDay3() < 10) {
+				llTaskBean.setOrderNumberOneDay3(10);
+			}
+			if (llTaskBean.getOrderNumberOneDay4() < 10 && llTaskBean.getOrderNumberOneDay4() != 0) {
+				llTaskBean.setOrderNumberOneDay4(10);
+			}
+			if (llTaskBean.getOrderNumberOneDay5() < 10 && llTaskBean.getOrderNumberOneDay5() != 0) {
+				llTaskBean.setOrderNumberOneDay5(10);
+			}
+			LLTask llTask = llTaskService.add(llTaskBean, getSessionServerUser());
+			this.setAttrToRequest("llTask", llTask);
 			return SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();
-			this.alertAndRedirect("任务添加失败", "/web/shop/taskmanage/add_task_step_one");
+			this.alertAndRedirect("任务添加失败", "web/shop/taskmanage/add_task_step_one");
 			return null;
 		}
 	}
 
-	@Action("publish")
-	public String add() {
+	@Action("add_task_success")
+	public String addTaskSuccess() {
 		try{
 			llTaskBean.setOperator(this.refreshAndGetSessionServerUser());
 			//验证vip是否到期
@@ -144,32 +166,43 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 				this.ajaxWrite(new AjaxBean(false, "vip有效期已过，请先续费vip"));
 				return null;
 			} 
+			LLTask task = llTaskService.getLLTask(llTaskBean.getTaskId());
+			if (task == null) {
+				this.alertAndRedirect("任务发布失败，请从第一步重试", "web/shop/taskmanage/add_task_failed");
+			}
+			if (task.getStatus() != Constant.TaskStatus.Create) {
+				this.alertAndRedirect("改任务已经发布过！", "web/shop/taskmanage/add_task_failed");
+			}
 			//店铺审核验证处理
-			LLShop shop = llShopService.getShop(llTaskBean.getShopId());
+			LLShop shop = task.getLlShop();
 			if (shop == null) {
-				this.ajaxWrite(new AjaxBean(false, "找不到该店铺"));
+				this.alertAndRedirect("任务发布失败，找不到该店铺", "web/shop/taskmanage/add_task_failed");
 				return null;
 			}
 			if (shop.getStatus() != Constant.Status.Success) {
-				this.ajaxWrite(new AjaxBean(false, "该店铺未审核通过，请等待审核通过后再次尝试"));
+				this.alertAndRedirect("任务发布失败，该店铺未审核通过，请等待审核通过后再次尝试", "/web/shop/taskmanage/add_task_failed");
 				return null;
 			}
-			LLTask task = llTaskService.getLLTask(llTaskBean.getTaskId());
 			task.setPageStayType(llTaskBean.getPageStayType());
 			task.setVisitTimeType(llTaskBean.getVisitTimeType());
 			task.setIsQuickVerify(llTaskBean.getIsQuickVerify());
 			task.setIsQuickExecute(llTaskBean.getIsQuickExecute());
-			if (llTaskService.updatePublishTask(task, getSessionServerUser())) {
-				this.ajaxWrite(new AjaxBean(true, "任务发布成功"));
-			} else {
-				this.ajaxWrite(new AjaxBean(false, "您的积分不足，请先充值后再次尝试"));
+			if (!llTaskService.updatePublishTask(task, getSessionServerUser())) {
+				this.alertAndRedirect("任务发布失败", "web/shop/taskmanage/add_task_failed");
+				return null;
 			}
+			this.alertAndRedirect("任务发布成功", "web/shop/taskmanage/task_detail");
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			this.ajaxWrite(new AjaxBean(false, "任务发布失败"));
+			this.alertAndRedirect("任务发布失败", "web/shop/taskmanage/add_task_failed");
 			return null;
 		}
+	}
+	
+	@Action("add_task_failed")
+	public String addTaskFailed() {
+		return SUCCESS;
 	}
 
 	@Action("load_add_task_shop")
@@ -248,5 +281,19 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 		this.ajaxWrite(new AjaxBean(true, sb.toString()));
         return null;
     }
-	
+
+	@Action("task_detail")
+	public String taskDetail(){
+		if (StringTools.isEmpty(llTaskBean.getTaskId())) {
+			this.alertAndGoBack("任务不存在！");
+			return null;
+		}
+		LLTask llTask = llTaskService.getLLTask(llTaskBean.getTaskId());
+		if (llTask == null) {
+			this.alertAndGoBack("任务不存在！");
+			return null;
+		}
+		this.setAttrToRequest("llTask", llTask);
+		return SUCCESS;
+	}
 }
