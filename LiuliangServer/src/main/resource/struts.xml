@@ -25,6 +25,8 @@
             <result name="shop_welcome">/shop_welcome.jsp</result>
             <result name="visit_limit_admin">/visit_limit_admin.jsp</result>
             <result name="visit_limit_shop">/visit_limit_shop.jsp</result>
+            <result name="account_freeze_shop">/account_freeze_shop.jsp</result>
+            <result name="account_freeze_admin">/account_freeze_admin.jsp</result>
         </global-results>
     </package>
     <!--默认加载类的后缀的名字 ,deafault:Action-->

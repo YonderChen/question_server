@@ -40,18 +40,8 @@ INSERT INTO `t_menu` VALUES ('100001', '100000', 1, '用户管理', 'web/admin/u
 INSERT INTO `t_menu` VALUES ('100002', '100000', 1, '角色管理', 'web/admin/useradmin/role/index', 'rightFrame', '100002', NULL, NULL);
 INSERT INTO `t_menu` VALUES ('300000', NULL, 0, '系统管理', NULL, NULL, '300000', 'leftico01.png', NULL);
 INSERT INTO `t_menu` VALUES ('300001', '300000', 1, '系统参数设置', 'web/admin/useradmin/system/param/index', 'rightFrame', '300001', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('400000', NULL, 0, '流量管理', NULL, 'rightFrame', '400000', 'leftico01.png', NULL);
-INSERT INTO `t_menu` VALUES ('400001', '400000', 1, '发布任务', 'web/admin/usershop/taskmanage/add_task', 'rightFrame', '400001', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('400002', '400000', 1, '任务列表', 'web/admin/usershop/taskmanage/index', 'rightFrame', '400002', NULL, NULL);
 INSERT INTO `t_menu` VALUES ('500000', NULL, 0, '账户管理', NULL, 'rightFrame', '500000', 'leftico01.png', NULL);
 INSERT INTO `t_menu` VALUES ('500001', '500000', 1, '基本信息', 'web/admin/baseinfo', 'rightFrame', '500001', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('500002', '500000', 1, '绑定店铺', 'web/admin/usershop/accountmanage/shopmanage/bind_shop', 'rightFrame', '500002', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('500003', '500000', 1, '店铺列表', 'web/admin/usershop/accountmanage/shopmanage/index', 'rightFrame', '500003', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('500004', '500000', 1, '续费会员', 'web/admin/usershop/accountmanage/dealmanage/renewalvip', 'rightFrame', '500004', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('500005', '500000', 1, '会员续费记录', 'web/admin/usershop/accountmanage/dealmanage/index_vip_order', 'rightFrame', '500005', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('500006', '500000', 1, '购买积分', 'web/admin/usershop/accountmanage/dealmanage/get_score', 'rightFrame', '500006', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('500007', '500000', 1, '积分购买记录', 'web/admin/usershop/accountmanage/dealmanage/index_score_order', 'rightFrame', '500007', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('500008', '500000', 1, '邀请商家', 'web/admin/usershop/accountmanage/inviteothers', 'rightFrame', '500008', NULL, NULL);
 INSERT INTO `t_menu` VALUES ('600000', NULL, 0, '审核管理', NULL, 'rightFrame', '600000', 'leftico01.png', NULL);
 INSERT INTO `t_menu` VALUES ('600001', '600000', 1, '店铺审核', 'web/admin/useradmin/verifymanage/shopmanage/index', 'rightFrame', '600001', NULL, NULL);
 INSERT INTO `t_menu` VALUES ('600002', '600000', 1, '续费会员订单审核', 'web/admin/useradmin/verifymanage/dealmanage/index_vip_order', 'rightFrame', '600002', NULL, NULL);
@@ -97,18 +87,8 @@ INSERT INTO `t_role_menu` VALUES ('100000', '100001');
 INSERT INTO `t_role_menu` VALUES ('100000', '100002');
 INSERT INTO `t_role_menu` VALUES ('100000', '300000');
 INSERT INTO `t_role_menu` VALUES ('100000', '300001');
-INSERT INTO `t_role_menu` VALUES ('100000', '400000');
-INSERT INTO `t_role_menu` VALUES ('100000', '400001');
-INSERT INTO `t_role_menu` VALUES ('100000', '400002');
 INSERT INTO `t_role_menu` VALUES ('100000', '500000');
 INSERT INTO `t_role_menu` VALUES ('100000', '500001');
-INSERT INTO `t_role_menu` VALUES ('100000', '500002');
-INSERT INTO `t_role_menu` VALUES ('100000', '500003');
-INSERT INTO `t_role_menu` VALUES ('100000', '500004');
-INSERT INTO `t_role_menu` VALUES ('100000', '500005');
-INSERT INTO `t_role_menu` VALUES ('100000', '500006');
-INSERT INTO `t_role_menu` VALUES ('100000', '500007');
-INSERT INTO `t_role_menu` VALUES ('100000', '500008');
 INSERT INTO `t_role_menu` VALUES ('100000', '600000');
 INSERT INTO `t_role_menu` VALUES ('100000', '600001');
 INSERT INTO `t_role_menu` VALUES ('100000', '600002');
@@ -125,18 +105,6 @@ INSERT INTO `t_role_menu` VALUES ('100001', '600001');
 INSERT INTO `t_role_menu` VALUES ('100001', '600002');
 INSERT INTO `t_role_menu` VALUES ('100001', '600003');
 INSERT INTO `t_role_menu` VALUES ('100001', '600004');
-INSERT INTO `t_role_menu` VALUES ('100002', '400000');
-INSERT INTO `t_role_menu` VALUES ('100002', '400001');
-INSERT INTO `t_role_menu` VALUES ('100002', '400002');
-INSERT INTO `t_role_menu` VALUES ('100002', '500000');
-INSERT INTO `t_role_menu` VALUES ('100002', '500001');
-INSERT INTO `t_role_menu` VALUES ('100002', '500002');
-INSERT INTO `t_role_menu` VALUES ('100002', '500003');
-INSERT INTO `t_role_menu` VALUES ('100002', '500004');
-INSERT INTO `t_role_menu` VALUES ('100002', '500005');
-INSERT INTO `t_role_menu` VALUES ('100002', '500006');
-INSERT INTO `t_role_menu` VALUES ('100002', '500007');
-INSERT INTO `t_role_menu` VALUES ('100002', '500008');
 
 -- ----------------------------
 -- Table structure for t_server_user
@@ -168,8 +136,8 @@ CREATE TABLE `t_server_user` (
 --  Records of `t_server_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_server_user` VALUES ('402881e846e4b3910146e4b8ce6c0004', 'admin', 'T0tQNVM=', '6cff5807cf61610da2446669acd09838', '超级管理员', '15000000000', 'admin@abc.com', null, '2014-12-10 11:11:11', '2015-03-27 15:32:39', '2015-03-27 15:49:26', '1', '127.0.0.1', 0, NULL);
-INSERT INTO `t_server_user` VALUES ('402882044c981aee014c981b344a0001', 'useradmin', 'T0tQNVM=', '6cff5807cf61610da2446669acd09838', '管理员', '15000000000', 'useradmin@abc.com', '402881e846e4b3910146e4b8ce6c0004', '2014-12-10 11:11:11', '2015-03-27 15:32:39', '2015-03-27 15:49:26', '1', '127.0.0.1', 0, NULL);
+INSERT INTO `t_server_user` VALUES ('402881e846e4b3910146e4b8ce6c0004', 'admin', 'T0tQNVM=', '6cff5807cf61610da2446669acd09838', '超级管理员', '15000000000', 'admin@abc.com', null, '2014-12-10 11:11:11', '2015-03-27 15:32:39', '2015-03-27 15:49:26', '1', '127.0.0.1', 0, 0, NULL, NULL, NULL);
+INSERT INTO `t_server_user` VALUES ('402882044c981aee014c981b344a0001', 'useradmin', 'T0tQNVM=', '6cff5807cf61610da2446669acd09838', '管理员', '15000000000', 'useradmin@abc.com', '402881e846e4b3910146e4b8ce6c0004', '2014-12-10 11:11:11', '2015-03-27 15:32:39', '2015-03-27 15:49:26', '1', '127.0.0.1', 0, 0, NULL, NULL, NULL);
 COMMIT;
 
 -- ----------------------------

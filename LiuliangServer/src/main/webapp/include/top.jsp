@@ -1,6 +1,6 @@
 ﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 
-<script>
+<script type="text/javascript">
 $(function(){
 	var username_top_test = "${sessionServerUserInfo.username}";
 	if(username_top_test == null || username_top_test == ""){
@@ -60,3 +60,6 @@ function isOutTime(result) {
         </menu>
     </div>
 </div>
+
+<iframe width="121" height="277" scrolling="no" frameborder="0" allowtransparency="true" src="${ctx}/include/qq_button.jsp" style="display: block; position: fixed; z-index: 2147483646 !important; left: auto; right: 8px; margin-left: 0px; top: 50%; bottom: auto; margin-top: -138px;">
+</iframe>

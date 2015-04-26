@@ -105,7 +105,7 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 			return null;
 		}
 		try{
-			llTaskBean.setOperator(this.refreshAndGetSessionServerUser());
+			llTaskBean.setOperator(this.getSessionServerUser());
 			//验证vip是否到期
 			if (!getSessionServerUser().checkVIPValid()) {
 				this.alertAndRedirect("vip有效期已过，请先续费vip", "web/shop/taskmanage/add_task_step_one");
@@ -117,7 +117,7 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 				this.alertAndRedirect("找不到该店铺", "web/shop/taskmanage/add_task_step_one");
 				return null;
 			}
-			if (shop.getStatus() != Constant.Status.Success) {
+			if (shop.getStatus() != LLShop.Status.Success) {
 				this.alertAndRedirect("该店铺未审核通过，请等待审核通过后再次尝试", "web/shop/taskmanage/add_task_step_one");
 				return null;
 			}
@@ -160,7 +160,7 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 	@Action("add_task_success")
 	public String addTaskSuccess() {
 		try{
-			llTaskBean.setOperator(this.refreshAndGetSessionServerUser());
+			llTaskBean.setOperator(this.getSessionServerUser());
 			//验证vip是否到期
 			if (!getSessionServerUser().checkVIPValid()) {
 				this.ajaxWrite(new AjaxBean(false, "vip有效期已过，请先续费vip"));
@@ -170,7 +170,7 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 			if (task == null) {
 				this.alertAndRedirect("任务发布失败，请从第一步重试", "web/shop/taskmanage/add_task_failed");
 			}
-			if (task.getStatus() != Constant.TaskStatus.Create) {
+			if (task.getStatus() != LLTask.Status.Create) {
 				this.alertAndRedirect("改任务已经发布过！", "web/shop/taskmanage/add_task_failed");
 			}
 			//店铺审核验证处理
@@ -179,7 +179,7 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 				this.alertAndRedirect("任务发布失败，找不到该店铺", "web/shop/taskmanage/add_task_failed");
 				return null;
 			}
-			if (shop.getStatus() != Constant.Status.Success) {
+			if (shop.getStatus() != LLShop.Status.Success) {
 				this.alertAndRedirect("任务发布失败，该店铺未审核通过，请等待审核通过后再次尝试", "/web/shop/taskmanage/add_task_failed");
 				return null;
 			}
@@ -191,7 +191,7 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 				this.alertAndRedirect("任务发布失败", "web/shop/taskmanage/add_task_failed");
 				return null;
 			}
-			this.alertAndRedirect("任务发布成功", "web/shop/taskmanage/task_detail");
+			this.alertAndRedirect("任务发布成功", "web/shop/taskmanage/task_detail?taskId=" + task.getTaskId());
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();

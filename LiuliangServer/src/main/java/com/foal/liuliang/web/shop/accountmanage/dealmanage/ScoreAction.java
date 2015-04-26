@@ -9,7 +9,6 @@ import com.foal.liuliang.bean.AjaxBean;
 import com.foal.liuliang.bean.LLDealOrderBean;
 import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.service.LLScoreOrderService;
-import com.foal.liuliang.util.GsonTools;
 import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -42,7 +41,6 @@ public class ScoreAction extends UserBaseAction implements ModelDriven<LLDealOrd
 			this.ajaxWrite(new AjaxBean(false, "提交数据有误，请重试"));
 	        return null;
 		}
-		System.out.println(GsonTools.parseJsonObject(llOrderBean).toString());
 		llOrderBean.setNum(Constant.PriceScoreMap.get(String.valueOf(llOrderBean.getPrice())));
 		llScoreOrderService.add(llOrderBean);
 		this.ajaxWrite(new AjaxBean(true, "订单提交成功，请耐心等待审核"));

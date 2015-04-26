@@ -36,6 +36,18 @@ public class LLShop implements Serializable {
 	private ServerUser checkAdmin;
 	private int status;
 
+	public static class Status {
+		public static final int Create = 0;
+		public static final int Success = 1;
+		public static final int CheckFail = -1;
+	}
+
+	public static class BindPlat {
+		public static final String TaoBao = "taobao";
+		public static final String Tmall = "tmall";
+		public static final String JD = "jd";
+	}
+	
 	@GenericGenerator(name = "generator", strategy = "uuid")
 	@Id
 	@GeneratedValue(generator = "generator")

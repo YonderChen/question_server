@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.foal.liuliang.bean.AjaxBean;
 import com.foal.liuliang.bean.LLDealOrderBean;
 import com.foal.liuliang.bean.PageBean;
+import com.foal.liuliang.pojo.LLScoreOrder;
+import com.foal.liuliang.pojo.LLVIPOrder;
 import com.foal.liuliang.service.LLScoreOrderService;
 import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
@@ -45,8 +47,11 @@ public class ScoreAction extends UserBaseAction implements ModelDriven<LLDealOrd
 	@Action("check_score_order")
 	public String checkShop() {
 		llOrderBean.setOperator(this.getSessionServerUser());
-        int status = this.llScoreOrderService.checkScoreOrder(llOrderBean);
-		this.ajaxWrite(new AjaxBean(true, String.valueOf(status)));
+        LLScoreOrder order = this.llScoreOrderService.checkScoreOrder(llOrderBean);
+        if (order.getStatus() == LLVIPOrder.Status.Success) {
+			this.updateSessionUser(order.getServerUser());
+		}
+        this.ajaxWrite(new AjaxBean(true, String.valueOf(order.getStatus())));
         return null;
 	}
 	

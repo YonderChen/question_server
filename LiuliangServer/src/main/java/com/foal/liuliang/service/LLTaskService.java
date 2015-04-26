@@ -28,6 +28,11 @@ public class LLTaskService extends DaoSupport {
 		return this.hibernateDao.get(LLTask.class, taskId);
 	}
 	
+	public LLTask updateLLTask(LLTask llTask) {
+		this.hibernateDao.update(llTask);
+		return llTask;
+	}
+	
 	public LLTask add(LLTaskBean llTaskBean, ServerUser user) {
 		LLTask llTask = null;
 		if (!StringTools.isEmpty(llTaskBean.getTaskId())) {
@@ -79,7 +84,7 @@ public class LLTaskService extends DaoSupport {
 		llTask.setIsQuickExecute(llTaskBean.getIsQuickExecute());
 		calCostScore(llTask);
 		llTask.setCreateTime(new Date());
-		llTask.setStatus(Constant.TaskStatus.Create);
+		llTask.setStatus(LLTask.Status.Create);
         this.hibernateDao.save(llTask);
         return llTask;
     }
@@ -129,13 +134,13 @@ public class LLTaskService extends DaoSupport {
 		LLScoreRecord record = new LLScoreRecord();
 		record.setServerUser(serverUser);
 		record.setNum(costScore);
-		record.setType(Constant.ScoreRecordType.Cost);
+		record.setType(LLScoreRecord.ScoreRecordType.Cost);
 		record.setRemain(serverUser.getScore());
 		record.setCreateTime(now);
 		record.setRemark("");
 		this.hibernateDao.save(record);
 		
-		llTask.setStatus(Constant.TaskStatus.Verify);
+		llTask.setStatus(LLTask.Status.Verify);
         this.hibernateDao.update(llTask);
         return true;
 	}

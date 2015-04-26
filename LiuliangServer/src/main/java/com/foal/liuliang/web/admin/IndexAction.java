@@ -122,7 +122,7 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 	
 	@Action("logout")
 	public String logout() {
-		this.getSession().invalidate();
+		this.invalidateSession();
 		return SUCCESS;
 	}
 	

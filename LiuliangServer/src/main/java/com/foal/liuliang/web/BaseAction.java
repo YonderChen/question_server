@@ -22,7 +22,7 @@ public class BaseAction extends ActionSupport{
 	 */
 	private static final long serialVersionUID = 2269532542366958839L;
 	protected AjaxBean ajaxBean;
-    
+	
 	protected HttpServletRequest getRequest() {
 		return ServletActionContext.getRequest();
 	}

@@ -82,7 +82,7 @@
                     </div>
                     
                 </div>
-                <div class="available_right"><a href="http://www.liuliangfu.com/trade/step_one" target="_blank">发布任务</a></div>
+                <div class="available_right"><a href="${ctx}/web/shop/taskmanage/add_task_step_one" target="_blank">发布任务</a></div>
             </div>            
         </div>
         <!-- 右侧顶部账号积分等信息 end -->
@@ -254,7 +254,9 @@
 						                                <s:if test="status == 6">任务修改,待审核</s:if>
 													</td>
 													<td style="font-size: 14px; width: 12%;">
-														<a href="${ctx }/web/shop/taskmanage/add_task_step_two?taskId=${record.taskId}" class="jx-trade">继续发布</a>
+						                                <s:if test="status == 0">
+															<a href="${ctx }/web/shop/taskmanage/add_task_step_two?taskId=${record.taskId}" class="jx-trade">继续发布</a>
+														</s:if>
 													</td>
 												</tr>
 											</tbody>
@@ -278,10 +280,6 @@
         
 	</div>
 </div>
-
-<div class="business-popup-under J_popBG"></div>
-<div class="business-popup J_popCON none"></div>
-
 			<jsp:include page="/include/footer.jsp" flush="true"></jsp:include>
 
 <script type="text/javascript"> 

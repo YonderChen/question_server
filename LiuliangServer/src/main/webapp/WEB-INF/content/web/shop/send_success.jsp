@@ -105,7 +105,7 @@
         <div class="register">
             <div class="passwd-title">
             	<span>找回登录密码</span>
-                <a href="/user/login">返回登录</a>
+                <a href="${ctx}">返回登录</a>
             </div>
             
             <div class="inputBox">

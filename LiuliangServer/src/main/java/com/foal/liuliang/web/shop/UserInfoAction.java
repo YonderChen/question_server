@@ -65,7 +65,7 @@ public class UserInfoAction extends UserBaseAction implements ModelDriven<Server
 
 	@Action("userinfo")
 	public String userinfo() {
-		this.refreshAndGetSessionServerUser();
+		this.getSessionServerUser();
 		return SUCCESS;
 	}
 }

@@ -62,8 +62,8 @@
 							${user.roleName}
 						</td>
 						<td>
-							<s:if test="status == 1">在职</s:if>
-							<s:else>离职</s:else>
+							<s:if test="status == 1">正常</s:if>
+							<s:else>冻结</s:else>
 						</td>
 						<td>
 							<button class="btn btn-link" type="button" onclick="editInput('${user.userId }');" data-toggle="button" data-loading-text="<i class='icon-pencil'></i>&nbsp;编辑"><i class="icon-pencil"></i>&nbsp;编辑</button>

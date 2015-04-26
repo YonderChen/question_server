@@ -34,6 +34,12 @@ public class LLVIPOrder implements Serializable {
 	private ServerUser checkAdmin;
 	private int status;
 
+	public static class Status {
+		public static final int Create = 0;
+		public static final int Success = 1;
+		public static final int CheckFail = -1;
+	}
+	
 	@GenericGenerator(name = "generator", strategy = "uuid")
 	@Id
 	@GeneratedValue(generator = "generator")

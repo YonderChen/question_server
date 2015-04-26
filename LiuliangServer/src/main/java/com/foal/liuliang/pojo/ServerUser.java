@@ -46,8 +46,8 @@ public class ServerUser implements Serializable {
 	private String roleName;
 
 	public class Status {
-		public static final int InCompany = 1;
-		public static final int AwayCompay = 2;
+		public static final int Normal = 1;//正常
+		public static final int Freeze = 2;//冻结
 	}
 
 	@GenericGenerator(name = "generator", strategy = "uuid")

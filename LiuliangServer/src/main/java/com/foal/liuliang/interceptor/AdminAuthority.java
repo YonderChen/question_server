@@ -42,6 +42,15 @@ public class AdminAuthority extends Authority {
 		// 如果有登陆,通过认证
 		if (loginUser != null) {
 			if (!Constant.ADMIN_ID.equals(loginUser.getUserId())) {	//不是超级管理员，验证路径权限
+				if (loginUser.getStatus() != ServerUser.Status.Normal) {
+					logger.info("账户被冻结");
+					if(StringTools.contains(requestUrl, Constant.PRO_CTX_VALUE + "/web/admin/")) {
+						this.setAuthorityUrl("account_freeze_admin");
+					} else {
+						this.setAuthorityUrl("account_freeze_shop");
+					}
+					return false;
+				}
 				List<String> roleIds = roleService.queryRoleIds(loginUser.getUserId());
 				if(StringTools.contains(requestUrl, Constant.PRO_CTX_VALUE + "/web/admin/")) {
 					if (!roleIds.contains(Constant.ROLE_ID_USER_ADMIN)) {

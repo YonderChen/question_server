@@ -15,10 +15,14 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.apache.log4j.Logger;
+
 import com.foal.liuliang.config.Constant;
 
 
 public class MailUtil { 
+	
+	private static final Logger logger = Logger.getLogger(MailUtil.class);
 
 	private MimeMessage mimeMsg; //MIME邮件对象 
 	private Session session; //邮件会话对象 
@@ -44,7 +48,7 @@ public class MailUtil {
 	 * @param hostName String 
 	 */
 	public void setSmtpHost(String hostName) { 
-		System.out.println("设置系统属性：mail.smtp.host = "+hostName); 
+		logger.info("设置系统属性：mail.smtp.host = "+hostName); 
 		if(props == null)
 			props = System.getProperties(); //获得系统属性对象 	
 		props.put("mail.smtp.host",hostName); //设置SMTP主机 
@@ -58,22 +62,22 @@ public class MailUtil {
 	public boolean createMimeMessage() 
 	{ 
 		try { 
-			System.out.println("准备获取邮件会话对象！"); 
+			logger.info("准备获取邮件会话对象！"); 
 			session = Session.getDefaultInstance(props,null); //获得邮件会话对象 
 		} 
 		catch(Exception e){ 
-			System.err.println("获取邮件会话对象时发生错误！"+e); 
+			logger.error("获取邮件会话对象时发生错误！", e); 
 			return false; 
 		} 
 	
-		System.out.println("准备创建MIME邮件对象！"); 
+		logger.info("准备创建MIME邮件对象！"); 
 		try { 
 			mimeMsg = new MimeMessage(session); //创建MIME邮件对象 
 			mp = new MimeMultipart(); 
 		
 			return true; 
 		} catch(Exception e){ 
-			System.err.println("创建MIME邮件对象失败！"+e); 
+			logger.error("创建MIME邮件对象失败！", e); 
 			return false; 
 		} 
 	} 	
@@ -83,7 +87,7 @@ public class MailUtil {
 	 * @param need
 	 */
 	public void setNeedAuth(boolean need) { 
-		System.out.println("设置smtp身份认证：mail.smtp.auth = "+need); 
+		logger.info("设置smtp身份认证：mail.smtp.auth = "+need); 
 		if(props == null) props = System.getProperties(); 
 		if(need){ 
 			props.put("mail.smtp.auth","true"); 
@@ -108,13 +112,13 @@ public class MailUtil {
 	 * @return
 	 */
 	public boolean setSubject(String mailSubject) { 
-		System.out.println("设置邮件主题！"); 
+		logger.info("设置邮件主题！"); 
 		try{ 
 			mimeMsg.setSubject(mailSubject); 
 			return true; 
 		} 
 		catch(Exception e) { 
-			System.err.println("设置邮件主题发生错误！"); 
+			logger.error("设置邮件主题发生错误！", e); 
 			return false; 
 		} 
 	}
@@ -131,7 +135,7 @@ public class MailUtil {
 		
 			return true; 
 		} catch(Exception e){ 
-		System.err.println("设置邮件正文时发生错误！"+e); 
+		logger.error("设置邮件正文时发生错误！", e); 
 		return false; 
 		} 
 	} 
@@ -141,7 +145,7 @@ public class MailUtil {
 	 */ 
 	public boolean addFileAffix(String filename) { 
 	
-		System.out.println("增加邮件附件："+filename); 
+		logger.info("增加邮件附件："+filename); 
 		try{ 
 			BodyPart bp = new MimeBodyPart(); 
 			FileDataSource fileds = new FileDataSource(filename); 
@@ -152,7 +156,7 @@ public class MailUtil {
 			
 			return true; 
 		} catch(Exception e){ 
-			System.err.println("增加邮件附件："+filename+"发生错误！"+e); 
+			logger.error("增加邮件附件："+filename+"发生错误！", e); 
 			return false; 
 		} 
 	} 
@@ -162,7 +166,7 @@ public class MailUtil {
 	 * @param from String 
 	 */ 
 	public boolean setFrom(String from) { 
-		System.out.println("设置发信人！"); 
+		logger.info("设置发信人！"); 
 		try{ 
 			mimeMsg.setFrom(new InternetAddress(from)); //设置发信人 
 			return true; 
@@ -200,14 +204,14 @@ public class MailUtil {
 	} 
 	
 	/** 
-	 * 发送邮件
+	 * 发送邮件,带抄送
 	 */ 
-	public boolean sendOut() 
+	public boolean sendAndCCOut() 
 	{ 
 		try{ 
 			mimeMsg.setContent(mp); 
 			mimeMsg.saveChanges(); 
-			System.out.println("正在发送邮件...."); 
+			logger.info("正在发送邮件...."); 
 			
 			Session mailSession = Session.getInstance(props,null); 
 			Transport transport = mailSession.getTransport("smtp"); 
@@ -216,12 +220,36 @@ public class MailUtil {
 			transport.sendMessage(mimeMsg,mimeMsg.getRecipients(Message.RecipientType.CC)); 
 			//transport.send(mimeMsg); 
 			
-			System.out.println("发送邮件成功！"); 
+			logger.info("发送邮件成功！"); 
 			transport.close(); 
 			
 			return true; 
 		} catch(Exception e) { 
-			System.err.println("邮件发送失败！"+e); 
+			logger.error("邮件发送失败！", e); 
+			return false; 
+		} 
+	} 
+	/** 
+	 * 发送邮件，没有抄送
+	 */ 
+	public boolean sendOut() 
+	{ 
+		try{ 
+			mimeMsg.setContent(mp); 
+			mimeMsg.saveChanges(); 
+			logger.info("正在发送邮件...."); 
+			
+			Session mailSession = Session.getInstance(props,null); 
+			Transport transport = mailSession.getTransport("smtp"); 
+			transport.connect((String)props.get("mail.smtp.host"),username,password); 
+			transport.sendMessage(mimeMsg,mimeMsg.getRecipients(Message.RecipientType.TO)); 
+			
+			logger.info("发送邮件成功！"); 
+			transport.close(); 
+			
+			return true; 
+		} catch(Exception e) { 
+			logger.error("邮件发送失败！", e); 
 			return false; 
 		} 
 	} 
@@ -274,7 +302,7 @@ public class MailUtil {
 		if(!theMail.setFrom(from)) return false;
 		theMail.setNamePass(username,password);
 		
-		if(!theMail.sendOut()) return false;
+		if(!theMail.sendAndCCOut()) return false;
 		return true;
 	}
 	
@@ -330,7 +358,7 @@ public class MailUtil {
 		if(!theMail.setFrom(from)) return false;
 		theMail.setNamePass(username,password);
 		
-		if(!theMail.sendOut()) return false;
+		if(!theMail.sendAndCCOut()) return false;
 		return true;
 	}
 	

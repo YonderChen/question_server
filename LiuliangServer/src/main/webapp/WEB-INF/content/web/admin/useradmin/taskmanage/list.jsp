@@ -73,7 +73,7 @@
 						<td>
 							${task.durationDay}
 						</td>
-						<td>
+						<td id="task_status_${task.taskId}">
 							<s:if test="status == 0">未发布</s:if>
 							<s:if test="status == 1">待审核</s:if>
 							<s:if test="status == 2">执行中</s:if>
@@ -83,7 +83,10 @@
 							<s:if test="status == 6">任务修改，待审核</s:if>
 						</td>
 						<td>
-							<button class="btn btn-link" type="button" onclick="detail('${task.taskId}');" data-toggle="button" data-loading-text="<i class='icon-pencil'></i>&nbsp;详情"><i class="icon-pencil"></i>&nbsp;详情</button>
+							<a href="${ctx}/web/admin/useradmin/taskmanage/task_detail?taskId=${task.taskId}" class="btn btn-link" target="_blank">[详情]</a>
+							<s:if test="status == 1">
+								<a id="check_a_${task.taskId}" href="javascript:check_task('${task.taskId}')" class="btn btn-link">[审核]</a>
+							</s:if>
 						</td>
 					</tr>
 					</s:iterator>

@@ -78,7 +78,7 @@ public class WelcomeAction extends UserBaseAction implements ModelDriven<ServerU
 
 	@Action("baseinfo")
 	public String baseinfo() {
-		ServerUser loginUser = this.refreshAndGetSessionServerUser();
+		ServerUser loginUser = this.getSessionServerUser();
 		List<String> roleIds = roleService.queryRoleIds(loginUser.getUserId());
 		int isShopUser = 1;
 		if (!roleIds.contains(Constant.ROLE_ID_USER_SHOP)) {

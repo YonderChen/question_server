@@ -51,7 +51,7 @@
         <div class="register">
             <div class="passwd-title">
             	<span>重置登录密码</span>
-                <a href="/">返回登录</a>
+                <a href="${ctx}">返回登录</a>
             </div>
             <div class="inputBox ModifyEmail">
                 <div class="inputMain">

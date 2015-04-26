@@ -52,6 +52,16 @@ public class LLTask implements Serializable {
 	private Date finishTime;
 	private int status;
 
+	public static class Status {
+        public static final int Create = 0;//未发布
+        public static final int Verify = 1;//待审核
+        public static final int Executing = 2;//执行中
+        public static final int Finish = 3;//已完成
+        public static final int Cancel = 4;//已取消
+        public static final int VerifyFaild = 5;//审核不通过
+        public static final int Changed = 6;//任务修改,待审核
+	}
+	
 	@GenericGenerator(name = "generator", strategy = "uuid")
 	@Id
 	@GeneratedValue(generator = "generator")

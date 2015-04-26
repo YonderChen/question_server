@@ -70,9 +70,10 @@ public class UserAction extends UserBaseAction implements ModelDriven<ServerUser
     @Action("edit")
    	public String edit() {
     	serverUserBean.setOperator(this.getSessionServerUser());
-        boolean result = this.serverUserService.updateServerUserInfo(serverUserBean);
-        if (result) {
+        ServerUser user = this.serverUserService.updateServerUserInfo(serverUserBean);
+        if (user != null) {
    			ajaxBean = new AjaxBean(true, "编辑成功.");
+   			this.updateSessionUser(user);
    		} else {
    			ajaxBean = new AjaxBean(false, "该用户不存在.");
    		}

@@ -5,9 +5,11 @@ import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.foal.liuliang.bean.AjaxBean;
 import com.foal.liuliang.bean.LLTaskBean;
 import com.foal.liuliang.bean.PageBean;
 import com.foal.liuliang.pojo.LLTask;
+import com.foal.liuliang.pojo.ServerUser;
 import com.foal.liuliang.service.LLShopService;
 import com.foal.liuliang.service.LLTaskService;
 import com.foal.liuliang.web.UserBaseAction;
@@ -46,10 +48,26 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
         return SUCCESS;
     }
 
-	@Action("detail")
-    public String detail() {
+	@Action("task_detail")
+    public String taskDetail() {
     	LLTask lltask = this.llTaskService.getLLTask(llTaskBean.getTaskId());
-    	this.setAttrToRequest("lltask", lltask);
+    	this.setAttrToRequest("llTask", lltask);
         return SUCCESS;
+    }
+
+	@Action("check_task")
+    public String checkTask() {
+    	LLTask llTask = this.llTaskService.getLLTask(llTaskBean.getTaskId());
+    	if(llTask.getServerUser().getStatus() != ServerUser.Status.Normal){
+        	this.ajaxWrite(new AjaxBean(false, "该用户账户已被冻结，审核失败"));
+            return null;
+    	}
+    	//调用第三方接口
+    	//
+    	//============
+    	llTask.setStatus(LLTask.Status.Executing);
+    	this.llTaskService.updateLLTask(llTask);
+    	this.ajaxWrite(new AjaxBean(true, "审核成功"));
+        return null;
     }
 }

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.foal.liuliang.bean.LLDealOrderBean;
 import com.foal.liuliang.bean.PageBean;
-import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.dao.DaoSupport;
 import com.foal.liuliang.pojo.LLScoreOrder;
 import com.foal.liuliang.pojo.LLScoreRecord;
@@ -26,7 +25,7 @@ public class LLScoreOrderService extends DaoSupport {
 		order.setPrice(orderBean.getPrice());
 		order.setDealId(orderBean.getDealId());
 		order.setCreateTime(new Date());
-		order.setStatus(Constant.Status.Create);
+		order.setStatus(LLScoreOrder.Status.Create);
         this.hibernateDao.save(order);
     }
 
@@ -42,12 +41,18 @@ public class LLScoreOrderService extends DaoSupport {
 		return new PageBean(list, allRow, llOrderBean.getPage(), llOrderBean.getPageSize());
     }
 	
-	public int checkScoreOrder(LLDealOrderBean llOrderBean) {
+	public LLScoreOrder checkScoreOrder(LLDealOrderBean llOrderBean) {
 		LLScoreOrder order = hibernateDao.get(LLScoreOrder.class, llOrderBean.getOrderId());
+		if (order == null) {
+			return null;
+		}
+		if (order.getStatus() == llOrderBean.getStatus()) {
+			return order;
+		}
 		order.setCheckAdmin(llOrderBean.getOperator());
 		order.setCheckTime(new Date());
-		if(llOrderBean.getStatus() == Constant.Status.Success){
-			order.setStatus(Constant.Status.Success);
+		if(llOrderBean.getStatus() == LLScoreOrder.Status.Success){
+			order.setStatus(LLScoreOrder.Status.Success);
 			//给用户增加积分
 			Date now = new Date();
 			order.getServerUser().incScore(order.getNum());
@@ -57,18 +62,18 @@ public class LLScoreOrderService extends DaoSupport {
 			LLScoreRecord record = new LLScoreRecord();
 			record.setServerUser(order.getServerUser());
 			record.setNum(order.getNum());
-			record.setType(Constant.ScoreRecordType.Buy);
+			record.setType(LLScoreRecord.ScoreRecordType.Buy);
 			record.setRemain(order.getServerUser().getScore());
 			record.setCreateTime(now);
 			record.setRemark("");
 			this.hibernateDao.save(record);
-		} else if (llOrderBean.getStatus() == Constant.Status.Create) {
-			order.setStatus(Constant.Status.Create);
+		} else if (llOrderBean.getStatus() == LLScoreOrder.Status.Create) {
+			order.setStatus(LLScoreOrder.Status.Create);
 		} else {
-			order.setStatus(Constant.Status.CheckFail);
+			order.setStatus(LLScoreOrder.Status.CheckFail);
 		}
         this.hibernateDao.update(order);
-        return order.getStatus();
+        return order;
     }
 }
 

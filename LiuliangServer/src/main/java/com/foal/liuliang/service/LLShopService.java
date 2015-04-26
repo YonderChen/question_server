@@ -20,12 +20,6 @@ import com.foal.liuliang.util.StringUtil;
 @Service(value = "llShopService")
 public class LLShopService extends DaoSupport {
 	
-	public static class BingPlat {
-		public static String TaoBao = "taobao";
-		public static String Tmall = "tmall";
-		public static String JD = "jd";
-	}
-	
 	public static class Regex {
 		public static String TaoBaoShopUrl_regex = "http://\\w+\\.taobao\\.com.*";
 		public static String TaoBaoGoodsUrl_regex = "http://item\\.taobao\\.com/item\\.htm\\?.*";
@@ -37,15 +31,15 @@ public class LLShopService extends DaoSupport {
 	
 	public boolean checkShopUrl(LLShopBean llShopBean) {
 		//检测店铺URL是否正确
-		if (BingPlat.TaoBao.equals(llShopBean.getBindPlat())) {
+		if (LLShop.BindPlat.TaoBao.equals(llShopBean.getBindPlat())) {
 			if (!llShopBean.getShopUrl().matches(Regex.TaoBaoShopUrl_regex)) {
 				return false;
 			}
-		} else if (BingPlat.Tmall.equals(llShopBean.getBindPlat())) {
+		} else if (LLShop.BindPlat.Tmall.equals(llShopBean.getBindPlat())) {
 			if (!llShopBean.getShopUrl().matches(Regex.TmallShopUrl_regex)) {
 				return false;
 			}
-		} else if (BingPlat.JD.equals(llShopBean.getBindPlat())) {
+		} else if (LLShop.BindPlat.JD.equals(llShopBean.getBindPlat())) {
 			if (!llShopBean.getShopUrl().matches(Regex.JDShopUrl_regex)) {
 				return false;
 			}
@@ -58,7 +52,7 @@ public class LLShopService extends DaoSupport {
 	public boolean checkBindName(LLShopBean llShopBean) {
 		//检测店铺旺旺是否正确
 		String bindName = "";
-		if (BingPlat.TaoBao.equals(llShopBean.getBindPlat())) {
+		if (LLShop.BindPlat.TaoBao.equals(llShopBean.getBindPlat())) {
 			if (!llShopBean.getShopUrl().matches(Regex.TaoBaoShopUrl_regex)) {
 				return false;
 			}
@@ -70,7 +64,7 @@ public class LLShopService extends DaoSupport {
 			} catch (Exception e) {
 				return false;
 			}
-		} else if (BingPlat.Tmall.equals(llShopBean.getBindPlat())) {
+		} else if (LLShop.BindPlat.Tmall.equals(llShopBean.getBindPlat())) {
 			if (!llShopBean.getShopUrl().matches(Regex.TmallShopUrl_regex)) {
 				return false;
 			}
@@ -82,7 +76,7 @@ public class LLShopService extends DaoSupport {
 			} catch (Exception e) {
 				return false;
 			}
-		} else if (BingPlat.JD.equals(llShopBean.getBindPlat())) {
+		} else if (LLShop.BindPlat.JD.equals(llShopBean.getBindPlat())) {
 			if (!llShopBean.getShopUrl().matches(Regex.JDShopUrl_regex)) {
 				return false;
 			}
@@ -103,15 +97,15 @@ public class LLShopService extends DaoSupport {
 	
 	public boolean checkGoodsUrl(LLShopBean llShopBean) {
 		//检测店铺URL是否正确
-		if (BingPlat.TaoBao.equals(llShopBean.getBindPlat())) {
+		if (LLShop.BindPlat.TaoBao.equals(llShopBean.getBindPlat())) {
 			if (!llShopBean.getVerifyGoodsUrl().matches(Regex.TaoBaoGoodsUrl_regex)) {
 				return false;
 			}
-		} else if (BingPlat.Tmall.equals(llShopBean.getBindPlat())) {
+		} else if (LLShop.BindPlat.Tmall.equals(llShopBean.getBindPlat())) {
 			if (!llShopBean.getVerifyGoodsUrl().matches(Regex.TmallGoodsUrl_regex)) {
 				return false;
 			}
-		} else if (BingPlat.JD.equals(llShopBean.getBindPlat())) {
+		} else if (LLShop.BindPlat.JD.equals(llShopBean.getBindPlat())) {
 			if (!llShopBean.getVerifyGoodsUrl().matches(Regex.JDGoodsUrl_regex)) {
 				return false;
 			}
@@ -122,7 +116,7 @@ public class LLShopService extends DaoSupport {
 	}
 	
 	public boolean checkShopNum(LLShopBean llShopBean) {
-        String queryHql = "select count(*) from LLShop as s where s.serverUser.userId = :userId and s.bindPlat = :bindPlat and s.status in (" + Constant.Status.Success + "," + Constant.Status.Create + ") ";
+        String queryHql = "select count(*) from LLShop as s where s.serverUser.userId = :userId and s.bindPlat = :bindPlat and s.status in (" + LLShop.Status.Success + "," + LLShop.Status.Create + ") ";
         Map paramMap = new HashMap();
         paramMap.put("userId", llShopBean.getUserId());
         paramMap.put("bindPlat", llShopBean.getBindPlat());
@@ -131,7 +125,7 @@ public class LLShopService extends DaoSupport {
 	}
 	
 	public boolean checkShopBindName(LLShopBean llShopBean) {
-        String queryHql = "select count(*) from LLShop as s where s.serverUser.userId = :userId and s.bindPlat = :bindPlat and s.bindName = :bindName and s.status in (" + Constant.Status.Success + "," + Constant.Status.Create + ") ";
+        String queryHql = "select count(*) from LLShop as s where s.serverUser.userId = :userId and s.bindPlat = :bindPlat and s.bindName = :bindName and s.status in (" + LLShop.Status.Success + "," + LLShop.Status.Create + ") ";
         Map paramMap = new HashMap();
         paramMap.put("userId", llShopBean.getUserId());
         paramMap.put("bindPlat", llShopBean.getBindPlat());
@@ -143,7 +137,7 @@ public class LLShopService extends DaoSupport {
 	public boolean checkVerifyCode(LLShopBean llShopBean) {
 		//检测验证码是否正确
 		String goodsName = "";
-		if (BingPlat.TaoBao.equals(llShopBean.getBindPlat())) {
+		if (LLShop.BindPlat.TaoBao.equals(llShopBean.getBindPlat())) {
 			if (!llShopBean.getVerifyGoodsUrl().matches(Regex.TaoBaoGoodsUrl_regex)) {
 				return false;
 			}
@@ -155,7 +149,7 @@ public class LLShopService extends DaoSupport {
 			} catch (Exception e) {
 				return false;
 			}
-		} else if (BingPlat.Tmall.equals(llShopBean.getBindPlat())) {
+		} else if (LLShop.BindPlat.Tmall.equals(llShopBean.getBindPlat())) {
 			if (!llShopBean.getVerifyGoodsUrl().matches(Regex.TmallGoodsUrl_regex)) {
 				return false;
 			}
@@ -167,7 +161,7 @@ public class LLShopService extends DaoSupport {
 			} catch (Exception e) {
 				return false;
 			}
-		} else if (BingPlat.JD.equals(llShopBean.getBindPlat())) {
+		} else if (LLShop.BindPlat.JD.equals(llShopBean.getBindPlat())) {
 			if (!llShopBean.getVerifyGoodsUrl().matches(Regex.JDGoodsUrl_regex)) {
 				return false;
 			}
@@ -232,12 +226,12 @@ public class LLShopService extends DaoSupport {
 		LLShop llShop = hibernateDao.get(LLShop.class, shopBean.getShopId());
 		llShop.setCheckAdmin(shopBean.getOperator());
 		llShop.setCheckTime(new Date());
-		if(shopBean.getStatus() == Constant.Status.Success){
-			llShop.setStatus(Constant.Status.Success);
-		} else if (shopBean.getStatus() == Constant.Status.Create) {
-			llShop.setStatus(Constant.Status.Create);
+		if(shopBean.getStatus() == LLShop.Status.Success){
+			llShop.setStatus(LLShop.Status.Success);
+		} else if (shopBean.getStatus() == LLShop.Status.Create) {
+			llShop.setStatus(LLShop.Status.Create);
 		} else {
-			llShop.setStatus(Constant.Status.CheckFail);
+			llShop.setStatus(LLShop.Status.CheckFail);
 		}
         this.hibernateDao.update(llShop);
         return llShop.getStatus();

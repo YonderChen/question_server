@@ -32,6 +32,11 @@ public class LLScoreRecord implements Serializable {
 	private Date createTime;
 	private String remark;
 
+	public static class ScoreRecordType {
+		public static final int Buy = 1;//购买
+		public static final int Cost = 2;//消费
+	}
+	
 	@GenericGenerator(name = "generator", strategy = "uuid")
 	@Id
 	@GeneratedValue(generator = "generator")

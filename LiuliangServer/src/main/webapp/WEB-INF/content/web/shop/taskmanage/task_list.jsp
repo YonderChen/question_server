@@ -140,7 +140,9 @@
 						                                <s:if test="status == 6">任务修改,待审核</s:if>
 													</td>
 													<td style="font-size: 14px; width: 12%;">
-														<a href="${ctx }/web/shop/taskmanage/add_task_step_two?taskId=${record.taskId}" class="jx-trade">继续发布</a>
+						                                <s:if test="status == 0">
+															<a href="${ctx }/web/shop/taskmanage/add_task_step_two?taskId=${record.taskId}" class="jx-trade">继续发布</a>
+														</s:if>
 													</td>
 												</tr>
 											</tbody>

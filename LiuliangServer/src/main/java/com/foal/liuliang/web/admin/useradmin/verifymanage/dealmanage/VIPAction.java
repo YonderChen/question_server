@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.foal.liuliang.bean.AjaxBean;
 import com.foal.liuliang.bean.LLDealOrderBean;
 import com.foal.liuliang.bean.PageBean;
+import com.foal.liuliang.pojo.LLVIPOrder;
 import com.foal.liuliang.service.LLVIPOrderService;
 import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
@@ -45,8 +46,11 @@ public class VIPAction extends UserBaseAction implements ModelDriven<LLDealOrder
 	@Action("check_vip_order")
 	public String checkShop() {
 		llOrderBean.setOperator(this.getSessionServerUser());
-        int status = this.llVIPOrderService.checkVIPOrder(llOrderBean);
-		this.ajaxWrite(new AjaxBean(true, String.valueOf(status)));
+        LLVIPOrder order = this.llVIPOrderService.checkVIPOrder(llOrderBean);
+        if (order.getStatus() == LLVIPOrder.Status.Success) {
+			this.updateSessionUser(order.getServerUser());
+		}
+		this.ajaxWrite(new AjaxBean(true, String.valueOf(order.getStatus())));
         return null;
 	}
 }

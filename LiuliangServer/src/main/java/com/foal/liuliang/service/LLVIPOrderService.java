@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.foal.liuliang.bean.LLDealOrderBean;
 import com.foal.liuliang.bean.PageBean;
-import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.dao.DaoSupport;
 import com.foal.liuliang.pojo.LLVIPOrder;
 import com.foal.liuliang.util.StringUtil;
@@ -26,7 +25,7 @@ public class LLVIPOrderService extends DaoSupport {
 		order.setPrice(orderBean.getPrice());
 		order.setDealId(orderBean.getDealId());
 		order.setCreateTime(new Date());
-		order.setStatus(Constant.Status.Create);
+		order.setStatus(LLVIPOrder.Status.Create);
         this.hibernateDao.save(order);
     }
 
@@ -42,12 +41,18 @@ public class LLVIPOrderService extends DaoSupport {
 		return new PageBean(list, allRow, llOrderBean.getPage(), llOrderBean.getPageSize());
     }
 	
-	public int checkVIPOrder(LLDealOrderBean llOrderBean) {
+	public LLVIPOrder checkVIPOrder(LLDealOrderBean llOrderBean) {
 		LLVIPOrder order = hibernateDao.get(LLVIPOrder.class, llOrderBean.getOrderId());
+		if (order == null) {
+			return null;
+		}
+		if (order.getStatus() == llOrderBean.getStatus()) {
+			return order;
+		}
 		order.setCheckAdmin(llOrderBean.getOperator());
 		order.setCheckTime(new Date());
-		if(llOrderBean.getStatus() == Constant.Status.Success){
-			order.setStatus(Constant.Status.Success);
+		if(llOrderBean.getStatus() == LLVIPOrder.Status.Success){
+			order.setStatus(LLVIPOrder.Status.Success);
 			//给用户推迟vip结束时间
 			Date oldEndTime = order.getServerUser().getVipEndTime();
 			if (oldEndTime == null) {
@@ -58,13 +63,13 @@ public class LLVIPOrderService extends DaoSupport {
 			cal.add(Calendar.MONTH, order.getNum());
 			order.getServerUser().setVipEndTime(cal.getTime());
 			this.hibernateDao.update(order.getServerUser());
-		} else if (llOrderBean.getStatus() == Constant.Status.Create) {
-			order.setStatus(Constant.Status.Create);
+		} else if (llOrderBean.getStatus() == LLVIPOrder.Status.Create) {
+			order.setStatus(LLVIPOrder.Status.Create);
 		} else {
-			order.setStatus(Constant.Status.CheckFail);
+			order.setStatus(LLVIPOrder.Status.CheckFail);
 		}
         this.hibernateDao.update(order);
-        return order.getStatus();
+        return order;
     }
 }
 

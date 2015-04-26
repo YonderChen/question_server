@@ -11,19 +11,19 @@
     <td>${user.username }</td>
   </tr>
   <tr>
-    <td align="right">姓名<em class="text-error"  style="font-size:16px">*</em>：</td>
-    <td><input name="name_e" id="name_e" type="text" class="span2" maxlength="50" value="${user.name }" placeholder="姓名"/></td>
+    <td align="right">姓名：</td>
+    <td>${user.name }</td>
   </tr>
   <tr>
-    <td align="right">联系电话<em class="text-error"  style="font-size:16px">*</em>：</td>
-    <td><input name="phone_e" id="phone_e" type="text" class="span2" maxlength="20" value="${user.phone }" placeholder="联系电话"/></td>
+    <td align="right">联系电话：</td>
+    <td>${user.phone }</td>
   </tr>
   <tr>
     <td align="right">状态<em class="text-error"  style="font-size:16px">*</em>：</td>
     <td>
     <select id="status_e" name="status_e" class="span2">
-						<option value="1" <s:if test="#request.user.status == 1">selected</s:if>>在职</option>
-						<option value="2" <s:if test="#request.user.status == 2">selected</s:if>>离职</option>
+						<option value="1" <s:if test="#request.user.status == 1">selected</s:if>>正常</option>
+						<option value="2" <s:if test="#request.user.status == 2">selected</s:if>>冻结</option>
 					</select>
     </td>
   </tr>

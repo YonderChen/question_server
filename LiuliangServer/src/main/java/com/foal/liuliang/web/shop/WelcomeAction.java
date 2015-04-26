@@ -37,7 +37,7 @@ public class WelcomeAction extends UserBaseAction implements ModelDriven<LLTaskR
 
 	@Action("center")
 	public String center() {
-		this.refreshAndGetSessionServerUser();
+		this.getSessionServerUser();
 		this.setAttrToRequest("nowDate", new Date());
 		llTaskRecordBean.setUserId(getSessionServerUser().getUserId());
 		if (llTaskRecordBean.getBeginTime() == null) {

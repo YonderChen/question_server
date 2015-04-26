@@ -115,9 +115,6 @@
                       <span class="sk-arrange-gray mo-t"><a id="next_step_a" href="javascript:nextStep();" class="sk-arrange-next ">下一步</a><em>(填写流量信息)</em></span>
                     </div>
                   </div>  
-					<div class="yjfb_task">
-                      <h3>你已选择店铺：<span class="niyixz_dianpu">迪尼贝儿旗舰店</span>,最近发布的任务单有<span class="zuijin_renwu_shu">8</span>单</h3>
-                    </div>
             	<!-- 任务列表 -->
                 </div>
               </div>

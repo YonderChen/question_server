@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.foal.liuliang.bean.AjaxBean;
 import com.foal.liuliang.bean.LLShopBean;
-import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.pojo.LLShop;
 import com.foal.liuliang.service.LLShopService;
 import com.foal.liuliang.util.RandomTools;
@@ -76,7 +75,7 @@ public class ShopAction extends UserBaseAction implements ModelDriven<LLShopBean
 			this.ajaxWrite(new AjaxBean(false, "请输入正确的商品地址"));
 			return null;
 		} 
-		llShopBean.setOperator(this.refreshAndGetSessionServerUser());
+		llShopBean.setOperator(this.getSessionServerUser());
 		llShopBean.setUserId(this.getSessionServerUser().getUserId());
 		if (!this.llShopService.checkShopNum(llShopBean)) {
 			this.ajaxWrite(new AjaxBean(false, "商店绑定个数已满"));
@@ -90,7 +89,7 @@ public class ShopAction extends UserBaseAction implements ModelDriven<LLShopBean
 			this.ajaxWrite(new AjaxBean(false, "vip有效期已过，请先续费vip"));
 			return null;
 		} else {
-			llShopService.add(llShopBean, Constant.Status.Create);
+			llShopService.add(llShopBean, LLShop.Status.Create);
 			this.ajaxWrite(new AjaxBean(true, "绑定成功.请耐心等待店铺审核工作"));
 	        return null;
 		}
@@ -115,9 +114,9 @@ public class ShopAction extends UserBaseAction implements ModelDriven<LLShopBean
 				sb.append("</span>");
 				sb.append("</td>");
 				sb.append("<td>");
-				if (shop.getStatus() == Constant.Status.Create) {
+				if (shop.getStatus() == LLShop.Status.Create) {
 					sb.append("待审核");
-				} else if (shop.getStatus() == Constant.Status.Success) {
+				} else if (shop.getStatus() == LLShop.Status.Success) {
 					sb.append("审核通过");
 				} else {
 					sb.append("审核失败");

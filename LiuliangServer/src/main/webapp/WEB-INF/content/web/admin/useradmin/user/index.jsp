@@ -125,21 +125,6 @@
 	}
 	
 	function edit() {
-		if ($("#name_e").val().trim() == "") {
-			alert("姓名不能为空");
-			$("#name_e").select();
-			return;
-		}
-		if ($("#phone_e").val().trim() == "") {
-			alert("联系电话不能为空");
-			$("#phone_e").select();
-			return;
-		}
-		if (!isTelephone($("#phone_e").val().trim())) {
-			alert("联系电话无效");
-			$("#phone_e").select();
-			return;
-		}
 		var roleIdArray = [];
 		if ($("#isAdmin").val().trim() == "true") {
 			$("#roleTd_e").find("input").each(function() {
@@ -160,8 +145,6 @@
 			type:'post',
 			data:{
 				userId: $("#userId").val().trim(),
-				name:$("#name_e").val().trim(),
-				phone:$("#phone_e").val().trim(),
 				status:$("#status_e").val().trim(),
 				roleIds:myArrayToString(roleIdArray)
 			},
@@ -184,7 +167,6 @@
 						ajaxSearch(1);
 					} else {
 						alert(result.msg);
-						$("#name_e").select();
 					}
 				}
 			}

@@ -34,8 +34,8 @@ public class ServerUserService extends DaoSupport {
 			sb.append("密码错误.");
 			return null;
 		}
-		if (user.getStatus() == ServerUser.Status.AwayCompay) {
-			sb.append("你已离职,无权登录.");
+		if (user.getStatus() == ServerUser.Status.Freeze) {
+			sb.append("您的账户已被冻结,无权登录.");
 			return null;
 		}
 		return user;
@@ -92,13 +92,11 @@ public class ServerUserService extends DaoSupport {
 		return (ServerUser)list.get(0);
 	}
 	
-	public boolean updateServerUserInfo(ServerUserBean userBean) {
+	public ServerUser updateServerUserInfo(ServerUserBean userBean) {
 		ServerUser user = this.getServerUser(userBean.getUserId());
 		if (user == null) {
-			return false;
+			return null;
 		}
-		user.setName(userBean.getName());
-		user.setPhone(userBean.getPhone());
 		user.setStatus(userBean.getStatus());
 		user.setModifyTime(new Date());
 		this.hibernateDao.update(user);
@@ -115,7 +113,7 @@ public class ServerUserService extends DaoSupport {
 				this.hibernateDao.save(ur);
 			}
 		}
-		return true;
+		return user;
 	}
 	
 	public ServerUser updateServerUserPass(ServerUserBean userBean) {
@@ -194,7 +192,7 @@ public class ServerUserService extends DaoSupport {
 		String[] passwords = StringUtil.generatePassword(userBean.getPassword());
 		user.setAssistantPassword(passwords[1]);
 		user.setEncryptedPassword(passwords[0]);
-		user.setStatus(ServerUser.Status.InCompany);
+		user.setStatus(ServerUser.Status.Normal);
 		this.hibernateDao.save(user);
 		String[] roleId = userBean.getRoleIds().split(",");
 		for (int i = 0; i < roleId.length; i++) {

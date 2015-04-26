@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.foal.liuliang.bean.AjaxBean;
 import com.foal.liuliang.bean.ServerUserBean;
 import com.foal.liuliang.config.Constant;
-import com.foal.liuliang.pojo.Menu;
 import com.foal.liuliang.pojo.ServerUser;
 import com.foal.liuliang.service.RoleService;
 import com.foal.liuliang.service.ServerUserService;
@@ -97,12 +96,6 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 		user.setLastLoginIp(this.getRequest().getRemoteAddr());
 		this.setSessionServerUser(user);
 		this.serverUserService.updateServerUserLastLoginTime(user);
-		List<Menu> menuList = this.serverUserService.queryLoginMenu(user.getUserId());
-		if (menuList.size() == 0) {
-			ajaxBean = new AjaxBean(false, "权限获取失败.");
-			this.ajaxWrite(ajaxBean);
-			return null;
-		}
 		String redirectUrl = Constant.PRO_CTX_VALUE + "/web/shop/center";
 		this.setAttrToSession("redirectUrl", redirectUrl);
 		ajaxBean = new AjaxBean(true);
@@ -113,7 +106,7 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 	
 	@Action("logout")
 	public String logout() {
-		this.getSession().invalidate();
+		this.invalidateSession();
 		return SUCCESS;
 	}
 	
@@ -161,7 +154,7 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 			return null;
 		}
 		StringBuilder url = new StringBuilder();
-		url.append(Constant.CONTEXT_WEB_URL + "/web/shop/reset_passwd?");
+		url.append(Constant.CONTEXT_WEB_URL + "web/shop/reset_passwd?");
 		url.append("userId=");
 		url.append(serverUser.getUserId());
 		long now = System.currentTimeMillis();
@@ -170,7 +163,6 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 		String sign = MD5Tools.hashToMD5(serverUser.getUserId() + now + Constant.SIGN_KEY);
 		url.append("&sign=");
 		url.append(sign);
-		url.append(System.currentTimeMillis());
 		StringBuilder mailContent = new StringBuilder();
 		mailContent.append("请点击一下链接重置您的密码。<br>");
 		mailContent.append("<a href=\"");
@@ -181,7 +173,7 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 		if(MailUtil.sendSystemMail(serverUser.getEmail(), "找回密码", mailContent.toString())){
 			return SUCCESS;
 		} else {
-			this.alertAndGoBack("签名错误");
+			this.alertAndGoBack("邮件发送失败");
 			return null;
 		}
 	}
@@ -195,7 +187,12 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 			this.alertAndRedirect("链接有误", "");
 			return null;
 		}
-		String checkSign = MD5Tools.hashToMD5(userId + time + Constant.SIGN_KEY);
+		ServerUser serverUser = serverUserService.getServerUser(userId);
+		if (serverUser == null) {
+			this.alertAndGoBack("用户不存在.");
+			return null;
+		}
+		String checkSign = MD5Tools.hashToMD5(serverUser.getUserId() + time + Constant.SIGN_KEY);
 		if (!sign.equals(checkSign)) {
 			this.alertAndRedirect("签名错误", "");
 			return null;
@@ -203,7 +200,7 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 		long urlTime = NumberUtils.toLong(time, 0);
 		long now = System.currentTimeMillis();
 		if (now - urlTime > Constant.ResetPwdUrlEffectiveTime) {
-			this.alertAndRedirect("链接已失效，请重新请求发送邮件", "/web/shop/find_passwd");
+			this.alertAndRedirect("链接已失效，请重新请求发送邮件", "web/shop/find_passwd");
 			return null;
 		}
 		this.setAttrToRequest("userId", userId);
@@ -231,7 +228,7 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 		long urlTime = NumberUtils.toLong(time, 0);
 		long now = System.currentTimeMillis();
 		if (now - urlTime > Constant.ResetPwdUrlEffectiveTime) {
-			this.alertAndRedirect("链接已失效，请重新请求发送邮件", "/web/shop/find_passwd");
+			this.alertAndRedirect("链接已失效，请重新请求发送邮件", "web/shop/find_passwd");
 			return null;
 		}
 		ServerUser user = serverUserService.updateServerUserPass(userId, password);

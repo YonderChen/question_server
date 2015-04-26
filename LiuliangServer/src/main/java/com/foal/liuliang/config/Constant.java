@@ -41,33 +41,6 @@ public class Constant {
 	
 	public static long ResetPwdUrlEffectiveTime = 48 * 60 * 60 * 1000;
 	
-	public static class Status {
-		public static final int Create = 0;
-		public static final int Success = 1;
-		public static final int CheckFail = -1;
-	}
-	
-	public static class TaskStatus {
-        public static final int Create = 0;//未发布
-        public static final int Verify = 1;//待审核
-        public static final int Executing = 2;//执行中
-        public static final int Finish = 3;//已完成
-        public static final int Cancel = 4;//已取消
-        public static final int VerifyFaild = 5;//审核不通过
-        public static final int Changed = 6;//任务修改,待审核
-	}
-	
-	public static class BindPlat {
-		public static final String Taobao = "taobao";
-		public static final String Tmall = "tmall";
-		public static final String Jd = "jd";
-	}
-	
-	public static class ScoreRecordType {
-		public static final int Buy = 1;//购买
-		public static final int Cost = 2;//消费
-	}
-
 	public static int OneVisitCostScore = 3;//每个流浪花费积分
 	
 	public static int OneKeywordCostScore = 30;//每额外添加一个关键词需要的积分

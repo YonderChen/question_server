@@ -1,8 +1,9 @@
 package com.foal.liuliang.interceptor;
 
+import org.apache.log4j.Logger;
+
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
-import org.apache.log4j.Logger;
 
 public abstract class Authority extends AbstractInterceptor {
 	/**

@@ -53,32 +53,29 @@
 		});
 	}
 	
-	function detail(taskId) {
-		$('#detailModal').modal('show');
-    	$(".btn-cancel").button('loading');
-		$(".btn-primary").button('loading');
-		$("#detailDiv").html("<div class='no-found'>加载中...</div>");
-		var url = "${ctx}/web/admin/useradmin/taskmanage/detail";
+	function check_task(taskId){
+		var url = "${ctx}/web/admin/useradmin/taskmanage/check_task";
 		$.ajax( {
 			url : url,
 			type : 'post',
 			data : {
-				taskId : taskId
+				taskId : taskId,
 			},
 			dataType : 'text',
 			timeout : 60000,
 			error : function(e) {
-				$("#addDetail").html("<div class='no-found'>连接服务器超时,请稍后再试.</div>");
-				$(".btn-cancel").button('reset');
-				$(".btn-primary").button('reset');
-				$(".active").removeClass('active');
+				alert("审核失败，连接异常");
 			},
 			success : function(result) {
-				$(".btn-cancel").button('reset');
-				$(".btn-primary").button('reset');
-				$(".active").removeClass('active');
 				if (!isOutTime(result)) {
-					$("#detailDiv").html(result);
+					result = eval("("+result+")");
+					if (result.success) {
+						$("#task_status_"+taskId).html("执行中");
+						$("#check_a_"+taskId).remove();
+						alert("审核成功");
+					} else {
+						alert(result.msg);
+					}
 				}
 			}
 		});
