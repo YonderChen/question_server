@@ -23,6 +23,7 @@ import com.foal.question.jersey.resource.tools.APIConstants.RetCode;
 import com.foal.question.pojo.AppFeedback;
 import com.foal.question.pojo.AppTipOff;
 import com.foal.question.pojo.AppUser;
+import com.foal.question.service.RiskWordService;
 import com.foal.question.service.SystemParamService;
 import com.foal.question.service.app.AppCommonService;
 import com.foal.question.service.app.AppUserService;
@@ -284,6 +285,12 @@ public class CommonResource {
 			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
 			return ret.toJson();
 		}
+		for (String riskWord : RiskWordService.RiskWordList) {
+			if(content.contains(riskWord)) {
+				ret.setResult(RetCode.Faild, "您输入的文字包含敏感内容");
+				return ret.toJson();
+			}
+		}
 		AppTipOff tipOff = new AppTipOff();
 		tipOff.setType(type);
 		tipOff.setRecordId(recordId);
@@ -307,6 +314,12 @@ public class CommonResource {
 		if (appUserService.getAppUserById(uid) == null) {
 			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
 			return ret.toJson();
+		}
+		for (String riskWord : RiskWordService.RiskWordList) {
+			if(content.contains(riskWord)) {
+				ret.setResult(RetCode.Faild, "您输入的文字包含敏感内容");
+				return ret.toJson();
+			}
 		}
 		AppFeedback feedback = new AppFeedback();
 		feedback.setContent(content);

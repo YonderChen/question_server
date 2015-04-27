@@ -249,3 +249,26 @@ CREATE TABLE `app_tip_off` (
   `create_time_` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for app_risk_word
+-- ----------------------------
+DROP TABLE IF EXISTS `app_risk_word`;
+CREATE TABLE `app_risk_word` (
+  `risk_word_` varchar(250) NOT NULL COMMENT '敏感词',
+  PRIMARY KEY (`risk_word_`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='敏感词';
+
+-- ----------------------------
+-- Records of app_risk_word
+-- ----------------------------
+INSERT INTO `app_risk_word` VALUES ('干你娘老鸡巴');
+INSERT INTO `app_risk_word` VALUES ('干你娘鸡巴');
+INSERT INTO `app_risk_word` VALUES ('操你他妈的');
+INSERT INTO `app_risk_word` VALUES ('操你她妈的');
+INSERT INTO `app_risk_word` VALUES ('操你妈');
+INSERT INTO `app_risk_word` VALUES ('操你妈的');
+INSERT INTO `app_risk_word` VALUES ('操你娘');
+INSERT INTO `app_risk_word` VALUES ('操你老母');
+INSERT INTO `app_risk_word` VALUES ('操妳他妈的');
+INSERT INTO `app_risk_word` VALUES ('操妳娘');

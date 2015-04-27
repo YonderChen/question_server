@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import com.foal.question.config.Constant;
 import com.foal.question.listener.ServiceLocator;
 import com.foal.question.service.GlobalConfigService;
+import com.foal.question.service.RiskWordService;
 
 public class StartUpServlet extends HttpServlet {
 	/**
@@ -43,6 +44,9 @@ public class StartUpServlet extends HttpServlet {
 		// 执行增量脚本
 		globalConfigService.runDbMigrate();
 		globalConfigService.initSystemParam();
+
+		RiskWordService riskWordService = ServiceLocator.getBean(RiskWordService.class);
+		riskWordService.initRiskWord();
 		
 		logger.info("启动成功...");
 	}

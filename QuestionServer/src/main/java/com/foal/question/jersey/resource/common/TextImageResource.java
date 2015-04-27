@@ -27,6 +27,7 @@ import com.foal.question.jersey.resource.tools.ResultMap;
 import com.foal.question.jersey.resource.tools.APIConstants.RetCode;
 import com.foal.question.pojo.AppTextImage;
 import com.foal.question.pojo.AppUser;
+import com.foal.question.service.RiskWordService;
 import com.foal.question.service.app.AppTextImageService;
 import com.foal.question.util.StringTools;
 import com.google.gson.JsonArray;
@@ -68,6 +69,12 @@ public class TextImageResource {
 			if (user.getStatus() == AppUser.Status.Silenced) {
 				ret.setResult(RetCode.Faild, "该帐号已经被禁言，请联系管理人员");
 				return ret.toJson();
+			}
+			for (String riskWord : RiskWordService.RiskWordList) {
+				if(content.contains(riskWord)) {
+					ret.setResult(RetCode.Faild, "您输入的文字包含敏感内容");
+					return ret.toJson();
+				}
 			}
 			String imageUrl = ResourceTools.uploadFile(param.getFileItemList(), ResourceTools.getImageSuffixs(), Constant.UPLOAD_IMAGE_PATH);
 			AppTextImage record = new AppTextImage();
