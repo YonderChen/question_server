@@ -49,14 +49,21 @@ public class TextVoiceResource {
 	@Produces( { MediaType.TEXT_HTML })
 	public String addTextVoice(@Context HttpServletRequest request) {
 		ResultMap ret = ResultMap.getResultMap();
-		ret.setResult(RetCode.Faild);
 		try {
 			MultipartFormParam param = ResourceTools.getMultipartFormParam(request);
 			String uid = param.getField("uid", "");
 			String content = param.getField("content", "");
 			AppUser user = appTextVoiceService.getAppUserService().getAppUserById(uid);
 			if (user == null) {
-				ret.setResult(RetCode.Faild, "用户uid不存在");
+				ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
+				return ret.toJson();
+			}
+			if (user.getStatus() == AppUser.Status.Freeze) {
+				ret.setResult(RetCode.Faild, "该帐号已经被封，请联系管理人员");
+				return ret.toJson();
+			}
+			if (user.getStatus() == AppUser.Status.Silenced) {
+				ret.setResult(RetCode.Faild, "该帐号已经被禁言，请联系管理人员");
 				return ret.toJson();
 			}
 			String voiceUrl = ResourceTools.uploadFile(param.getFileItemList(), ResourceTools.getVoiceSuffixs(), Constant.UPLOAD_VOICE_PATH);
@@ -77,6 +84,7 @@ public class TextVoiceResource {
 			ret.setResult(RetCode.Success);
 		} catch (Exception e) {
 			logger.error("发送文字声音失败", e);
+			ret.setResult(RetCode.Faild, "未知错误");
 		}
 		return ret.toJson();
 	}
@@ -95,7 +103,7 @@ public class TextVoiceResource {
 		ResultMap ret = ResultMap.getResultMap();
 		AppUser user = appTextVoiceService.getAppUserService().getAppUserById(uid);
 		if (user == null) {
-			ret.setResult(RetCode.Faild, "用户uid不存在");
+			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
 			return ret.toJson();
 		}
 		List<AppTextVoice> recordList = appTextVoiceService.getRecordByOwner(uid, orderBy, page, pageSize);
@@ -120,16 +128,16 @@ public class TextVoiceResource {
 	@GET
 	@Path(value = "/load_others")
 	@Produces( { MediaType.TEXT_HTML })
-	public String loadByOwner(@QueryParam(value = "uid") String uid, @QueryParam(value = "target_uid") String targetUid, @QueryParam(value = "order_by") int orderBy, @QueryParam(value = "page") int page, @QueryParam(value = "page_size") int pageSize) {
+	public String loadByOthers(@QueryParam(value = "uid") String uid, @QueryParam(value = "target_uid") String targetUid, @QueryParam(value = "order_by") int orderBy, @QueryParam(value = "page") int page, @QueryParam(value = "page_size") int pageSize) {
 		ResultMap ret = ResultMap.getResultMap();
 		AppUser user = appTextVoiceService.getAppUserService().getAppUserById(uid);
 		if (user == null) {
-			ret.setResult(RetCode.Faild, "用户uid不存在");
+			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
 			return ret.toJson();
 		}
 		AppUser targetUser = appTextVoiceService.getAppUserService().getAppUserById(targetUid);
 		if (targetUser == null) {
-			ret.setResult(RetCode.Faild, "目标用户uid不存在");
+			ret.setResult(RetCode.Faild, "目标用户不存在");
 			return ret.toJson();
 		}
 		List<AppTextVoice> recordList = appTextVoiceService.getRecordByOwner(targetUid, orderBy, page, pageSize);
@@ -184,7 +192,7 @@ public class TextVoiceResource {
 		ResultMap ret = ResultMap.getResultMap();
 		AppUser user = appTextVoiceService.getAppUserService().getAppUserById(uid);
 		if (user == null) {
-			ret.setResult(RetCode.Faild, "用户uid不存在");
+			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
 			return ret.toJson();
 		}
 		AppTextVoice record = appTextVoiceService.getRecord(recordId);
@@ -204,7 +212,7 @@ public class TextVoiceResource {
 		ResultMap ret = ResultMap.getResultMap();
 		AppUser user = appTextVoiceService.getAppUserService().getAppUserById(uid);
 		if (user == null) {
-			ret.setResult(RetCode.Faild, "用户uid不存在");
+			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
 			return ret.toJson();
 		}
 		AppTextVoice record = appTextVoiceService.getRecord(recordId);
@@ -234,7 +242,7 @@ public class TextVoiceResource {
 		ResultMap ret = ResultMap.getResultMap();
 		AppUser user = appTextVoiceService.getAppUserService().getAppUserById(uid);
 		if (user == null) {
-			ret.setResult(RetCode.Faild, "用户uid不存在");
+			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
 			return ret.toJson();
 		}
 		AppTextVoice record = appTextVoiceService.getRecord(recordId);

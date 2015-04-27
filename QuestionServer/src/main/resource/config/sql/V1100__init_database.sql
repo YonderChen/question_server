@@ -149,12 +149,16 @@ INSERT INTO `t_user_role` VALUES ('402881e846e4b3910146e4b8ce6c0004', '100000');
 DROP TABLE IF EXISTS `app_user`;
 CREATE TABLE `app_user` (
   `uid_` varchar(50) NOT NULL COMMENT '本地id',
-  `open_id_` varchar(100) NOT NULL COMMENT '第三方id',
+  `user_type_` int(11) NOT NULL COMMENT '用户类型，0：第三方平台，1：本地账户',
+  `open_id_` varchar(100) DEFAULT NULL COMMENT '第三方id',
+  `username_` varchar(100) DEFAULT NULL COMMENT '用户名',
+  `password_` varchar(255) DEFAULT NULL COMMENT '密码',
   `name_` varchar(255) DEFAULT NULL COMMENT '昵称',
   `gender_` varchar(20) DEFAULT NULL COMMENT '性别',
   `figureurl_` varchar(255) DEFAULT NULL COMMENT '头像url',
   `create_time_` datetime NOT NULL COMMENT '用户创建时间',
   `update_at_` datetime NOT NULL COMMENT '最近一次更新时间',
+  `status_` int NOT NULL COMMENT '用户状态，0：正常，1：禁言，2：封号',
   PRIMARY KEY (`uid_`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -219,3 +223,29 @@ CREATE TABLE `app_text_voice_praise_log` (
   PRIMARY KEY (`op_id_`),
   KEY `record_index` (`record_id_`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for app_feedback
+-- ----------------------------
+DROP TABLE IF EXISTS `app_feedback`;
+CREATE TABLE `app_feedback` (
+  `id_` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `content_` varchar(500) NOT NULL COMMENT '反馈内容',
+  `uid_` varchar(50) NOT NULL COMMENT '反馈用户uid',
+  `create_time_` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id_`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for app_tip_off
+-- ----------------------------
+DROP TABLE IF EXISTS `app_tip_off`;
+CREATE TABLE `app_tip_off` (
+  `id_` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `type_` int(11) NOT NULL COMMENT '举报的记录类型，0：文字图片，1：文字声音',
+  `record_id_` int(11) NOT NULL COMMENT '被举报的记录id',
+  `content_` varchar(500) NOT NULL COMMENT '举报内容描述',
+  `uid_` varchar(50) NOT NULL COMMENT '举报用户uid',
+  `create_time_` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id_`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;

@@ -52,14 +52,21 @@ public class TextImageResource {
 	@Produces( { MediaType.TEXT_HTML })
 	public String addTextImage(@Context HttpServletRequest request) {
 		ResultMap ret = ResultMap.getResultMap();
-		ret.setResult(RetCode.Faild);
 		try {
 			MultipartFormParam param = ResourceTools.getMultipartFormParam(request);
 			String uid = param.getField("uid", "");
 			String content = param.getField("content", "");
 			AppUser user = appTextImageService.getAppUserService().getAppUserById(uid);
 			if (user == null) {
-				ret.setResult(RetCode.Faild, "用户uid不存在");
+				ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
+				return ret.toJson();
+			}
+			if (user.getStatus() == AppUser.Status.Freeze) {
+				ret.setResult(RetCode.Faild, "该帐号已经被封，请联系管理人员");
+				return ret.toJson();
+			}
+			if (user.getStatus() == AppUser.Status.Silenced) {
+				ret.setResult(RetCode.Faild, "该帐号已经被禁言，请联系管理人员");
 				return ret.toJson();
 			}
 			String imageUrl = ResourceTools.uploadFile(param.getFileItemList(), ResourceTools.getImageSuffixs(), Constant.UPLOAD_IMAGE_PATH);
@@ -88,6 +95,7 @@ public class TextImageResource {
 			ret.setResult(RetCode.Success);
 		} catch (Exception e) {
 			logger.error("发送文字图片失败", e);
+			ret.setResult(RetCode.Faild, "未知错误");
 		}
 		return ret.toJson();
 	}
@@ -106,7 +114,7 @@ public class TextImageResource {
 		ResultMap ret = ResultMap.getResultMap();
 		AppUser user = appTextImageService.getAppUserService().getAppUserById(uid);
 		if (user == null) {
-			ret.setResult(RetCode.Faild, "用户uid不存在");
+			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
 			return ret.toJson();
 		}
 		List<AppTextImage> recordList = appTextImageService.getRecordByOwner(uid, orderBy, page, pageSize);
@@ -135,12 +143,12 @@ public class TextImageResource {
 		ResultMap ret = ResultMap.getResultMap();
 		AppUser user = appTextImageService.getAppUserService().getAppUserById(uid);
 		if (user == null) {
-			ret.setResult(RetCode.Faild, "用户uid不存在");
+			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
 			return ret.toJson();
 		}
 		AppUser targetUser = appTextImageService.getAppUserService().getAppUserById(targetUid);
 		if (targetUser == null) {
-			ret.setResult(RetCode.Faild, "目标用户uid不存在");
+			ret.setResult(RetCode.Faild, "目标用户不存在");
 			return ret.toJson();
 		}
 		List<AppTextImage> recordList = appTextImageService.getRecordByOwner(targetUid, orderBy, page, pageSize);
@@ -195,7 +203,7 @@ public class TextImageResource {
 		ResultMap ret = ResultMap.getResultMap();
 		AppUser user = appTextImageService.getAppUserService().getAppUserById(uid);
 		if (user == null) {
-			ret.setResult(RetCode.Faild, "用户uid不存在");
+			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
 			return ret.toJson();
 		}
 		AppTextImage record = appTextImageService.getRecord(recordId);
@@ -221,7 +229,7 @@ public class TextImageResource {
 		ResultMap ret = ResultMap.getResultMap();
 		AppUser user = appTextImageService.getAppUserService().getAppUserById(uid);
 		if (user == null) {
-			ret.setResult(RetCode.Faild, "用户uid不存在");
+			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
 			return ret.toJson();
 		}
 		AppTextImage record = appTextImageService.getRecord(recordId);
@@ -251,7 +259,7 @@ public class TextImageResource {
 		ResultMap ret = ResultMap.getResultMap();
 		AppUser user = appTextImageService.getAppUserService().getAppUserById(uid);
 		if (user == null) {
-			ret.setResult(RetCode.Faild, "用户uid不存在");
+			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
 			return ret.toJson();
 		}
 		AppTextImage record = appTextImageService.getRecord(recordId);

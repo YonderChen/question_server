@@ -26,7 +26,7 @@ public class AppTextVoice implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8490001678272587693L;
+	private static final long serialVersionUID = -2915678199478151293L;
 	private int id;
 	private String ownerId;
 	private String content;
@@ -142,7 +142,11 @@ public class AppTextVoice implements Serializable{
 
 	public JsonObject toJson(AppUser owner, boolean hasPraised) {
 		JsonObject jo = GsonTools.parseJsonObject(this);
-		jo.addProperty("ownerFigureurl", owner.getFigureurl());
+		if (owner.getUserType() == AppUser.UserType.Local) {
+			jo.addProperty("ownerFigureurl", Constant.CONTEXT_WEB_URL + owner.getFigureurl());
+		} else {
+			jo.addProperty("ownerFigureurl", owner.getFigureurl());
+		}
 		jo.addProperty("ownerName", owner.getName());
 		jo.addProperty("voiceUrl", Constant.CONTEXT_WEB_URL + this.voiceUrl);
 		jo.add("voiceInfo", GsonTools.parseJsonObject(voiceInfo));

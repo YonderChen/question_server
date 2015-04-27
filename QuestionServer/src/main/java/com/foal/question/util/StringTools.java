@@ -148,4 +148,15 @@ public class StringTools extends StringUtils {
 			return false;
 		return true;
 	}
+	
+	public static boolean checkNumberOrLetterOrUnderLine(String str) {
+	    char[] chars=str.toCharArray();
+	    for (int i = 0; i < chars.length; i++) {
+			char c = chars[i];
+			if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_')) {
+				return false;
+			}
+		}
+	    return true;
+	}
 }

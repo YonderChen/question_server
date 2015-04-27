@@ -26,7 +26,7 @@ public class AppTextImage implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3012366411497097753L;
+	private static final long serialVersionUID = 3559410446984912861L;
 	private int id;
 	private String ownerId;
 	private String content;
@@ -142,7 +142,11 @@ public class AppTextImage implements Serializable{
 	
 	public JsonObject toJson(AppUser owner, boolean hasPraised) {
 		JsonObject jo = GsonTools.parseJsonObject(this);
-		jo.addProperty("ownerFigureurl", owner.getFigureurl());
+		if (owner.getUserType() == AppUser.UserType.Local) {
+			jo.addProperty("ownerFigureurl", Constant.CONTEXT_WEB_URL + owner.getFigureurl());
+		} else {
+			jo.addProperty("ownerFigureurl", owner.getFigureurl());
+		}
 		jo.addProperty("ownerName", owner.getName());
 		jo.addProperty("imageUrl", Constant.CONTEXT_WEB_URL + this.imageUrl);
 		jo.add("imageInfo", GsonTools.parseJsonObject(imageInfo));
