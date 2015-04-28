@@ -50,6 +50,9 @@ public class CommonResource {
 	@Autowired
 	SystemParamService systemParamService;
 	
+	@Autowired
+	RiskWordService riskWordService;
+	
 	@POST
 	@Path("/get_version")
 	@Produces( { MediaType.TEXT_HTML })
@@ -285,11 +288,9 @@ public class CommonResource {
 			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
 			return ret.toJson();
 		}
-		for (String riskWord : RiskWordService.RiskWordList) {
-			if(content.contains(riskWord)) {
-				ret.setResult(RetCode.Faild, "您输入的文字包含敏感内容");
-				return ret.toJson();
-			}
+		if(riskWordService.containRiskWord(content)) {
+			ret.setResult(RetCode.Faild, "您输入的文字包含敏感内容");
+			return ret.toJson();
 		}
 		AppTipOff tipOff = new AppTipOff();
 		tipOff.setType(type);
@@ -315,11 +316,9 @@ public class CommonResource {
 			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
 			return ret.toJson();
 		}
-		for (String riskWord : RiskWordService.RiskWordList) {
-			if(content.contains(riskWord)) {
-				ret.setResult(RetCode.Faild, "您输入的文字包含敏感内容");
-				return ret.toJson();
-			}
+		if(riskWordService.containRiskWord(content)) {
+			ret.setResult(RetCode.Faild, "您输入的文字包含敏感内容");
+			return ret.toJson();
 		}
 		AppFeedback feedback = new AppFeedback();
 		feedback.setContent(content);

@@ -44,6 +44,9 @@ public class TextVoiceResource {
 	@Autowired
 	AppTextVoiceService appTextVoiceService;
 	
+	@Autowired
+	RiskWordService riskWordService;
+	
 	@POST
 	@Path(value = "/add")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -67,11 +70,9 @@ public class TextVoiceResource {
 				ret.setResult(RetCode.Faild, "该帐号已经被禁言，请联系管理人员");
 				return ret.toJson();
 			}
-			for (String riskWord : RiskWordService.RiskWordList) {
-				if(content.contains(riskWord)) {
-					ret.setResult(RetCode.Faild, "您输入的文字包含敏感内容");
-					return ret.toJson();
-				}
+			if(riskWordService.containRiskWord(content)) {
+				ret.setResult(RetCode.Faild, "您输入的文字包含敏感内容");
+				return ret.toJson();
 			}
 			String voiceUrl = ResourceTools.uploadFile(param.getFileItemList(), ResourceTools.getVoiceSuffixs(), Constant.UPLOAD_VOICE_PATH);
 			AppTextVoice record = new AppTextVoice();

@@ -47,6 +47,9 @@ public class TextImageResource {
 	@Autowired
 	AppTextImageService appTextImageService;
 	
+	@Autowired
+	RiskWordService riskWordService;
+	
 	@POST
 	@Path(value = "/add")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -70,11 +73,9 @@ public class TextImageResource {
 				ret.setResult(RetCode.Faild, "该帐号已经被禁言，请联系管理人员");
 				return ret.toJson();
 			}
-			for (String riskWord : RiskWordService.RiskWordList) {
-				if(content.contains(riskWord)) {
-					ret.setResult(RetCode.Faild, "您输入的文字包含敏感内容");
-					return ret.toJson();
-				}
+			if(riskWordService.containRiskWord(content)) {
+				ret.setResult(RetCode.Faild, "您输入的文字包含敏感内容");
+				return ret.toJson();
 			}
 			String imageUrl = ResourceTools.uploadFile(param.getFileItemList(), ResourceTools.getImageSuffixs(), Constant.UPLOAD_IMAGE_PATH);
 			AppTextImage record = new AppTextImage();
