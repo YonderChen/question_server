@@ -3,7 +3,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>遇见你, 听说你</title>
+		<title>遇见你, 听你说</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
 		
 	    <link rel="shortcut icon" href="${ctx }/images/favicon.ico" type="image/x-icon" />
@@ -20,7 +20,7 @@ $(document).ready(function(){
 	$("#jquery_jplayer_1").jPlayer({
 		ready: function (event) {
 			$(this).jPlayer("setMedia", {
-				title: "遇见你  听说你",
+				title: "遇见你  听你说",
 				mp3: "${ctx}${record.voiceUrl }",
 				m4a: "${ctx}${record.voiceUrl }",
 				oga: "${ctx}${record.voiceUrl }"
@@ -61,7 +61,7 @@ $(document).ready(function(){
 					<b style="font-style: normal; color: gray; font-size: 10px;"><s:date name="#request.record.createTime" format="yyyy-MM-dd HH:mm:ss"/></b>
 				</td>
 				<td align="right">
-					<b style="font-style: normal; color: blue; font-size: 10px; margin-right: 10px;"><a href="http://121.43.150.13/QuestionServer/home.html">遇见你, 听说你</a></b>
+					<b style="font-style: normal; color: blue; font-size: 10px; margin-right: 10px;"><a href="http://121.43.150.13/QuestionServer/home.html">遇见你, 听你说</a></b>
 				</td>
 			</tr>
 			<tr>
@@ -113,7 +113,7 @@ $(document).ready(function(){
 								<img width="72px" height="72px" src="${ctx }/images/sy/ICON/72x72.png" alt="icon" /> 
 							</td>
 							<td>
-								<h4 style="color: rgb(66,224,255);">遇见你  听说你</h4>
+								<h4 style="color: rgb(66,224,255);">遇见你  听你说</h4>
 								<h5>在最美的文字里遇见你</h5>
 							</td>
 							<td>
