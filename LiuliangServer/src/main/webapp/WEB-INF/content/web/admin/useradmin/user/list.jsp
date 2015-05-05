@@ -66,7 +66,7 @@
 							<s:else>冻结</s:else>
 						</td>
 						<td>
-							<button class="btn btn-link" type="button" onclick="editInput('${user.userId }');" data-toggle="button" data-loading-text="<i class='icon-pencil'></i>&nbsp;编辑"><i class="icon-pencil"></i>&nbsp;编辑</button>
+							<button class="btn btn-link" type="button" onclick="javascript:editInput('${user.userId }');" data-toggle="button" data-loading-text="<i class='icon-pencil'></i>&nbsp;编辑"><i class="icon-pencil"></i>&nbsp;编辑</button>
 						</td>
 					</tr>
 					</s:iterator>

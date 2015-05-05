@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta http-equiv="X-UA-Compatible"content="IE=10; IE=9; IE=8; IE=7; IE=EDGE">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
@@ -58,7 +59,7 @@
 				password:$("#password").val().trim(),
 				email:$("#useremail").val().trim(),
 				userqq:$("#userqq").val().trim(),
-				phone:$("#usermobile").val().trim(),
+				phone:$("#usermobile").val().trim()
 			},
 			dataType:'json',
 			timeout:60000,
@@ -188,7 +189,7 @@
                                         </em>
                                               
                                     </div>
-                                    <!-- <a href="javascript:;" class="cord" onClick="cord();">发送验证码</a> -->
+                                    <!-- <a href="javascript:;" class="cord" onclick="javascript:cord();">发送验证码</a> -->
                                     <!-- <span class="cordspan" style="display:none;">60秒后可重新发送</span> -->
                                 </div>
 
@@ -203,7 +204,7 @@
                                     </div>
                                 </div>   -->                                                                    
                                 <p class="item loginsub inp">
-                                    <button type="button" onclick="register();" class="loginbtn" id="submit_btn" name="submit_btn">立即注册</button>
+                                    <button type="button" onclick="javascript:register();" class="loginbtn" id="submit_btn" name="submit_btn">立即注册</button>
                                     <label for="recommend_chk"><input canempty="ture" checkurl="ture" regname="recommend_chk" type="checkbox" checked="checked" id="recommend_chk" name="login_remember">我同意流量符<a href="${ctx}/static_shop/html/protocol.html" target="_blank">服务协议</a></label>
                                 </p>                                    
                             </div>

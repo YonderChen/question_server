@@ -47,7 +47,7 @@
 							<s:date name="modifyTime" format="yyyy-MM-dd HH:mm:ss"/>
 						</td>
 						<td>
-							<button class="btn btn-link" type="button" onclick="edit('${sysParam.paramId }');" data-toggle="button" data-loading-text="<i class='icon-ok'></i>&nbsp;保存"><i class="icon-ok"></i>&nbsp;保存</button>
+							<button class="btn btn-link" type="button" onclick="javascript:edit('${sysParam.paramId }');" data-toggle="button" data-loading-text="<i class='icon-ok'></i>&nbsp;保存"><i class="icon-ok"></i>&nbsp;保存</button>
 						</td>
 					</tr>
 					</s:iterator>

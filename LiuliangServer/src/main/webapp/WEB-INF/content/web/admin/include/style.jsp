@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+	<meta http-equiv="X-UA-Compatible"content="IE=10; IE=9; IE=8; IE=7; IE=EDGE">
 <link type="text/css" href="${ctx}/style/bootstrap.min.css" rel="stylesheet">
 <link type="text/css" href="${ctx}/style/bootstrap-responsive.min.css" rel="stylesheet">
 <link type="text/css" rel="stylesheet" href="${ctx}/style/font-awesome.min.css">

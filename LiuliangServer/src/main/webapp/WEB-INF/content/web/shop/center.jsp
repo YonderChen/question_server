@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta http-equiv="X-UA-Compatible"content="IE=10; IE=9; IE=8; IE=7; IE=EDGE">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
@@ -94,8 +95,8 @@
                     <ul class="tab-list" style="padding-left:10px;">
                         <li class="active notice-li"><a href="#">网站公告</a></li>
                         <!-- <li class="problem-li"><a href="#">常见问题</a></li> -->
-                        <span style="display:inline-block; margin-left:20px; color:#f00; margin-top:10px;">请先购买流量符VIP会员再加群，否则一律拒绝！流量符VIP商家交流qq群：328892256</span>
                     </ul>
+                    <span style="display: block; margin-left:135px; color:#f00; margin-top:-25px;">请先购买流量符VIP会员再加群，否则一律拒绝！流量符VIP商家交流qq群：328892256</span>
                 </div>
                 <table style="margin-top:6px;width:100%" class="notice-table">
                                         <tbody><tr style="height:35px; color:#555; font-size:14px;">
@@ -187,9 +188,9 @@
                             
                             <div style="height:10px; width:100%;"></div>
                             <span style="margin-left:0;">任务发布时间：</span>
-                            <input style="width:100px; border:1px solid #CCC;" name="beginTime" value="<s:date name="#request.llTaskRecordBean.beginTime" format="yyyy-MM-dd"/>" onclick="WdatePicker()">
+                            <input style="width:100px; border:1px solid #CCC;" name="beginTime" value="<s:date name="#request.llTaskRecordBean.beginTime" format="yyyy-MM-dd"/>" onclick="javascript:WdatePicker()">
                             <span style="margin-left:0;">-</span>
-                            <input style="width:100px; border:1px solid #CCC;" name="endTime" value="<s:date name="#request.llTaskRecordBean.endTime" format="yyyy-MM-dd"/>" onclick="WdatePicker()">
+                            <input style="width:100px; border:1px solid #CCC;" name="endTime" value="<s:date name="#request.llTaskRecordBean.endTime" format="yyyy-MM-dd"/>" onclick="javascript:WdatePicker()">
 
                             <span style="margin-left:16px;">高级搜索：</span>
                             <select name="queryKey" id="queryKey" style="width: 100px;">

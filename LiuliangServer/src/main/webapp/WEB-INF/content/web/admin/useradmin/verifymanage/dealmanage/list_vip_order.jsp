@@ -58,8 +58,8 @@
 						</td>
 						<td id="op_${order.orderId}">
 							<s:if test="status == 0">
-								<button class="btn btn-link" type="button" onclick="check_vip_order('${order.orderId}', 1);" data-toggle="button" data-loading-text="<i class='icon-pencil'></i>&nbsp;通过"><i class="icon-pencil"></i>&nbsp;通过</button>
-								<button class="btn btn-link" type="button" onclick="check_vip_order('${order.orderId}', -1);" data-toggle="button" data-loading-text="<i class='icon-pencil'></i>&nbsp;拒绝"><i class="icon-pencil"></i>&nbsp;拒绝</button>
+								<button class="btn btn-link" type="button" onclick="javascript:check_vip_order('${order.orderId}', 1);" data-toggle="button" data-loading-text="<i class='icon-pencil'></i>&nbsp;通过"><i class="icon-pencil"></i>&nbsp;通过</button>
+								<button class="btn btn-link" type="button" onclick="javascript:check_vip_order('${order.orderId}', -1);" data-toggle="button" data-loading-text="<i class='icon-pencil'></i>&nbsp;拒绝"><i class="icon-pencil"></i>&nbsp;拒绝</button>
 							</s:if>
 							<s:else>
 								无

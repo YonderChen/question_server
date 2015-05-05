@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta http-equiv="X-UA-Compatible"content="IE=10; IE=9; IE=8; IE=7; IE=EDGE">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
@@ -52,7 +53,7 @@
                                   <i class="icon-P"></i>
                                   <input type="password" id="oldPassword" placeholder="请输入密码" autocomplete="off" cname="one" class="txt placebox" name="old_pwd" regname="loginpassword" emptyerr="密码不能为空">
                                 </em>
-                                                              </div>
+                              </div>
                             </div>
                             <div class="item clearfix">
                               <label class="tit"><i>*</i>新密码</label>
@@ -74,7 +75,7 @@
                             </div>
                             <p class="item itembtnp">
                               <a href="javascript:editPass();" class="itembtn">确认修改</a>
-                                                          </p>                                   
+                            </p>                                   
                         </div>
                         </form>
 <script type="text/javascript"> 
@@ -172,7 +173,7 @@
 			url:url,
 			type:'post',
 			data:{
-				userqq: $("#userqq").val().trim(),
+				userqq: $("#userqq").val().trim()
 			},
 			dataType:'text',
 			timeout:60000,
@@ -253,7 +254,7 @@ $(function(){
 			url:url,
 			type:'post',
 			data:{
-				phone: $("#usermoblie").val().trim(),
+				phone: $("#usermoblie").val().trim()
 			},
 			dataType:'text',
 			timeout:60000,

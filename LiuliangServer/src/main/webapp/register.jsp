@@ -3,6 +3,7 @@
 <html>
   <head>
     <title>注册</title>
+	<meta http-equiv="X-UA-Compatible"content="IE=10; IE=9; IE=8; IE=7; IE=EDGE">
 	<link rel="shortcut icon" href="${ctx }/images/favicon.ico" type="image/x-icon" />
 	<link rel="icon" href="${ctx }/images/favicon.ico" type="image/x-icon" />
 	<link type="text/css" href="${ctx}/style/style.css" rel="stylesheet"/>
@@ -144,10 +145,10 @@
 						</li>
 						<li style="display: none;">
 							<input id="code" name="code" type="text" class="loginpwd1" value="" placeholder="验证码" maxlength="5" />
-							<img src="${ctx}/web/admin/code" style="vertical-align: middle; padding-left: 10px; cursor: pointer;" id="img" onclick="changeCode();" title="换一张" />
+							<img src="${ctx}/web/admin/code" style="vertical-align: middle; padding-left: 10px; cursor: pointer;" id="img" onclick="javascript:changeCode();" title="换一张" />
 						</li>
 						<li>
-							<input id="registerBtn" type="button" class="loginbtn" value="注册" onclick="register();" data-toggle="button" data-loading-text="注册" />
+							<input id="registerBtn" type="button" class="loginbtn" value="注册" onclick="javascript:register();" data-toggle="button" data-loading-text="注册" />
 						</li>
 					</ul>
 				</form>

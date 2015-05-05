@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta http-equiv="X-UA-Compatible"content="IE=10; IE=9; IE=8; IE=7; IE=EDGE">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
@@ -61,11 +62,11 @@
 								</h5>
 								<p>
 									<label>
-										<input name="sleep_time" id="pageStayType_checkbox1" class="J_accessTotal" onclick="changepageStayType_checkbox1();" type="checkbox" value="${pageStayCostScoreMap['1'] }">
+										<input name="sleep_time" id="pageStayType_checkbox1" class="J_accessTotal" onclick="javascript:changepageStayType_checkbox1();" type="checkbox" value="${pageStayCostScoreMap['1'] }">
 										设置停留时间至60~120秒<span>${pageStayCostScoreMap['1'] }积分</span>
 									</label>
 									<label>
-										<input name="sleep_time" id="pageStayType_checkbox2" class="J_accessTotal" onclick="changepageStayType_checkbox2();" type="checkbox" value="${pageStayCostScoreMap['2'] }">
+										<input name="sleep_time" id="pageStayType_checkbox2" class="J_accessTotal" onclick="javascript:changepageStayType_checkbox2();" type="checkbox" value="${pageStayCostScoreMap['2'] }">
 										设置停留时间至120~180秒<span>${pageStayCostScoreMap['2'] }积分</span>
 									</label>
 								</p>
@@ -92,11 +93,11 @@
 							</h5>
 							<p>
 								<label>
-									<input name="visit_time" id="visitTimeType_checkbox1" class="J_accessTotal" onclick="changevisitTimeType_checkbox1();" type="checkbox" value="${visitTimeCostScoreMap['1'] }">
+									<input name="visit_time" id="visitTimeType_checkbox1" class="J_accessTotal" onclick="javascript:changevisitTimeType_checkbox1();" type="checkbox" value="${visitTimeCostScoreMap['1'] }">
 									随机分布<span>${visitTimeCostScoreMap['1'] }积分</span>
 								</label>
 								<label>
-									<input name="visit_time" id="visitTimeType_checkbox2" class="J_accessTotal" onclick="changevisitTimeType_checkbox2();" type="checkbox" value="${visitTimeCostScoreMap['2'] }">
+									<input name="visit_time" id="visitTimeType_checkbox2" class="J_accessTotal" onclick="javascript:changevisitTimeType_checkbox2();" type="checkbox" value="${visitTimeCostScoreMap['2'] }">
 									网购用户习惯曲线分布<span>${visitTimeCostScoreMap['2'] }积分</span>
 								</label>
 							</p>
@@ -118,7 +119,7 @@
 								</h5>
 								<p>
 									<label>
-										<input name="first_check" id="isQuickVerify_checkbox" onclick="changeIsQuickVerify()" class="J_accessTotal" type="checkbox" value="${quickVerifyCostScore }">
+										<input name="first_check" id="isQuickVerify_checkbox" onclick="javascript:changeIsQuickVerify()" class="J_accessTotal" type="checkbox" value="${quickVerifyCostScore }">
 										任务优先审核（<span>${quickVerifyCostScore }</span>积分）
 									</label>
 								</p>
@@ -136,7 +137,7 @@
 								</h5>
 								<p>
 									<label>
-										<input name="first_execute" id="isQuickExecute_checkbox" onclick="changeIsQuickExecute()" class="J_accessTotal" type="checkbox" value="${quickExecuteCostScore }">
+										<input name="first_execute" id="isQuickExecute_checkbox" onclick="javascript:changeIsQuickExecute()" class="J_accessTotal" type="checkbox" value="${quickExecuteCostScore }">
 										任务优先执行（<span>${quickExecuteCostScore }</span>积分）
 									</label>
 								</p>

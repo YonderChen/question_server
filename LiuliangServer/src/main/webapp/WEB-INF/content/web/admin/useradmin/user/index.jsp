@@ -267,13 +267,13 @@
 					<label>
 						&nbsp;
 					</label>
-					<button id="searchBtn" class="btn btn-info" onclick="ajaxSearch(1);" data-toggle="button" data-loading-text="<i class='icon-search'></i>&nbsp;搜索中..."><i class="icon-search"></i>&nbsp;搜索</button>
+					<button id="searchBtn" class="btn btn-info" onclick="javascript:ajaxSearch(1);" data-toggle="button" data-loading-text="<i class='icon-search'></i>&nbsp;搜索中..."><i class="icon-search"></i>&nbsp;搜索</button>
 				</li>
 
 			</ul>
 		    	<ul class="seachform">
 		    	<li>
-		    	<button class="btn btn-primary" type="button" onclick="addInput();" data-toggle="button" data-loading-text="<i class='icon-plus'></i>&nbsp;新增用户"><i class="icon-plus"></i>&nbsp;新增用户</button>
+		    	<button class="btn btn-primary" type="button" onclick="javascript:addInput();" data-toggle="button" data-loading-text="<i class='icon-plus'></i>&nbsp;新增用户"><i class="icon-plus"></i>&nbsp;新增用户</button>
 		    	</li>
 		      </ul>
 			<div id="ajaxSearchId">
@@ -290,7 +290,7 @@
 		
 		</div>
 		<div class="modal-footer">
-		<button class="btn btn-primary" data-toggle="button" data-loading-text="保存" onclick="edit();">保存</button>
+		<button class="btn btn-primary" data-toggle="button" data-loading-text="保存" onclick="javascript:edit();">保存</button>
 		<button class="btn btn-cancel" data-dismiss="modal" aria-hidden="true" data-toggle="button" data-loading-text="关闭">关闭</button>
 		</div>
 	</div>
@@ -304,7 +304,7 @@
 		
 		</div>
 		<div class="modal-footer">
-		<button class="btn btn-primary" data-toggle="button" data-loading-text="保存" onclick="add();">保存</button>
+		<button class="btn btn-primary" data-toggle="button" data-loading-text="保存" onclick="javascript:add();">保存</button>
 		<button class="btn btn-cancel" data-dismiss="modal" aria-hidden="true" data-toggle="button" data-loading-text="关闭">关闭</button>
 		</div>
 	</div>

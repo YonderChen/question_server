@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta http-equiv="X-UA-Compatible"content="IE=10; IE=9; IE=8; IE=7; IE=EDGE">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
@@ -44,12 +45,12 @@
                             </div>
                             <div class="integral-search-time">
                                 <label>起止时间：</label>
-                                <input type="text" name="beginTime" class="Wdate" onclick="WdatePicker()" value="<s:date name="#request.beginTime" format="yyyy-MM-dd"/>">
+                                <input type="text" name="beginTime" class="Wdate" onclick="javascript:WdatePicker()" value="<s:date name="#request.beginTime" format="yyyy-MM-dd"/>">
                                 至
-                                <input type="text" name="endTime" class="Wdate" onclick="WdatePicker()" value="<s:date name="#request.endTime" format="yyyy-MM-dd"/>">
+                                <input type="text" name="endTime" class="Wdate" onclick="javascript:WdatePicker()" value="<s:date name="#request.endTime" format="yyyy-MM-dd"/>">
                             </div>
                             <input type="hidden" id="current_page" name="page" value="${pageBean.currentPage}">
-                            <input type="submit" class="integral-search-butt" onclick="resetPage()" value="提交查询">
+                            <input type="submit" class="integral-search-butt" onclick="javascript:resetPage()" value="提交查询">
                         </form>
                     </div>
                     <p class="integral-careful"><span>注意：</span>为了减少服务器负荷，只能查找最近一个月内的流量使用记录。

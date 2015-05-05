@@ -143,11 +143,11 @@
 						</li>
 						<li style="display: none;">
 							<input id="code" name="code" type="text" class="loginpwd1" value="" placeholder="验证码" maxlength="5" />
-							<img src="${ctx}/web/admin/code" style="vertical-align: middle; padding-left: 10px; cursor: pointer;" id="img" onclick="changeCode();" title="换一张" />
+							<img src="${ctx}/web/admin/code" style="vertical-align: middle; padding-left: 10px; cursor: pointer;" id="img" onclick="javascript:changeCode();" title="换一张" />
 						</li>
 						<li>
-							<input id="loginBtn" type="button" class="loginbtn" value="登录" onclick="login();"  data-toggle="button" data-loading-text="登录"/>
-							<input id="registerBtn" type="button" class="loginbtn" value="注册" onclick="window.location.href='${ctx}/register.jsp'" />
+							<input id="loginBtn" type="button" class="loginbtn" value="登录" onclick="javascript:login();"  data-toggle="button" data-loading-text="登录"/>
+							<input id="registerBtn" type="button" class="loginbtn" value="注册" onclick="javascript:window.location.href='${ctx}/register.jsp'" />
 							<label>
 								<input name="rememberMe" id="rememberMe" type="checkbox" />记住密码
 							</label>

@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta http-equiv="X-UA-Compatible"content="IE=10; IE=9; IE=8; IE=7; IE=EDGE">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
@@ -69,7 +70,7 @@
 	}
 	
 	function AddMonths(date,months){
-		var nd = new Date(date);
+		var nd = new NewDate(date);
 		//alert(nd.getFullYear() + "年" + (nd.getMonth() + 1) + "月" + nd.getDate() + "日");
 		var y = nd.getFullYear() + parseInt((nd.getMonth() + 1 + parseInt(months)) / 12);
 		var m = (nd.getMonth() + 1 + parseInt(months)) % 12;
@@ -79,6 +80,14 @@
 		var cdate = y+"-"+m+"-"+d;
 		return cdate;
 	}
+	
+	function NewDate(str) { 
+		str = str.split('-'); 
+		var date = new Date(); 
+		date.setUTCFullYear(str[0], str[1] - 1, str[2]); 
+		date.setUTCHours(0, 0, 0, 0); 
+		return date; 
+	} 
 </script>
 </head>
 <body>
@@ -138,17 +147,17 @@
 								<div class="select_buy_input">
                             		<input type="hidden" id="paytime" value="">
 									<label style="margin-right: 50px;">
-										<input type="radio" onclick="paytimeChange(6);" name="paytime" value="6" data-k="120">
+										<input type="radio" onclick="javascript:paytimeChange(6);" name="paytime" value="6" data-k="120">
 										6个月
 										<span style="color: #F80000; margin-left: 4px;">120</span> 元
 									</label>
 									<label style="margin-right: 50px;">
-										<input type="radio" onclick="paytimeChange(9);" name="paytime" value="9" data-k="180">
+										<input type="radio" onclick="javascript:paytimeChange(9);" name="paytime" value="9" data-k="180">
 										9个月
 										<span style="color: #F80000; margin-left: 4px;">180</span> 元
 									</label>
 									<label style="margin-right: 50px;">
-										<input type="radio" onclick="paytimeChange(12);" name="paytime" checked="checked" value="12"
+										<input type="radio" onclick="javascript:paytimeChange(12);" name="paytime" checked="checked" value="12"
 											data-k="216">
 										12个月
 										<span style="color: #F80000; margin-left: 4px;">216</span> 元
@@ -156,7 +165,7 @@
 										<span class="red">推荐</span>
 									</label>
 									<label style="margin-right: 50px;">
-										<input type="radio" onclick="paytimeChange(24);" name="paytime" value="24" data-k="398">
+										<input type="radio" onclick="javascript:paytimeChange(24);" name="paytime" value="24" data-k="398">
 										24个月
 										<span style="color: #F80000; margin-left: 4px;">398</span> 元
 										<i>（8.3折）</i>
@@ -189,7 +198,7 @@
                         </form>
                         
                             <div class="btn-box tc">
-                                <input type="button" onclick="submit();" name="submit" class="buttons-vip-confirm buttons" value="确认付款">
+                                <input type="button" onclick="javascript:submit();" name="submit" class="buttons-vip-confirm buttons" value="确认付款">
                                 
 					<s:if test="#session.sessionServerUserInfo.vipEndTime == null">
 						<span class="skip-step"><a href="${ctx}/web/shop/center">跳过此步骤</a>(暂时不开通VIP)</span>

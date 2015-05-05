@@ -29,13 +29,12 @@ function isOutTime(result) {
 <div id="has_login" style="display: none;">
 	<div class="state" style="background:#F2F2F2;">
     	<div class="wrap">
-    	        <a href="${ctx}/web/shop/userinfo">${sessionServerUserInfo.username }</a> ｜ <a href="${ctx }/web/shop/logout">退出</a>
-        
-        <span class="fr"><a href="${ctx}/help/help_center.jsp?left_list_id=-2" target="_blank">帮助中心</a></span>
-        <span class="fr" style="margin-right:40px;">积分: ${sessionServerUserInfo.score } 点</span>
-        <span class="fr" style="margin-right:40px;">
-            <a href="${ctx }/web/shop/accountmanage/dealmanage/get_score">购买积分</a> ｜ <a href="${ctx }/web/shop/accountmanage/dealmanage/renewalvip">续费会员</a>
-        </span>
+	        <span class="fr"><a href="${ctx}/help/help_center.jsp?left_list_id=-2" target="_blank">帮助中心</a></span>
+	        <span class="fr" style="margin-right:40px;">积分: ${sessionServerUserInfo.score } 点</span>
+	        <span class="fr" style="margin-right:40px;">
+	            <a href="${ctx }/web/shop/accountmanage/dealmanage/get_score">购买积分</a> ｜ <a href="${ctx }/web/shop/accountmanage/dealmanage/renewalvip">续费会员</a>
+	        </span>
+		    <a href="${ctx}/web/shop/userinfo">${sessionServerUserInfo.username }</a> ｜ <a href="${ctx }/web/shop/logout">退出</a>
 		</div>
 	</div>
 </div>
@@ -43,9 +42,9 @@ function isOutTime(result) {
 <div id="un_login">
 	<div class="state" style="background:#F2F2F2;">
 	    <div class="wrap">
-	    	        <a href="${ctx }/web/shop/register_index">注册</a> ｜ <a href="${ctx}/web/shop/index">登录</a>
 	        <span class="fr"><a href="${ctx}/help/help_center.jsp?left_list_id=-2" target="_blank">帮助中心</a></span>
-	    	    </div>
+   	        <a href="${ctx }/web/shop/register_index">注册</a> ｜ <a href="${ctx}/web/shop/index">登录</a>
+   	    </div>
 	</div>
 </div>
 	

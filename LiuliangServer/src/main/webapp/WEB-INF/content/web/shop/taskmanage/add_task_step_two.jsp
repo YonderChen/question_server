@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta http-equiv="X-UA-Compatible"content="IE=10; IE=9; IE=8; IE=7; IE=EDGE">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
@@ -159,7 +160,7 @@
 												onafterpaste="this.value=this.value.replace(/\D/g,'')">
 											&nbsp;访客/天
 											<span style="font-size: 12px; color: #666; margin: 0;">（最低10访客/天）</span>
-											<span class="red"><a style="color: blue;" onclick="div_keyword_del()">删除</a></span>
+											<span class="red"><a style="color: blue;" onclick="javascript:div_keyword_del()">删除</a></span>
 											<span id="hd_kwd_info3" class="error" style="display: none;"></span>
 										</div>
 										<div id="div_keyword5" style="display: none;">
@@ -177,7 +178,7 @@
 												onafterpaste="this.value=this.value.replace(/\D/g,'')">
 											&nbsp;访客/天
 											<span style="font-size: 12px; color: #666; margin: 0;">（最低10访客/天）</span>
-											<span class="red"><a style="color: blue;" onclick="div_keyword_del()">删除</a></span>
+											<span class="red"><a style="color: blue;" onclick="javascript:div_keyword_del()">删除</a></span>
 											<span id="hd_kwd_info3" class="error" style="display: none;"></span>
 										</div>
 									</div>
@@ -232,20 +233,20 @@
 									</p>
 									<div class="seletime">
 										<label>
-											<input type="radio" name="pay_days" onclick="changeDurationDay(7);" value="7">
+											<input type="radio" name="pay_days" onclick="javascript:changeDurationDay(7);" value="7">
 											7天
 										</label>
 										<label>
-											<input type="radio" name="pay_days" onclick="changeDurationDay(10);" value="10"
+											<input type="radio" name="pay_days" onclick="javascript:changeDurationDay(10);" value="10"
 												checked="checked">
 											10天
 										</label>
 										<label>
-											<input type="radio" name="pay_days" onclick="changeDurationDay(15);" value="15">
+											<input type="radio" name="pay_days" onclick="javascript:changeDurationDay(15);" value="15">
 											15天
 										</label>
 										<label>
-											<input type="radio" name="pay_days" onclick="changeDurationDay(30);" value="30">
+											<input type="radio" name="pay_days" onclick="javascript:changeDurationDay(30);" value="30">
 											30天
 										</label>
 										<input type="hidden" id="durationDay" name="durationDay" value="${llTask.durationDay}">

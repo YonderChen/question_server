@@ -110,7 +110,7 @@
 
 
 
-.Process{width:530px; padding: 40px 50px 12px;overflow: hidden; float:left; margin-left:20px;}
+.Process{width:540px; padding: 40px 50px 12px;overflow: hidden; float:left; margin-left:20px;}
 .Process ul{position: relative;zoom:1;height: 10px;line-height: 10px;}
 .Process ul li{float: left;background: url(../images/Processdis.png) repeat-x;height: 10px;position: relative;}
 .Process ul li.Processlast{position: absolute;left: 100%;background: none;top: 0;}

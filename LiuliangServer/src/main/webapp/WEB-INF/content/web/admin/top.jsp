@@ -17,7 +17,7 @@
 
 		<div class="topright">
 			<div class="user" style="width: 100px;">
-				<i><a href="${ctx }/web/admin/logout" style="padding-left: 35px;" target="_parent" onclick="return confirm('确定注销本次登录？');">注销</a></i>
+				<i><a href="${ctx }/web/admin/logout" style="padding-left: 35px;" target="_parent" onclick="javascript:return confirm('确定注销本次登录？');">注销</a></i>
 			</div>
 		</div>
 

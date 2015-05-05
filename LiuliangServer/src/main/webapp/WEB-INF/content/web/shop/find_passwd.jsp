@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<meta http-equiv="X-UA-Compatible"content="IE=10; IE=9; IE=8; IE=7; IE=EDGE">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
@@ -69,7 +70,7 @@
 							<input name="code" style="width: 115px;" type="text" class="txt placebox" id="code" size="15" maxlength="6" cname="one" placeholder="请输入验证码" regname="code" emptyerr="验证码不能为空" value="">
 							</em>
 							<em style="cursor: pointer; vertical-align: middle; display: inline-block; margin-left: 5px;">
-								<img src="${ctx}/web/shop/code" id="img" onclick="changeCode();" title="换一张" class="yz_img">
+								<img src="${ctx}/web/shop/code" id="img" onclick="javascript:changeCode();" title="换一张" class="yz_img">
 							</em>
 							<a href="javascript:;"
 								style="font-size: 12px; color: #07d; margin-left: 5px;"

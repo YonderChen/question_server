@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta http-equiv="X-UA-Compatible"content="IE=10; IE=9; IE=8; IE=7; IE=EDGE">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
@@ -95,22 +96,22 @@
                             <div class="pay-integral-input">
                             	<input type="hidden" id="price" value="">
                                                                 <div><label>
-                                    <input type="radio" onclick="priceChange(1000);" name="score_type" value="1000">&nbsp;&nbsp;支付&nbsp;<span><em>1,000</em></span>&nbsp;元，总计获得:&nbsp;<span>10,000</span>&nbsp;积分<em style="color:#999;">&nbsp;(含:&nbsp;购买10000积分 )</em>
+                                    <input type="radio" onclick="javascript:priceChange(1000);" name="score_type" value="1000">&nbsp;&nbsp;支付&nbsp;<span><em>1,000</em></span>&nbsp;元，总计获得:&nbsp;<span>10,000</span>&nbsp;积分<em style="color:#999;">&nbsp;(含:&nbsp;购买10000积分 )</em>
                                 </label></div>
                                                                 <div><label>
-                                    <input type="radio" onclick="priceChange(2000);" name="score_type" value="2000">&nbsp;&nbsp;支付&nbsp;<span><em>2,000</em></span>&nbsp;元，总计获得:&nbsp;<span>21,818</span>&nbsp;积分<em style="color:#999;">&nbsp;(含:&nbsp;购买20000积分 + 系统赠送1818积分)</em>
+                                    <input type="radio" onclick="javascript:priceChange(2000);" name="score_type" value="2000">&nbsp;&nbsp;支付&nbsp;<span><em>2,000</em></span>&nbsp;元，总计获得:&nbsp;<span>21,818</span>&nbsp;积分<em style="color:#999;">&nbsp;(含:&nbsp;购买20000积分 + 系统赠送1818积分)</em>
                                 </label></div>
                                                                 <div><label>
-                                    <input type="radio" onclick="priceChange(5000);" name="score_type" value="5000" checked="checked">&nbsp;&nbsp;支付&nbsp;<span><em>5,000</em></span>&nbsp;元，总计获得:&nbsp;<span>60,000</span>&nbsp;积分<em style="color:#999;">&nbsp;(含:&nbsp;购买50000积分 + 系统赠送10000积分)</em>
+                                    <input type="radio" onclick="javascript:priceChange(5000);" name="score_type" value="5000" checked="checked">&nbsp;&nbsp;支付&nbsp;<span><em>5,000</em></span>&nbsp;元，总计获得:&nbsp;<span>60,000</span>&nbsp;积分<em style="color:#999;">&nbsp;(含:&nbsp;购买50000积分 + 系统赠送10000积分)</em>
                                 </label></div>
                                                                 <div><label>
-                                    <input type="radio" onclick="priceChange(10000);" name="score_type" value="10000">&nbsp;&nbsp;支付&nbsp;<span><em>10,000</em></span>&nbsp;元，总计获得:&nbsp;<span>133,333</span>&nbsp;积分<em style="color:#999;">&nbsp;(含:&nbsp;购买100000积分 + 系统赠送33333积分)</em>
+                                    <input type="radio" onclick="javascript:priceChange(10000);" name="score_type" value="10000">&nbsp;&nbsp;支付&nbsp;<span><em>10,000</em></span>&nbsp;元，总计获得:&nbsp;<span>133,333</span>&nbsp;积分<em style="color:#999;">&nbsp;(含:&nbsp;购买100000积分 + 系统赠送33333积分)</em>
                                 </label></div>
                                                                 <div><label>
-                                    <input type="radio" onclick="priceChange(20000);" name="score_type" value="20000">&nbsp;&nbsp;支付&nbsp;<span><em>20,000</em></span>&nbsp;元，总计获得:&nbsp;<span>300,000</span>&nbsp;积分<em style="color:#999;">&nbsp;(含:&nbsp;购买200000积分 + 系统赠送100000积分)</em>
+                                    <input type="radio" onclick="javascript:priceChange(20000);" name="score_type" value="20000">&nbsp;&nbsp;支付&nbsp;<span><em>20,000</em></span>&nbsp;元，总计获得:&nbsp;<span>300,000</span>&nbsp;积分<em style="color:#999;">&nbsp;(含:&nbsp;购买200000积分 + 系统赠送100000积分)</em>
                                 </label></div>
                                                                 <div><label>
-                                    <input type="radio" onclick="priceChange(30000);" name="score_type" value="30000">&nbsp;&nbsp;支付&nbsp;<span><em>30,000</em></span>&nbsp;元，总计获得:&nbsp;<span>450,000</span>&nbsp;积分<em style="color:#999;">&nbsp;(含:&nbsp;购买300000积分 + 系统赠送150000积分)</em>
+                                    <input type="radio" onclick="javascript:priceChange(30000);" name="score_type" value="30000">&nbsp;&nbsp;支付&nbsp;<span><em>30,000</em></span>&nbsp;元，总计获得:&nbsp;<span>450,000</span>&nbsp;积分<em style="color:#999;">&nbsp;(含:&nbsp;购买300000积分 + 系统赠送150000积分)</em>
                                 </label></div>
                                                             </div>
                         </div>
@@ -136,7 +137,7 @@
                         </form>
                         
                             <div class="btn-box tc">
-                                <input type="button" onclick="submit();" name="submit" class="buttons-vip-confirm buttons" value="立即购买">
+                                <input type="button" onclick="javascript:submit();" name="submit" class="buttons-vip-confirm buttons" value="立即购买">
                             </div>
                     </div>
                 </div>

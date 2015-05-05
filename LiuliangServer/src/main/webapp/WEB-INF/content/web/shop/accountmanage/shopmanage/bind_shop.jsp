@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta http-equiv="X-UA-Compatible"content="IE=10; IE=9; IE=8; IE=7; IE=EDGE">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
@@ -90,7 +91,7 @@
 			url:url,
 			type:'post',
 			data:{
-				bindPlat : bindPlat,
+				bindPlat : bindPlat
 			},
 			dataType:'text',
 			timeout:60000,
@@ -195,15 +196,15 @@
                             <ul class="clearfix J_inputlink">
                                                                 <li id="taobao_li" class="active"><i></i>
                                 <label><a>
-                                  <input type="radio" name="bind_plat" onclick="bindPlatChange('taobao')" value="taobao" checked="checked">淘宝                                </a></label>
+                                  <input type="radio" name="bind_plat" onclick="javascript:bindPlatChange('taobao')" value="taobao" checked="checked">淘宝                                </a></label>
                                 </li>
                                                                 <li id="tmall_li"><i></i>
                                 <label><a>
-                                  <input type="radio" name="bind_plat" onclick="bindPlatChange('tmall')" value="tmall">天猫                                </a></label>
+                                  <input type="radio" name="bind_plat" onclick="javascript:bindPlatChange('tmall')" value="tmall">天猫                                </a></label>
                                 </li>
                                                                 <li id="jd_li"><i></i>
                                 <label><a>
-                                  <input type="radio" name="bind_plat" onclick="bindPlatChange('jd')" value="jd">京东                                </a></label>
+                                  <input type="radio" name="bind_plat" onclick="javascript:bindPlatChange('jd')" value="jd">京东                                </a></label>
                                 </li>
                                                         	</ul>    
                             	<input type="hidden" id="bindPlat" value="">
@@ -258,14 +259,14 @@
                                       </div>
         							
                                       <p class="item">
-                                        <input class="savebtn" style="cursor:pointer;display:inline-block;" type="button" onclick="bind();" ondblclick="return false;" value="提交审核">
+                                        <input class="savebtn" style="cursor:pointer;display:inline-block;" type="button" onclick="javascript:bind();" ondblclick="return false;" value="提交审核">
                                                                                </p>
                                 
                                 </div> 
                             </div>
                                                       <!--add-->
                           <div class="binding-shop-list">
-                              <h1>已绑定的店铺<span class="red">(0)</span><span class="shop-num">每个平台可绑定十个店铺</span></h1>
+                              <h1>已绑定的店铺<span class="shop-num">每个平台可绑定十个店铺</span></h1>
                               <table border="1" bordercolor="#E5E5E5" style="table-layout:fixed;word-wrap:break-word;">
                                 
 								<thead>

@@ -199,7 +199,7 @@
 				</table>
 			</div>
 			<div class="modal-footer">
-			<button class="btn btn-primary" data-toggle="button" data-loading-text="保存" onclick="editPass();">保存</button>
+			<button class="btn btn-primary" data-toggle="button" data-loading-text="保存" onclick="javascript:editPass();">保存</button>
 			<button class="btn btn-cancel" data-dismiss="modal" aria-hidden="true" data-toggle="button" data-loading-text="关闭">关闭</button>
 			</div>
 		</div>
@@ -222,7 +222,7 @@
 				</table>
 			</div>
 			<div class="modal-footer">
-			<button class="btn btn-primary" data-toggle="button" data-loading-text="保存" onclick="editInfo();">保存</button>
+			<button class="btn btn-primary" data-toggle="button" data-loading-text="保存" onclick="javascript:editInfo();">保存</button>
 			<button class="btn btn-cancel" data-dismiss="modal" aria-hidden="true" data-toggle="button" data-loading-text="关闭">关闭</button>
 			</div>
 		</div>

@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta http-equiv="X-UA-Compatible"content="IE=10; IE=9; IE=8; IE=7; IE=EDGE">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
@@ -59,7 +60,7 @@
 								<label>
 									<em>${taobao_shop_num}</em>
 									<a> 
-										<input name="plat" id="radio_taobao" type="radio" onclick="changePlat('taobao', true);" value="taobao">
+										<input name="plat" id="radio_taobao" type="radio" onclick="javascript:changePlat('taobao', true);" value="taobao">
 										<b class="taobao"></b> 
 									</a>
 								</label>
@@ -70,7 +71,7 @@
 								<label>
 									<em class="num">${tmall_shop_num}</em>
 									<a> 
-										<input name="plat" id="radio_tmall" type="radio" onclick="changePlat('tmall', true);" value="tmall" checked="checked"> 
+										<input name="plat" id="radio_tmall" type="radio" onclick="javascript:changePlat('tmall', true);" value="tmall" checked="checked"> 
 										<b class="tmall"></b> 
 									</a>
 								</label>
@@ -81,7 +82,7 @@
 								<label>
 									<em>${jd_shop_num}</em>
 									<a> 
-										<input name="plat" id="radio_jd" type="radio" onclick="changePlat('jd', true);" value="jd">
+										<input name="plat" id="radio_jd" type="radio" onclick="javascript:changePlat('jd', true);" value="jd">
 										<b class="jd"></b> 
 									</a>
 								</label>
@@ -148,7 +149,7 @@ function changePlat(bindPlat, clearShopId){
 		type : 'post',
 		data:{
 			bindPlat : bindPlat,
-			shopId : $("#shopId").val(),
+			shopId : $("#shopId").val()
 		},
 		dataType : 'text',
 		timeout : 60000,

@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<meta http-equiv="X-UA-Compatible"content="IE=10; IE=9; IE=8; IE=7; IE=EDGE">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
@@ -96,8 +97,8 @@
 	<body>
 		<div class="state" style="background: #F2F2F2;">
 			<div class="wrap">
+		        <span class="fr"><a href="${ctx}/help/help_center.jsp?left_list_id=-2" target="_blank">帮助中心</a></span>
 				<a href="${ctx }/web/shop/register_index">注册</a> ｜ <a href="#">登录</a>
-        <span class="fr"><a href="${ctx}/help/help_center.jsp?left_list_id=-2" target="_blank">帮助中心</a></span>
 			</div>
 		</div>
 
@@ -165,14 +166,14 @@
 								<div class="login_input inp">
 			                        <label>验证码：</label>
 									<input type="text" class="txt placebox" style="width:100px;" name="uvcode" placeholder="请输入验证码" value="">
-									<img src="${ctx}/web/shop/code" id="img" onclick="changeCode();" title="换一张" style="position:relative;top:10px;">
+									<img src="${ctx}/web/shop/code" id="img" onclick="javascript:changeCode();" title="换一张" style="position:relative;top:10px;">
 								</div>
 						 	</div>
 
 							<div class="login_button">
-								<!-- <input type="submit" name="button" id="button" class="loginbtn" value="登录" onClick="login();" />-->
+								<!-- <input type="submit" name="button" id="button" class="loginbtn" value="登录" onclick="javascript:login();" />-->
 								<!-- 需要验证码时换为此button  上面的button隐藏 -->
-								<input type="button" name="button" class="loginbtn" value="登  录" id="Button1" onclick="login();">
+								<input type="button" name="button" class="loginbtn" value="登  录" id="Button1" onclick="javascript:login();">
 								<div>
 									<a href="${ctx}/web/shop/register_index">注册账号</a>
 									<p></p>

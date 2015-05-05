@@ -6,10 +6,10 @@
 	    </a>
     </div>
     <div style="width:1000px; margin:5px auto;">
-	    <a href="${ctx }/help/raiders.jsp" target="_blank">
-	    	<img src="${ctx}/static_shop/images/banner4162.png" width="495" height="65">
-	    </a>
     	<a href="${ctx }/help/propagandas.jsp" target="_blank" style="float:right;">
     		<img src="${ctx}/static_shop/images/banner4163.png" width="495" height="65">
     	</a>
+	    <a href="${ctx }/help/raiders.jsp" target="_blank">
+	    	<img src="${ctx}/static_shop/images/banner4162.png" width="495" height="65">
+	    </a>
     </div>
