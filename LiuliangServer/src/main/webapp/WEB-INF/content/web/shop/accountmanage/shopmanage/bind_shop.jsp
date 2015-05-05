@@ -13,6 +13,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="${ctx}/images/favicon.ico" media="screen">
 	<script type="text/javascript" src="${ctx}/js/base.js"></script>
   	<script type="text/javascript" src="${ctx}/js/jquery.js"></script>
+	<script type="text/javascript" src="${ctx }/js/ZeroClipboard/ZeroClipboard.js"></script>
 	<link rel="stylesheet" href="${ctx}/static_shop/style/common.css">
     <link rel="stylesheet" href="${ctx}/static_shop/style/person_center.css">
     <link rel="stylesheet" href="${ctx}/static_shop/style/popup.css">
@@ -22,6 +23,31 @@
 	
 	$(document).ready(function(){
 	    bindPlatChange($("input[name='bind_plat'][checked]").val());
+	    if(window.clipboardData){ //判断是否是IE浏览器
+	    	$("#d_clip_button").click(function(){
+				window.clipboardData.clearData();
+				window.clipboardData.setData("Text", $("#d_clip_value").val());
+	        	alert("验证码：'" + $("#d_clip_value").val() + "'， 复制成功");
+	    	});
+		} else {
+			var clip = new ZeroClipboard($('#d_clip_button'), {  
+			  	moviePath: "${ctx }/js/ZeroClipboard/ZeroClipboard.swf"  
+			}); 
+			clip.on( 'ready', function(event) {
+		        clip.on( 'copy', function(event) {
+		            event.clipboardData.setData('text/plain', $("#d_clip_value").val());
+		        } );
+		 
+		        clip.on( 'aftercopy', function(event) {
+		        	alert("验证码：'" + event.data['text/plain'] + "'， 复制成功");
+		        } );
+			} );
+	 
+			clip.on( 'error', function(event) {
+				console.log( 'ZeroClipboard error of type "' + event.name + '": ' + event.message );
+				ZeroClipboard.destroy();
+			} );
+		}
 	});
 	
 	function bindPlatChange(bindPlat) {
@@ -210,7 +236,8 @@
                                       <div class="item clearfix">
                                          <label class="tit">验证码:</label>
                                          <div class="bindingshop-yzm inp">
-                                             <div class="binding-yzm"><span>${goodsVerifyCode}</span><a class="J_copytext" data-copy="${goodsVerifyCode}" href="javascript:;">复制验证码</a><div class="zclip" id="zclip-ZeroClipboardMovie_1" style="position: absolute; left: 150px; top: 0px; width: 70px; height: 35px; z-index: 99;"><embed id="ZeroClipboardMovie_1" src="http://www.renqifu.com/static/js/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="70" height="35" name="ZeroClipboardMovie_1" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=1&amp;width=70&amp;height=35" wmode="transparent"></div></div>
+										     <input type="hidden" value="${goodsVerifyCode}" id="d_clip_value"/>
+                                             <div class="binding-yzm"><span>${goodsVerifyCode}</span><a id="d_clip_button" class="J_copytext" data-clipboard-target="d_clip_value">复制验证码</a></div>
                                              <p>1.将验证码加到您的店铺里某个上架商品的标题上，类似这样：</p>
                                              <div class="binding-shopimg">
 												<img id="binding_shopimg_taobao" style="display: none;" alt="商品验证" src="${ctx}/static_shop/images/business/binding_shopimg_taobao.jpg">
