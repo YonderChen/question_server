@@ -55,11 +55,13 @@
 			timeout : 60000,
 			error : function(e) {
 				$(".btn-link").button('reset');
+				$(".active").removeClass('active');
 				alert("连接服务器超时,请稍后再试.");
 			},
 			success : function(result) {
 				if (!isOutTime(result)) {
 					$(".btn-link").button('reset');
+					$(".active").removeClass('active');
 					result = eval("("+result+")");
 					ajaxSearch();
 				}

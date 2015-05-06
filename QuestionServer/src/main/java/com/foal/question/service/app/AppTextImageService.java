@@ -2,16 +2,21 @@ package com.foal.question.service.app;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.foal.question.bean.AppTextImageBean;
+import com.foal.question.bean.PageBean;
 import com.foal.question.dao.DaoSupport;
 import com.foal.question.pojo.AppTextImage;
 import com.foal.question.pojo.AppTextImagePraiseLog;
 import com.foal.question.pojo.AppUser;
 import com.foal.question.util.StringTools;
+import com.foal.question.util.StringUtil;
 
 @SuppressWarnings("unchecked")
 @Service(value = "appTextImageService")
@@ -133,5 +138,22 @@ public class AppTextImageService extends DaoSupport {
 			userList.add(appUserService.getAppUserById(log.getUid()));
 		}
 		return userList;
+	}
+
+	public PageBean queryTextImage(AppTextImageBean appTextImageBean) {
+		String queryHql = "from AppTextImage as r where 1 = 1";
+		Map paramMap = new HashMap();
+		if (!StringUtil.isEmpty(appTextImageBean.getId())) {
+			queryHql += " and r.id = :id";
+			paramMap.put("id", appTextImageBean.getId());
+		}
+		if (!StringUtil.isEmpty(appTextImageBean.getOwnerId())) {
+			queryHql += " and r.ownerId = :ownerId";
+			paramMap.put("ownerId", appTextImageBean.getOwnerId());
+		}
+		int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
+		queryHql += " order by r.createTime desc";
+		List list = this.hibernateDao.queryList(queryHql, appTextImageBean.getPage(), appTextImageBean.getPageSize(), paramMap);
+		return new PageBean(list, allRow, appTextImageBean.getPage(), appTextImageBean.getPageSize());
 	}
 }

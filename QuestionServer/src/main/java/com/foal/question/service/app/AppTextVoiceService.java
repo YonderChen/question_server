@@ -2,16 +2,21 @@ package com.foal.question.service.app;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.foal.question.bean.AppTextVoiceBean;
+import com.foal.question.bean.PageBean;
 import com.foal.question.dao.DaoSupport;
 import com.foal.question.pojo.AppTextVoice;
 import com.foal.question.pojo.AppTextVoicePraiseLog;
 import com.foal.question.pojo.AppUser;
 import com.foal.question.util.StringTools;
+import com.foal.question.util.StringUtil;
 
 @SuppressWarnings("unchecked")
 @Service(value = "appTextVoiceService")
@@ -133,5 +138,22 @@ public class AppTextVoiceService extends DaoSupport {
 			userList.add(appUserService.getAppUserById(log.getUid()));
 		}
 		return userList;
+	}
+
+	public PageBean queryTextVoice(AppTextVoiceBean appTextVoiceBean) {
+		String queryHql = "from AppTextVoice as r where 1 = 1";
+		Map paramMap = new HashMap();
+		if (!StringUtil.isEmpty(appTextVoiceBean.getId())) {
+			queryHql += " and r.id = :id";
+			paramMap.put("id", appTextVoiceBean.getId());
+		}
+		if (!StringUtil.isEmpty(appTextVoiceBean.getOwnerId())) {
+			queryHql += " and r.ownerId = :ownerId";
+			paramMap.put("ownerId", appTextVoiceBean.getOwnerId());
+		}
+		int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
+		queryHql += " order by r.createTime desc";
+		List list = this.hibernateDao.queryList(queryHql, appTextVoiceBean.getPage(), appTextVoiceBean.getPageSize(), paramMap);
+		return new PageBean(list, allRow, appTextVoiceBean.getPage(), appTextVoiceBean.getPageSize());
 	}
 }

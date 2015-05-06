@@ -1,10 +1,14 @@
 package com.foal.question.service.app;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.foal.question.bean.AppUserBean;
+import com.foal.question.bean.PageBean;
 import com.foal.question.config.Constant;
 import com.foal.question.dao.DaoSupport;
 import com.foal.question.jersey.resource.tools.ResultMap;
@@ -12,6 +16,7 @@ import com.foal.question.jersey.resource.tools.APIConstants.RetCode;
 import com.foal.question.pojo.AppUser;
 import com.foal.question.util.MD5Tools;
 import com.foal.question.util.StringTools;
+import com.foal.question.util.StringUtil;
 
 @SuppressWarnings("unchecked")
 @Service(value = "appUserService")
@@ -81,4 +86,31 @@ public class AppUserService extends DaoSupport {
 		return true;
 	}
 	
+	public PageBean queryAppUser(AppUserBean appUserBean) {
+		String queryHql = "from AppUser as u where 1 = 1";
+		Map paramMap = new HashMap();
+		if (!StringUtil.isEmpty(appUserBean.getUid())) {
+			queryHql += " and u.uid = :uid";
+			paramMap.put("uid", appUserBean.getUid());
+		}
+		if (!StringUtil.isEmpty(appUserBean.getName())) {
+			queryHql += " and u.name like :name";
+			paramMap.put("name", "%"+appUserBean.getName()+"%");
+		}
+		int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
+		queryHql += " order by u.updateAt desc";
+		List list = this.hibernateDao.queryList(queryHql, appUserBean.getPage(), appUserBean.getPageSize(), paramMap);
+		return new PageBean(list, allRow, appUserBean.getPage(), appUserBean.getPageSize());
+	}
+
+	public boolean updateAppUserStatus(AppUserBean appUserBean) {
+		AppUser user = this.getAppUserById(appUserBean.getUid());
+		if (user == null) {
+			return false;
+		}
+		user.setStatus(appUserBean.getStatus());
+		user.setUpdateAt(new Date());
+		this.hibernateDao.update(user);
+		return true;
+	}
 }

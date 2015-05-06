@@ -39,6 +39,10 @@ CREATE TABLE `t_menu` (
 INSERT INTO `t_menu` VALUES ('100000', null, '0', '权限管理', null, null, '100000', 'leftico01.png', null, null);
 INSERT INTO `t_menu` VALUES ('100001', '100000', '1', '用户管理', 'web/admin/user/index', 'rightFrame', '100001', null, null, '100001');
 INSERT INTO `t_menu` VALUES ('100002', '100000', '1', '角色管理', 'web/admin/role/index', 'rightFrame', '100002', null, null, '100002');
+INSERT INTO `t_menu` VALUES ('200000', null, '0', 'APP管理', null, null, '200000', 'leftico01.png', null, null);
+INSERT INTO `t_menu` VALUES ('200001', '200000', '1', '用户管理', 'web/admin/appuser/index', 'rightFrame', '200001', null, null, '200001');
+INSERT INTO `t_menu` VALUES ('200002', '200000', '1', '图片文字管理', 'web/admin/apptextimage/index', 'rightFrame', '200002', null, null, '200002');
+INSERT INTO `t_menu` VALUES ('200003', '200000', '1', '声音文字管理', 'web/admin/apptextvoice/index', 'rightFrame', '200003', null, null, '200003');
 INSERT INTO `t_menu` VALUES ('300000', null, '0', '系统管理', null, null, '300000', 'leftico01.png', null, null);
 INSERT INTO `t_menu` VALUES ('300001', '300000', '1', '系统参数设置', 'web/admin/system/param/index', 'rightFrame', '300001', null, null, '300001');
 
@@ -77,6 +81,10 @@ CREATE TABLE `t_role_menu` (
 INSERT INTO `t_role_menu` VALUES ('100000', '100000');
 INSERT INTO `t_role_menu` VALUES ('100000', '100001');
 INSERT INTO `t_role_menu` VALUES ('100000', '100002');
+INSERT INTO `t_role_menu` VALUES ('100000', '200000');
+INSERT INTO `t_role_menu` VALUES ('100000', '200001');
+INSERT INTO `t_role_menu` VALUES ('100000', '200002');
+INSERT INTO `t_role_menu` VALUES ('100000', '200003');
 INSERT INTO `t_role_menu` VALUES ('100000', '300000');
 INSERT INTO `t_role_menu` VALUES ('100000', '300001');
 
