@@ -2,7 +2,7 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title>Yonder Demo System</title>
+	<title>遇见你, 听你说</title>
 	<link rel="shortcut icon" href="${ctx }/images/favicon.ico" type="image/x-icon" />
 	<link rel="icon" href="${ctx }/images/favicon.ico" type="image/x-icon" />
 	<link type="text/css" href="${ctx}/style/style.css" rel="stylesheet"/>
@@ -131,8 +131,8 @@
 </span>    
     <ul>
     <li><a href="#">回首页</a></li>
-    <li><a href="#">帮助</a></li>
-    <li><a href="#">关于</a></li>
+    <li><a href="${ctx}/home.html">APP首页</a></li>
+    <li><a href="${ctx}/about.html">关于</a></li>
     </ul>    
     </div>
     

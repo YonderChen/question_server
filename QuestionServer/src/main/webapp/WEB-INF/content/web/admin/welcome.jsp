@@ -139,7 +139,7 @@
 	</div>
 	<div class="mainindex">
 		<div class="welinfo">
-			<span><img src="${ctx}/images/sun.png" alt="天气" /></span> <b>${sessionServerUserInfo.name }(${sessionServerUserInfo.username })你好，欢迎使用Demo管理系统</b>
+			<span><img src="${ctx}/images/sun.png" alt="天气" /></span> <b>${sessionServerUserInfo.name }(${sessionServerUserInfo.username })你好，欢迎进入'遇见你APP'管理后台</b>
 		</div>
 
 		<div class="welinfo">

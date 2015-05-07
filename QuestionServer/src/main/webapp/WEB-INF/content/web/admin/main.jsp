@@ -2,7 +2,7 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title>Yonder Demo System</title>
+	<title>遇见你, 听你说</title>
     <link rel="shortcut icon" href="${ctx }/images/favicon.ico" type="image/x-icon" />
 	<link rel="icon" href="${ctx }/images/favicon.ico" type="image/x-icon" />
     <script type="text/javascript" src="${ctx}/js/jquery.js"></script>

@@ -73,3 +73,27 @@
 	function goback() {
 		window.history.go(-1);
 	}
+	
+	String.prototype.trim = function () {
+		return this .replace(/^\s\s*/, '' ).replace(/\s\s*$/, '' );
+	}
+	
+	function getQueryString(name) {
+	    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+	    var r = window.location.search.substr(1).match(reg);
+	    if (r != null) return unescape(r[2]); return null;
+    }
+	
+	function StringBuilder()
+	{
+	   this.data=Array("");
+	}
+	StringBuilder.prototype.append=function()
+	{
+	   this.data.push(arguments[0]);
+	   return this;
+	}
+	StringBuilder.prototype.toString=function()
+	{
+	   return this.data.join("");
+	}
