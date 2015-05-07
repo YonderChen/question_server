@@ -56,6 +56,7 @@
                     <s:if test="#request.llTask.llShop.bindPlat == 'jd'"><i class="plat_small plat_jd"></i>京东</s:if> | ${llTask.llShop.bindName} | <s:if test="#request.llTask.taskType == 0">自然搜索流量</s:if><s:else>自然搜索流量</s:else><a class="back_step_one" href="javascript:pre_step();">返回编辑</a></div>
                     <input type="hidden" id="bindPlat" name="bindPlat" value="${llTask.llShop.bindPlat}">
                     <input type="hidden" id="shopId" name="shopId" value="${llTask.llShop.shopId}">
+                    <input type="hidden" id="clientType" name="clientType" value="${llTask.clientType}">
                     <input type="hidden" id="taskType" name="taskType" value="${llTask.taskType}">
                     <input type="hidden" id="taskId" name="taskId" value="${llTask.taskId}">
                     <div class="flow-info checkout-steps">

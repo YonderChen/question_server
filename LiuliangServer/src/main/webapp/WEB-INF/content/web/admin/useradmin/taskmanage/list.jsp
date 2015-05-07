@@ -17,10 +17,13 @@
 						<th width="5%">
 							平台
 						</th>
+						<th width="10%">
+							客户端
+						</th>
 						<th width="15%">
 							店铺
 						</th>
-						<th width="20%">
+						<th width="10%">
 							商品
 						</th>
 						<th width="10%">
@@ -53,6 +56,15 @@
 							<s:if test="llShop.bindPlat == 'taobao'">淘宝</s:if>
 							<s:if test="llShop.bindPlat == 'tmall'">天猫</s:if>
 							<s:if test="llShop.bindPlat == 'jd'">京东</s:if>
+						</td>
+						<td>
+                        	<s:if test="clientType == 'pc'">pc端</s:if>
+                        	<s:else>
+                         		<s:if test="clientType == 'phone'">手机端</s:if>
+                                <s:else>
+                                	未知端
+								</s:else>
+							</s:else>
 						</td>
 						<td>
 							${task.llShop.bindName}

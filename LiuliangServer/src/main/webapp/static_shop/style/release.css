@@ -5,6 +5,8 @@
 .new-Release-first-bd{}
 .new-Release-select{overflow: hidden}
 .new-Release-select-list{float: left;padding-bottom:2000px;margin-bottom:-2000px;height: 100%;width: 200px;border-right:1px solid #E0E0E0; }
+.new-Release-select-list.Release-clientType{width: 213px;padding: 0 22px 2000px 0;}
+.new-Release-select-list.Release-clientType-raido{width: 213px;padding: 0 22px 2000px 30px;}
 .new-Release-select-list.Release-plat{width: 213px;padding: 0 22px 2000px 30px;}
 .new-Release-select-list.Release-shop{width: 338px;padding: 0 22px 2000px 22px;}
 .new-Release-select-list.Release-type{width: 290px;padding: 0 0px 2000px 20px;border-right:0 none;}

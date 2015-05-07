@@ -27,6 +27,7 @@ public class LLTask implements Serializable {
 	private String taskId;
 	private ServerUser serverUser;
 	private LLShop llShop;
+	private String clientType;
 	private int taskType;
 	private String goodsUrl;
 	private String goodsName;
@@ -92,6 +93,15 @@ public class LLTask implements Serializable {
 
 	public void setLlShop(LLShop llShop) {
 		this.llShop = llShop;
+	}
+
+	@Column(name = "client_type_")
+	public String getClientType() {
+		return clientType;
+	}
+
+	public void setClientType(String clientType) {
+		this.clientType = clientType;
 	}
 
 	@Column(name = "task_type_")
@@ -314,6 +324,7 @@ public class LLTask implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((clientType == null) ? 0 : clientType.hashCode());
 		result = prime * result + costScore;
 		result = prime * result + ((createTime == null) ? 0 : createTime.hashCode());
 		result = prime * result + durationDay;
@@ -339,6 +350,7 @@ public class LLTask implements Serializable {
 		result = prime * result + ((serverUser == null) ? 0 : serverUser.hashCode());
 		result = prime * result + status;
 		result = prime * result + ((taskId == null) ? 0 : taskId.hashCode());
+		result = prime * result + taskType;
 		result = prime * result + visitTimeType;
 		return result;
 	}
@@ -352,6 +364,11 @@ public class LLTask implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		LLTask other = (LLTask) obj;
+		if (clientType == null) {
+			if (other.clientType != null)
+				return false;
+		} else if (!clientType.equals(other.clientType))
+			return false;
 		if (costScore != other.costScore)
 			return false;
 		if (createTime == null) {
@@ -440,6 +457,8 @@ public class LLTask implements Serializable {
 			if (other.taskId != null)
 				return false;
 		} else if (!taskId.equals(other.taskId))
+			return false;
+		if (taskType != other.taskType)
 			return false;
 		if (visitTimeType != other.visitTimeType)
 			return false;

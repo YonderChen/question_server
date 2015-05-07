@@ -43,6 +43,8 @@ public class LLTaskService extends DaoSupport {
 		}
 		llTask.setServerUser(llTaskBean.getOperator());
 		llTask.setLlShop(this.hibernateDao.get(LLShop.class, llTaskBean.getShopId()));
+		llTask.setClientType(llTaskBean.getClientType());
+		llTask.setTaskType(NumberUtils.toInt(llTaskBean.getTaskType(), 0));
 		llTask.setGoodsUrl(llTaskBean.getGoodsUrl());
 		llTask.setGoodsName(llTaskBean.getGoodsName());
 		llTask.setGoodsImg(llTaskBean.getGoodsImg());

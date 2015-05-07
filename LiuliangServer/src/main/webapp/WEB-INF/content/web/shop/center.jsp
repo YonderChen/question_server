@@ -218,7 +218,7 @@
 										<table border="0" bordercolor="#C9E7F7" cellspacing="0" cellpadding="0">
 											<tbody>
 												<tr>
-													<th colspan="6">
+													<th colspan="7">
 														<span><i class="plat_small plat_${record.llShop.bindPlat}"></i>${record.llShop.bindName}&nbsp;&nbsp;任务编号：${record.taskId}<a href="${ctx}/web/shop/taskmanage/task_detail?taskId=${record.taskId}" class="trade-detail" target="_blank">[详情]</a>&nbsp;&nbsp;发布时间：<s:date name="createTime" format="yyyy-MM-dd HH:mm:ss"/></span>
 													</th>
 												</tr>
@@ -233,11 +233,20 @@
 														</div>
 													</td>
 													<td style="font-size: 14px; width: 10%;">
+						                                <s:if test="clientType == 'pc'">pc端</s:if>
+						                                <s:else>
+						                                	<s:if test="clientType == 'phone'">手机端</s:if>
+							                                <s:else>
+							                                	未知端
+															</s:else>
+														</s:else>
+													</td>
+													<td style="font-size: 14px; width: 9%;">
 														${(record.orderNumberOneDay1 + record.orderNumberOneDay2 
 															+record.orderNumberOneDay3 + record.orderNumberOneDay4 
 															+ record.orderNumberOneDay5) * record.durationDay}
 													</td>
-													<td style="font-size: 14px; width: 18%;">
+													<td style="font-size: 14px; width: 9%;">
 														${record.orderNumberOneDay1 + record.orderNumberOneDay2 
 															+record.orderNumberOneDay3 + record.orderNumberOneDay4 
 															+ record.orderNumberOneDay5}

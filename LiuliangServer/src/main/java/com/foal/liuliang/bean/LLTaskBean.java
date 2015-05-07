@@ -12,6 +12,7 @@ public class LLTaskBean extends Page {
 	private String taskId;
 	private String userId;
 	private String shopId;
+	private String clientType;
 	private String taskType;
 	private String goodsUrl;
 	private String goodsName;
@@ -60,6 +61,12 @@ public class LLTaskBean extends Page {
 	}
 	public void setShopId(String shopId) {
 		this.shopId = shopId;
+	}
+	public String getClientType() {
+		return clientType;
+	}
+	public void setClientType(String clientType) {
+		this.clientType = clientType;
 	}
 	public String getTaskType() {
 		return taskType;

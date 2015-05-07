@@ -87,8 +87,26 @@
 									</a>
 								</label>
 							</li>
+
+						</ul>
+						<ul class="clearfix">
+							<li id="taobao_li">
+							</li>
+							<li style="height:80px" id="taobao_li">
+								<i></i>
+								<div class="new-Release-select-list-hd  Release-clientType">客户端类型：</div>
+								<div class="new-Release-select-list-hd  Release-clientType-raido"> 
+									<label style="font-size: 16px; color: black; font-weight:bold; cursor:pointer">
+										<input name="client_type" id="client_radio_pc" type="radio" onclick="javascript:changeClient('pc');" value="pc" checked="checked">pc端
+									</label>
+									<label style="font-size: 16px; color: black; font-weight:bold; cursor:pointer">
+										<input name="client_type" id="client_radio_phone" type="radio" onclick="javascript:changeClient('phone');" value="phone">手机端
+									</label>
+								</div>
+							</li>
 						</ul>
 						<input type="hidden" id="bindPlat" name="bindPlat" value="">
+						<input type="hidden" id="clientType" name="clientType" value="">
 					</div>
                    
                    <div class="new-Release-select-list Release-shop store_type_taobao">
@@ -128,9 +146,22 @@
 
 $(function(){
 	changePlat("${bindPlat}", false);
+	changeClient("pc");
 })
 
+function changeClient(clientType) {
+	if(bindPlat == $("#clientType").val()){
+		$("#clientType").val(clientType);
+		return;
+	}
+	$("#clientType").val(clientType);
+}
+
 function changePlat(bindPlat, clearShopId){
+	if(bindPlat == $("#bindPlat").val()){
+		$("#bindPlat").val(bindPlat);
+		return;
+	}
 	$("#bindPlat").val(bindPlat);
 	
 	$("input[name='plat'][checked]").parent().parent().parent().removeClass();
@@ -189,7 +220,8 @@ function changeShop(shopId){
 function nextStep(){
 	var bindPlat = $("#bindPlat").val().trim();
 	var shopId = $("#shopId").val().trim();
-	if(bindPlat == "" || shopId == ""){
+	var clientType = $("#clientType").val().trim();
+	if(bindPlat == "" || shopId == "" || clientType == ""){
 		return;
 	}
 	$("#trade_form").submit();

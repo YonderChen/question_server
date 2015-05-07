@@ -32,6 +32,15 @@
         <p>任务编号：${llTask.taskId }</p>
         <p>任务发布时间：<s:date name="#request.llTask.createTime" format="yyyy-MM-dd HH:mm:ss"/></p>
         <p>店铺名：<i class="plat_small plat_tmall"></i>${llTask.llShop.bindName }</p>
+        <p>客户端类型：
+		<s:if test="#request.llTask.clientType == 'pc'">pc端</s:if>
+		<s:else>
+			<s:if test="#request.llTask.clientType == 'phone'">手机端</s:if>
+			<s:else>
+				未知端
+			</s:else>
+		</s:else>
+        </p>
         <p>流量类型：
             <s:if test="#request.llTask.taskType == 0">自然搜索流量</s:if>
             <s:else>自然搜索流量</s:else>

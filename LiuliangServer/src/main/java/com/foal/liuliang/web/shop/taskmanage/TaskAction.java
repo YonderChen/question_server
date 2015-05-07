@@ -75,6 +75,7 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 			}
 			LLTask task = new LLTask();
 			task.setLlShop(llShop);
+			task.setClientType(llTaskBean.getClientType());
 			task.setTaskType(NumberUtils.toInt(llTaskBean.getTaskType(), 0));
 			this.setAttrToRequest("llTask", task);
 		} else {
