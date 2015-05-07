@@ -149,11 +149,6 @@ public class TextImageResource {
 	@Produces( { MediaType.TEXT_HTML })
 	public String loadByOwner(@QueryParam(value = "uid") String uid, @QueryParam(value = "target_uid") String targetUid, @QueryParam(value = "order_by") int orderBy, @QueryParam(value = "page") int page, @QueryParam(value = "page_size") int pageSize) {
 		ResultMap ret = ResultMap.getResultMap();
-		AppUser user = appTextImageService.getAppUserService().getAppUserById(uid);
-		if (user == null) {
-			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
-			return ret.toJson();
-		}
 		AppUser targetUser = appTextImageService.getAppUserService().getAppUserById(targetUid);
 		if (targetUser == null) {
 			ret.setResult(RetCode.Faild, "目标用户不存在");
