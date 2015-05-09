@@ -28,7 +28,10 @@ public class LLVIPOrder implements Serializable {
 	private ServerUser serverUser;
 	private int num;
 	private int price;
+	private String payImgUrl;
 	private String dealId;
+	private String reason;
+	private Date payTime;
 	private Date createTime;
 	private Date checkTime;
 	private ServerUser checkAdmin;
@@ -80,6 +83,15 @@ public class LLVIPOrder implements Serializable {
 		this.price = price;
 	}
 
+	@Column(name = "pay_img_url_")
+	public String getPayImgUrl() {
+		return payImgUrl;
+	}
+
+	public void setPayImgUrl(String payImgUrl) {
+		this.payImgUrl = payImgUrl;
+	}
+
 	@Column(name = "deal_id_")
 	public String getDealId() {
 		return dealId;
@@ -87,6 +99,24 @@ public class LLVIPOrder implements Serializable {
 
 	public void setDealId(String dealId) {
 		this.dealId = dealId;
+	}
+
+	@Column(name = "reason_")
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+	
+	@Column(name = "pay_time_")
+	public Date getPayTime() {
+		return payTime;
+	}
+
+	public void setPayTime(Date payTime) {
+		this.payTime = payTime;
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -136,7 +166,9 @@ public class LLVIPOrder implements Serializable {
 		result = prime * result + ((dealId == null) ? 0 : dealId.hashCode());
 		result = prime * result + num;
 		result = prime * result + ((orderId == null) ? 0 : orderId.hashCode());
+		result = prime * result + ((payTime == null) ? 0 : payTime.hashCode());
 		result = prime * result + price;
+		result = prime * result + ((reason == null) ? 0 : reason.hashCode());
 		result = prime * result + ((serverUser == null) ? 0 : serverUser.hashCode());
 		result = prime * result + status;
 		return result;
@@ -178,7 +210,17 @@ public class LLVIPOrder implements Serializable {
 				return false;
 		} else if (!orderId.equals(other.orderId))
 			return false;
+		if (payTime == null) {
+			if (other.payTime != null)
+				return false;
+		} else if (!payTime.equals(other.payTime))
+			return false;
 		if (price != other.price)
+			return false;
+		if (reason == null) {
+			if (other.reason != null)
+				return false;
+		} else if (!reason.equals(other.reason))
 			return false;
 		if (serverUser == null) {
 			if (other.serverUser != null)
@@ -189,5 +231,5 @@ public class LLVIPOrder implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 }

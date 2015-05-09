@@ -89,24 +89,7 @@
 							</li>
 
 						</ul>
-						<ul class="clearfix">
-							<li id="taobao_li">
-							</li>
-							<li style="height:80px" id="taobao_li">
-								<i></i>
-								<div class="new-Release-select-list-hd  Release-clientType">客户端类型：</div>
-								<div class="new-Release-select-list-hd  Release-clientType-raido"> 
-									<label style="font-size: 16px; color: black; font-weight:bold; cursor:pointer">
-										<input name="client_type" id="client_radio_pc" type="radio" onclick="javascript:changeClient('pc');" value="pc" checked="checked">pc端
-									</label>
-									<label style="font-size: 16px; color: black; font-weight:bold; cursor:pointer">
-										<input name="client_type" id="client_radio_phone" type="radio" onclick="javascript:changeClient('phone');" value="phone">手机端
-									</label>
-								</div>
-							</li>
-						</ul>
 						<input type="hidden" id="bindPlat" name="bindPlat" value="">
-						<input type="hidden" id="clientType" name="clientType" value="">
 					</div>
                    
                    <div class="new-Release-select-list Release-shop store_type_taobao">
@@ -125,8 +108,24 @@
 										</label>
 									</li>
 								</ul>
+								<ul class="clearfix">
+									<li></li>
+									<li style="height:80px">
+										<i></i>
+										<div class="new-Release-select-list-hd  Release-clientType">客户端类型：</div><br>
+										<div class="new-Release-select-list-hd  Release-clientType-raido"> 
+											<label style="font-size: 16px; color: black; font-weight:bold; cursor:pointer; float: left;">
+												<input name="client_type" id="client_radio_pc" type="radio" onclick="javascript:changeClient('pc');" value="pc">pc端
+											</label>
+											<label style="font-size: 16px; color: black; font-weight:bold; cursor:pointer; float: right;">
+												<input name="client_type" id="client_radio_phone" type="radio" onclick="javascript:changeClient('phone');" value="phone">手机端
+											</label>
+										</div>
+									</li>
+								</ul>
 							</div>
 							<input type="hidden" id="taskType" name="taskType" value="0">
+							<input type="hidden" id="clientType" name="clientType" value="">
 						</div>  
                   </form>
                   <div class="new-Release-btn">
@@ -146,15 +145,15 @@
 
 $(function(){
 	changePlat("${bindPlat}", false);
-	changeClient("pc");
 })
 
 function changeClient(clientType) {
-	if(bindPlat == $("#clientType").val()){
-		$("#clientType").val(clientType);
-		return;
-	}
 	$("#clientType").val(clientType);
+	if($("#shopId").val().trim() != "" && $("#clientType").val().trim() != ""){
+		$("#next_step_a").removeClass("disabled");
+	} else {
+		$("#next_step_a").addClass("disabled");
+	}
 }
 
 function changePlat(bindPlat, clearShopId){
@@ -197,7 +196,9 @@ function changePlat(bindPlat, clearShopId){
 						$("#next_step_a").addClass("disabled");
 					} else{
 						$("#shopId").val($("input[name='shop_id'][checked]").val());
-						$("#next_step_a").removeClass("disabled");
+						if($("#clientType").val().trim() != ""){
+							$("#next_step_a").removeClass("disabled");
+						}
 					}
 				}
 			}
@@ -221,7 +222,16 @@ function nextStep(){
 	var bindPlat = $("#bindPlat").val().trim();
 	var shopId = $("#shopId").val().trim();
 	var clientType = $("#clientType").val().trim();
-	if(bindPlat == "" || shopId == "" || clientType == ""){
+	if(bindPlat == "") {
+		alert("请选择平台");
+		return;
+	}
+	if(shopId == "") {
+		alert("请选择店铺");
+		return;
+	}
+	if(clientType == ""){
+		alert("请选择客户端类型");
 		return;
 	}
 	$("#trade_form").submit();

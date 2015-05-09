@@ -91,6 +91,26 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 
 	@Action("add_task_step_three")
 	public String addTaskStepThree() {
+		if (llTaskBean.getOrderNumberOneDay1() < 10 || StringTools.isEmpty(llTaskBean.getKeyword1()) || llTaskBean.getKeyword1().length() > 12) {
+			this.alertAndGoBack("提交数据异常");
+			return null;
+		}
+		if (llTaskBean.getOrderNumberOneDay2() < 10 || StringTools.isEmpty(llTaskBean.getKeyword2()) || llTaskBean.getKeyword1().length() > 12) {
+			this.alertAndGoBack("提交数据异常");
+			return null;
+		}
+		if (llTaskBean.getOrderNumberOneDay3() < 10 || StringTools.isEmpty(llTaskBean.getKeyword3()) || llTaskBean.getKeyword1().length() > 12) {
+			this.alertAndGoBack("提交数据异常");
+			return null;
+		}
+		if (llTaskBean.getOrderNumberOneDay4() != 0 && (llTaskBean.getOrderNumberOneDay4() < 10 || StringTools.isEmpty(llTaskBean.getKeyword4()) || llTaskBean.getKeyword1().length() > 12)) {
+			this.alertAndGoBack("提交数据异常");
+			return null;
+		}
+		if (llTaskBean.getOrderNumberOneDay5() != 0 && (llTaskBean.getOrderNumberOneDay5() < 10 || StringTools.isEmpty(llTaskBean.getKeyword5()) || llTaskBean.getKeyword1().length() > 12)) {
+			this.alertAndGoBack("提交数据异常");
+			return null;
+		}
 		try {
 			String fileSuffix = ResourceTools.getFileSuffix(llTaskBean.getGoodsImgFileFileName());
 			if(!ResourceTools.checkSuffix(fileSuffix, ResourceTools.getImageSuffixs())) {
@@ -128,25 +148,12 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 			llTaskBean.setIsQuickVerify(Constant.QuickVerifyDefault);
 			llTaskBean.setIsQuickExecute(Constant.QuickExecuteDefault);
 			if (StringTools.isEmpty(llTaskBean.getKeyword4().trim()) || llTaskBean.getOrderNumberOneDay4() < 0) {
+				llTaskBean.setKeyword4("");
 				llTaskBean.setOrderNumberOneDay4(0);
 			}
 			if (StringTools.isEmpty(llTaskBean.getKeyword5().trim()) || llTaskBean.getOrderNumberOneDay5() < 0) {
+				llTaskBean.setKeyword5("");
 				llTaskBean.setOrderNumberOneDay5(0);
-			}
-			if (llTaskBean.getOrderNumberOneDay1() < 10) {
-				llTaskBean.setOrderNumberOneDay1(10);
-			}
-			if (llTaskBean.getOrderNumberOneDay2() < 10) {
-				llTaskBean.setOrderNumberOneDay2(10);
-			}
-			if (llTaskBean.getOrderNumberOneDay3() < 10) {
-				llTaskBean.setOrderNumberOneDay3(10);
-			}
-			if (llTaskBean.getOrderNumberOneDay4() < 10 && llTaskBean.getOrderNumberOneDay4() != 0) {
-				llTaskBean.setOrderNumberOneDay4(10);
-			}
-			if (llTaskBean.getOrderNumberOneDay5() < 10 && llTaskBean.getOrderNumberOneDay5() != 0) {
-				llTaskBean.setOrderNumberOneDay5(10);
 			}
 			LLTask llTask = llTaskService.add(llTaskBean, getSessionServerUser());
 			this.setAttrToRequest("llTask", llTask);

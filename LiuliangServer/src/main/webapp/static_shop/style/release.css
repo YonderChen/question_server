@@ -57,6 +57,8 @@
 .new-Release-select-list-hd.Release-plat{width: 213px;padding: 0 22px 0px 30px;}
 .new-Release-select-list-hd.Release-shop{width: 338px;padding: 0 22px 0px 22px;}
 .new-Release-select-list-hd.Release-type{width: 290px;padding: 0 0px 0px 20px;}
+.new-Release-select-list-hd.Release-clientType{width: 213px;padding: 0 22px 20 0;}
+.new-Release-select-list-hd.Release-clientType-raido{width: 213px;padding: 0 22px 20 30px;display: inline;}
 .new-Release-first-bd a.sk-arrange-next{margin-right: 6px;}
 
 

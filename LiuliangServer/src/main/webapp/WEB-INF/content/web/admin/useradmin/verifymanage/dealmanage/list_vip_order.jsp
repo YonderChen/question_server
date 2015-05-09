@@ -11,22 +11,31 @@
 						<th width="10%">
 							用户名
 						</th>
-						<th width="10%">
-							续费月数
+						<th width="5%">
+							月数
 						</th>
-						<th width="10%">
+						<th width="5%">
 							价格
 						</th>
-						<th width="25%">
+						<th width="15%">
 							转账交易号
 						</th>
-						<th width="20%">
+						<th width="10%">
+							理由
+						</th>
+						<th width="10%">
+							付款时间
+						</th>
+						<th width="15%">
+							付款截图
+						</th>
+						<th width="10%">
 							创建时间
 						</th>
 						<th width="10%">
 							状态
 						</th>
-						<th width="15%">
+						<th width="10%">
 							操作
 						</th>
 					</tr>
@@ -45,6 +54,15 @@
 						</td>
 						<td>
 							${order.dealId}
+						</td>
+						<td>
+							${order.reason}
+						</td>
+						<td>
+							<s:date name="payTime" format="yyyy-MM-dd HH:mm:ss"/>
+						</td>
+						<td>
+							<img width="50px" height="80px" alt="" src="${ctx}${order.payImgUrl}" onclick="javascript:showImg('${ctx}${order.payImgUrl}');" />
 						</td>
 						<td>
 							<s:date name="createTime" format="yyyy-MM-dd HH:mm:ss"/>

@@ -83,17 +83,17 @@
 	function editPass() {
 		if ($("#oldPassword").val().trim() == "") {
 			alert("原始密码不能为空");
-			$("#oldPassword").select();
+			scrollAndSelect("oldPassword");
 			return;
 		}
 		if ($("#newPassword").val().trim() == "") {
 			alert("新密码不能为空");
-			$("#newPassword").select();
+			scrollAndSelect("newPassword");
 			return;
 		}
 		if ($("#newPassword").val().trim() != $("#newPassword_c").val().trim()) {
 			alert("两次新密码不一致");
-			$("#newPassword_c").select();
+			scrollAndSelect("newPassword_c");
 			return;
 		}
 		var url = "${ctx}/web/shop/edit_pass";
@@ -118,7 +118,7 @@
 				} else {
 					$("#newPassword").val("");
 					$("#newPassword_c").val("");
-					$("#oldPassword").select();
+					scrollAndSelect("oldPassword");
 				}
 				alert(result.msg);
 			}
@@ -165,7 +165,7 @@
 	function edit_qq() {
 		if ($("#userqq").val().trim() == "") {
 			alert("QQ不能为空");
-			$("#userqq").select();
+			scrollAndSelect("userqq");
 			return;
 		}
 		var url = "${ctx}/web/shop/edit_qq";
@@ -246,7 +246,7 @@ $(function(){
 	function edit_phone() {
 		if ($("#usermoblie").val().trim() == "") {
 			alert("手机号不能为空");
-			$("#usermoblie").select();
+			scrollAndSelect("usermoblie");
 			return;
 		}
 		var url = "${ctx}/web/shop/edit_phone";

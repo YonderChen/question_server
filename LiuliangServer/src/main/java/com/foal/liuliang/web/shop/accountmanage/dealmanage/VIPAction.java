@@ -11,7 +11,9 @@ import com.foal.liuliang.bean.AjaxBean;
 import com.foal.liuliang.bean.LLDealOrderBean;
 import com.foal.liuliang.bean.PageBean;
 import com.foal.liuliang.config.Constant;
+import com.foal.liuliang.jersey.resource.tools.ResourceTools;
 import com.foal.liuliang.service.LLVIPOrderService;
+import com.foal.liuliang.util.FileUtil;
 import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -46,8 +48,22 @@ public class VIPAction extends UserBaseAction implements ModelDriven<LLDealOrder
 	        return null;
 		}
 		llOrderBean.setPrice((int)(Constant.VIPTimePriceMap.get(String.valueOf(llOrderBean.getNum()))));
+		try {
+			String fileSuffix = ResourceTools.getFileSuffix(llOrderBean.getPayImgFileFileName());
+			if(!ResourceTools.checkSuffix(fileSuffix, ResourceTools.getImageSuffixs())) {
+				this.alertAndGoBack("请选择正确的图片");
+				return null;
+			}
+			String fileDirPath = Constant.TOMCAT_SERVICE_ADDRESS + Constant.UPLOAD_IMAGE_PATH;
+			String fileName = FileUtil.uploadFile(llOrderBean.getPayImgFile(), fileDirPath, llOrderBean.getPayImgFileFileName());
+			llOrderBean.setPayImgUrl(Constant.UPLOAD_IMAGE_PATH + fileName);
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.alertAndRedirect("上传图片失败", "web/shop/accountmanage/dealmanage/renewalvip");
+			return null;
+		}
 		llVIPOrderService.add(llOrderBean);
-		this.ajaxWrite(new AjaxBean(true, "订单提交成功，请耐心等待审核"));
+		this.alertAndRedirect("订单提交成功，请耐心等待审核", "web/shop/accountmanage/dealmanage/renewalvip");
         return null;
 	}
 

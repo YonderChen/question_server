@@ -14,6 +14,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="${ctx}/images/favicon.ico" media="screen">
 	<script type="text/javascript" src="${ctx}/js/base.js"></script>
   	<script type="text/javascript" src="${ctx}/js/jquery.js"></script>
+   	<script type="text/javascript" src="${ctx}/js/calendar/WdatePicker.js"></script>
 	<link rel="stylesheet" href="${ctx}/static_shop/style/common.css">
     <link rel="stylesheet" href="${ctx}/static_shop/style/person_center.css">
     <link rel="stylesheet" href="${ctx}/static_shop/style/popup.css">
@@ -30,35 +31,39 @@
 	}
 	
 	function submit() {
-		if($("#dealId").val().trim() == ""){
-			alert("请输入转账交易号");
-			$("#dealId").select();
+		if($("#payImgFile").val().trim() == ""){
+			alert("请选择付款成功截图");
+			$("body,html").animate({
+		   		scrollTop:$("#payImgFile").offset().top  //让body的scrollTop等于pos的top，就实现了滚动
+		   	},0);
+			scrollAndSelect("payImgFile");
 			return;
 		}
-		var url = "${ctx}/web/shop/accountmanage/dealmanage/add_score_order";
-		$.ajax({
-			url:url,
-			type:'post',
-			data:{
-				price : $("#price").val().trim(),
-				dealId : $("#dealId").val().trim()
-			},
-			dataType:'text',
-			timeout:60000,
-			error: function(e) {
-				alert("连接服务器超时,请稍后再试.");
-			},
-			success: function(result){
-				if (!isOutTime(result)) {
-					result = eval("("+result+")");
-					alert(result.msg);
-					if (result.success) {
-						$("#price").val("taobao");
-						$("#dealId").val("");
-					}
-				}
-			}
-		});
+		if($("#dealId").val().trim() == ""){
+			alert("请输入转账交易号");
+			$("body,html").animate({
+		   		scrollTop:$("#dealId").offset().top
+		   	},0);
+			scrollAndSelect("dealId");
+			return;
+		}
+		if($("#reason").val().trim() == ""){
+			alert("请输入理由（平台账号）");
+			$("body,html").animate({
+		   		scrollTop:$("#reason").offset().top
+		   	},0);
+			scrollAndSelect("reason");
+			return;
+		}
+		if($("#payTime").val().trim() == ""){
+			alert("请输入付款时间");
+			$("body,html").animate({
+		   		scrollTop:$("#payTime").offset().top
+		   	},0);
+			scrollAndSelect("payTime");
+			return;
+		}
+		$("#pay_form").submit();
 	}
 	
 </script>
@@ -90,11 +95,11 @@
               
                   <div class="register">
                     <div class="register_info">
-                        <form id="pay_form" action="#" method="post" target="_blank">
+                        <form id="pay_form" action="${ctx}/web/shop/accountmanage/dealmanage/add_score_order" method="post" enctype="multipart/form-data">
                         <div class="pay-integral">
-                            <h1>1.请选择积分<span>因每月所售积分有限，<em>建议提前一次性选择足够1个月使用的积分数量</em></span></h1>
+                            <h1>1.请选择积分<span>因每月所售积分有限，<em>建议提前一次性选择足够1个月使用的积分数量（积分说明：每1个流量需要花费${oneVisitCostScore }个积分）</em></span></h1>
                             <div class="pay-integral-input">
-                            	<input type="hidden" id="price" value="">
+                            	<input type="hidden" id="price" name="price" value="">
                                                                 <div><label>
                                     <input type="radio" onclick="javascript:priceChange(1000);" name="score_type" value="1000">&nbsp;&nbsp;支付&nbsp;<span><em>1,000</em></span>&nbsp;元，总计获得:&nbsp;<span>10,000</span>&nbsp;积分<em style="color:#999;">&nbsp;(含:&nbsp;购买10000积分 )</em>
                                 </label></div>
@@ -116,23 +121,49 @@
                                                             </div>
                         </div>
                         
-                        <div class="pay_des">
-                            <h1 style="margin-bottom:20px;">2.输入转账交易号</h1>
-                            
-                        <div>                            
-                                <div class="item clearfix">
+                        <div class="pay-integral">
+                            <h1 style="margin-bottom:20px;">2.转账到指定支付宝<span><a target="_blank" href="${ctx}/web/shop/accountmanage/dealmanage/pay_guide" style="color: blue;"><u>查看详细付款流程</u></a></span></h1>
+                        </div>
+                        
+                        <div class="pay-integral">
+                            <h1 style="margin-bottom:20px;">3.转账成功截图上传</h1>
+                        	<div>                   
+		                        <div class="item clearfix">
+                                    <label class="tit" >转账成功截图： </label>
+                                    <input type="file" id="payImgFile" name="payImgFile" class="input_file" >
+                                    <span id="hd_item_img" class="error" style="display:none;"></span>
+                                </div>
+	                        </div>
+                        </div>
+                        
+                        <div class="pay-integral">
+                            <h1 style="margin-bottom:20px;">4.输入交易相关信息</h1>
+                        	<div>                            
+                                <div class="item clearfix" style="margin-left: 70px;">
                                     <label class="tit">交易号:</label>
                                     <div class="inp">
-                                        <em class="inpbox">
-                                            <i class="icon-TXM"></i>
+                                        <em class="inpbox" style="padding-left: 0px;">
                                             <input type="text" id="dealId" name="dealId" autocomplete="off" cname="one" placeholder="请输入交易号" warn=" " checkurl="ture" class="txt placebox" regname="dealId" emptyerr="交易号不能为空">
                                         </em>
                                     </div>
                                 </div>
-                            <div>
-                            	<img id="jiaoyihao_img" alt="交易号" src="${ctx}/images/jiaoyihao.jpg">
-                            </div>
-                        </div>
+                                <div class="item clearfix">
+                                    <label class="tit">理由（平台账号）:</label>
+                                    <div class="inp">
+                                        <em class="inpbox" style="padding-left: 0px;">
+                                            <input type="text" id="reason" name="reason" autocomplete="off" cname="one" placeholder="请输入理由" warn=" " checkurl="ture" class="txt placebox" regname="reason" emptyerr="理由不能为空">
+                                        </em>
+                                    </div>
+                                </div>
+                                <div class="item clearfix" style="margin-left: 56px;">
+                                    <label class="tit">创建时间:</label>
+                                    <div class="inp">
+                                        <em class="inpbox" style="padding-left: 0px;">
+                            				<input style="width:180px; border:1px solid #CCC;" id="payTime" name="payTime" value="" onclick="javascript:WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:00'})">
+                                        </em>
+                                    </div>
+                                </div>
+	                        </div>
                         </div>
                         </form>
                         

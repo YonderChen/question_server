@@ -14,6 +14,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="${ctx}/images/favicon.ico" media="screen">
 	<script type="text/javascript" src="${ctx}/js/base.js"></script>
   	<script type="text/javascript" src="${ctx}/js/jquery.js"></script>
+   	<script type="text/javascript" src="${ctx}/js/calendar/WdatePicker.js"></script>
 	<link rel="stylesheet" href="${ctx}/static_shop/style/common.css">
     <link rel="stylesheet" href="${ctx}/static_shop/style/person_center.css">
     <link rel="stylesheet" href="${ctx}/static_shop/style/popup.css">
@@ -22,51 +23,52 @@
 	<script type="text/javascript">
 	
 	$(document).ready(function(){
-	    paytimeChange($("input[name='paytime'][checked]").val());
+	    payMonthChange($("input[name='payMonth'][checked]").val());
 	});
 	
-	function paytimeChange(paytime){
-		$("#paytime").val(paytime);
-		$("#pay_month").html(paytime);
-		var dateLimit = AddMonths($("#begin_time").val(),paytime);
+	function payMonthChange(payMonth){
+		$("#num").val(payMonth);
+		$("#pay_month").html(payMonth);
+		var dateLimit = AddMonths($("#begin_time").val(),payMonth);
 	    $("#date_limit").html(dateLimit);
 	}
 	
 	
+	
 	function submit() {
-		if($("#paytime").val().trim() == ""){
-			alert("请选择续费月数");
+		if($("#payImgFile").val().trim() == ""){
+			alert("请选择付款成功截图");
+			$("body,html").animate({
+		   		scrollTop:$("#payImgFile").offset().top  //让body的scrollTop等于pos的top，就实现了滚动
+		   	},0);
+			scrollAndSelect("payImgFile");
 			return;
 		}
 		if($("#dealId").val().trim() == ""){
 			alert("请输入转账交易号");
-			$("#dealId").select();
+			$("body,html").animate({
+		   		scrollTop:$("#dealId").offset().top
+		   	},0);
+			scrollAndSelect("dealId");
 			return;
 		}
-		var url = "${ctx}/web/shop/accountmanage/dealmanage/add_vip_order";
-		$.ajax({
-			url:url,
-			type:'post',
-			data:{
-				num : $("#paytime").val().trim(),
-				dealId : $("#dealId").val().trim()
-			},
-			dataType:'text',
-			timeout:60000,
-			error: function(e) {
-				alert("连接服务器超时,请稍后再试.");
-			},
-			success: function(result){
-				if (!isOutTime(result)) {
-					result = eval("("+result+")");
-					alert(result.msg);
-					if (result.success) {
-						$("#price").val("taobao");
-						$("#dealId").val("");
-					}
-				}
-			}
-		});
+		if($("#reason").val().trim() == ""){
+			alert("请输入理由（平台账号）");
+			$("body,html").animate({
+		   		scrollTop:$("#reason").offset().top
+		   	},0);
+			scrollAndSelect("reason");
+			return;
+		}
+		if($("#payTime").val().trim() == ""){
+			alert("请输入付款时间");
+			$("body,html").animate({
+		   		scrollTop:$("#payTime").offset().top
+		   	},0);
+			scrollAndSelect("payTime");
+			return;
+		}
+		$("#pay_form").submit();
 	}
 	
 	function AddMonths(date,months){
@@ -140,24 +142,24 @@
                     <div class="register">
                     <div class="register_info">
                         
-                        <form id="pay_form" action="#" method="post" target="_blank">
+                        <form id="pay_form" action="${ctx}/web/shop/accountmanage/dealmanage/add_vip_order" method="post" enctype="multipart/form-data">
                         <div class="select_buy">
                         
                             <h1>1.请选择续费时长</h1>
 								<div class="select_buy_input">
-                            		<input type="hidden" id="paytime" value="">
+                            		<input type="hidden" id="num" name="num" value="">
 									<label style="margin-right: 50px;">
-										<input type="radio" onclick="javascript:paytimeChange(6);" name="paytime" value="6" data-k="120">
+										<input type="radio" onclick="javascript:payMonthChange(6);" name="payMonth" value="6" data-k="120">
 										6个月
 										<span style="color: #F80000; margin-left: 4px;">120</span> 元
 									</label>
 									<label style="margin-right: 50px;">
-										<input type="radio" onclick="javascript:paytimeChange(9);" name="paytime" value="9" data-k="180">
+										<input type="radio" onclick="javascript:payMonthChange(9);" name="payMonth" value="9" data-k="180">
 										9个月
 										<span style="color: #F80000; margin-left: 4px;">180</span> 元
 									</label>
 									<label style="margin-right: 50px;">
-										<input type="radio" onclick="javascript:paytimeChange(12);" name="paytime" checked="checked" value="12"
+										<input type="radio" onclick="javascript:payMonthChange(12);" name="payMonth" checked="checked" value="12"
 											data-k="216">
 										12个月
 										<span style="color: #F80000; margin-left: 4px;">216</span> 元
@@ -165,7 +167,7 @@
 										<span class="red">推荐</span>
 									</label>
 									<label style="margin-right: 50px;">
-										<input type="radio" onclick="javascript:paytimeChange(24);" name="paytime" value="24" data-k="398">
+										<input type="radio" onclick="javascript:payMonthChange(24);" name="payMonth" value="24" data-k="398">
 										24个月
 										<span style="color: #F80000; margin-left: 4px;">398</span> 元
 										<i>（8.3折）</i>
@@ -177,23 +179,49 @@
                             </div>
                         </div>
                         
-                        <div class="pay_des">
-                            <h1 style="margin-bottom:20px;">2.输入转账交易号</h1>    
-                            
-                        <div>                            
-                                <div class="item clearfix">
+                        <div class="pay-integral">
+                            <h1 style="margin-bottom:20px;">2.转账到指定支付宝<span><a target="_blank" href="${ctx}/web/shop/accountmanage/dealmanage/pay_guide" style="color: blue;"><u>查看详细付款流程</u></a></span></h1>
+                        </div>
+                        
+                        <div class="pay-integral">
+                            <h1 style="margin-bottom:20px;">3.转账成功截图上传</h1>
+                        	<div>                   
+		                        <div class="item clearfix">
+                                    <label class="tit" >转账成功截图： </label>
+                                    <input type="file" id="payImgFile" name="payImgFile" class="input_file" >
+                                    <span id="hd_item_img" class="error" style="display:none;"></span>
+                                </div>
+	                        </div>
+                        </div>
+                        
+                        <div class="pay-integral">
+                            <h1 style="margin-bottom:20px;">4.输入交易相关信息</h1>
+                        	<div>                            
+                                <div class="item clearfix" style="margin-left: 70px;">
                                     <label class="tit">交易号:</label>
                                     <div class="inp">
-                                        <em class="inpbox">
-                                            <i class="icon-TXM"></i>
+                                        <em class="inpbox" style="padding-left: 0px;">
                                             <input type="text" id="dealId" name="dealId" autocomplete="off" cname="one" placeholder="请输入交易号" warn=" " checkurl="ture" class="txt placebox" regname="dealId" emptyerr="交易号不能为空">
                                         </em>
                                     </div>
                                 </div>
-                            <div>
-                            	<img id="jiaoyihao_img" alt="交易号" src="${ctx}/images/jiaoyihao.jpg">
-                            </div>
-                        </div>
+                                <div class="item clearfix">
+                                    <label class="tit">理由（平台账号）:</label>
+                                    <div class="inp">
+                                        <em class="inpbox" style="padding-left: 0px;">
+                                            <input type="text" id="reason" name="reason" autocomplete="off" cname="one" placeholder="请输入理由" warn=" " checkurl="ture" class="txt placebox" regname="reason" emptyerr="理由不能为空">
+                                        </em>
+                                    </div>
+                                </div>
+                                <div class="item clearfix" style="margin-left: 56px;">
+                                    <label class="tit">创建时间:</label>
+                                    <div class="inp">
+                                        <em class="inpbox" style="padding-left: 0px;">
+                            				<input style="width:180px; border:1px solid #CCC;" id="payTime" name="payTime" value="" onclick="javascript:WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:00'})">
+                                        </em>
+                                    </div>
+                                </div>
+	                        </div>
                         </div>
                         </form>
                         

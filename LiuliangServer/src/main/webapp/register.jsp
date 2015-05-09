@@ -16,28 +16,28 @@
 	function register() {
 		if ($("#username").val().trim() == "") {
 			alert("用户名不能为空.");
-			$("#username").select();
+			scrollAndSelect("username");
 			return;
 		}
 		if ($("#password").val().trim() == "") {
 			alert("密码不能为空.");
-			$("#password").select();
+			scrollAndSelect("password");
 			return;
 		}
 		if ($("#password_confirm").val().trim() != $("#password").val().trim()) {
 			alert("两次密码不一致.");
-			$("#password_confirm").select();
+			scrollAndSelect("password_confirm");
 			return;
 		}
 		if ($("#email").val().trim() == "") {
 			alert("邮箱不能为空.");
-			$("#email").select();
+			scrollAndSelect("email");
 			return;
 		}
 		/*
 		if ($("#code").val().trim() == "") {
 			alert("验证码不能为空.");
-			$("#code").select();
+			scrollAndSelect("code");
 			return;
 		}
 		*/

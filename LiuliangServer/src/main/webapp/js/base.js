@@ -97,3 +97,10 @@
 	{
 	   return this.data.join("");
 	}
+	
+	function scrollAndSelect(id){
+		$("body,html").animate({
+	   		scrollTop:$("#" + id).offset().top  //让body的scrollTop等于pos的top，就实现了滚动
+	   	},0);
+		$("#" + id).select();
+	}

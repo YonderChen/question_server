@@ -17,6 +17,7 @@ import com.foal.liuliang.pojo.LLScoreRecord;
 import com.foal.liuliang.pojo.LLShop;
 import com.foal.liuliang.pojo.LLTask;
 import com.foal.liuliang.pojo.ServerUser;
+import com.foal.liuliang.util.GenerateSequenceUtil;
 import com.foal.liuliang.util.StringTools;
 import com.foal.liuliang.util.StringUtil;
 
@@ -87,6 +88,9 @@ public class LLTaskService extends DaoSupport {
 		calCostScore(llTask);
 		llTask.setCreateTime(new Date());
 		llTask.setStatus(LLTask.Status.Create);
+		if (StringTools.isEmpty(llTask.getTaskId())) {
+			llTask.setTaskId(GenerateSequenceUtil.generateSequenceNo());
+		}
         this.hibernateDao.save(llTask);
         return llTask;
     }

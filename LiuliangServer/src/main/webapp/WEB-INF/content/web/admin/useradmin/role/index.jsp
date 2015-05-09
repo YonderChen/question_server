@@ -148,12 +148,12 @@
 	function edit() {
 		if($("#name_e").val().trim() == ""){
 			alert("角色名不能为空");
-			$("#name_e").select();
+			scrollAndSelect("name_e");
 			return;
 		}
 		if($("#description_e").val().trim().length > 100){
 			alert("角色描述过长");
-			$("#description_e").select();
+			scrollAndSelect("description_e");
 			return;
 		}
 		var menuIdArray = [];
@@ -197,7 +197,7 @@
 						ajaxSearch(null);
 					} else {
 						alert(result.msg);
-						$("#name_e").select();
+						scrollAndSelect("name_e");
 					}
 				}
 			}
@@ -238,12 +238,12 @@
 	function add() {
 		if($("#name_a").val().trim() == ""){
 			alert("角色名不能为空");
-			$("#name_a").select();
+			scrollAndSelect("name_a");
 			return;
 		}
 		if($("#description_a").val().trim().length > 100){
 			alert("角色描述过长");
-			$("#description_a").select();
+			scrollAndSelect("description_a");
 			return;
 		}
 		var menuIdArray = [];
@@ -286,7 +286,7 @@
 						ajaxSearch(1);
 					} else {
 						alert(result.msg);
-						$("#name_a").select();
+						scrollAndSelect("name_a");
 					}
 				}
 			}

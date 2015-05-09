@@ -118,17 +118,26 @@
 		}
 		if($("#bindName").val().trim() == ""){
 			alert("请输入店铺旺旺");
-			$("#bindName").select();
+			$("body,html").animate({
+		   		scrollTop:$("#bindName").offset().top  //让body的scrollTop等于pos的top，就实现了滚动
+		   	},0);
+			scrollAndSelect("bindName");
 			return;
 		}
 		if($("#shopUrl").val().trim() == ""){
 			alert("请输入店铺首页URL");
-			$("#shopUrl").select();
+			$("body,html").animate({
+		   		scrollTop:$("#shopUrl").offset().top  //让body的scrollTop等于pos的top，就实现了滚动
+		   	},0);
+			scrollAndSelect("shopUrl");
 			return;
 		}
 		if($("#verifyGoodsUrl").val().trim() == ""){
 			alert("请输入验证商品URL");
-			$("#verifyGoodsUrl").select();
+			$("body,html").animate({
+		   		scrollTop:$("#verifyGoodsUrl").offset().top  //让body的scrollTop等于pos的top，就实现了滚动
+		   	},0);
+			scrollAndSelect("verifyGoodsUrl");
 			return;
 		}
 		var url = "${ctx}/web/shop/accountmanage/shopmanage/add";

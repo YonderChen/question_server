@@ -39,7 +39,7 @@
 	function edit(paramId) {
 		if($("#value_"+paramId).val().trim() == ""){
 			alert("参数值不能为空");
-			$("#value_"+paramId).select();
+			scrollAndSelect("value_"+paramId);
 			return ;
 		}
 		$(".btn-link").button('loading');

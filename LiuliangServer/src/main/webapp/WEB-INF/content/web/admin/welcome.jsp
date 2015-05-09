@@ -30,17 +30,17 @@
 	function editPass() {
 		if ($("#oldPassword").val().trim() == "") {
 			alert("原始密码不能为空");
-			$("#oldPassword").select();
+			scrollAndSelect("oldPassword");
 			return;
 		}
 		if ($("#newPassword").val().trim() == "") {
 			alert("新密码不能为空");
-			$("#newPassword").select();
+			scrollAndSelect("newPassword");
 			return;
 		}
 		if ($("#newPassword").val().trim() != $("#newPassword_c").val().trim()) {
 			alert("两次新密码不一致");
-			$("#newPassword_c").select();
+			scrollAndSelect("newPassword_c");
 			return;
 		}
 		$(".btn-cancel").button('loading');
@@ -76,7 +76,7 @@
 						alert(result.msg);
 						$("#newPassword").val("");
 						$("#newPassword_c").val("");
-						$("#oldPassword").select();
+						scrollAndSelect("oldPassword");
 					}
 				}
 			}
@@ -86,12 +86,12 @@
 	function editInfo() {
 		if ($("#phone").val().trim() == "") {
 			alert("联系电话不能为空");
-			$("#phone").select();
+			scrollAndSelect("phone");
 			return;
 		}
 		if (!isTelephone($("#phone").val().trim())) {
 			alert("联系电话无效");
-			$("#phone").select();
+			scrollAndSelect("phone");
 			return;
 		}
 		$(".btn-cancel").button('loading');

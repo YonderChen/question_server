@@ -27,15 +27,15 @@
 			var password_check = $("#password_check").val().trim();
 			if(password == ""){
 				alert("密码不能为空");
-				$("#password").select();
+				scrollAndSelect("password");
 			}
 			if(password_check == ""){
 				alert("密码不能为空");
-				$("#password_check").select();
+				scrollAndSelect("password_check");
 			}
 			if(password != password_check){
 				alert("两次密码不一致");
-				$("#password_check").select();
+				scrollAndSelect("password_check");
 			}
 			$("#from").submit();
 		}	

@@ -6,7 +6,6 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -62,10 +61,9 @@ public class LLTask implements Serializable {
         public static final int VerifyFaild = 5;//审核不通过
         public static final int Changed = 6;//任务修改,待审核
 	}
-	
-	@GenericGenerator(name = "generator", strategy = "uuid")
+
+	@GenericGenerator(name = "generator", strategy = "assigned")
 	@Id
-	@GeneratedValue(generator = "generator")
 	@Column(name = "task_id_")
 	public String getTaskId() {
 		return taskId;

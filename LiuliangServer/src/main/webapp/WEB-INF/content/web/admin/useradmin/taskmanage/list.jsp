@@ -50,7 +50,7 @@
 							${task.serverUser.username }
 						</td>
 						<td>
-							<img style="height: 80px;width: 100px;" src="${ctx}${task.goodsImg}" />
+							<img style="height: 80px;width: 100px;" src="${ctx}${task.goodsImg}" onclick="javascript:showImg('${ctx}${task.goodsImg}');" />
 						</td>
 						<td>
 							<s:if test="llShop.bindPlat == 'taobao'">淘宝</s:if>

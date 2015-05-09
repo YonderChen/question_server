@@ -53,7 +53,16 @@
                     <div class="shop-type">任务类型已选择：
                     <s:if test="#request.llTask.llShop.bindPlat == 'taobao'"><i class="plat_small plat_taobao"></i>淘宝</s:if>
                     <s:if test="#request.llTask.llShop.bindPlat == 'tmall'"><i class="plat_small plat_tmall"></i>天猫</s:if>
-                    <s:if test="#request.llTask.llShop.bindPlat == 'jd'"><i class="plat_small plat_jd"></i>京东</s:if> | ${llTask.llShop.bindName} | <s:if test="#request.llTask.taskType == 0">自然搜索流量</s:if><s:else>自然搜索流量</s:else><a class="back_step_one" href="javascript:pre_step();">返回编辑</a></div>
+                    <s:if test="#request.llTask.llShop.bindPlat == 'jd'"><i class="plat_small plat_jd"></i>京东</s:if>
+                     | ${llTask.llShop.bindName}
+                     | <s:if test="#request.llTask.taskType == 0">自然搜索流量</s:if>
+                      	<s:else>自然搜索流量</s:else>
+                     | <s:if test="#request.llTask.clientType == 'pc'">pc端</s:if>
+                     	<s:else>
+	                     	<s:if test="#request.llTask.clientType == 'phone'">手机端</s:if>
+	                     	<s:else>未知客户端</s:else>
+                     	</s:else>
+                    <a class="back_step_one" href="javascript:pre_step();">返回编辑</a></div>
                     <input type="hidden" id="bindPlat" name="bindPlat" value="${llTask.llShop.bindPlat}">
                     <input type="hidden" id="shopId" name="shopId" value="${llTask.llShop.shopId}">
                     <input type="hidden" id="clientType" name="clientType" value="${llTask.clientType}">
@@ -96,7 +105,7 @@
 											<label class="kwd_num">
 												关键词1：
 											</label>
-											<input type="text" class="text w200" id="keyword1" name="keyword1" value="${llTask.keyword1}">
+											<input type="text" onchange="javascript:checkLength('keyword1', 12);" class="text w200" id="keyword1" name="keyword1" value="${llTask.keyword1}">
 											&nbsp;&nbsp;
 											<label>
 												每日访客数：
@@ -114,7 +123,7 @@
 											<label class="kwd_num">
 												关键词2：
 											</label>
-											<input type="text" class="text w200" id="keyword2" name="keyword2" value="${llTask.keyword2}">
+											<input type="text" onchange="javascript:checkLength('keyword2', 12);" class="text w200" id="keyword2" name="keyword2" value="${llTask.keyword2}">
 											&nbsp;&nbsp;
 											<label>
 												每日访客数：
@@ -132,7 +141,7 @@
 											<label class="kwd_num">
 												关键词3：
 											</label>
-											<input type="text" class="text w200" id="keyword3" name="keyword3" value="${llTask.keyword3}">
+											<input type="text" onchange="javascript:checkLength('keyword3', 12);" class="text w200" id="keyword3" name="keyword3" value="${llTask.keyword3}">
 											&nbsp;&nbsp;
 											<label>
 												每日访客数：
@@ -150,7 +159,7 @@
 											<label class="kwd_num">
 												关键词4：
 											</label>
-											<input type="text" class="text w200" id="keyword4" name="keyword4" value="${llTask.keyword4}">
+											<input type="text" onchange="javascript:checkLength('keyword4', 12);" class="text w200" id="keyword4" name="keyword4" value="${llTask.keyword4}">
 											&nbsp;&nbsp;
 											<label>
 												每日访客数：
@@ -168,7 +177,7 @@
 											<label class="kwd_num">
 												关键词5：
 											</label>
-											<input type="text" class="text w200" id="keyword5" name="keyword5" value="${llTask.keyword5}">
+											<input type="text" onchange="javascript:checkLength('keyword5', 12);" class="text w200" id="keyword5" name="keyword5" value="${llTask.keyword5}">
 											&nbsp;&nbsp;
 											<label>
 												每日访客数：
@@ -401,89 +410,117 @@
 	
 	function next_step() {
 		if($("#bindPlat").val().trim() == ""){
-			alert("请选择平台");
-			to_process(1);
-			$("input[name='plat_radio'][value='tmall']").attr('checked',true);
+			alert("平台为选择，请返回上一步");
+			pre_step();
 			return;
 		}
 		if($("#shopId").val().trim() == ""){
-			alert("请选择店铺");
-			$("#shopId").select();
+			alert("店铺为选择，请返回上一步");
+			pre_step();
 			return;
 		}
 		if($("#goodsUrl").val().trim() == ""){
 			alert("请输入商品URL");
-			$("#goodsUrl").select();
+			$("body,html").animate({
+		   		scrollTop:$("#goodsUrl").offset().top  //让body的scrollTop等于pos的top，就实现了滚动
+		   	},0);
+			scrollAndSelect("goodsUrl");
 			return;
 		}
 		if($("#goodsName").val().trim() == ""){
 			alert("请输入商品名称");
-			$("#goodsName").select();
+			$("body,html").animate({
+		   		scrollTop:$("#goodName").offset().top  //让body的scrollTop等于pos的top，就实现了滚动
+		   	},0);
+			scrollAndSelect("goodsName");
 			return;
 		}
 		if($("#goodsImgFile").val().trim() == ""){
 			alert("请选择商品主图");
-			$("#goodsImgFile").select();
+			scrollAndSelect("goodsImgFile");
 			return;
 		}
 		if($("#keyword1").val().trim() == ""){
 			alert("请输入关键词1");
-			$("#keyword1").select();
+			scrollAndSelect("keyword1");
+			return;
+		}
+		if(!checkLength("keyword1",12)){
 			return;
 		}
 		if($("#orderNumberOneDay1").val().trim() == ""){
 			alert("请输入关键词1每日访客数");
-			$("#orderNumberOneDay1").select();
+			scrollAndSelect("orderNumberOneDay1");
 			return;
 		}
 		if(parseInt($("#orderNumberOneDay1").val().trim()) < 10){
 			alert("关键词1每日访客数必须大于等于10");
-			$("#orderNumberOneDay1").select();
+			scrollAndSelect("orderNumberOneDay1");
 			return;
 		}
 		if($("#keyword2").val().trim() == ""){
 			alert("请输入关键词2");
-			$("#keyword2").select();
+			scrollAndSelect("keyword2");
+			return;
+		}
+		if(!checkLength("keyword2",12)){
 			return;
 		}
 		if($("#orderNumberOneDay2").val().trim() == ""){
 			alert("请输入关键词2每日访客数");
-			$("#orderNumberOneDay2").select();
+			scrollAndSelect("orderNumberOneDay2");
 			return;
 		}
 		if(parseInt($("#orderNumberOneDay2").val().trim()) < 10){
 			alert("关键词2每日访客数必须大于等于10");
-			$("#orderNumberOneDay2").select();
+			scrollAndSelect("orderNumberOneDay2");
 			return;
 		}
 		if($("#keyword3").val().trim() == ""){
 			alert("请输入关键词3");
-			$("#keyword3").select();
+			scrollAndSelect("keyword3");
+			return;
+		}
+		if(!checkLength("keyword3",12)){
 			return;
 		}
 		if($("#orderNumberOneDay3").val().trim() == ""){
 			alert("请输入关键词3每日访客数");
-			$("#orderNumberOneDay3").select();
+			scrollAndSelect("orderNumberOneDay3");
 			return;
 		}
 		if(parseInt($("#orderNumberOneDay3").val().trim()) < 10){
 			alert("关键词3每日访客数必须大于等于10");
-			$("#orderNumberOneDay3").select();
+			scrollAndSelect("orderNumberOneDay3");
 			return;
 		}
 		if(!$("#div_keyword4").is(":hidden")){
-			var num4 = parseInt($("#orderNumberOneDay4").val().trim())
-			if(num4 < 10 && num4 > 0){
+			if($("#keyword4").val().trim() == ""){
+				alert("请输入关键词4");
+				scrollAndSelect("keyword4");
+				return;
+			}
+			if(!checkLength("keyword4",12)){
+				return;
+			}
+			if(parseInt($("#orderNumberOneDay4").val().trim()) < 10){
 				alert("关键词4每日访客数必须大于等于10");
-				$("#orderNumberOneDay4").select();
+				scrollAndSelect("orderNumberOneDay4");
 				return;
 			}
 		}
 		if(!$("#div_keyword5").is(":hidden")){
-			var num5 = parseInt($("#orderNumberOneDay5").val().trim())
-			if(num5 < 10 && num5 > 0){
+			if($("#keyword5").val().trim() == ""){
+				alert("请输入关键词4");
+				scrollAndSelect("keyword5");
+				return;
+			}
+			if(!checkLength("keyword5",12)){
+				return;
+			}
+			if(parseInt($("#orderNumberOneDay5").val().trim()) < 10){
 				alert("关键词5每日访客数必须大于等于10");
-				$("#orderNumberOneDay5").select();
+				scrollAndSelect("orderNumberOneDay5");
 				return;
 			}
 		}
@@ -493,6 +530,16 @@
 	
 	function pre_step(){
 		$("#to_step_one").submit();
+	}
+	
+	function checkLength(id, maxlimit) {
+		if ($("#" + id).val().length > maxlimit){
+			alert("关键词最多只能输入" + maxlimit + "个字");
+			$("#" + id).val($("#" + id).val().substring(0,maxlimit));
+			scrollAndSelect(id);
+			return false;
+		}
+		return true;
 	}
 </script>
 

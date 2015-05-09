@@ -176,12 +176,12 @@
 	function add() {
 		if ($("#username_a").val().trim() == "") {
 			alert("用户名不能为空");
-			$("#username_a").select();
+			scrollAndSelect("username_a");
 			return;
 		}
 		if ($("#name_a").val().trim() == "") {
 			alert("姓名不能为空");
-			$("#name_a").select();
+			scrollAndSelect("name_a");
 			return;
 		}
 		var roleIdArray = [];
@@ -224,7 +224,7 @@
 						ajaxSearch(1);
 					} else {
 						alert(result.msg);
-						$("#username_a").select();
+						scrollAndSelect("username_a");
 					}
 				}
 			}

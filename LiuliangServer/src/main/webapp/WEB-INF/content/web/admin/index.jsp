@@ -15,18 +15,18 @@
 	function login() {
 		if ($("#username").val().trim() == "") {
 			alert("用户名不能为空.");
-			$("#username").select();
+			scrollAndSelect("username");
 			return;
 		}
 		if ($("#password").val().trim() == "") {
 			alert("密码不能为空.");
-			$("#password").select();
+			scrollAndSelect("password");
 			return;
 		}
 		/*
 		if ($("#code").val().trim() == "") {
 			alert("验证码不能为空.");
-			$("#code").select();
+			scrollAndSelect("code");
 			return;
 		}
 		*/

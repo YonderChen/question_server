@@ -21,32 +21,32 @@
 	function register() {
 		if ($("#username").val().trim() == "") {
 			alert("用户名不能为空.");
-			$("#username").select();
+			scrollAndSelect("username");
 			return;
 		}
 		if ($("#password").val().trim() == "") {
 			alert("密码不能为空.");
-			$("#password").select();
+			scrollAndSelect("password");
 			return;
 		}
 		if ($("#password_confirm").val().trim() != $("#password").val().trim()) {
 			alert("两次密码不一致.");
-			$("#password_confirm").select();
+			scrollAndSelect("password_confirm");
 			return;
 		}
 		if ($("#useremail").val().trim() == "") {
 			alert("邮箱不能为空.");
-			$("#useremail").select();
+			scrollAndSelect("useremail");
 			return;
 		}
 		if ($("#userqq").val().trim() == "") {
 			alert("QQ不能为空.");
-			$("#userqq").select();
+			scrollAndSelect("userqq");
 			return;
 		}
 		if ($("#usermobile").val().trim() == "") {
 			alert("手机不能为空.");
-			$("#usermobile").select();
+			scrollAndSelect("usermobile");
 			return;
 		}
 		

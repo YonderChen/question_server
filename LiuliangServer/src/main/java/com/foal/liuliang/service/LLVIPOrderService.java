@@ -23,7 +23,10 @@ public class LLVIPOrderService extends DaoSupport {
 		order.setServerUser(orderBean.getOperator());
 		order.setNum(orderBean.getNum());
 		order.setPrice(orderBean.getPrice());
+		order.setPayImgUrl(orderBean.getPayImgUrl());
 		order.setDealId(orderBean.getDealId());
+		order.setReason(orderBean.getReason());
+		order.setPayTime(orderBean.getPayTime());
 		order.setCreateTime(new Date());
 		order.setStatus(LLVIPOrder.Status.Create);
         this.hibernateDao.save(order);
