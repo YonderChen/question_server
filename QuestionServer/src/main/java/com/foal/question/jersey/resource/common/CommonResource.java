@@ -284,10 +284,6 @@ public class CommonResource {
 			ret.setResult(RetCode.Faild, "举报内容不能为空");
 			return ret.toJson();
 		}
-		if (appUserService.getAppUserById(uid) == null) {
-			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
-			return ret.toJson();
-		}
 		if(riskWordService.containRiskWord(content)) {
 			ret.setResult(RetCode.Faild, "您输入的文字包含敏感内容");
 			return ret.toJson();
@@ -297,6 +293,9 @@ public class CommonResource {
 		tipOff.setRecordId(recordId);
 		tipOff.setContent(content);
 		tipOff.setUid(uid);
+		if (tipOff.getUid() == null) {
+			tipOff.setUid("");
+		}
 		tipOff.setCreateTime(new Date());
 		appCommonService.addEntity(tipOff);
 		ret.setResult(RetCode.Success);
