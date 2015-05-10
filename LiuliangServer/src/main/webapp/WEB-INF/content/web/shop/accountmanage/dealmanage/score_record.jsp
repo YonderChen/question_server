@@ -53,9 +53,13 @@
                             <input type="submit" class="integral-search-butt" onclick="javascript:resetPage()" value="提交查询">
                         </form>
                     </div>
-                    <p class="integral-careful"><span>注意：</span>为了减少服务器负荷，只能查找最近一个月内的流量使用记录。
+                    <p class="integral-careful">
+                    	<span>注意：</span>
+                    	为了减少服务器负荷，只能查找最近一个月内的流量使用记录。
                     </p>
-                    
+                    <p class="integral-careful">
+                    	<span style="float: right;"><a href="javascript:export_score_record();" style="color: blue; margin-right: 50px;">导出</a><a href="javascript:export_all_score_record();" style="color: blue; margin-right: 50px;">导出所有</a></span>
+                    </p>
                     <table class="integral-record-table">
 						<thead>
                     	<tr>
@@ -123,6 +127,47 @@ function searchPage(page){
 	$("#condition_form").submit();
 }
 
+function export_score_record(){
+ var url= "${ctx}/web/shop/accountmanage/dealmanage/export_score_record";       
+     $.ajax({
+         type: "POST",
+         dataType: "html",
+         url: url,
+         data: $('#condition_form').serialize(),
+         success: function (result) {
+			if (!isOutTime(result)) {
+				result = eval("("+result+")");
+				if (result.success) {
+					window.location.href = '${ctx}' + result.msg;
+				}
+			}
+         },
+         error: function(data) {
+			alert("连接服务器超时,请稍后再试.");
+          }
+     });
+}
+
+function export_all_score_record(){
+ var url= "${ctx}/web/shop/accountmanage/dealmanage/export_all_score_record";       
+     $.ajax({
+         type: "POST",
+         dataType: "html",
+         url: url,
+         data: $('#condition_form').serialize(),
+         success: function (result) {
+			if (!isOutTime(result)) {
+				result = eval("("+result+")");
+				if (result.success) {
+					window.location.href= '${ctx}' + result.msg;
+				}
+			}
+         },
+         error: function(data) {
+			alert("连接服务器超时,请稍后再试.");
+          }
+     });
+}
 </script>
 
 </body></html>

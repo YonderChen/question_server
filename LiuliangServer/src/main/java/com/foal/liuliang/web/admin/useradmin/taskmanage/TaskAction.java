@@ -1,5 +1,7 @@
 package com.foal.liuliang.web.admin.useradmin.taskmanage;
 
+import java.util.Date;
+
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
@@ -66,6 +68,8 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
     	//
     	//============
     	llTask.setStatus(LLTask.Status.Executing);
+    	llTask.setCheckTime(new Date());
+    	llTask.setCheckAdmin(this.getSessionServerUser());
     	this.llTaskService.updateLLTask(llTask);
     	this.ajaxWrite(new AjaxBean(true, "审核成功"));
         return null;

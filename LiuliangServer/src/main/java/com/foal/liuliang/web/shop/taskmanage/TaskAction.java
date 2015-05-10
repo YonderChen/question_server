@@ -1,5 +1,7 @@
 package com.foal.liuliang.web.shop.taskmanage;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.math.NumberUtils;
@@ -302,6 +304,16 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 			return null;
 		}
 		this.setAttrToRequest("llTask", llTask);
+		if (llTask.getStatus() == LLTask.Status.Executing || llTask.getStatus() == LLTask.Status.Finish) {
+			if (llTask.getCheckTime() != null) {
+				Date executeBegin = llTask.getCheckTime();
+				this.setAttrToRequest("executeBegin", executeBegin);
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(executeBegin);
+				cal.add(Calendar.DAY_OF_MONTH, llTask.getDurationDay());
+				this.setAttrToRequest("executeEnd", cal.getTime());
+			}
+		}
 		return SUCCESS;
 	}
 }

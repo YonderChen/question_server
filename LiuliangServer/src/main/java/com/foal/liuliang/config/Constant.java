@@ -23,6 +23,8 @@ public class Constant {
 	
 	public static final String UPLOAD_IMAGE_PATH = "/app_upload/image/";
 	public static final String UPLOAD_TEMP_PATH = "/app_upload/temp/";
+
+	public static final String EXPORT_PATH = "/user_export/";
 	
 	public static final String ADMIN_ID = "402881e846e4b3910146e4b8ce6c0004";
 	

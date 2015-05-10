@@ -69,11 +69,26 @@ public class TaskRecordAction extends UserBaseAction implements ModelDriven<LLTa
 		} else if ("goodsName".equals(llTaskRecordBean.getQueryKey())) {
 			llTaskRecordBean.setGoodsName(llTaskRecordBean.getQueryValue());
 		}
+		if (this.getRequest().getParameter("task_status") != null) {
+			if (!"all".equals(this.getRequest().getParameter("task_status"))) {
+				llTaskRecordBean.setStatus(this.getRequest().getParameter("task_status"));
+			}
+		}
         PageBean pageBean = this.llTaskService.queryLLTaskRecord(llTaskRecordBean);
 		this.setAttrToRequest("pageBean", pageBean);
 		this.setAttrToRequest("llTaskRecordBean", llTaskRecordBean);
 		int allLLTaskCount = this.llTaskService.queryAllLLTaskRecordCount(llTaskRecordBean.getUserId());
 		this.setAttrToRequest("allLLTaskCount", allLLTaskCount);
+		int executingLLTaskCount = this.llTaskService.queryLLTaskRecordCountByStatus(llTaskRecordBean.getUserId(), LLTask.Status.Executing);
+		this.setAttrToRequest("executingLLTaskCount", executingLLTaskCount);
+		int finishLLTaskCount = this.llTaskService.queryLLTaskRecordCountByStatus(llTaskRecordBean.getUserId(), LLTask.Status.Finish);
+		this.setAttrToRequest("finishLLTaskCount", finishLLTaskCount);
+		if (this.getRequest().getParameter("task_status") != null) {
+			this.setAttrToRequest("task_status", this.getRequest().getParameter("task_status"));
+		} else {
+			this.setAttrToRequest("task_status", "all");
+		}
+		this.setAttrToRequest("conditionAction", "/web/shop/taskmanage/task_list?left-list-id=1");
         return SUCCESS;
     }
 
@@ -96,12 +111,5 @@ public class TaskRecordAction extends UserBaseAction implements ModelDriven<LLTa
 		}
 		this.ajaxWrite(new AjaxBean(true, sb.toString()));
         return null;
-    }
-	
-	@Action("detail")
-    public String detail() {
-    	LLTask lltask = this.llTaskService.getLLTask(llTaskRecordBean.getTaskId());
-    	this.setAttrToRequest("lltask", lltask);
-        return SUCCESS;
     }
 }

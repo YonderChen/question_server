@@ -49,6 +49,8 @@ public class LLTask implements Serializable {
 	private int isQuickExecute;
 	private int costScore;
 	private Date createTime;
+	private Date checkTime;
+	private ServerUser checkAdmin;
 	private Date finishTime;
 	private int status;
 
@@ -300,6 +302,25 @@ public class LLTask implements Serializable {
 		this.createTime = createTime;
 	}
 
+	@Column(name = "check_time_")
+	public Date getCheckTime() {
+		return checkTime;
+	}
+
+	public void setCheckTime(Date checkTime) {
+		this.checkTime = checkTime;
+	}
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "check_admin_")
+	public ServerUser getCheckAdmin() {
+		return checkAdmin;
+	}
+
+	public void setCheckAdmin(ServerUser checkAdmin) {
+		this.checkAdmin = checkAdmin;
+	}
+
 	@Column(name = "finish_time_")
 	public Date getFinishTime() {
 		return finishTime;
@@ -318,149 +339,5 @@ public class LLTask implements Serializable {
 		this.status = status;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((clientType == null) ? 0 : clientType.hashCode());
-		result = prime * result + costScore;
-		result = prime * result + ((createTime == null) ? 0 : createTime.hashCode());
-		result = prime * result + durationDay;
-		result = prime * result + ((finishTime == null) ? 0 : finishTime.hashCode());
-		result = prime * result + ((goodsImg == null) ? 0 : goodsImg.hashCode());
-		result = prime * result + ((goodsName == null) ? 0 : goodsName.hashCode());
-		result = prime * result + ((goodsUrl == null) ? 0 : goodsUrl.hashCode());
-		result = prime * result + isQuickExecute;
-		result = prime * result + isQuickVerify;
-		result = prime * result + ((keyword1 == null) ? 0 : keyword1.hashCode());
-		result = prime * result + ((keyword2 == null) ? 0 : keyword2.hashCode());
-		result = prime * result + ((keyword3 == null) ? 0 : keyword3.hashCode());
-		result = prime * result + ((keyword4 == null) ? 0 : keyword4.hashCode());
-		result = prime * result + ((keyword5 == null) ? 0 : keyword5.hashCode());
-		result = prime * result + ((llShop == null) ? 0 : llShop.hashCode());
-		result = prime * result + orderNumberOneDay1;
-		result = prime * result + orderNumberOneDay2;
-		result = prime * result + orderNumberOneDay3;
-		result = prime * result + orderNumberOneDay4;
-		result = prime * result + orderNumberOneDay5;
-		result = prime * result + pageStayType;
-		result = prime * result + searchSource;
-		result = prime * result + ((serverUser == null) ? 0 : serverUser.hashCode());
-		result = prime * result + status;
-		result = prime * result + ((taskId == null) ? 0 : taskId.hashCode());
-		result = prime * result + taskType;
-		result = prime * result + visitTimeType;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		LLTask other = (LLTask) obj;
-		if (clientType == null) {
-			if (other.clientType != null)
-				return false;
-		} else if (!clientType.equals(other.clientType))
-			return false;
-		if (costScore != other.costScore)
-			return false;
-		if (createTime == null) {
-			if (other.createTime != null)
-				return false;
-		} else if (!createTime.equals(other.createTime))
-			return false;
-		if (durationDay != other.durationDay)
-			return false;
-		if (finishTime == null) {
-			if (other.finishTime != null)
-				return false;
-		} else if (!finishTime.equals(other.finishTime))
-			return false;
-		if (goodsImg == null) {
-			if (other.goodsImg != null)
-				return false;
-		} else if (!goodsImg.equals(other.goodsImg))
-			return false;
-		if (goodsName == null) {
-			if (other.goodsName != null)
-				return false;
-		} else if (!goodsName.equals(other.goodsName))
-			return false;
-		if (goodsUrl == null) {
-			if (other.goodsUrl != null)
-				return false;
-		} else if (!goodsUrl.equals(other.goodsUrl))
-			return false;
-		if (isQuickExecute != other.isQuickExecute)
-			return false;
-		if (isQuickVerify != other.isQuickVerify)
-			return false;
-		if (keyword1 == null) {
-			if (other.keyword1 != null)
-				return false;
-		} else if (!keyword1.equals(other.keyword1))
-			return false;
-		if (keyword2 == null) {
-			if (other.keyword2 != null)
-				return false;
-		} else if (!keyword2.equals(other.keyword2))
-			return false;
-		if (keyword3 == null) {
-			if (other.keyword3 != null)
-				return false;
-		} else if (!keyword3.equals(other.keyword3))
-			return false;
-		if (keyword4 == null) {
-			if (other.keyword4 != null)
-				return false;
-		} else if (!keyword4.equals(other.keyword4))
-			return false;
-		if (keyword5 == null) {
-			if (other.keyword5 != null)
-				return false;
-		} else if (!keyword5.equals(other.keyword5))
-			return false;
-		if (llShop == null) {
-			if (other.llShop != null)
-				return false;
-		} else if (!llShop.equals(other.llShop))
-			return false;
-		if (orderNumberOneDay1 != other.orderNumberOneDay1)
-			return false;
-		if (orderNumberOneDay2 != other.orderNumberOneDay2)
-			return false;
-		if (orderNumberOneDay3 != other.orderNumberOneDay3)
-			return false;
-		if (orderNumberOneDay4 != other.orderNumberOneDay4)
-			return false;
-		if (orderNumberOneDay5 != other.orderNumberOneDay5)
-			return false;
-		if (pageStayType != other.pageStayType)
-			return false;
-		if (searchSource != other.searchSource)
-			return false;
-		if (serverUser == null) {
-			if (other.serverUser != null)
-				return false;
-		} else if (!serverUser.equals(other.serverUser))
-			return false;
-		if (status != other.status)
-			return false;
-		if (taskId == null) {
-			if (other.taskId != null)
-				return false;
-		} else if (!taskId.equals(other.taskId))
-			return false;
-		if (taskType != other.taskType)
-			return false;
-		if (visitTimeType != other.visitTimeType)
-			return false;
-		return true;
-	}
 
 }

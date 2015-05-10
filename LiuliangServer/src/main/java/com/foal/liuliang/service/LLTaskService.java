@@ -199,8 +199,8 @@ public class LLTaskService extends DaoSupport {
             paramMap.put("taskId", llTaskRecordBean.getTaskId() );
         }
         if (!StringUtil.isEmpty(llTaskRecordBean.getGoodsName())) {
-            queryHql += " and s.goodsName = :goodsName";
-            paramMap.put("goodsName", llTaskRecordBean.getGoodsName() );
+            queryHql += " and s.goodsName like :goodsName";
+            paramMap.put("goodsName", "%" + llTaskRecordBean.getGoodsName() + "%" );
         }
         List list = this.hibernateDao.queryList(queryHql, llTaskRecordBean.getPage(), llTaskRecordBean.getPageSize(), paramMap);
         int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
@@ -211,6 +211,15 @@ public class LLTaskService extends DaoSupport {
         String queryHql = "from LLTask as s where s.serverUser.userId = :userId";
         Map paramMap = new HashMap();
         paramMap.put("userId", userId );
+        int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
+		return allRow;
+    }
+	
+	public int queryLLTaskRecordCountByStatus(String userId, int status) {
+        String queryHql = "from LLTask as s where s.serverUser.userId = :userId and s.status = :status";
+        Map paramMap = new HashMap();
+        paramMap.put("userId", userId );
+        paramMap.put("status", status );
         int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
 		return allRow;
     }

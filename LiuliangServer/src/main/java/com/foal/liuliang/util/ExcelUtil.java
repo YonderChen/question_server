@@ -2,6 +2,7 @@ package com.foal.liuliang.util;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -49,6 +50,38 @@ public class ExcelUtil {
 		return filePath;
 	}
 	
+	public static String exportRepositoryModule(String fileName, String fileDirPath, String sheetName, String[] title, List<String[]> data) throws Exception{
+		HSSFWorkbook wb = new HSSFWorkbook();
+		HSSFCellStyle style = wb.createCellStyle();
+		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);// 居中设置
+		HSSFSheet sheet = wb.createSheet(sheetName); 
+		insertTitleForRepository(sheet, style, title);
+		int currentRow = 0;
+		currentRow++;
+		for (String[] rowData : data) {
+			HSSFRow row = sheet.createRow(currentRow);
+			insertData(row, rowData);
+			currentRow++;
+		}
+		File file = new File(fileDirPath);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		String filePath = fileDirPath + "/" + fileName;
+		writeToDisk(wb, filePath);
+		return filePath;
+	}
+	
+	private static void insertTitleForRepository(HSSFSheet sheet, HSSFCellStyle style, String[] title) {
+		HSSFRow headRow = sheet.createRow(0);
+		for (int i = 0; i < title.length; i++) {
+			HSSFCell cell = headRow.createCell((short)i, HSSFCell.CELL_TYPE_STRING);
+			HSSFRichTextString ts = new HSSFRichTextString(title[i]);
+			cell.setCellValue(ts);
+			cell.setCellStyle(style);
+		}
+	}
+	
 	private static void insertTitleForRepository(HSSFSheet sheet, HSSFCellStyle style, String[] title, short[] width) {
 		HSSFRow headRow = sheet.createRow(0);
 		for (int i = 0; i < title.length; i++) {
@@ -60,7 +93,7 @@ public class ExcelUtil {
 		}
 	}
 	
-	private static void insertData(HSSFRow row, Object... data) {
+	private static void insertData(HSSFRow row, String... data) {
 		for (int i = 0; i < data.length; i++) {
 			HSSFCell cell = row.createCell((short)i, HSSFCell.CELL_TYPE_STRING);
 			HSSFRichTextString ts = new HSSFRichTextString((String)data[i]);

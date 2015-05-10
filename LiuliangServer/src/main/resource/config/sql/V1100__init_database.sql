@@ -295,6 +295,8 @@ CREATE TABLE `ll_task` (
   `is_quick_execute_` int(11) NOT NULL DEFAULT '0' COMMENT '是否优先执行',
   `cost_score_` int(11) NOT NULL COMMENT '消耗积分',
   `create_time_` datetime DEFAULT NULL COMMENT '创建时间',
+  `check_time` datetime DEFAULT NULL COMMENT '审核通过（开始执行）时间',
+  `check_admin_` varchar(64) DEFAULT NULL COMMENT '操作管理员id',
   `finish_time_` datetime DEFAULT NULL COMMENT '任务执行完毕时间',
   `status_` int(11) NOT NULL COMMENT '任务状态',
   PRIMARY KEY (`task_id_`)

@@ -43,6 +43,28 @@ public class LLScoreRecordService extends DaoSupport {
         int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
 		return new PageBean(list, allRow, llScoreRecordBean.getPage(), llScoreRecordBean.getPageSize());
     }
+
+	public List queryAllLLScoreRecord(LLScoreRecordBean llScoreRecordBean) {
+        String queryHql = "from LLScoreRecord as s where 1=1";
+        Map paramMap = new HashMap();
+        if (!StringUtil.isEmpty(llScoreRecordBean.getUserId())) {
+            queryHql += " and s.serverUser.userId = :userId";
+            paramMap.put("userId", llScoreRecordBean.getUserId() );
+        }
+        if (llScoreRecordBean.getType() != 0) {
+            queryHql += " and s.type = :type";
+            paramMap.put("type", llScoreRecordBean.getType() );
+		}
+        if (llScoreRecordBean.getBeginTime() != null) {
+            queryHql += " and s.createTime >= :beginTime";
+            paramMap.put("beginTime", llScoreRecordBean.getBeginTime() );
+        }
+        if (llScoreRecordBean.getEndTime() != null) {
+            queryHql += " and s.createTime <= :endTime";
+            paramMap.put("endTime", llScoreRecordBean.getEndTime() );
+        }
+        return this.hibernateDao.queryList(queryHql, paramMap);
+    }
 	
 }
 

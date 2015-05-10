@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.foal.liuliang.bean.LLTaskRecordBean;
 import com.foal.liuliang.bean.PageBean;
+import com.foal.liuliang.pojo.LLTask;
 import com.foal.liuliang.service.LLShopService;
 import com.foal.liuliang.service.LLTaskService;
 import com.foal.liuliang.web.UserBaseAction;
@@ -70,6 +71,11 @@ public class WelcomeAction extends UserBaseAction implements ModelDriven<LLTaskR
 		this.setAttrToRequest("llTaskRecordBean", llTaskRecordBean);
 		int allLLTaskCount = this.llTaskService.queryAllLLTaskRecordCount(llTaskRecordBean.getUserId());
 		this.setAttrToRequest("allLLTaskCount", allLLTaskCount);
+		int executingLLTaskCount = this.llTaskService.queryLLTaskRecordCountByStatus(llTaskRecordBean.getUserId(), LLTask.Status.Executing);
+		this.setAttrToRequest("executingLLTaskCount", executingLLTaskCount);
+		int finishLLTaskCount = this.llTaskService.queryLLTaskRecordCountByStatus(llTaskRecordBean.getUserId(), LLTask.Status.Finish);
+		this.setAttrToRequest("finishLLTaskCount", finishLLTaskCount);
+		this.setAttrToRequest("conditionAction", "/web/shop/center");
 		return SUCCESS;
 	}
 }

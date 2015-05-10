@@ -74,6 +74,9 @@
         <s:if test="#request.llTask.orderNumberOneDay5 > 0">
         	<p>${llTask.keyword5 } : ${llTask.orderNumberOneDay5 } 访客 / 天</p>
 		</s:if>
+	    <s:if test="#request.llTask.status == 2 || #request.llTask.status == 3">
+			<p>预计执行时间：<s:date name="#request.executeBegin" format="yyyy-MM-dd"/> —— <s:date name="#request.executeEnd" format="yyyy-MM-dd"/></p>
+		</s:if>
     </div>
     <div class="task-detail-right">
     	<div class="task-state">

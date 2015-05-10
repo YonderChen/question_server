@@ -2,6 +2,8 @@ package com.foal.liuliang.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,6 +37,12 @@ public class LLScoreRecord implements Serializable {
 	public static class ScoreRecordType {
 		public static final int Buy = 1;//购买
 		public static final int Cost = 2;//消费
+	}
+	
+	public static Map<Integer, String> ScoreRecordTypeMap = new HashMap<Integer, String>();
+	static {
+		ScoreRecordTypeMap.put(ScoreRecordType.Buy, "购买");
+		ScoreRecordTypeMap.put(ScoreRecordType.Cost, "消费");
 	}
 	
 	@GenericGenerator(name = "generator", strategy = "uuid")
