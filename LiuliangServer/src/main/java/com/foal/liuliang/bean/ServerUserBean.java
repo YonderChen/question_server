@@ -1,6 +1,7 @@
 package com.foal.liuliang.bean;
 
 public class ServerUserBean extends Page {
+	private int userType;
 	private String username;
 	private String password;
 	private String email;
@@ -13,6 +14,14 @@ public class ServerUserBean extends Page {
 	private String newPassword;
 	private String userqq;
 	private int status;
+
+	public int getUserType() {
+		return userType;
+	}
+
+	public void setUserType(int userType) {
+		this.userType = userType;
+	}
 
 	public String getUsername() {
 		return username;

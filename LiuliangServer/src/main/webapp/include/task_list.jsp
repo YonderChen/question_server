@@ -102,7 +102,7 @@
 													<td style="font-size: 14px; width: 15%;">
 														0 / ${record.durationDay}
 													</td>
-													<td style="font-size: 14px; width: 15%;">
+													<td id="status_${record.taskId}" style="font-size: 14px; width: 15%;">
 						                                <s:if test="status == 0">未发布</s:if>
 						                                <s:if test="status == 1">待审核</s:if>
 						                                <s:if test="status == 2">任务进行中</s:if>
@@ -111,13 +111,10 @@
 						                                <s:if test="status == 5">审核不通过</s:if>
 						                                <s:if test="status == 6">任务修改,待审核</s:if>
 													</td>
-													<td style="font-size: 14px; width: 12%;">
-						                                <s:if test="status == 0">
+													<td id="op_${record.taskId}" style="font-size: 14px; width: 12%;">
+						                                <s:if test="status == 0 || status == 5">
 															<a href="${ctx }/web/shop/taskmanage/add_task_step_two?taskId=${record.taskId}" class="jx-trade">继续发布</a>
-														</s:if>
-						                                <s:if test="status == 5">
-															<a href="#" class="jx-trade">取消任务</a>
-															<a href="#" class="jx-trade">修改任务</a>
+															<a href="javascript:cancelTask('${record.taskId}');" class="jx-trade">取消任务</a>
 														</s:if>
 													</td>
 												</tr>
@@ -135,3 +132,34 @@
 					</div>
                     
                 </div>
+
+<script type="text/javascript"> 
+
+function cancelTask(taskId){
+	var url = "${ctx}/web/shop/taskmanage/cancel_task";
+	$.ajax( {
+		url : url,
+		type : 'post',
+		data:{
+			taskId: taskId
+		},
+		dataType : 'text',
+		timeout : 60000,
+		error : function(e) {
+			alert("连接服务器超时,加载店铺列表失败,请稍后再试.");
+		},
+		success : function(result) {
+			if (!isOutTime(result)) {
+				result = eval("("+result+")");
+				if (result.success) {
+					alert("取消成功");
+					$("#status_" + taskId).html("已取消");
+					$("#op_" + taskId).html("");
+				} else {
+					alert(result.msg);
+				}
+			}
+		}
+	});
+}
+</script>

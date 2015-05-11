@@ -47,6 +47,8 @@ INSERT INTO `t_menu` VALUES ('600001', '600000', 1, '店铺审核', 'web/admin/u
 INSERT INTO `t_menu` VALUES ('600002', '600000', 1, '续费会员订单审核', 'web/admin/useradmin/verifymanage/dealmanage/index_vip_order', 'rightFrame', '600002', NULL, NULL);
 INSERT INTO `t_menu` VALUES ('600003', '600000', 1, '购买积分订单审核', 'web/admin/useradmin/verifymanage/dealmanage/index_score_order', 'rightFrame', '600003', NULL, NULL);
 INSERT INTO `t_menu` VALUES ('600004', '600000', 1, '任务列表', 'web/admin/useradmin/taskmanage/index', 'rightFrame', '600004', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('600005', '600000', '1', '商户管理', 'web/admin/useradmin/shopusermanage/index', 'rightFrame', '600005', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('600006', '600000', '1', '流量记录', 'web/admin/useradmin/liuliangmanage/index', 'rightFrame', '600006', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for t_role
@@ -67,7 +69,6 @@ CREATE TABLE `t_role` (
 -- ----------------------------
 INSERT INTO `t_role` VALUES ('100000', '超级管理员', '可管理后台整个系统', '2014-12-10 17:36:33', '2014-12-10 17:36:36', NULL);
 INSERT INTO `t_role` VALUES ('100001', '管理员', '管理员', '2015-4-7 19:41:27', '2015-4-7 19:42:04', '402881e846e4b3910146e4b8ce6c0004');
-INSERT INTO `t_role` VALUES ('100002', '商家用户', '店铺商家', '2015-4-7 19:41:57', '2015-4-7 19:41:57', '402881e846e4b3910146e4b8ce6c0004');
 
 -- ----------------------------
 -- Table structure for t_role_menu
@@ -94,6 +95,8 @@ INSERT INTO `t_role_menu` VALUES ('100000', '600001');
 INSERT INTO `t_role_menu` VALUES ('100000', '600002');
 INSERT INTO `t_role_menu` VALUES ('100000', '600003');
 INSERT INTO `t_role_menu` VALUES ('100000', '600004');
+INSERT INTO `t_role_menu` VALUES ('100000', '600005');
+INSERT INTO `t_role_menu` VALUES ('100000', '600006');
 INSERT INTO `t_role_menu` VALUES ('100001', '100000');
 INSERT INTO `t_role_menu` VALUES ('100001', '100001');
 INSERT INTO `t_role_menu` VALUES ('100001', '300000');
@@ -105,6 +108,8 @@ INSERT INTO `t_role_menu` VALUES ('100001', '600001');
 INSERT INTO `t_role_menu` VALUES ('100001', '600002');
 INSERT INTO `t_role_menu` VALUES ('100001', '600003');
 INSERT INTO `t_role_menu` VALUES ('100001', '600004');
+INSERT INTO `t_role_menu` VALUES ('100001', '600005');
+INSERT INTO `t_role_menu` VALUES ('100001', '600006');
 
 -- ----------------------------
 -- Table structure for t_server_user
@@ -112,6 +117,7 @@ INSERT INTO `t_role_menu` VALUES ('100001', '600004');
 DROP TABLE IF EXISTS `t_server_user`;
 CREATE TABLE `t_server_user` (
   `user_id_` varchar(64) NOT NULL,
+  `user_type_` int(11) NOT NULL,
   `username_` varchar(50) DEFAULT NULL,
   `assistant_password_` varchar(20) DEFAULT NULL,
   `encrypted_password_` varchar(50) DEFAULT NULL,
@@ -136,8 +142,8 @@ CREATE TABLE `t_server_user` (
 --  Records of `t_server_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_server_user` VALUES ('402881e846e4b3910146e4b8ce6c0004', 'admin', 'T0tQNVM=', '6cff5807cf61610da2446669acd09838', '超级管理员', '15000000000', 'admin@abc.com', null, '2014-12-10 11:11:11', '2015-03-27 15:32:39', '2015-03-27 15:49:26', '1', '127.0.0.1', 0, 0, NULL, NULL, NULL);
-INSERT INTO `t_server_user` VALUES ('402882044c981aee014c981b344a0001', 'useradmin', 'T0tQNVM=', '6cff5807cf61610da2446669acd09838', '管理员', '15000000000', 'useradmin@abc.com', '402881e846e4b3910146e4b8ce6c0004', '2014-12-10 11:11:11', '2015-03-27 15:32:39', '2015-03-27 15:49:26', '1', '127.0.0.1', 0, 0, NULL, NULL, NULL);
+INSERT INTO `t_server_user` VALUES ('402881e846e4b3910146e4b8ce6c0004', 1, 'admin', 'T0tQNVM=', '6cff5807cf61610da2446669acd09838', '超级管理员', '15000000000', 'admin@abc.com', null, '2014-12-10 11:11:11', '2015-03-27 15:32:39', '2015-03-27 15:49:26', '1', '127.0.0.1', 0, 0, NULL, NULL, NULL);
+INSERT INTO `t_server_user` VALUES ('402882044c981aee014c981b344a0001', 1, 'useradmin', 'T0tQNVM=', '6cff5807cf61610da2446669acd09838', '管理员', '15000000000', 'useradmin@abc.com', '402881e846e4b3910146e4b8ce6c0004', '2014-12-10 11:11:11', '2015-03-27 15:32:39', '2015-03-27 15:49:26', '1', '127.0.0.1', 0, 0, NULL, NULL, NULL);
 COMMIT;
 
 -- ----------------------------

@@ -12,7 +12,7 @@ import com.foal.liuliang.service.ServerUserService;
 import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
-@InterceptorRefs( { @InterceptorRef("interceptor-admin") })
+@InterceptorRefs( { @InterceptorRef("interceptor-shop") })
 public class UserInfoAction extends UserBaseAction implements ModelDriven<ServerUserBean> {
 
 	/**

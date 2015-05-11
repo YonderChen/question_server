@@ -8,20 +8,23 @@
                         <table width="95%" class="tablelist">
 				<thead>
 					<tr>
-						<th width="15%">
+						<th width="10%">
 							用户名
+						</th>
+						<th width="15%">
+							会员到期时间
+						</th>
+						<th width="10%">
+							剩余积分
 						</th>
 						<th width="15%">
 							联系电话
 						</th>
-						<th width="20%">
+						<th width="15%">
 							创建时间
 						</th>
-						<th width="20%">
+						<th width="15%">
 							最近登录时间
-						</th>
-						<th width="10%">
-							所属角色
 						</th>
 						<th width="10%">
 							状态
@@ -38,6 +41,12 @@
 							${user.username}
 						</td>
 						<td>
+							<s:date name="vipEndTime" format="yyyy-MM-dd HH:mm:ss"/>
+						</td>
+						<td>
+							${user.score}
+						</td>
+						<td>
 							${user.phone}
 						</td>
 						<td>
@@ -45,9 +54,6 @@
 						</td>
 						<td>
 							<s:date name="lastLoginTime" format="yyyy-MM-dd HH:mm:ss"/>
-						</td>
-						<td>
-							${user.roleName}
 						</td>
 						<td>
 							<s:if test="status == 1">正常</s:if>

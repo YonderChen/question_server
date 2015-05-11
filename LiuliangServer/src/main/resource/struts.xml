@@ -15,6 +15,16 @@
                 <!--                 定义拦截器栈包含authority拦截器  -->
                 <interceptor-ref name="authority-admin"/>
             </interceptor-stack>
+            <!--定义权限控制拦截器 -->
+            <interceptor name="authority-shop" class="com.foal.liuliang.interceptor.ShopAuthority"/>
+            
+            <!--             定义一个包含权限控制的拦截器栈 -->
+            <interceptor-stack name="interceptor-shop">
+                <!--                 定义拦截器栈包含default-stack拦截器栈 -->
+                <interceptor-ref name="defaultStack"/>
+                <!--                 定义拦截器栈包含authority拦截器  -->
+                <interceptor-ref name="authority-shop"/>
+            </interceptor-stack>
         </interceptors>
         <!-- 定义全局处理结果 -->
         <global-results>

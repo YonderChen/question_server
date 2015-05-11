@@ -23,7 +23,7 @@ import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
 @SuppressWarnings("unchecked")
-@InterceptorRefs( { @InterceptorRef("interceptor-admin") })
+@InterceptorRefs( { @InterceptorRef("interceptor-shop") })
 public class ScoreRecordAction extends UserBaseAction implements ModelDriven<LLScoreRecordBean>{
 
 	/**

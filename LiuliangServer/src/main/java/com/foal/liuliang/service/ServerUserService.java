@@ -11,11 +11,19 @@ import com.foal.liuliang.bean.PageBean;
 import com.foal.liuliang.bean.ServerUserBean;
 import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.dao.DaoSupport;
+import com.foal.liuliang.pojo.LLScoreOrder;
+import com.foal.liuliang.pojo.LLScoreRecord;
+import com.foal.liuliang.pojo.LLShop;
+import com.foal.liuliang.pojo.LLTask;
+import com.foal.liuliang.pojo.LLVIPOrder;
 import com.foal.liuliang.pojo.Menu;
 import com.foal.liuliang.pojo.Role;
+import com.foal.liuliang.pojo.RoleMenu;
 import com.foal.liuliang.pojo.ServerUser;
+import com.foal.liuliang.pojo.SystemParam;
 import com.foal.liuliang.pojo.UserRole;
 import com.foal.liuliang.pojo.UserRolePK;
+import com.foal.liuliang.util.StringTools;
 import com.foal.liuliang.util.StringUtil;
 
 @SuppressWarnings("unchecked")
@@ -63,6 +71,10 @@ public class ServerUserService extends DaoSupport {
 			queryHql += " and s.parent.userId is not null";
 		}
         Map paramMap = new HashMap();
+        if (serverUserBean.getUserType() > 0) {
+            queryHql += " and s.userType = :userType";
+            paramMap.put("userType", serverUserBean.getUserType() );
+        }
         if (!StringUtil.isEmpty(serverUserBean.getName())) {
             queryHql += " and s.name like :name";
             paramMap.put("name", "%" +serverUserBean.getName()+"%" );
@@ -100,17 +112,19 @@ public class ServerUserService extends DaoSupport {
 		user.setStatus(userBean.getStatus());
 		user.setModifyTime(new Date());
 		this.hibernateDao.update(user);
-		if (userBean.getOperator().getUserId().equals(Constant.ADMIN_ID) && !userBean.getUserId().equals(Constant.ADMIN_ID)) {
+		if (user.getUserType() == ServerUser.UserType.AdminUser && !userBean.getUserId().equals(Constant.ADMIN_ID)) {
 			List list = this.hibernateDao.queryList("from UserRole as u where u.pk.serverUser.userId = ?", userBean.getUserId());
 			this.hibernateDao.deleteAll(list);
-			String[] roleId = userBean.getRoleIds().split(",");
-			for (int i = 0; i < roleId.length; i++) {
-				UserRole ur = new UserRole();
-				UserRolePK pk = new UserRolePK();
-				pk.setRole(this.hibernateDao.get(Role.class, roleId[i]));
-				pk.setServerUser(user);
-				ur.setPk(pk);
-				this.hibernateDao.save(ur);
+			if (StringTools.isNotEmpty(userBean.getRoleIds())) {
+				String[] roleId = userBean.getRoleIds().split(",");
+				for (int i = 0; i < roleId.length; i++) {
+					UserRole ur = new UserRole();
+					UserRolePK pk = new UserRolePK();
+					pk.setRole(this.hibernateDao.get(Role.class, roleId[i]));
+					pk.setServerUser(user);
+					ur.setPk(pk);
+					this.hibernateDao.save(ur);
+				}
 			}
 		}
 		return user;
@@ -181,6 +195,7 @@ public class ServerUserService extends DaoSupport {
 			return true;
 		}
 		ServerUser user = new ServerUser();
+		user.setUserType(userBean.getUserType());
 		user.setUsername(userBean.getUsername());
 		user.setName(userBean.getName());
 		user.setPhone(userBean.getPhone());
@@ -206,5 +221,18 @@ public class ServerUserService extends DaoSupport {
 		return true;
 	}
 	
+	public void clearHibernateCache() {
+		this.hibernateDao.getSessionFactory().evict(LLScoreOrder.class);
+		this.hibernateDao.getSessionFactory().evict(LLScoreRecord.class);
+		this.hibernateDao.getSessionFactory().evict(LLShop.class);
+		this.hibernateDao.getSessionFactory().evict(LLTask.class);
+		this.hibernateDao.getSessionFactory().evict(LLVIPOrder.class);
+		this.hibernateDao.getSessionFactory().evict(Menu.class);
+		this.hibernateDao.getSessionFactory().evict(Role.class);
+		this.hibernateDao.getSessionFactory().evict(RoleMenu.class);
+		this.hibernateDao.getSessionFactory().evict(ServerUser.class);
+		this.hibernateDao.getSessionFactory().evict(SystemParam.class);
+		this.hibernateDao.getSessionFactory().evict(UserRole.class);
+	}
 }
 

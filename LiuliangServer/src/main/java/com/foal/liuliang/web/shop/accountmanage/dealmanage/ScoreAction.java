@@ -14,7 +14,7 @@ import com.foal.liuliang.util.FileUtil;
 import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
-@InterceptorRefs( { @InterceptorRef("interceptor-admin") })
+@InterceptorRefs( { @InterceptorRef("interceptor-shop") })
 public class ScoreAction extends UserBaseAction implements ModelDriven<LLDealOrderBean>{
 
 	/**

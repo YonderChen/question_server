@@ -16,7 +16,7 @@ import com.foal.liuliang.service.LLTaskService;
 import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
-@InterceptorRefs( { @InterceptorRef("interceptor-admin") })
+@InterceptorRefs( { @InterceptorRef("interceptor-shop") })
 public class WelcomeAction extends UserBaseAction implements ModelDriven<LLTaskRecordBean> {
 
 	/**

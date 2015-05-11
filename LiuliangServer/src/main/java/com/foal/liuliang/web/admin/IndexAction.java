@@ -35,27 +35,6 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 		return SUCCESS;
 	}
 	
-	@Action("register")
-	public String register() {
-		StringBuffer sb = new StringBuffer();
-		userBean.setRoleIds(Constant.ROLE_ID_USER_SHOP);
-		userBean.setOperator(serverUserService.getServerUser(Constant.ADMIN_ID));
-        boolean result = this.serverUserService.addServerUser(userBean, sb);
-        if (result) {
-   			ajaxBean = new AjaxBean(true, "新增成功.");
-   			String redirectUrl = Constant.PRO_CTX_VALUE + "/web/admin/index";
-   			this.setAttrToSession("redirectUrl", redirectUrl);
-   			ajaxBean = new AjaxBean(true);
-   			ajaxBean.setRedirectUrl(redirectUrl);
-   			this.ajaxWrite(ajaxBean);
-   		} else {
-   			ajaxBean = new AjaxBean(false, sb.toString());
-   	   		return null;
-   		}
-   		this.ajaxWrite(ajaxBean);
-		return null;
-	}
-	
 	@Action("login")
 	public String login() {
 		/*
@@ -75,6 +54,10 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 		if (user == null) {
 			ajaxBean = new AjaxBean(false, sb.toString());
 			this.ajaxWrite(ajaxBean);
+			return null;
+		}
+		if (user.getUserType() != ServerUser.UserType.AdminUser) {
+			this.ajaxWrite(new AjaxBean(false, "你没有权限登录该页面"));
 			return null;
 		}
 		this.setAttrToSession("loginLast", user.getLastLoginTime());

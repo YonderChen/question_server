@@ -26,6 +26,7 @@ public class ServerUser implements Serializable {
 	 */
 	private static final long serialVersionUID = -765325582266116562L;
 	private String userId;
+	private int userType;
 	private String username;
 	private String encryptedPassword;
 	private String assistantPassword;
@@ -45,6 +46,11 @@ public class ServerUser implements Serializable {
 
 	private String roleName;
 
+	public class UserType {
+		public static final int AdminUser = 1;//管理员
+		public static final int ShopUser = 2;//商户
+	}
+
 	public class Status {
 		public static final int Normal = 1;//正常
 		public static final int Freeze = 2;//冻结
@@ -60,6 +66,15 @@ public class ServerUser implements Serializable {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	@Column(name = "user_type_")
+	public int getUserType() {
+		return userType;
+	}
+
+	public void setUserType(int userType) {
+		this.userType = userType;
 	}
 
 	@Column(name = "status_")

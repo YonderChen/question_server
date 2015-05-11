@@ -1,4 +1,4 @@
-package com.foal.liuliang.web.admin.useradmin.user;
+package com.foal.liuliang.web.admin.useradmin.shopusermanage;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
@@ -43,7 +43,7 @@ public class UserAction extends UserBaseAction implements ModelDriven<ServerUser
     @Action("list")
     public String list() {
     	serverUserBean.setOperator(getSessionServerUser());
-    	serverUserBean.setUserType(ServerUser.UserType.AdminUser);
+    	serverUserBean.setUserType(ServerUser.UserType.ShopUser);
         PageBean pageBean = this.serverUserService.queryServerUser(serverUserBean);
 		for (int i = 0; i < pageBean.getList().size(); i++) {
 			ServerUser user = (ServerUser)pageBean.getList().get(i);
@@ -56,14 +56,6 @@ public class UserAction extends UserBaseAction implements ModelDriven<ServerUser
     @Action("edit_input")
     public String editInput() {
     	ServerUser user = this.serverUserService.getServerUser(serverUserBean.getUserId());
-    	if (!user.getUserId().equals(Constant.ADMIN_ID)) {
-    		this.setAttrToRequest("roleIds", this.roleService.queryRoleId(serverUserBean.getUserId()));
-        	this.setAttrToRequest("roleList", this.roleService.queryRole());
-        	this.setAttrToRequest("isAdmin", true);
-    	} else {
-    		this.setAttrToRequest("isAdmin", false);
-    		user.setRoleName(this.roleService.queryRoleName(user.getUserId()));
-    	}
     	this.setAttrToRequest("user", user);
         return SUCCESS;
     }
@@ -71,7 +63,7 @@ public class UserAction extends UserBaseAction implements ModelDriven<ServerUser
     @Action("edit")
    	public String edit() {
     	serverUserBean.setOperator(this.getSessionServerUser());
-    	serverUserBean.setUserType(ServerUser.UserType.AdminUser);
+    	serverUserBean.setUserType(ServerUser.UserType.ShopUser);
         ServerUser user = this.serverUserService.updateServerUserInfo(serverUserBean);
         if (user != null) {
    			ajaxBean = new AjaxBean(true, "编辑成功.");

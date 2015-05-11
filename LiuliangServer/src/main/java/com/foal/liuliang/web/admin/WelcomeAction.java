@@ -1,7 +1,6 @@
 package com.foal.liuliang.web.admin;
 
 import java.util.Date;
-import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
@@ -12,7 +11,6 @@ import com.foal.liuliang.bean.AjaxBean;
 import com.foal.liuliang.bean.ServerUserBean;
 import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.pojo.ServerUser;
-import com.foal.liuliang.service.RoleService;
 import com.foal.liuliang.service.ServerUserService;
 import com.foal.liuliang.util.StringUtil;
 import com.foal.liuliang.web.UserBaseAction;
@@ -28,9 +26,6 @@ public class WelcomeAction extends UserBaseAction implements ModelDriven<ServerU
 
 	@Autowired
 	private ServerUserService serverUserService;
-	
-	@Autowired
-	private RoleService roleService;
 
 	private ServerUserBean userBean = new ServerUserBean();
 
@@ -78,14 +73,14 @@ public class WelcomeAction extends UserBaseAction implements ModelDriven<ServerU
 
 	@Action("baseinfo")
 	public String baseinfo() {
-		ServerUser loginUser = this.getSessionServerUser();
-		List<String> roleIds = roleService.queryRoleIds(loginUser.getUserId());
-		int isShopUser = 1;
-		if (!roleIds.contains(Constant.ROLE_ID_USER_SHOP)) {
-			isShopUser = 0;
-		}
-		this.setAttrToRequest("isShopUser", isShopUser);
 		this.setAttrToRequest("nowDate", new Date());
 		return SUCCESS;
+	}
+	
+	@Action("clear_hibernate_query_cache")
+	public String clearHibernateQueryCache() {
+		serverUserService.clearHibernateCache();
+		this.ajaxWrite(new AjaxBean(true, "清除hibernate缓存成功"));
+		return null;
 	}
 }

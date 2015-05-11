@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta http-equiv="X-UA-Compatible"content="IE=10; IE=9; IE=8; IE=7; IE=EDGE">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
@@ -20,9 +19,51 @@
     <link rel="stylesheet" href="${ctx}/static_shop/style/register.css">
     <link rel="stylesheet" href="${ctx}/static_shop/style/release.css">
     <link rel="stylesheet" href="${ctx}/static_shop/style/detail.css">
+	<script type="text/javascript">
+
+	function isOutTime(result) {
+		if (result.indexOf("win.location.href='${ctx}/web/admin/index'") > 0) {
+			alert("登录超时,请重新登录.");
+			var win = window;
+			while (win != window.parent) {
+				win = window.parent;
+			}
+			win.location.href='${ctx}/web/admin/index';
+			return true;
+		}
+		return false;
+	}
+	
+	function check_task(taskId){
+		var url = "${ctx}/web/admin/useradmin/taskmanage/check_task";
+		$.ajax( {
+			url : url,
+			type : 'post',
+			data : {
+				taskId : taskId,
+			},
+			dataType : 'text',
+			timeout : 60000,
+			error : function(e) {
+				alert("审核失败，连接异常");
+			},
+			success : function(result) {
+				if (!isOutTime(result)) {
+					result = eval("("+result+")");
+					if (result.success) {
+						$("#task_status_"+taskId).html("执行中");
+						$("#check_a_"+taskId).remove();
+						alert(result.msg);
+					} else {
+						alert(result.msg);
+					}
+				}
+			}
+		});
+	}
+</script>
 </head>
 <body>
-			<jsp:include page="/include/top.jsp" flush="true"></jsp:include>
 <div class="breadcrumbs">
     <div class="wrap"><a href="${ctx}">首页</a> &gt; <a href="#">任务详情</a></div>
 </div>
@@ -74,14 +115,11 @@
         <s:if test="#request.llTask.orderNumberOneDay5 > 0">
         	<p>${llTask.keyword5 } : ${llTask.orderNumberOneDay5 } 访客 / 天</p>
 		</s:if>
-	    <s:if test="#request.llTask.status == 2 || #request.llTask.status == 3">
-			<p>预计执行时间：<s:date name="#request.executeBegin" format="yyyy-MM-dd"/> —— <s:date name="#request.executeEnd" format="yyyy-MM-dd"/></p>
-		</s:if>
     </div>
     <div class="task-detail-right">
     	<div class="task-state">
         	<h4 class="f16"><i></i>任务状态：
-        		<span id="task_status">
+        		<span id="task_status_${llTask.taskId}">
 		            <s:if test="#request.llTask.status == 0">未发布</s:if>
 		            <s:if test="#request.llTask.status == 1">待审核</s:if>
 		            <s:if test="#request.llTask.status == 2">任务进行中</s:if>
@@ -91,15 +129,8 @@
 		            <s:if test="#request.llTask.status == 6">任务修改,待审核</s:if>
 	            </span>
 			</h4>
-			<s:if test="#request.llTask.status == 0 || #request.llTask.status == 5">
-            	<p id="task_op" class="main-f">您还可以：
-            		<br>
-            		<br>
-            		<a style="margin-left: 50px;" href="${ctx }/web/shop/taskmanage/add_task_step_two?taskId=${llTask.taskId}"><em>继续发布</em></a>
-            		<br>
-            		<br>
-            		<a style="margin-left: 50px;" href="javascript:cancelTask('${llTask.taskId}');"><em>取消任务</em></a>
-            	</p>
+			<s:if test="#request.llTask.status == 1">
+            	<p id="check_a_${llTask.taskId}" class="main-f">点击审核：<a href="javascript:check_task('${llTask.taskId}')"><em>通过审核</em></a></p>
             </s:if>
         </div>
     </div>
@@ -245,34 +276,4 @@
 </div>
 			<jsp:include page="/include/footer.jsp" flush="true"></jsp:include>
 
-<script type="text/javascript"> 
-
-function cancelTask(taskId){
-	var url = "${ctx}/web/shop/taskmanage/cancel_task";
-	$.ajax( {
-		url : url,
-		type : 'post',
-		data:{
-			taskId: taskId
-		},
-		dataType : 'text',
-		timeout : 60000,
-		error : function(e) {
-			alert("连接服务器超时,加载店铺列表失败,请稍后再试.");
-		},
-		success : function(result) {
-			if (!isOutTime(result)) {
-				result = eval("("+result+")");
-				if (result.success) {
-					alert("取消成功");
-					$("#task_status").html("已取消");
-					$("#task_op").html("");
-				} else {
-					alert(result.msg);
-				}
-			}
-		}
-	});
-}
-</script>
 </body></html>

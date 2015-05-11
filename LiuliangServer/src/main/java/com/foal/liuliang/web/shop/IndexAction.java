@@ -1,7 +1,5 @@
 package com.foal.liuliang.web.shop;
 
-import java.util.List;
-
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,6 @@ import com.foal.liuliang.bean.AjaxBean;
 import com.foal.liuliang.bean.ServerUserBean;
 import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.pojo.ServerUser;
-import com.foal.liuliang.service.RoleService;
 import com.foal.liuliang.service.ServerUserService;
 import com.foal.liuliang.util.MD5Tools;
 import com.foal.liuliang.util.MailUtil;
@@ -29,9 +26,6 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 	
 	@Autowired
 	private ServerUserService serverUserService;
-	
-	@Autowired
-	private RoleService roleService;
 
 	public ServerUserBean getModel() {
 		return this.userBean;
@@ -45,8 +39,9 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 	@Action("register")
 	public String register() {
 		StringBuffer sb = new StringBuffer();
-		userBean.setRoleIds(Constant.ROLE_ID_USER_SHOP);
+		userBean.setRoleIds("");
 		userBean.setOperator(serverUserService.getServerUser(Constant.ADMIN_ID));
+		userBean.setUserType(ServerUser.UserType.ShopUser);
         boolean result = this.serverUserService.addServerUser(userBean, sb);
         if (result) {
    			ajaxBean = new AjaxBean(true, "新增成功.");
@@ -84,13 +79,9 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 			this.ajaxWrite(ajaxBean);
 			return null;
 		}
-		if (!Constant.ADMIN_ID.equals(user.getUserId())) {	//不是超级管理员，验证路径权限
-			List<String> roleIds = roleService.queryRoleIds(user.getUserId());
-			if (!roleIds.contains(Constant.ROLE_ID_USER_SHOP)) {
-				ajaxBean = new AjaxBean(false, "您没有权限访问该页面");
-				this.ajaxWrite(ajaxBean);
-				return null;
-			}
+		if (user.getUserType() != ServerUser.UserType.ShopUser && !Constant.ADMIN_ID.equals(user.getUserId())) {
+			this.ajaxWrite(new AjaxBean(false, "你没有权限登录该页面"));
+			return null;
 		}
 		this.setAttrToSession("loginLast", user.getLastLoginTime());
 		user.setLastLoginIp(this.getRequest().getRemoteAddr());

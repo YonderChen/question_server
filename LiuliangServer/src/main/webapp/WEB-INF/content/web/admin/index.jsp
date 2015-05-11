@@ -147,12 +147,8 @@
 						</li>
 						<li>
 							<input id="loginBtn" type="button" class="loginbtn" value="登录" onclick="javascript:login();"  data-toggle="button" data-loading-text="登录"/>
-							<input id="registerBtn" type="button" class="loginbtn" value="注册" onclick="javascript:window.location.href='${ctx}/register.jsp'" />
 							<label>
 								<input name="rememberMe" id="rememberMe" type="checkbox" />记住密码
-							</label>
-							<label>
-								<a href="${ctx}/forget.jsp">忘记密码</a>
 							</label>
 						</li>
 					</ul>

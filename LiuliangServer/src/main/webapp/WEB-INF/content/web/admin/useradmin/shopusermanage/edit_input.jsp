@@ -27,12 +27,4 @@
 					</select>
     </td>
   </tr>
-	<tr>
-    <td align="right" style="padding-top:5px;">所属角色<em class="text-error"  style="font-size:16px">*</em>：</td>
-    <td id="roleTd_e">
-    <s:iterator value="#request.roleList" id="role">
-		<label class="checkbox inline" title="${role.description }"><input type="checkbox" id="${role.roleId }"/>${role.name }</label>
-	</s:iterator>
-    </td>
-  </tr>
 </table>

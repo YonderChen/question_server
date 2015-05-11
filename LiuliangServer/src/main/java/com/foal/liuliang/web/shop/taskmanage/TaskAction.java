@@ -25,7 +25,7 @@ import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
 @SuppressWarnings("unchecked")
-@InterceptorRefs( { @InterceptorRef("interceptor-admin") })
+@InterceptorRefs( { @InterceptorRef("interceptor-shop") })
 public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean>{
 	
 	/**
@@ -86,6 +86,10 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 				this.alertAndRedirect(null, "web/shop/taskmanage/add_task_step_one");
 				return null;
 			}
+			if (task.getStatus() != LLTask.Status.Create && task.getStatus() != LLTask.Status.VerifyFaild) {
+				this.alertAndRedirect("当前该任务状态为不可编辑状态！", "web/shop/taskmanage/add_task_failed");
+				return null;
+			}
 			this.setAttrToRequest("llTask", task);
 		}
 		return SUCCESS;
@@ -134,6 +138,17 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 				this.alertAndRedirect("vip有效期已过，请先续费vip", "web/shop/taskmanage/add_task_step_one");
 				return null;
 			} 
+			if (StringTools.isNotEmpty(llTaskBean.getTaskId())) {
+				LLTask task = llTaskService.getLLTask(llTaskBean.getTaskId());
+				if (task == null) {
+					this.alertAndRedirect("任务发布失败，请从第一步重试", "web/shop/taskmanage/add_task_failed");
+					return null;
+				}
+				if (task.getStatus() != LLTask.Status.Create && task.getStatus() != LLTask.Status.VerifyFaild) {
+					this.alertAndRedirect("当前该任务状态为不可编辑状态！", "web/shop/taskmanage/add_task_failed");
+					return null;
+				}
+			}
 			//店铺审核验证处理
 			LLShop shop = llShopService.getShop(llTaskBean.getShopId());
 			if (shop == null) {
@@ -180,8 +195,9 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 			if (task == null) {
 				this.alertAndRedirect("任务发布失败，请从第一步重试", "web/shop/taskmanage/add_task_failed");
 			}
-			if (task.getStatus() != LLTask.Status.Create) {
-				this.alertAndRedirect("改任务已经发布过！", "web/shop/taskmanage/add_task_failed");
+			if (task.getStatus() != LLTask.Status.Create && task.getStatus() != LLTask.Status.VerifyFaild) {
+				this.alertAndRedirect("当前该任务状态为不可编辑状态！", "web/shop/taskmanage/add_task_failed");
+				return null;
 			}
 			//店铺审核验证处理
 			LLShop shop = task.getLlShop();
@@ -315,5 +331,26 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 			}
 		}
 		return SUCCESS;
+	}
+
+	@Action("cancel_task")
+	public String cancelTask(){
+		if (StringTools.isEmpty(llTaskBean.getTaskId())) {
+			this.alertAndGoBack("任务不存在！");
+			return null;
+		}
+		LLTask llTask = llTaskService.getLLTask(llTaskBean.getTaskId());
+		if (llTask == null) {
+			this.alertAndGoBack("任务不存在！");
+			return null;
+		}
+		if (llTask.getStatus() != LLTask.Status.Create && llTask.getStatus() != LLTask.Status.VerifyFaild) {
+			this.alertAndRedirect("当前该任务状态为不可编辑状态！", "web/shop/taskmanage/add_task_failed");
+			return null;
+		}
+		llTask.setStatus(LLTask.Status.Cancel);
+		llTaskService.updateLLTask(llTask);
+		this.ajaxWrite(new AjaxBean(true, "修改成功"));
+		return null;
 	}
 }

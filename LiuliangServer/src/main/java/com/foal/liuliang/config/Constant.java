@@ -28,9 +28,6 @@ public class Constant {
 	
 	public static final String ADMIN_ID = "402881e846e4b3910146e4b8ce6c0004";
 	
-	public static final String ROLE_ID_USER_ADMIN = "100001";
-	public static final String ROLE_ID_USER_SHOP = "100002";
-
 	public static final String EMAIL_STMP_SERVER_KEY = "emailStmpServer";
 	public static final String EMAIL_USERNAME_KEY = "emailUsername";
 	public static final String EMAIL_PASSWORD_KEY = "emailPassword";
