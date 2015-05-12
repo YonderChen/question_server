@@ -36,6 +36,15 @@ public class AppUserService extends DaoSupport {
 		return false;
 	}
 
+	public AppUser getAppUserByUsername(String username) {
+		String queryHql = "from AppUser as u where u.username = ?";
+		List<AppUser> list = this.hibernateDao.queryList(queryHql, username);
+		if (list == null || list.size() == 0) {
+			return null;
+		}
+		return list.get(0);
+	}
+
 	public AppUser getAppUserByUsernameAndPwd(String username, String password) {
 		String queryHql = "from AppUser as u where u.username = ? and password = ?";
 		List<AppUser> list = this.hibernateDao.queryList(queryHql, username, MD5Tools.hashToMD5(password + Constant.PASSWORD_SECRET_KEY));

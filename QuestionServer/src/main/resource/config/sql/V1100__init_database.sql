@@ -158,16 +158,18 @@ DROP TABLE IF EXISTS `app_user`;
 CREATE TABLE `app_user` (
   `uid_` varchar(50) NOT NULL COMMENT '本地id',
   `user_type_` int(11) NOT NULL COMMENT '用户类型，0：第三方平台，1：本地账户',
-  `open_id_` varchar(100) DEFAULT NULL COMMENT '第三方id',
-  `username_` varchar(100) DEFAULT NULL COMMENT '用户名',
-  `password_` varchar(255) DEFAULT NULL COMMENT '密码',
+  `open_id_` varchar(100) NOT NULL COMMENT '第三方id',
+  `username_` varchar(100) NOT NULL COMMENT '用户名',
+  `password_` varchar(255) NOT NULL COMMENT '密码',
   `name_` varchar(255) DEFAULT NULL COMMENT '昵称',
   `gender_` varchar(20) DEFAULT NULL COMMENT '性别',
   `figureurl_` varchar(255) DEFAULT NULL COMMENT '头像url',
   `create_time_` datetime NOT NULL COMMENT '用户创建时间',
   `update_at_` datetime NOT NULL COMMENT '最近一次更新时间',
   `status_` int NOT NULL COMMENT '用户状态，0：正常，1：禁言，2：封号',
-  PRIMARY KEY (`uid_`)
+  PRIMARY KEY (`uid_`),
+  KEY `open_id_index_` (`open_id_`) USING BTREE,
+  KEY `username_index_` (`username_`) USING BTREE
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------

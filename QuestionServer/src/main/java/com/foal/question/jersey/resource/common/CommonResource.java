@@ -112,6 +112,7 @@ public class CommonResource {
 			Date now = new Date();
 			AppUser appUser = new AppUser();
 			appUser.setUserType(AppUser.UserType.Local);
+			appUser.setOpenId("");
 			appUser.setUsername(username);
 			appUser.setPassword(MD5Tools.hashToMD5(password + Constant.PASSWORD_SECRET_KEY));
 			appUser.setName(name);
@@ -146,12 +147,13 @@ public class CommonResource {
 			ret.setResult(RetCode.Faild, "用户名不能为空");
 			return ret.toJson();
 		}
-		if (!appUserService.isUsernameExist(username)) {
+		AppUser appUser = appUserService.getAppUserByUsername(username);
+		if (appUser == null) {
 			ret.setResult(RetCode.Faild, "用户名不存在");
 			return ret.toJson();
 		}
-		AppUser appUser = appUserService.getAppUserByUsernameAndPwd(username, password);
-		if (appUser == null) {
+		String checkPwd = MD5Tools.hashToMD5(password + Constant.PASSWORD_SECRET_KEY);
+		if (!checkPwd.equals(appUser.getPassword())) {
 			ret.setResult(RetCode.Faild, "用户名密码错误");
 			return ret.toJson();
 		}
@@ -184,6 +186,8 @@ public class CommonResource {
 			appUser = new AppUser();
 			appUser.setUserType(userType);
 			appUser.setOpenId(openId);
+			appUser.setUsername("");
+			appUser.setPassword("");
 			appUser.setName(name);
 			appUser.setGender(gender);
 			appUser.setFigureurl(figureurl);
