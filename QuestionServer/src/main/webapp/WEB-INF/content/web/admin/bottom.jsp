@@ -7,7 +7,7 @@
 	</head>
 	<body>
 		<div class="topleft1">
-			Copyright©2015 yonder
+			© 2015-2017 yujianni520.com 版权所有 ICP证：闽ICP备15008824号-2
 		</div>
 	</body>
 </html>

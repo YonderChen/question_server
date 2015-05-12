@@ -23,7 +23,7 @@
 					<b style="font-style: normal; color: gray; font-size: 10px;"><s:date name="#request.record.createTime" format="yyyy-MM-dd HH:mm:ss"/></b>
 				</td>
 				<td align="right">
-					<b style="font-style: normal; color: blue; font-size: 10px; margin-right: 10px;"><a href="http://121.43.150.13/QuestionServer/home.html">遇见你, 听你说</a></b>
+					<b style="font-style: normal; color: blue; font-size: 10px; margin-right: 10px;"><a href="http://www.yujianni520.com">遇见你, 听你说</a></b>
 				</td>
 			</tr>
 			<tr>
@@ -53,7 +53,7 @@
 								<h5>在最美的文字里遇见你</h5>
 							</td>
 							<td>
-								<button class="btn btn-primary" data-toggle="button" data-loading-text="下载" onclick="location.href='http://121.43.150.13/QuestionServer/home.html';">下载</button>
+								<button class="btn btn-primary" data-toggle="button" data-loading-text="下载" onclick="location.href='http://www.yujianni520.com';">下载</button>
 							</td>
 						</tr>
 					</table>

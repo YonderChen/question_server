@@ -6,9 +6,9 @@
 		<title>出错啦！</title>
 		<link rel="shortcut icon" href="${ctx }/images/favicon.ico" type="image/x-icon" />
 		<link rel="icon" href="${ctx }/images/favicon.ico" type="image/x-icon" />
-		<link type="text/css" href="${ctx}/style/style1.css" rel="stylesheet" />
+		<link type="text/css" href="${ctx}/style/style.css" rel="stylesheet"/>
 	</head>
-	<body style="background-color:#1c77ac; background-image:url(${ctx}/images1/light.png); background-repeat:no-repeat; background-position:center top; overflow:hidden;">
+	<body style="background-color:#1c77ac; background-image:url(${ctx}/images/light.png); background-repeat:no-repeat; background-position:center top; overflow:hidden;">
 		<div id="mainBody">
 			<div id="cloud1" class="cloud"></div>
 			<div id="cloud2" class="cloud"></div>
@@ -24,7 +24,7 @@
 
 		</table>
 		<div class="loginbm">
-			Copyright©2015 yonder
+			© 2015-2017 yujianni520.com 版权所有 ICP证：闽ICP备15008824号-2
 		</div>
 
 	</body>
