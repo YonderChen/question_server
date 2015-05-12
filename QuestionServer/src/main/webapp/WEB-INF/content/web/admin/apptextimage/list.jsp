@@ -47,7 +47,7 @@
 							${record.content}
 						</td>
 						<td>
-							<img alt="" style="max-height: 150px; max-width: 150px;" src="${ctx}${record.imageUrl}" />
+							<img alt="" style="max-height: 150px; max-width: 150px;" src="${ctx}${record.imageUrl}" onclick="javascript:showImg('${ctx}${record.imageUrl}');" />
 						</td>
 						<td>
 							<s:date name="createTime" format="yyyy-MM-dd HH:mm:ss"/>
