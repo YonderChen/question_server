@@ -161,6 +161,8 @@ public class CommonResource {
 			ret.setResult(RetCode.Faild, "该帐号已经被封，请联系管理人员");
 			return ret.toJson();
 		}
+		appUser.setUpdateAt(new Date());
+		appUserService.updateAppUser(appUser);
 		ret.setResult(RetCode.Success);
 		ret.add("uid", appUser.getUid());
 		ret.add("name", appUser.getName());
