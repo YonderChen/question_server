@@ -9,7 +9,7 @@
 				<thead>
 					<tr>
 						<th width="10%">
-							用户名
+							平台账号
 						</th>
 						<th width="15%">
 							会员到期时间
@@ -18,13 +18,13 @@
 							剩余积分
 						</th>
 						<th width="15%">
-							联系电话
+							邮箱
 						</th>
 						<th width="15%">
-							创建时间
+							QQ
 						</th>
 						<th width="15%">
-							最近登录时间
+							手机
 						</th>
 						<th width="10%">
 							状态
@@ -47,13 +47,13 @@
 							${user.score}
 						</td>
 						<td>
+							${user.email}
+						</td>
+						<td>
+							${user.userqq}
+						</td>
+						<td>
 							${user.phone}
-						</td>
-						<td>
-							<s:date name="createTime" format="yyyy-MM-dd HH:mm:ss"/>
-						</td>
-						<td>
-							<s:date name="lastLoginTime" format="yyyy-MM-dd HH:mm:ss"/>
 						</td>
 						<td>
 							<s:if test="status == 1">正常</s:if>

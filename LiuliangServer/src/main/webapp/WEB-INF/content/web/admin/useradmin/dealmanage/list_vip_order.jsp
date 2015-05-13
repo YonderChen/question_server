@@ -87,5 +87,5 @@
 					</s:iterator>
 				</tbody>
 			</table>
-			<jsp:include page="../../../include/ajax_pager.jsp" flush="true"></jsp:include>
+			<jsp:include page="../../include/ajax_pager.jsp" flush="true"></jsp:include>
 </s:else>

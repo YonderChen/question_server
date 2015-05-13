@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<title></title>
-		<jsp:include page="../../../include/style.jsp" flush="true"></jsp:include>
+		<jsp:include page="../../include/style.jsp" flush="true"></jsp:include>
 	<script type="text/javascript">
 	function preFunArray() {
 		var funs = new Array();
@@ -26,7 +26,7 @@
 		}
 		$("#searchBtn").button('loading');
 		$("#ajaxSearchId").html("<div class='no-found'>加载中...</div>");
-		var url = "${ctx}/web/admin/useradmin/verifymanage/shopmanage/list";
+		var url = "${ctx}/web/admin/useradmin/dealmanage/list_vip_order";
 		$.ajax( {
 			url : url,
 			type : 'post',
@@ -53,13 +53,13 @@
 		});
 	}
 	
-	function check_shop(shopId, status) {
-		var url = "${ctx}/web/admin/useradmin/verifymanage/shopmanage/check_shop";
+	function check_vip_order(orderId, status) {
+		var url = "${ctx}/web/admin/useradmin/dealmanage/check_vip_order";
 		$.ajax( {
 			url : url,
 			type : 'post',
 			data : {
-				shopId : shopId,
+				orderId : orderId,
 				status : status
 			},
 			dataType : 'text',
@@ -81,13 +81,23 @@
 						} else {
 							status_desc = "审核失败";
 						}
-						$("#status_"+shopId).html(status_desc);
-						$("#op_"+shopId).html("无");
+						$("#status_"+orderId).html(status_desc);
+						$("#op_"+orderId).html("无");
 						alert("操作成功");
 					}
 				}
 			}
 		});
+	}
+	
+	function showImg(photo_url) {
+		$('#showImg').modal('show');
+		//设置显示放大后的图片位置  
+		$("#showImg").find("img").attr("src", photo_url);  
+		//单击放大后的图片消失  
+		$("#showImg").click(function(){  
+			$('#showImg').modal('hide');
+		});  
 	}
 </script>
 	</head>
@@ -99,7 +109,7 @@
 					账户管理
 				</li>
 				<li>
-					购买积分列表
+					会员续费列表
 				</li>
 			</ul>
 		</div>
@@ -132,5 +142,12 @@
 			</div>
 		</div>
 		
+		
+		<div id="showImg" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" style="z-index:100000;position: absolute;" data-backdrop="static">
+            <img id="showImg_img" />  
+	        <div style="display: none;">
+				<button id="closeShowButton" class="btn btn-cancel" data-dismiss="modal" aria-hidden="true" data-toggle="button" data-loading-text="关闭">关闭</button>
+			</div>
+	    </div>
 	</body>
 </html>

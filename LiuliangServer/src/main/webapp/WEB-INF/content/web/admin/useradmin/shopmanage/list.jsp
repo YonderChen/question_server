@@ -9,10 +9,13 @@
 				<thead>
 					<tr>
 						<th width="10%">
-							用户名
+							平台账号
 						</th>
 						<th width="10%">
-							店铺旺旺
+							店铺名称
+						</th>
+						<th width="10%">
+							绑定平台
 						</th>
 						<th width="20%">
 							店铺地址
@@ -41,6 +44,11 @@
 							${shop.bindName }
 						</td>
 						<td>
+							<s:if test="bindPlat == 'taobao'">淘宝</s:if>
+							<s:if test="bindPlat == 'tmall'">天猫</s:if>
+							<s:if test="bindPlat == 'jd'">京东</s:if>
+						</td>
+						<td>
 							${shop.shopUrl}
 						</td>
 						<td>
@@ -51,23 +59,15 @@
 						</td>
 						<td id="status_${shop.shopId}">
 							<s:if test="status == 0">待审核</s:if>
-							<s:else>
-								<s:if test="status == 1">审核通过</s:if>
-								<s:else>审核失败</s:else>
-							</s:else>
+							<s:if test="status == 1">审核通过</s:if>
+							<s:if test="status == 2">审核失败</s:if>
 						</td>
 						<td id="op_${shop.shopId}">
-							<s:if test="status == 0">
-								<button class="btn btn-link" type="button" onclick="javascript:check_shop('${shop.shopId}', 1);" data-toggle="button" data-loading-text="<i class='icon-pencil'></i>&nbsp;通过"><i class="icon-pencil"></i>&nbsp;通过</button>
-								<button class="btn btn-link" type="button" onclick="javascript:check_shop('${shop.shopId}', -1);" data-toggle="button" data-loading-text="<i class='icon-pencil'></i>&nbsp;拒绝"><i class="icon-pencil"></i>&nbsp;拒绝</button>
-							</s:if>
-							<s:else>
-								无
-							</s:else>
+							<button class="btn btn-link" type="button" onclick="javascript:editInput('${shop.shopId }');" data-toggle="button" data-loading-text="<i class='icon-pencil'></i>&nbsp;编辑"><i class="icon-pencil"></i>&nbsp;编辑</button>
 						</td>
 					</tr>
 					</s:iterator>
 				</tbody>
 			</table>
-			<jsp:include page="../../../include/ajax_pager.jsp" flush="true"></jsp:include>
+			<jsp:include page="../../include/ajax_pager.jsp" flush="true"></jsp:include>
 </s:else>

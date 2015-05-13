@@ -94,7 +94,7 @@ public class ScoreRecordAction extends UserBaseAction implements ModelDriven<LLS
 		cal.set(Calendar.MINUTE, 59);
 		cal.set(Calendar.SECOND, 59);
 		llscoreRecordBean.setEndTime(cal.getTime());
-		List list = this.llScoreRecordService.queryAllLLScoreRecord(llscoreRecordBean);
+		List list = this.llScoreRecordService.queryExportLLScoreRecord(llscoreRecordBean);
 		try {
 			String filePath = exportFile(list);
 			this.ajaxWrite(new AjaxBean(true, filePath));
@@ -108,7 +108,7 @@ public class ScoreRecordAction extends UserBaseAction implements ModelDriven<LLS
     public String exportAll() {
 		LLScoreRecordBean bean = new LLScoreRecordBean();
 		bean.setUserId(getSessionServerUser().getUserId());
-		List list = this.llScoreRecordService.queryAllLLScoreRecord(bean);
+		List list = this.llScoreRecordService.queryExportLLScoreRecord(bean);
 		try {
 			String filePath = exportFile(list);
 			this.ajaxWrite(new AjaxBean(true, filePath));

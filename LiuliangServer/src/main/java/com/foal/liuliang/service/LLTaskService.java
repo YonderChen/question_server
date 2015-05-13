@@ -139,7 +139,7 @@ public class LLTaskService extends DaoSupport {
 		
 		LLScoreRecord record = new LLScoreRecord();
 		record.setServerUser(serverUser);
-		record.setNum(costScore);
+		record.setNum(0 - costScore);
 		record.setType(LLScoreRecord.ScoreRecordType.Cost);
 		record.setRemain(serverUser.getScore());
 		record.setCreateTime(now);

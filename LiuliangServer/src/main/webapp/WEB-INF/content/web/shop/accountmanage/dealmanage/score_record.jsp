@@ -81,6 +81,9 @@
 										<s:if test="type == 1">购买</s:if>
 										<s:else>
 											<s:if test="type == 2">消费</s:if>
+											<s:else>
+												<s:if test="type == 3">管理员修改</s:if>
+											</s:else>
 										</s:else>
 									</td>
 									<td>

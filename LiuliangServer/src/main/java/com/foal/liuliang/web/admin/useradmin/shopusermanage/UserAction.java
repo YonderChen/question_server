@@ -1,5 +1,7 @@
 package com.foal.liuliang.web.admin.useradmin.shopusermanage;
 
+import java.util.Calendar;
+
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
@@ -8,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.foal.liuliang.bean.AjaxBean;
 import com.foal.liuliang.bean.PageBean;
 import com.foal.liuliang.bean.ServerUserBean;
-import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.pojo.ServerUser;
 import com.foal.liuliang.service.RoleService;
 import com.foal.liuliang.service.ServerUserService;
@@ -43,8 +44,23 @@ public class UserAction extends UserBaseAction implements ModelDriven<ServerUser
     @Action("list")
     public String list() {
     	serverUserBean.setOperator(getSessionServerUser());
-    	serverUserBean.setUserType(ServerUser.UserType.ShopUser);
-        PageBean pageBean = this.serverUserService.queryServerUser(serverUserBean);
+		if (serverUserBean.getBeginTime() != null) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(serverUserBean.getBeginTime());
+			cal.set(Calendar.HOUR_OF_DAY, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			serverUserBean.setBeginTime(cal.getTime());
+		}
+		if (serverUserBean.getEndTime() != null) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(serverUserBean.getEndTime());
+			cal.set(Calendar.HOUR_OF_DAY, 23);
+			cal.set(Calendar.MINUTE, 59);
+			cal.set(Calendar.SECOND, 59);
+			serverUserBean.setEndTime(cal.getTime());
+		}
+        PageBean pageBean = this.serverUserService.queryShopUser(serverUserBean);
 		for (int i = 0; i < pageBean.getList().size(); i++) {
 			ServerUser user = (ServerUser)pageBean.getList().get(i);
 			user.setRoleName(this.roleService.queryRoleName(user.getUserId()));
@@ -63,35 +79,12 @@ public class UserAction extends UserBaseAction implements ModelDriven<ServerUser
     @Action("edit")
    	public String edit() {
     	serverUserBean.setOperator(this.getSessionServerUser());
-    	serverUserBean.setUserType(ServerUser.UserType.ShopUser);
-        ServerUser user = this.serverUserService.updateServerUserInfo(serverUserBean);
+        ServerUser user = this.serverUserService.updateShopUserInfo(serverUserBean);
         if (user != null) {
    			ajaxBean = new AjaxBean(true, "编辑成功.");
    			this.updateSessionUser(user);
    		} else {
    			ajaxBean = new AjaxBean(false, "该用户不存在.");
-   		}
-   		this.ajaxWrite(ajaxBean);
-   		return null;
-   	}
-    
-    @Action("add_input")
-    public String addInput() {
-    	this.setAttrToRequest("roleList", this.roleService.queryRole());
-        return SUCCESS;
-    }
-    
-    @Action("add")
-   	public String add() {
-    	serverUserBean.setOperator(this.getSessionServerUser());
-    	StringBuffer sb = new StringBuffer();
-    	serverUserBean.setPassword(Constant.INIT_PASSWORD);
-    	serverUserBean.setUserType(ServerUser.UserType.AdminUser);
-        boolean result = this.serverUserService.addServerUser(serverUserBean, sb);
-        if (result) {
-   			ajaxBean = new AjaxBean(true, "新增成功.");
-   		} else {
-   			ajaxBean = new AjaxBean(false, sb.toString());
    		}
    		this.ajaxWrite(ajaxBean);
    		return null;

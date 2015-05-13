@@ -195,13 +195,29 @@ public class LLShopService extends DaoSupport {
 	public PageBean queryLLShop(LLShopBean llShopBean) {
         String queryHql = "from LLShop as s where 1=1";
         Map paramMap = new HashMap();
-        if (!StringUtil.isEmpty(llShopBean.getUserId())) {
-            queryHql += " and s.serverUser.userId = :userId";
-            paramMap.put("userId", llShopBean.getUserId() );
+        if (!StringUtil.isEmpty(llShopBean.getUsername())) {
+            queryHql += " and s.serverUser.username = :username";
+            paramMap.put("username", llShopBean.getUsername() );
+        }
+        if (!StringUtil.isEmpty(llShopBean.getBindName())) {
+            queryHql += " and s.bindName like :bindName";
+            paramMap.put("bindName", "%" +llShopBean.getBindName() + "%" );
         }
         if (!StringUtil.isEmpty(llShopBean.getBindPlat())) {
             queryHql += " and s.bindPlat = :bindPlat";
             paramMap.put("bindPlat", llShopBean.getBindPlat() );
+        }
+        if (llShopBean.getStatus() >= 0) {
+            queryHql += " and s.status = :status";
+            paramMap.put("status", llShopBean.getStatus() );
+        }
+        if (llShopBean.getBeginTime() != null) {
+            queryHql += " and s.createTime >= :beginTime";
+            paramMap.put("beginTime", llShopBean.getBeginTime() );
+        }
+        if (llShopBean.getEndTime() != null) {
+            queryHql += " and s.createTime <= :endTime";
+            paramMap.put("endTime", llShopBean.getEndTime() );
         }
         List list = this.hibernateDao.queryList(queryHql, llShopBean.getPage(), llShopBean.getPageSize(), paramMap);
         int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
@@ -239,6 +255,27 @@ public class LLShopService extends DaoSupport {
 	
 	public LLShop getShop(String shopId) {
 		return this.hibernateDao.get(LLShop.class, shopId);
+	}
+	
+	public LLShop updateShop(LLShopBean llShopBean) {
+		LLShop llShop = this.getShop(llShopBean.getShopId());
+		if (llShop == null) {
+			return null;
+		}
+		llShop.setBindName(llShopBean.getBindName());
+		llShop.setBindPlat(llShopBean.getBindPlat());
+		llShop.setShopUrl(llShopBean.getShopUrl());
+		llShop.setVerifyGoodsUrl(llShopBean.getVerifyGoodsUrl());
+		llShop.setVerifyCode(llShopBean.getVerifyCode());
+		if (llShop.getStatus() != llShopBean.getStatus()) {
+			if (llShopBean.getStatus() == LLShop.Status.Success) {
+				llShop.setCheckAdmin(llShopBean.getOperator());
+				llShop.setCheckTime(new Date());
+			}
+			llShop.setStatus(llShopBean.getStatus());
+		}
+		this.hibernateDao.update(llShop);
+		return llShop;
 	}
 	
 	public int getShopNum(String userId, String bindPlat) {

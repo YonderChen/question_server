@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<title></title>
-		<jsp:include page="../../../include/style.jsp" flush="true"></jsp:include>
+		<jsp:include page="../../include/style.jsp" flush="true"></jsp:include>
 	<script type="text/javascript">
 	function preFunArray() {
 		var funs = new Array();
@@ -26,7 +26,7 @@
 		}
 		$("#searchBtn").button('loading');
 		$("#ajaxSearchId").html("<div class='no-found'>加载中...</div>");
-		var url = "${ctx}/web/admin/useradmin/verifymanage/dealmanage/list_vip_order";
+		var url = "${ctx}/web/admin/useradmin/dealmanage/list_score_order";
 		$.ajax( {
 			url : url,
 			type : 'post',
@@ -53,8 +53,8 @@
 		});
 	}
 	
-	function check_vip_order(orderId, status) {
-		var url = "${ctx}/web/admin/useradmin/verifymanage/dealmanage/check_vip_order";
+	function check_score_order(orderId, status) {
+		var url = "${ctx}/web/admin/useradmin/dealmanage/check_score_order";
 		$.ajax( {
 			url : url,
 			type : 'post',
@@ -109,7 +109,7 @@
 					账户管理
 				</li>
 				<li>
-					会员续费列表
+					购买积分列表
 				</li>
 			</ul>
 		</div>
@@ -141,7 +141,6 @@
 			
 			</div>
 		</div>
-		
 		
 		<div id="showImg" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" style="z-index:100000;position: absolute;" data-backdrop="static">
             <img id="showImg_img" />  

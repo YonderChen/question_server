@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.foal.liuliang.bean.PageBean;
@@ -30,6 +31,9 @@ import com.foal.liuliang.util.StringUtil;
 @Service(value = "serverUserService")
 public class ServerUserService extends DaoSupport {
 
+	@Autowired
+	LLScoreRecordService llScoreRecordService;
+	
 	public ServerUser queryServerUser(ServerUserBean userBean, StringBuffer sb) {
 		String queryHql = "from ServerUser as t where t.username = ?";
 		List list = this.hibernateDao.queryList(queryHql, userBean.getUsername());
@@ -71,10 +75,8 @@ public class ServerUserService extends DaoSupport {
 			queryHql += " and s.parent.userId is not null";
 		}
         Map paramMap = new HashMap();
-        if (serverUserBean.getUserType() > 0) {
-            queryHql += " and s.userType = :userType";
-            paramMap.put("userType", serverUserBean.getUserType() );
-        }
+        queryHql += " and s.userType = :userType";
+        paramMap.put("userType", ServerUser.UserType.AdminUser );
         if (!StringUtil.isEmpty(serverUserBean.getName())) {
             queryHql += " and s.name like :name";
             paramMap.put("name", "%" +serverUserBean.getName()+"%" );
@@ -85,6 +87,32 @@ public class ServerUserService extends DaoSupport {
         }
         int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
         queryHql += " order by s.createTime desc";
+        List list = this.hibernateDao.queryList(queryHql, serverUserBean.getPage(), serverUserBean.getPageSize(), paramMap);
+        return new PageBean(list, allRow, serverUserBean.getPage(), serverUserBean.getPageSize());
+    }
+	
+	public PageBean queryShopUser(ServerUserBean serverUserBean) {
+        String queryHql = "from ServerUser as s where 1 = 1";
+        if (!serverUserBean.getOperator().getUserId().equals(Constant.ADMIN_ID)) {
+			queryHql += " and s.parent.userId is not null";
+		}
+        Map paramMap = new HashMap();
+        queryHql += " and s.userType = :userType";
+        paramMap.put("userType", ServerUser.UserType.ShopUser );
+        if (!StringUtil.isEmpty(serverUserBean.getUsername())) {
+            queryHql += " and s.username like :username";
+            paramMap.put("username", "%" +serverUserBean.getUsername()+"%" );
+        }
+        if (serverUserBean.getBeginTime() != null) {
+            queryHql += " and s.vipEndTime >= :beginTime";
+            paramMap.put("beginTime", serverUserBean.getBeginTime() );
+        }
+        if (serverUserBean.getEndTime() != null) {
+            queryHql += " and s.vipEndTime <= :endTime";
+            paramMap.put("endTime", serverUserBean.getEndTime() );
+        }
+        int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
+        queryHql += " order by s.modifyTime desc";
         List list = this.hibernateDao.queryList(queryHql, serverUserBean.getPage(), serverUserBean.getPageSize(), paramMap);
         return new PageBean(list, allRow, serverUserBean.getPage(), serverUserBean.getPageSize());
     }
@@ -112,7 +140,7 @@ public class ServerUserService extends DaoSupport {
 		user.setStatus(userBean.getStatus());
 		user.setModifyTime(new Date());
 		this.hibernateDao.update(user);
-		if (user.getUserType() == ServerUser.UserType.AdminUser && !userBean.getUserId().equals(Constant.ADMIN_ID)) {
+		if (!userBean.getUserId().equals(Constant.ADMIN_ID)) {
 			List list = this.hibernateDao.queryList("from UserRole as u where u.pk.serverUser.userId = ?", userBean.getUserId());
 			this.hibernateDao.deleteAll(list);
 			if (StringTools.isNotEmpty(userBean.getRoleIds())) {
@@ -126,6 +154,35 @@ public class ServerUserService extends DaoSupport {
 					this.hibernateDao.save(ur);
 				}
 			}
+		}
+		return user;
+	}
+	
+	public ServerUser updateShopUserInfo(ServerUserBean userBean) {
+		ServerUser user = this.getServerUser(userBean.getUserId());
+		if (user == null) {
+			return null;
+		}
+		Date now = new Date();
+		int oldScore = user.getScore();
+		user.setVipEndTime(userBean.getVipEndTime());
+		user.setScore(userBean.getScore());
+		user.setEmail(userBean.getEmail());
+		user.setUserqq(userBean.getUserqq());
+		user.setPhone(userBean.getPhone());
+		user.setStatus(userBean.getStatus());
+		user.setModifyTime(now);
+		this.hibernateDao.update(user);
+		int scoreChange = user.getScore() - oldScore;
+		if (scoreChange != 0) {
+			LLScoreRecord record = new LLScoreRecord();
+			record.setServerUser(user);
+			record.setNum(scoreChange);
+			record.setType(LLScoreRecord.ScoreRecordType.AdminEdit);
+			record.setRemain(user.getScore());
+			record.setCreateTime(now);
+			record.setRemark("");
+			llScoreRecordService.add(record);
 		}
 		return user;
 	}

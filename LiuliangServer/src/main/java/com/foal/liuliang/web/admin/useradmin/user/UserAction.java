@@ -43,7 +43,6 @@ public class UserAction extends UserBaseAction implements ModelDriven<ServerUser
     @Action("list")
     public String list() {
     	serverUserBean.setOperator(getSessionServerUser());
-    	serverUserBean.setUserType(ServerUser.UserType.AdminUser);
         PageBean pageBean = this.serverUserService.queryServerUser(serverUserBean);
 		for (int i = 0; i < pageBean.getList().size(); i++) {
 			ServerUser user = (ServerUser)pageBean.getList().get(i);
@@ -71,7 +70,6 @@ public class UserAction extends UserBaseAction implements ModelDriven<ServerUser
     @Action("edit")
    	public String edit() {
     	serverUserBean.setOperator(this.getSessionServerUser());
-    	serverUserBean.setUserType(ServerUser.UserType.AdminUser);
         ServerUser user = this.serverUserService.updateServerUserInfo(serverUserBean);
         if (user != null) {
    			ajaxBean = new AjaxBean(true, "编辑成功.");

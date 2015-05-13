@@ -1,5 +1,7 @@
 package com.foal.liuliang.bean;
 
+import java.util.Date;
+
 public class ServerUserBean extends Page {
 	private int userType;
 	private String username;
@@ -13,7 +15,12 @@ public class ServerUserBean extends Page {
 	private String oldPassword;
 	private String newPassword;
 	private String userqq;
+	private int score;
+	private Date vipEndTime;
 	private int status;
+	
+	private Date beginTime;
+	private Date endTime;
 
 	public int getUserType() {
 		return userType;
@@ -117,6 +124,38 @@ public class ServerUserBean extends Page {
 
 	public void setUserqq(String userqq) {
 		this.userqq = userqq;
+	}
+
+	public Date getVipEndTime() {
+		return vipEndTime;
+	}
+
+	public void setVipEndTime(Date vipEndTime) {
+		this.vipEndTime = vipEndTime;
+	}
+	
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public Date getBeginTime() {
+		return beginTime;
+	}
+
+	public void setBeginTime(Date beginTime) {
+		this.beginTime = beginTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 }
