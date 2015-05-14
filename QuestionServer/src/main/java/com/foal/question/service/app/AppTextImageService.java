@@ -99,9 +99,9 @@ public class AppTextImageService extends DaoSupport {
 	public List<AppTextImage> getRecordByOwner(String ownerId, int orderBy, int page, int pageSize) {
 		String queryHql;
 		if (orderBy == 0) {
-			queryHql = "from AppTextImage v where v.ownerId = ? order by v.createTime desc";
+			queryHql = "from AppTextImage v where v.owner.uid = ? order by v.createTime desc";
 		} else {
-			queryHql = "from AppTextImage v where v.ownerId = ? order by v.praiseCount desc";
+			queryHql = "from AppTextImage v where v.owner.uid = ? order by v.praiseCount desc";
 		}
 		return this.hibernateDao.queryList(queryHql, page, pageSize, ownerId);
 	}
@@ -148,7 +148,7 @@ public class AppTextImageService extends DaoSupport {
 			paramMap.put("id", appTextImageBean.getId());
 		}
 		if (!StringUtil.isEmpty(appTextImageBean.getOwnerId())) {
-			queryHql += " and r.ownerId = :ownerId";
+			queryHql += " and r.owner.uid = :ownerId";
 			paramMap.put("ownerId", appTextImageBean.getOwnerId());
 		}
 		int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);

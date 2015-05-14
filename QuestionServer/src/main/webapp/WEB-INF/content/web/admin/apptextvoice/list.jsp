@@ -13,19 +13,25 @@
 						<th width="15%">
 							作者uid
 						</th>
-						<th width="20%">
+						<th width="10%">
+							昵称
+						</th>
+						<th width="10%">
+							头像
+						</th>
+						<th width="15%">
 							文字内容
 						</th>
-						<th width="20%">
+						<th width="15%">
 							声音
 						</th>
 						<th width="10%">
 							发表时间
 						</th>
-						<th width="10%">
+						<th width="5%">
 							点赞数
 						</th>
-						<th width="10%">
+						<th width="5%">
 							分享数
 						</th>
 						<th width="10%">
@@ -40,7 +46,14 @@
 							${record.id}
 						</td>
 						<td>
-							${record.ownerId}
+							${record.owner.uid}
+						</td>
+						<td>
+							${record.owner.name}
+						</td>
+						<td>
+							<s:if test="owner.userType == 1"><img alt="" width="50px" height="50px" src="${ctx}${record.owner.figureurl}" /></s:if>
+							<s:else><img alt="" width="50px" height="50px" src="${record.owner.figureurl}" /></s:else>
 						</td>
 						<td>
 							${record.content}

@@ -99,9 +99,9 @@ public class AppTextVoiceService extends DaoSupport {
 	public List<AppTextVoice> getRecordByOwner(String ownerId, int orderBy, int page, int pageSize) {
 		String queryHql;
 		if (orderBy == 0) {
-			queryHql = "from AppTextVoice v where v.ownerId = ? order by v.createTime desc";
+			queryHql = "from AppTextVoice v where v.owner.uid = ? order by v.createTime desc";
 		} else {
-			queryHql = "from AppTextVoice v where v.ownerId = ? order by v.praiseCount desc";
+			queryHql = "from AppTextVoice v where v.owner.uid = ? order by v.praiseCount desc";
 		}
 		return this.hibernateDao.queryList(queryHql, page, pageSize, ownerId);
 	}
@@ -148,7 +148,7 @@ public class AppTextVoiceService extends DaoSupport {
 			paramMap.put("id", appTextVoiceBean.getId());
 		}
 		if (!StringUtil.isEmpty(appTextVoiceBean.getOwnerId())) {
-			queryHql += " and r.ownerId = :ownerId";
+			queryHql += " and r.owner.uid = :ownerId";
 			paramMap.put("ownerId", appTextVoiceBean.getOwnerId());
 		}
 		int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);

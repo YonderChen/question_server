@@ -13,6 +13,7 @@ import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Index;
 
 import com.foal.question.util.GsonTools;
 import com.google.gson.JsonObject;
@@ -66,6 +67,7 @@ public class AppUser implements Serializable{
 	public void setUserType(int userType) {
 		this.userType = userType;
 	}
+	@Index(name = "open_id_index_")
 	@Column(name = "open_id_")
 	public String getOpenId() {
 		return openId;
@@ -73,6 +75,7 @@ public class AppUser implements Serializable{
 	public void setOpenId(String openId) {
 		this.openId = openId;
 	}
+	@Index(name = "username_index_")
 	@Column(name = "username_")
 	public String getUsername() {
 		return username;

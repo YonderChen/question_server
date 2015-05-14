@@ -77,7 +77,7 @@ public class TextVoiceResource {
 			String voiceUrl = ResourceTools.uploadFile(param.getFileItemList(), ResourceTools.getVoiceSuffixs(), Constant.UPLOAD_VOICE_PATH);
 			AppTextVoice record = new AppTextVoice();
 			record.setContent(content);
-			record.setOwnerId(uid);
+			record.setOwner(user);
 			record.setVoiceUrl(voiceUrl);
 			//获取图片信息
 			JsonObject voiceInfo = new JsonObject();
@@ -88,7 +88,7 @@ public class TextVoiceResource {
 			record.setPraiseCount(0);
 			record.setShareCount(0);
 			appTextVoiceService.addRecord(record);
-			ret.add("text_voice", record.toJson(user, false));
+			ret.add("text_voice", record.toJson(false));
 			ret.setResult(RetCode.Success);
 		} catch (Exception e) {
 			logger.error("发送文字声音失败", e);
@@ -117,7 +117,7 @@ public class TextVoiceResource {
 		List<AppTextVoice> recordList = appTextVoiceService.getRecordByOwner(uid, orderBy, page, pageSize);
 		JsonArray retJa = new JsonArray();
 		for (AppTextVoice record : recordList) {
-			retJa.add(getRetRecordJson(user, record, uid));
+			retJa.add(getRetRecordJson(record, uid));
 		}
 		ret.add("text_voices", retJa);
 		ret.setResult(RetCode.Success);
@@ -146,7 +146,7 @@ public class TextVoiceResource {
 		List<AppTextVoice> recordList = appTextVoiceService.getRecordByOwner(targetUid, orderBy, page, pageSize);
 		JsonArray retJa = new JsonArray();
 		for (AppTextVoice record : recordList) {
-			retJa.add(getRetRecordJson(targetUser, record, uid));
+			retJa.add(getRetRecordJson(record, uid));
 		}
 		ret.add("text_voices", retJa);
 		ret.setResult(RetCode.Success);
@@ -169,17 +169,16 @@ public class TextVoiceResource {
 		List<AppTextVoice> recordList = appTextVoiceService.getPublicRecord(orderBy, page, pageSize);
 		JsonArray retJa = new JsonArray();
 		for (AppTextVoice record : recordList) {
-			AppUser user = appTextVoiceService.getAppUserService().getAppUserById(record.getOwnerId());
-			retJa.add(getRetRecordJson(user, record, uid));
+			retJa.add(getRetRecordJson(record, uid));
 		}
 		ret.add("text_voices", retJa);
 		ret.setResult(RetCode.Success);
 		return ret.toJson();
 	}
 	
-	private JsonObject getRetRecordJson(AppUser user, AppTextVoice record, String uid) {
+	private JsonObject getRetRecordJson(AppTextVoice record, String uid) {
 		boolean hasPraised = appTextVoiceService.hasPraised(record.getId(), uid);
-		return record.toJson(user, hasPraised);
+		return record.toJson(hasPraised);
 	}
 
 	/**
@@ -223,7 +222,7 @@ public class TextVoiceResource {
 			ret.setResult(RetCode.Faild, "要删除的记录不存在");
 			return ret.toJson();
 		}
-		if (!StringTools.equalsStr(record.getOwnerId(), uid)) {
+		if (!StringTools.equalsStr(record.getOwner().getUid(), uid)) {
 			ret.setResult(RetCode.Faild, "该记录不属于你，不能进行删除");
 			return ret.toJson();
 		}

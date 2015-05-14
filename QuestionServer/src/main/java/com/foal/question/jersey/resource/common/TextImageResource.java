@@ -80,7 +80,7 @@ public class TextImageResource {
 			String imageUrl = ResourceTools.uploadFile(param.getFileItemList(), ResourceTools.getImageSuffixs(), Constant.UPLOAD_IMAGE_PATH);
 			AppTextImage record = new AppTextImage();
 			record.setContent(content);
-			record.setOwnerId(uid);
+			record.setOwner(user);
 			record.setImageUrl(imageUrl);
 			//获取图片信息
 			int width = 0;
@@ -99,7 +99,7 @@ public class TextImageResource {
 			record.setPraiseCount(0);
 			record.setShareCount(0);
 			appTextImageService.addRecord(record);
-			ret.add("text_image", record.toJson(user, false));
+			ret.add("text_image", record.toJson(false));
 			ret.setResult(RetCode.Success);
 		} catch (Exception e) {
 			logger.error("发送文字图片失败", e);
@@ -128,7 +128,7 @@ public class TextImageResource {
 		List<AppTextImage> recordList = appTextImageService.getRecordByOwner(uid, orderBy, page, pageSize);
 		JsonArray retJa = new JsonArray();
 		for (AppTextImage record : recordList) {
-			retJa.add(getRetRecordJson(user, record, uid));
+			retJa.add(getRetRecordJson(record, uid));
 		}
 		ret.add("text_images", retJa);
 		ret.setResult(RetCode.Success);
@@ -157,7 +157,7 @@ public class TextImageResource {
 		List<AppTextImage> recordList = appTextImageService.getRecordByOwner(targetUid, orderBy, page, pageSize);
 		JsonArray retJa = new JsonArray();
 		for (AppTextImage record : recordList) {
-			retJa.add(getRetRecordJson(targetUser, record, uid));
+			retJa.add(getRetRecordJson(record, uid));
 		}
 		ret.add("text_images", retJa);
 		ret.setResult(RetCode.Success);
@@ -180,17 +180,16 @@ public class TextImageResource {
 		List<AppTextImage> recordList = appTextImageService.getPublicRecord(orderBy, page, pageSize);
 		JsonArray retJa = new JsonArray();
 		for (AppTextImage record : recordList) {
-			AppUser user = appTextImageService.getAppUserService().getAppUserById(record.getOwnerId());
-			retJa.add(getRetRecordJson(user, record, uid));
+			retJa.add(getRetRecordJson(record, uid));
 		}
 		ret.add("text_images", retJa);
 		ret.setResult(RetCode.Success);
 		return ret.toJson();
 	}
 	
-	private JsonObject getRetRecordJson(AppUser user, AppTextImage record, String uid) {
+	private JsonObject getRetRecordJson(AppTextImage record, String uid) {
 		boolean hasPraised = appTextImageService.hasPraised(record.getId(), uid);
-		return record.toJson(user, hasPraised);
+		return record.toJson(hasPraised);
 	}
 	
 	/**
@@ -240,7 +239,7 @@ public class TextImageResource {
 			ret.setResult(RetCode.Faild, "要删除的记录不存在");
 			return ret.toJson();
 		}
-		if (!StringTools.equalsStr(record.getOwnerId(), uid)) {
+		if (!StringTools.equalsStr(record.getOwner().getUid(), uid)) {
 			ret.setResult(RetCode.Faild, "该记录不属于你，不能进行删除");
 			return ret.toJson();
 		}

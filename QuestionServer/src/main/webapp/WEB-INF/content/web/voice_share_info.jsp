@@ -44,14 +44,15 @@ $(document).ready(function(){
 	var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
 	var isMicroMessenger = u.indexOf('MicroMessenger') > -1; //微信中打开
 	function linkToAppDownloadPage(){
-		if(isAndroid){
-			location.href='http://a.app.qq.com/o/simple.jsp?pkgname=com.example.yujianni';
-		}
-		else{
-			if(isMicroMessenger){
-				alert("微信用户请在浏览器中打开该页面在点击下载。");
+		if(isMicroMessenger){
+			location.href='http://a.app.qq.com/o/simple.jsp?pkgname=com.example.yujianni&g_f=991653'
+		} else {
+			if(isAndroid){
+				location.href='http://a.app.qq.com/o/simple.jsp?pkgname=com.example.yujianni&g_f=991653';
 			}
-			location.href='https://itunes.apple.com/us/app/yu-jian-ni/id983458853?l=zh&ls=1&mt=8';
+			else{
+				location.href='https://itunes.apple.com/us/app/yu-jian-ni/id983458853?l=zh&ls=1&mt=8';
+			}
 		}
 	}
 </script>

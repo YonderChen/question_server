@@ -14,10 +14,16 @@
 						<th width="15%">
 							作者uid
 						</th>
-						<th width="20%">
+						<th width="10%">
+							昵称
+						</th>
+						<th width="10%">
+							头像
+						</th>
+						<th width="15%">
 							文字内容
 						</th>
-						<th width="30%">
+						<th width="15%">
 							图片
 						</th>
 						<th width="10%">
@@ -41,7 +47,14 @@
 							${record.id}
 						</td>
 						<td>
-							${record.ownerId}
+							${record.owner.uid}
+						</td>
+						<td>
+							${record.owner.name}
+						</td>
+						<td>
+							<s:if test="owner.userType == 1"><img alt="" width="50px" height="50px" src="${ctx}${record.owner.figureurl}" /></s:if>
+							<s:else><img alt="" width="50px" height="50px" src="${record.owner.figureurl}" /></s:else>
 						</td>
 						<td>
 							${record.content}

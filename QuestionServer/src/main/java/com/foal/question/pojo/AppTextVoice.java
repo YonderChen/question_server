@@ -5,8 +5,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
@@ -16,7 +19,6 @@ import org.hibernate.annotations.Index;
 
 import com.foal.question.config.Constant;
 import com.foal.question.util.GsonTools;
-import com.foal.question.util.StringTools;
 import com.google.gson.JsonObject;
 
 @Entity
@@ -28,7 +30,7 @@ public class AppTextVoice implements Serializable{
 	 */
 	private static final long serialVersionUID = -2915678199478151293L;
 	private int id;
-	private String ownerId;
+	private AppUser owner;
 	private String content;
 	private String voiceUrl;
 	private String voiceInfo;
@@ -47,12 +49,13 @@ public class AppTextVoice implements Serializable{
 		this.id = id;
 	}
 	@Index(name = "owner_id_index")
-	@Column(name = "owner_id_")
-	public String getOwnerId() {
-		return ownerId;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "owner_id_")
+	public AppUser getOwner() {
+		return owner;
 	}
-	public void setOwnerId(String ownerId) {
-		this.ownerId = ownerId;
+	public void setOwner(AppUser owner) {
+		this.owner = owner;
 	}
 	@Column(name = "content_")
 	public String getContent() {
@@ -110,17 +113,16 @@ public class AppTextVoice implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
-		result = prime * result + ((ownerId == null) ? 0 : ownerId.hashCode());
 		result = prime * result + ((content == null) ? 0 : content.hashCode());
-		result = prime * result + ((voiceUrl == null) ? 0 : voiceUrl.hashCode());
-		result = prime * result + ((voiceInfo == null) ? 0 : voiceInfo.hashCode());
 		result = prime * result + ((createTime == null) ? 0 : createTime.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
 		result = prime * result + praiseCount;
 		result = prime * result + shareCount;
+		result = prime * result + ((voiceInfo == null) ? 0 : voiceInfo.hashCode());
+		result = prime * result + ((voiceUrl == null) ? 0 : voiceUrl.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -130,18 +132,43 @@ public class AppTextVoice implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		AppTextVoice other = (AppTextVoice) obj;
-		return id == other.id
-				&& StringTools.equalsStr(ownerId, other.ownerId)
-				&& StringTools.equalsStr(content, other.content)
-				&& StringTools.equalsStr(voiceUrl, other.voiceUrl)
-				&& StringTools.equalsStr(voiceInfo, other.voiceInfo)
-				&& createTime.getTime() == other.createTime.getTime()
-				&& praiseCount == other.praiseCount
-				&& shareCount == other.shareCount;
+		if (content == null) {
+			if (other.content != null)
+				return false;
+		} else if (!content.equals(other.content))
+			return false;
+		if (createTime == null) {
+			if (other.createTime != null)
+				return false;
+		} else if (!createTime.equals(other.createTime))
+			return false;
+		if (id != other.id)
+			return false;
+		if (owner == null) {
+			if (other.owner != null)
+				return false;
+		} else if (!owner.equals(other.owner))
+			return false;
+		if (praiseCount != other.praiseCount)
+			return false;
+		if (shareCount != other.shareCount)
+			return false;
+		if (voiceInfo == null) {
+			if (other.voiceInfo != null)
+				return false;
+		} else if (!voiceInfo.equals(other.voiceInfo))
+			return false;
+		if (voiceUrl == null) {
+			if (other.voiceUrl != null)
+				return false;
+		} else if (!voiceUrl.equals(other.voiceUrl))
+			return false;
+		return true;
 	}
-
-	public JsonObject toJson(AppUser owner, boolean hasPraised) {
+	public JsonObject toJson(boolean hasPraised) {
 		JsonObject jo = GsonTools.parseJsonObject(this);
+		jo.remove("owner");
+		jo.addProperty("ownerId", owner.getUid());
 		if (owner.getUserType() == AppUser.UserType.Local) {
 			jo.addProperty("ownerFigureurl", Constant.CONTEXT_WEB_URL + owner.getFigureurl());
 		} else {
