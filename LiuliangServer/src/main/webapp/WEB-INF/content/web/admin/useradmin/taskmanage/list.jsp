@@ -96,9 +96,6 @@
 						</td>
 						<td>
 							<a href="${ctx}/web/admin/useradmin/taskmanage/task_detail?taskId=${task.taskId}" class="btn btn-link" target="_blank">[详情]</a>
-							<s:if test="status == 1">
-								<a id="check_a_${task.taskId}" href="javascript:check_task('${task.taskId}')" class="btn btn-link">[审核]</a>
-							</s:if>
 						</td>
 					</tr>
 					</s:iterator>

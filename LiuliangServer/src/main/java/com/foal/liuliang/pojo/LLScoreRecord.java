@@ -38,6 +38,7 @@ public class LLScoreRecord implements Serializable {
 		public static final int Buy = 1;//购买
 		public static final int Cost = 2;//消费
 		public static final int AdminEdit = 3;//管理员修改
+		public static final int TaskReturn = 4;//任务消费返还
 	}
 	
 	public static Map<Integer, String> ScoreRecordTypeMap = new HashMap<Integer, String>();
@@ -45,6 +46,7 @@ public class LLScoreRecord implements Serializable {
 		ScoreRecordTypeMap.put(ScoreRecordType.Buy, "购买");
 		ScoreRecordTypeMap.put(ScoreRecordType.Cost, "消费");
 		ScoreRecordTypeMap.put(ScoreRecordType.AdminEdit, "管理员修改");
+		ScoreRecordTypeMap.put(ScoreRecordType.TaskReturn, "任务消费返还");
 	}
 	
 	@GenericGenerator(name = "generator", strategy = "uuid")

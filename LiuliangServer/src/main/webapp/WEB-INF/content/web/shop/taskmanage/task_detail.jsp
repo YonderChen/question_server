@@ -101,6 +101,10 @@
             		<a style="margin-left: 50px;" href="javascript:cancelTask('${llTask.taskId}');"><em>取消任务</em></a>
             	</p>
             </s:if>
+            <br>
+            <br>
+            <br>
+		 	备注：${llTask.remark}
         </div>
     </div>
 </div>

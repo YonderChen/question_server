@@ -10,6 +10,7 @@ import com.foal.liuliang.bean.LLDealOrderBean;
 import com.foal.liuliang.bean.PageBean;
 import com.foal.liuliang.pojo.LLVIPOrder;
 import com.foal.liuliang.service.LLVIPOrderService;
+import com.foal.liuliang.service.ServerUserService;
 import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -25,6 +26,9 @@ public class VIPAction extends UserBaseAction implements ModelDriven<LLDealOrder
 
 	@Autowired
 	LLVIPOrderService llVIPOrderService;
+
+	@Autowired
+	ServerUserService serverUserService;
 	
 	public LLDealOrderBean getModel() {
 		return llOrderBean;
@@ -48,6 +52,7 @@ public class VIPAction extends UserBaseAction implements ModelDriven<LLDealOrder
 		llOrderBean.setOperator(this.getSessionServerUser());
         LLVIPOrder order = this.llVIPOrderService.checkVIPOrder(llOrderBean);
         if (order.getStatus() == LLVIPOrder.Status.Success) {
+        	serverUserService.updateServerUser(order.getServerUser());
 			this.updateSessionUser(order.getServerUser());
 		}
 		this.ajaxWrite(new AjaxBean(true, String.valueOf(order.getStatus())));

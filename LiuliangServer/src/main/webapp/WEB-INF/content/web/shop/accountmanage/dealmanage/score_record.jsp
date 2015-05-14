@@ -41,6 +41,8 @@
                                     <option value="" selected="">全部</option>
                                     <option value="1">购买</option>
                                     <option value="2">消费</option>
+                                    <option value="3">管理员修改</option>
+                                    <option value="4">任务消费返还</option>
                                 </select>
                             </div>
                             <div class="integral-search-time">
@@ -79,12 +81,9 @@
 									</td>
 									<td>
 										<s:if test="type == 1">购买</s:if>
-										<s:else>
-											<s:if test="type == 2">消费</s:if>
-											<s:else>
-												<s:if test="type == 3">管理员修改</s:if>
-											</s:else>
-										</s:else>
+										<s:if test="type == 2">消费</s:if>
+										<s:if test="type == 3">管理员修改</s:if>
+										<s:if test="type == 4">任务消费返还</s:if>
 									</td>
 									<td>
 										${record.num}

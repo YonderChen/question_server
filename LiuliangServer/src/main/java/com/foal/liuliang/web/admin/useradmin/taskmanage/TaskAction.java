@@ -10,10 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.foal.liuliang.bean.AjaxBean;
 import com.foal.liuliang.bean.LLTaskBean;
 import com.foal.liuliang.bean.PageBean;
+import com.foal.liuliang.pojo.LLScoreRecord;
 import com.foal.liuliang.pojo.LLTask;
 import com.foal.liuliang.pojo.ServerUser;
+import com.foal.liuliang.service.LLScoreRecordService;
 import com.foal.liuliang.service.LLShopService;
 import com.foal.liuliang.service.LLTaskService;
+import com.foal.liuliang.service.ServerUserService;
 import com.foal.liuliang.web.UserBaseAction;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -32,6 +35,12 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 	
 	@Autowired
 	LLShopService llShopService;
+	
+	@Autowired
+	ServerUserService serverUserService;
+	
+	@Autowired
+	LLScoreRecordService llScoreRecordService;
 	
 	public LLTaskBean getModel() {
 		return llTaskBean;
@@ -67,11 +76,56 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
     	//调用第三方接口
     	//
     	//============
+    	Date now = new Date();
+    	int returnScore = llTask.getCostScore() - llTaskBean.getCostScore();
+    	if (returnScore != 0) {
+			llTask.setCostScore(llTaskBean.getCostScore());
+			llTask.getServerUser().incScore(returnScore);
+			LLScoreRecord record = new LLScoreRecord();
+			record.setServerUser(llTask.getServerUser());
+			record.setNum(returnScore);
+			record.setType(LLScoreRecord.ScoreRecordType.TaskReturn);
+			record.setRemain(llTask.getServerUser().getScore());
+			record.setCreateTime(now);
+			record.setRemark("管理员修改消费积分");
+			llScoreRecordService.add(record);
+		}
     	llTask.setStatus(LLTask.Status.Executing);
-    	llTask.setCheckTime(new Date());
+    	llTask.setCheckTime(now);
     	llTask.setCheckAdmin(this.getSessionServerUser());
     	this.llTaskService.updateLLTask(llTask);
+    	serverUserService.updateServerUser(llTask.getServerUser());
+		this.updateSessionUser(llTask.getServerUser());
     	this.ajaxWrite(new AjaxBean(true, "审核成功"));
+        return null;
+    }
+
+	@Action("check_fail_task")
+    public String checkFailTask() {
+    	LLTask llTask = this.llTaskService.getLLTask(llTaskBean.getTaskId());
+    	if(llTask.getServerUser().getStatus() != ServerUser.Status.Normal){
+        	this.ajaxWrite(new AjaxBean(false, "该用户账户已被冻结，审核失败"));
+            return null;
+    	}
+    	Date now = new Date();
+    	int returnScore = llTask.getCostScore();
+		llTask.getServerUser().incScore(returnScore);
+		LLScoreRecord record = new LLScoreRecord();
+		record.setServerUser(llTask.getServerUser());
+		record.setNum(returnScore);
+		record.setType(LLScoreRecord.ScoreRecordType.TaskReturn);
+		record.setRemain(llTask.getServerUser().getScore());
+		record.setCreateTime(now);
+		record.setRemark("审核不通过");
+		llScoreRecordService.add(record);
+    	llTask.setStatus(LLTask.Status.VerifyFaild);
+    	llTask.setRemark(llTaskBean.getRemark());
+    	llTask.setCheckTime(now);
+    	llTask.setCheckAdmin(this.getSessionServerUser());
+    	this.llTaskService.updateLLTask(llTask);
+    	serverUserService.updateServerUser(llTask.getServerUser());
+		this.updateSessionUser(llTask.getServerUser());
+    	this.ajaxWrite(new AjaxBean(true, "拒绝审核成功"));
         return null;
     }
 }

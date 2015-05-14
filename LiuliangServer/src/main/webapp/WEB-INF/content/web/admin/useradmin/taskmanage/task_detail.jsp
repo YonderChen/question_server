@@ -41,6 +41,7 @@
 			type : 'post',
 			data : {
 				taskId : taskId,
+				costScore : $("#costScore").val()
 			},
 			dataType : 'text',
 			timeout : 60000,
@@ -51,8 +52,40 @@
 				if (!isOutTime(result)) {
 					result = eval("("+result+")");
 					if (result.success) {
-						$("#task_status_"+taskId).html("执行中");
-						$("#check_a_"+taskId).remove();
+						$("#task_status").html("执行中");
+						$("#task_op").remove();
+						$("#status_op_div").removeAttr("style");
+						alert(result.msg);
+					} else {
+						alert(result.msg);
+					}
+				}
+			}
+		});
+	}
+	
+	
+	function check_fail_task(taskId){
+		var url = "${ctx}/web/admin/useradmin/taskmanage/check_fail_task";
+		$.ajax( {
+			url : url,
+			type : 'post',
+			data : {
+				taskId : taskId,
+				remark : $("#remark").val()
+			},
+			dataType : 'text',
+			timeout : 60000,
+			error : function(e) {
+				alert("审核失败，连接异常");
+			},
+			success : function(result) {
+				if (!isOutTime(result)) {
+					result = eval("("+result+")");
+					if (result.success) {
+						$("#task_status").html("审核不通过");
+						$("#task_op").remove();
+						$("#status_op_div").removeAttr("style");
 						alert(result.msg);
 					} else {
 						alert(result.msg);
@@ -86,12 +119,12 @@
             <s:if test="#request.llTask.taskType == 0">自然搜索流量</s:if>
             <s:else>自然搜索流量</s:else>
         </p>
-        <p>任务计划总流量：<span>
+        <p>任务计划总流量：<span id="total_visitNumber">
         ${(llTask.orderNumberOneDay1 + llTask.orderNumberOneDay2 
 			+llTask.orderNumberOneDay3 + llTask.orderNumberOneDay4 
 			+ llTask.orderNumberOneDay5) * llTask.durationDay}
 		</span>访客</p>
-        <p>计划访客数：<span>
+        <p>计划访客数：<span id="">
         ${llTask.orderNumberOneDay1 + llTask.orderNumberOneDay2 
 			+llTask.orderNumberOneDay3 + llTask.orderNumberOneDay4 
 			+ llTask.orderNumberOneDay5}
@@ -117,9 +150,9 @@
 		</s:if>
     </div>
     <div class="task-detail-right">
-    	<div class="task-state">
+    	<div id="status_op_div" class="task-state" <s:if test="#request.llTask.status == 1 || #request.llTask.status == 6">style="padding-top: 10px;"</s:if>>
         	<h4 class="f16"><i></i>任务状态：
-        		<span id="task_status_${llTask.taskId}">
+        		<span id="task_status">
 		            <s:if test="#request.llTask.status == 0">未发布</s:if>
 		            <s:if test="#request.llTask.status == 1">待审核</s:if>
 		            <s:if test="#request.llTask.status == 2">任务进行中</s:if>
@@ -129,8 +162,34 @@
 		            <s:if test="#request.llTask.status == 6">任务修改,待审核</s:if>
 	            </span>
 			</h4>
-			<s:if test="#request.llTask.status == 1">
-            	<p id="check_a_${llTask.taskId}" class="main-f">点击审核：<a href="javascript:check_task('${llTask.taskId}')"><em>通过审核</em></a></p>
+			<s:if test="#request.llTask.status == 1 || #request.llTask.status == 6">
+            	<div id="task_op" class="main-f">您还可以：
+            		<br>
+            		
+            		<div style="margin-left: 50px;">
+	                    <div class="item clearfix">
+	                        <label class="tit">修改消耗积分：</label>
+	                        <div class="inp">
+	                            <em class="inpbox" style="padding-left: 0px;">
+	                                <input type="text" id="costScore" name="costScore" value="${llTask.costScore}" onkeyup="this.value=this.value.replace(/\D/g,'')" class="txt placebox">
+	                            </em>
+	                        </div>
+	                    </div>
+	            		<br>
+	            		<a href="javascript:check_task('${llTask.taskId}');"><em>通过审核</em></a>
+                    </div>
+            		<br>
+            		<br>
+            		<hr style="margin-left: -20px;">
+            		<div style="margin-left: 50px;">
+	            		<a href="javascript:check_fail_task('${llTask.taskId}');"><em>拒绝审核</em></a>
+	            		<br>
+	            		<br>
+	            		备注：（请填写拒绝理由）
+	            		<br>
+	            		<textarea style="width:300px; height:100px; border:solid 1px gray; resize:none;" id="remark" rows="5" cols="50"></textarea>
+           	    	</div>
+            	</div>
             </s:if>
         </div>
     </div>
@@ -146,7 +205,7 @@
         	<td>
             	<div class="intableProList">
                     <img class="img" width="50" height="50" src="${ctx }${llTask.goodsImg }">
-                    <p class="text">衣服</p>
+                    <p class="text">${llTask.goodsName }</p>
                 </div>
             </td>
             <td>

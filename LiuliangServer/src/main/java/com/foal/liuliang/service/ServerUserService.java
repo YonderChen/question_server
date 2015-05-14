@@ -34,6 +34,10 @@ public class ServerUserService extends DaoSupport {
 	@Autowired
 	LLScoreRecordService llScoreRecordService;
 	
+	public void updateServerUser(ServerUser user) {
+		this.hibernateDao.update(user);
+	}
+	
 	public ServerUser queryServerUser(ServerUserBean userBean, StringBuffer sb) {
 		String queryHql = "from ServerUser as t where t.username = ?";
 		List list = this.hibernateDao.queryList(queryHql, userBean.getUsername());
@@ -55,7 +59,7 @@ public class ServerUserService extends DaoSupport {
 	
 	public void updateServerUserLastLoginTime(ServerUser user) {
 		user.setLastLoginTime(new Date());
-		this.hibernateDao.update(user);
+		this.updateServerUser(user);
 	}
 	
 	public List<Menu> queryAllMenu() {
@@ -139,7 +143,7 @@ public class ServerUserService extends DaoSupport {
 		}
 		user.setStatus(userBean.getStatus());
 		user.setModifyTime(new Date());
-		this.hibernateDao.update(user);
+		this.updateServerUser(user);
 		if (!userBean.getUserId().equals(Constant.ADMIN_ID)) {
 			List list = this.hibernateDao.queryList("from UserRole as u where u.pk.serverUser.userId = ?", userBean.getUserId());
 			this.hibernateDao.deleteAll(list);
@@ -172,7 +176,7 @@ public class ServerUserService extends DaoSupport {
 		user.setPhone(userBean.getPhone());
 		user.setStatus(userBean.getStatus());
 		user.setModifyTime(now);
-		this.hibernateDao.update(user);
+		this.updateServerUser(user);
 		int scoreChange = user.getScore() - oldScore;
 		if (scoreChange != 0) {
 			LLScoreRecord record = new LLScoreRecord();
@@ -196,7 +200,7 @@ public class ServerUserService extends DaoSupport {
 		user.setAssistantPassword(passwords[1]);
 		user.setEncryptedPassword(passwords[0]);
 		user.setModifyTime(new Date());
-		this.hibernateDao.update(user);
+		this.updateServerUser(user);
 		return user;
 	}
 
@@ -209,7 +213,7 @@ public class ServerUserService extends DaoSupport {
 		user.setAssistantPassword(passwords[1]);
 		user.setEncryptedPassword(passwords[0]);
 		user.setModifyTime(new Date());
-		this.hibernateDao.update(user);
+		this.updateServerUser(user);
 		return user;
 	}
 	
@@ -218,7 +222,7 @@ public class ServerUserService extends DaoSupport {
 		user.setName(userBean.getName());
 		user.setPhone(userBean.getPhone());
 		user.setModifyTime(new Date());
-		this.hibernateDao.update(user);
+		this.updateServerUser(user);
 		return user;
 	}
 	
@@ -226,7 +230,7 @@ public class ServerUserService extends DaoSupport {
 		ServerUser user = this.getServerUser(userBean.getUserId());
 		user.setUserqq(userBean.getUserqq());
 		user.setModifyTime(new Date());
-		this.hibernateDao.update(user);
+		this.updateServerUser(user);
 		return user;
 	}
 	
@@ -234,7 +238,7 @@ public class ServerUserService extends DaoSupport {
 		ServerUser user = this.getServerUser(userBean.getUserId());
 		user.setPhone(userBean.getPhone());
 		user.setModifyTime(new Date());
-		this.hibernateDao.update(user);
+		this.updateServerUser(user);
 		return user;
 	}
 

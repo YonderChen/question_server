@@ -53,6 +53,7 @@ public class LLTask implements Serializable {
 	private ServerUser checkAdmin;
 	private Date finishTime;
 	private int status;
+	private String remark;
 
 	public static class Status {
         public static final int Create = 0;//未发布
@@ -337,6 +338,15 @@ public class LLTask implements Serializable {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	@Column(name = "remark_")
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 

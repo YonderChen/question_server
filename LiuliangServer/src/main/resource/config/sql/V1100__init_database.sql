@@ -224,7 +224,7 @@ CREATE TABLE `ll_score_record` (
   `record_id_` varchar(64) NOT NULL COMMENT '积分变动记录id',
   `user_id_` varchar(64) NOT NULL COMMENT '购买用户',
   `num_` int(11) NOT NULL COMMENT '积分数目',
-  `type_` int(11) NOT NULL COMMENT '变动类型，1：购买，2：消费',
+  `type_` int(11) NOT NULL COMMENT '变动类型，1：购买，2：消费，3：管理员修改，4：任务消费返还',
   `remain_` int(11) NOT NULL COMMENT '剩余积分',
   `create_time_` datetime DEFAULT NULL COMMENT '创建时间',
   `remark_` varchar(64) DEFAULT NULL COMMENT '备注',
@@ -305,5 +305,6 @@ CREATE TABLE `ll_task` (
   `check_admin_` varchar(64) DEFAULT NULL COMMENT '操作管理员id',
   `finish_time_` datetime DEFAULT NULL COMMENT '任务执行完毕时间',
   `status_` int(11) NOT NULL COMMENT '任务状态',
+  `remark_` varchar(500) NOT NULL COMMENT '备注',
   PRIMARY KEY (`task_id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

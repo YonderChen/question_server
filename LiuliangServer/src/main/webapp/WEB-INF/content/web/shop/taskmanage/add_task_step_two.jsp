@@ -212,10 +212,8 @@
 											<label id="searchSource_label_jd">
 												电脑端京东自然搜索占比：
 											</label>
-											<input type="text"  id="searchSource" name="pc_percent" class="pctext"
-												value="${llTask.searchSource}"
-												onkeyup="this.value=this.value.replace(/\D/g,'')"
-												onafterpaste="this.value=this.value.replace(/\D/g,'')">
+											<input type="text"  id="searchSource" name="searchSource" class="pctext"
+												value="${llTask.searchSource}">
 											%
 										</div>
 										<div id="searchSource_div_tmall">
@@ -223,8 +221,7 @@
 												电脑端天猫自然搜索占比：
 											</label>
 											<input type="text" disabled="disabled"  id="searchSource_cut" name="pc_tm_percent" class="pctext"
-												value="${100-llTask.searchSource}" onkeyup="this.value=this.value.replace(/\D/g,'')"
-												onafterpaste="this.value=this.value.replace(/\D/g,'')">
+												value="${100-llTask.searchSource}">
 											%
 										</div>
 									</div>
@@ -306,9 +303,9 @@
 			$("#searchSource_cut").val(0);
 			$("#searchSource").attr("readonly","readonly");
 		}
-		
-		$("#durationDay").val($("input[name='pay_days'][checked]").val());
+		changeDurationDay($("#durationDay").val());
 	  	$("#searchSource").change(function(){
+	  		$("#searchSource").val($("#searchSource").val().replace(/\D/g,''));
 	  		if($("#searchSource").val().trim() == ""){
 	  			$("#searchSource").val(0);
 	  		}

@@ -37,6 +37,7 @@ public class LLTaskBean extends Page {
 	private Date createTime;
 	private Date finishTime;
 	private int status;
+	private String remark;
 	
 	private File goodsImgFile;
     private String goodsImgFileFileName;
@@ -235,5 +236,11 @@ public class LLTaskBean extends Page {
 	}
 	public void setBindPlat(String bindPlat) {
 		this.bindPlat = bindPlat;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 }
