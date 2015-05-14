@@ -123,6 +123,7 @@ public class CommonResource {
 			appUser.setFigureurl(imageUrl);
 			appUser.setCreateTime(now);
 			appUser.setUpdateAt(now);
+			appUser.setLastLoginIp(request.getRemoteAddr());
 			appUser.setStatus(AppUser.Status.Normal);
 			appUserService.addAppUser(appUser);
 			
@@ -140,7 +141,7 @@ public class CommonResource {
 	@POST
 	@Path("/login_local")
 	@Produces( { MediaType.TEXT_HTML })
-	public String login_local(@FormParam(value = "username") String username, @FormParam(value = "password") String password) {
+	public String login_local(@FormParam(value = "username") String username, @FormParam(value = "password") String password, @Context HttpServletRequest request) {
 
 		ResultMap ret = ResultMap.getResultMap();
 		if (StringTools.isBlank(username)) {
@@ -162,6 +163,7 @@ public class CommonResource {
 			return ret.toJson();
 		}
 		appUser.setUpdateAt(new Date());
+		appUser.setLastLoginIp(request.getRemoteAddr());
 		appUserService.updateAppUser(appUser);
 		ret.setResult(RetCode.Success);
 		ret.add("uid", appUser.getUid());
@@ -175,7 +177,7 @@ public class CommonResource {
 	@Path("/login")
 	@Produces( { MediaType.TEXT_HTML })
 	public String login(@FormParam(value = "openid") String openId, @FormParam(value = "name") String name,
-			@FormParam(value = "gender") String gender, @FormParam(value = "figureurl") String figureurl) {
+			@FormParam(value = "gender") String gender, @FormParam(value = "figureurl") String figureurl, @Context HttpServletRequest request) {
 		ResultMap ret = ResultMap.getResultMap();
 		if (StringTools.isBlank(openId)) {
 			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
@@ -195,6 +197,7 @@ public class CommonResource {
 			appUser.setFigureurl(figureurl);
 			appUser.setCreateTime(now);
 			appUser.setUpdateAt(now);
+			appUser.setLastLoginIp(request.getRemoteAddr());
 			appUser.setStatus(AppUser.Status.Normal);
 			appUserService.addAppUser(appUser);
 		} else {
@@ -206,6 +209,7 @@ public class CommonResource {
 			appUser.setGender(gender);
 			appUser.setFigureurl(figureurl);
 			appUser.setUpdateAt(now);
+			appUser.setLastLoginIp(request.getRemoteAddr());
 			appUserService.updateAppUser(appUser);
 		}
 		
@@ -268,7 +272,6 @@ public class CommonResource {
 					appUser.setFigureurl(imageUrl);
 				}
 			}
-			appUser.setCreateTime(now);
 			appUser.setUpdateAt(now);
 			appUserService.updateAppUser(appUser);
 			ret.setResult(RetCode.Success);

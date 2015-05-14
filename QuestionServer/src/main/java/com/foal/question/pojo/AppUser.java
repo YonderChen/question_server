@@ -35,6 +35,7 @@ public class AppUser implements Serializable{
 	private String figureurl;
 	private Date createTime;
 	private Date updateAt;
+	private String lastLoginIp;
 	private int status;
 
 	public class Status {
@@ -121,6 +122,13 @@ public class AppUser implements Serializable{
 	public void setUpdateAt(Date updateAt) {
 		this.updateAt = updateAt;
 	}
+	@Column(name = "last_login_ip_")
+	public String getLastLoginIp() {
+		return lastLoginIp;
+	}
+	public void setLastLoginIp(String lastLoginIp) {
+		this.lastLoginIp = lastLoginIp;
+	}
 	@Column(name = "status_")
 	public int getStatus() {
 		return status;
@@ -128,7 +136,6 @@ public class AppUser implements Serializable{
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -136,6 +143,7 @@ public class AppUser implements Serializable{
 		result = prime * result + ((createTime == null) ? 0 : createTime.hashCode());
 		result = prime * result + ((figureurl == null) ? 0 : figureurl.hashCode());
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+		result = prime * result + ((lastLoginIp == null) ? 0 : lastLoginIp.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((openId == null) ? 0 : openId.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
@@ -169,6 +177,11 @@ public class AppUser implements Serializable{
 			if (other.gender != null)
 				return false;
 		} else if (!gender.equals(other.gender))
+			return false;
+		if (lastLoginIp == null) {
+			if (other.lastLoginIp != null)
+				return false;
+		} else if (!lastLoginIp.equals(other.lastLoginIp))
 			return false;
 		if (name == null) {
 			if (other.name != null)

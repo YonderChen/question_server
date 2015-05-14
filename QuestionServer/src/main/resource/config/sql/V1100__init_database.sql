@@ -166,6 +166,7 @@ CREATE TABLE `app_user` (
   `figureurl_` varchar(255) DEFAULT NULL COMMENT '头像url',
   `create_time_` datetime NOT NULL COMMENT '用户创建时间',
   `update_at_` datetime NOT NULL COMMENT '最近一次更新时间',
+  `last_login_ip_` varchar(20) DEFAULT NULL COMMENT '上一次登录ip',
   `status_` int NOT NULL COMMENT '用户状态，0：正常，1：禁言，2：封号',
   PRIMARY KEY (`uid_`),
   KEY `open_id_index_` (`open_id_`) USING BTREE,

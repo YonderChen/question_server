@@ -17,17 +17,20 @@
 						<th width="10%">
 							第三方id
 						</th>
-						<th width="15%">
+						<th width="10%">
 							本地帐号
 						</th>
 						<th width="10%">
 							昵称
 						</th>
-						<th width="15%">
+						<th width="10%">
 							头像
 						</th>
 						<th width="10%">
 							更新时间
+						</th>
+						<th width="10%">
+							上一次登录ip
 						</th>
 						<th width="10%">
 							状态
@@ -62,6 +65,9 @@
 						</td>
 						<td>
 							<s:date name="updateAt" format="yyyy-MM-dd HH:mm:ss"/>
+						</td>
+						<td>
+							${user.lastLoginIp}
 						</td>
 						<td>
 							<s:if test="status == 0">正常</s:if>
