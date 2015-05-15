@@ -1,5 +1,6 @@
 package com.foal.liuliang.web.admin.useradmin.taskmanage;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -54,6 +55,22 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 	@Action("list")
     public String list() {
 		llTaskBean.setUserId("");
+		if (llTaskBean.getBeginTime() != null) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(llTaskBean.getBeginTime());
+			cal.set(Calendar.HOUR_OF_DAY, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			llTaskBean.setBeginTime(cal.getTime());
+		}
+		if (llTaskBean.getEndTime() != null) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(llTaskBean.getEndTime());
+			cal.set(Calendar.HOUR_OF_DAY, 23);
+			cal.set(Calendar.MINUTE, 59);
+			cal.set(Calendar.SECOND, 59);
+			llTaskBean.setEndTime(cal.getTime());
+		}
         PageBean pageBean = this.llTaskService.queryLLTask(llTaskBean);
 		this.setAttrToRequest("pageBean", pageBean);
         return SUCCESS;

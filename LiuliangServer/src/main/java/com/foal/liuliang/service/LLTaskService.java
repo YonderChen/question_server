@@ -88,6 +88,7 @@ public class LLTaskService extends DaoSupport {
 		calCostScore(llTask);
 		llTask.setCreateTime(new Date());
 		llTask.setStatus(LLTask.Status.Create);
+		llTask.setRemark("");
 		if (StringTools.isEmpty(llTask.getTaskId())) {
 			llTask.setTaskId(GenerateSequenceUtil.generateSequenceNo());
 		}
@@ -154,9 +155,33 @@ public class LLTaskService extends DaoSupport {
 	public PageBean queryLLTask(LLTaskBean llTaskBean) {
         String queryHql = "from LLTask as s where 1=1";
         Map paramMap = new HashMap();
-        if (!StringUtil.isEmpty(llTaskBean.getUserId())) {
-            queryHql += " and s.serverUser.userId = :userId";
-            paramMap.put("userId", llTaskBean.getUserId() );
+        if (!StringUtil.isEmpty(llTaskBean.getUsername())) {
+            queryHql += " and s.serverUser.username = :username";
+            paramMap.put("username", llTaskBean.getUsername() );
+        }
+        if (!StringUtil.isEmpty(llTaskBean.getBindName())) {
+            queryHql += " and s.llShop.bindName like :bindName";
+            paramMap.put("bindName", "%" +llTaskBean.getBindName() + "%" );
+        }
+        if (!StringUtil.isEmpty(llTaskBean.getBindPlat())) {
+            queryHql += " and s.llShop.bindPlat = :bindPlat";
+            paramMap.put("bindPlat", llTaskBean.getBindPlat() );
+        }
+        if (llTaskBean.getStatus() >= 0) {
+            queryHql += " and s.status = :status";
+            paramMap.put("status", llTaskBean.getStatus() );
+        }
+        if (llTaskBean.getBeginTime() != null) {
+            queryHql += " and s.createTime >= :beginTime";
+            paramMap.put("beginTime", llTaskBean.getBeginTime() );
+        }
+        if (llTaskBean.getEndTime() != null) {
+            queryHql += " and s.createTime <= :endTime";
+            paramMap.put("endTime", llTaskBean.getEndTime() );
+        }
+        if (!StringUtil.isEmpty(llTaskBean.getTaskId())) {
+            queryHql += " and s.taskId = :taskId";
+            paramMap.put("taskId", llTaskBean.getTaskId() );
         }
         List list = this.hibernateDao.queryList(queryHql, llTaskBean.getPage(), llTaskBean.getPageSize(), paramMap);
         int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);

@@ -23,7 +23,11 @@ public class LLDealOrderBean extends Page {
 	private File payImgFile;
     private String payImgFileFileName;
     private String payImgFileContentType;
-    
+
+	private String username;
+	private Date beginTime;
+	private Date endTime;
+	
 	public String getOrderId() {
 		return orderId;
 	}
@@ -101,5 +105,23 @@ public class LLDealOrderBean extends Page {
 	}
 	public void setPayImgFileContentType(String payImgFileContentType) {
 		this.payImgFileContentType = payImgFileContentType;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public Date getBeginTime() {
+		return beginTime;
+	}
+	public void setBeginTime(Date beginTime) {
+		this.beginTime = beginTime;
+	}
+	public Date getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 }

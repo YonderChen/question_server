@@ -42,7 +42,7 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 		userBean.setRoleIds("");
 		userBean.setOperator(serverUserService.getServerUser(Constant.ADMIN_ID));
 		userBean.setUserType(ServerUser.UserType.ShopUser);
-        boolean result = this.serverUserService.addServerUser(userBean, sb);
+        boolean result = this.serverUserService.addShopUser(userBean, sb);
         if (result) {
    			ajaxBean = new AjaxBean(true, "新增成功.");
    			String redirectUrl = Constant.PRO_CTX_VALUE + "/web/shop/index";

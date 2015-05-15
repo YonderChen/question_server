@@ -23,34 +23,40 @@
 <body>
 			<jsp:include page="/include/top.jsp" flush="true"></jsp:include>
 <div class="breadcrumbs">
-    <div class="wrap"><a href="${ctx}">首页</a> &gt; <a href="${ctx }/web/shop/accountmanage/dealmanage/score_record?left-list-id=2">积分记录</a></div>
+    <div class="wrap"><a href="${ctx}">首页</a> &gt; <a href="${ctx }/web/shop/accountmanage/dealmanage/pay_record?left-list-id=4">充值记录</a></div>
 </div>
     <div class="wrap clearfix">
 			<jsp:include page="/include/left.jsp" flush="true"></jsp:include> 
 	<div class="business-right">
           <div class="business-right-comm">
               <div class="business-info">
-                <div class="integral-record-hd">积分记录</div>
+                <div class="integral-record-hd">充值记录</div>
                 
+                <ul class="business-tabs">
+                  <li id="task_tabs_1" class="active"><a href="${ctx }/web/shop/accountmanage/dealmanage/pay_record?left-list-id=4&record_type=1">
+                  <span>购买积分</span></a></li>
+                  <li id="task_tabs_2"><a href="${ctx }/web/shop/accountmanage/dealmanage/pay_record?left-list-id=4&record_type=2">
+                  <span>续费会员</span></a></li>
+                </ul>
                 <div class="business-info-bd">
                     <div class="integral-serch">
-                        <form id="condition_form" action="${ctx}/web/shop/accountmanage/dealmanage/score_record?left-list-id=2" method="get">
+                        <form id="condition_form" action="${ctx }/web/shop/accountmanage/dealmanage/pay_record?left-list-id=4" method="get">
                             <div class="integral-search-type">
-                                <label>请选择类型：</label>
-                                <select id="type_select" name="type">
-                                    <option value="" selected="">全部</option>
-                                    <option value="1">购买</option>
-                                    <option value="2">消费</option>
-                                    <option value="3">管理员修改</option>
-                                    <option value="4">任务消费返还</option>
+                                <label>状态：</label>
+                                <select id="status_select" name="status">
+                                    <option value="-1" selected="selected">全部</option>
+                                    <option value="0">待审核</option>
+                                    <option value="1">审核通过</option>
+                                    <option value="2">审核失败</option>
                                 </select>
                             </div>
                             <div class="integral-search-time">
                                 <label>起止时间：</label>
-                                <input type="text" name="beginTime" class="Wdate" onclick="javascript:WdatePicker();" value="<s:date name="#request.beginTime" format="yyyy-MM-dd"/>">
+                                <input type="text" name="beginTime" class="Wdate" onclick="javascript:WdatePicker();" value="<s:date name="#request.llPayRecordBean.beginTime" format="yyyy-MM-dd"/>">
                                 至
-                                <input type="text" name="endTime" class="Wdate" onclick="javascript:WdatePicker();" value="<s:date name="#request.endTime" format="yyyy-MM-dd"/>">
+                                <input type="text" name="endTime" class="Wdate" onclick="javascript:WdatePicker();" value="<s:date name="#request.llPayRecordBean.endTime" format="yyyy-MM-dd"/>">
                             </div>
+                            <input type="hidden" id="recordType" name="recordType" value="${llPayRecordBean.recordType}">
                             <input type="hidden" id="current_page" name="page" value="${pageBean.currentPage}">
                             <input type="submit" class="integral-search-butt" onclick="javascript:resetPage();" value="提交查询">
                         </form>
@@ -59,40 +65,36 @@
                     	<span>注意：</span>
                     	为了减少服务器负荷，只能查找最近一个月内的流量使用记录。
                     </p>
-                    <p class="integral-careful">
-                    	<span style="float: right;"><a href="javascript:export_score_record();" style="color: blue; margin-right: 50px;">导出</a><a href="javascript:export_all_score_record();" style="color: blue; margin-right: 50px;">导出所有</a></span>
-                    </p>
                     <table class="integral-record-table">
 						<thead>
                     	<tr>
+                            <th width="30%">编号</th>
                             <th width="30%">时间</th>
-                            <th width="10%">类型</th>
-                            <th width="10%">数量</th>
-                            <th width="20%">剩余积分</th>
-                            <th width="30%">备注</th>
+                            <th id="num_desc" width="15%">数量</th>
+                            <th width="15%">价格</th>
+                            <th width="10%">状态</th>
                         </tr>
                         </thead>
                         <tbody>
 							<s:if test="#request.pageBean.allRow > 0">
-								<s:iterator value="#request.pageBean.list" id="record">
+								<s:iterator value="#request.pageBean.list" id="order">
 								<tr>
+									<td>
+										<a target="_blank" href="${ctx}/web/shop/accountmanage/dealmanage/pay_record_detail?order_id=${order.orderId}&record_type=${llPayRecordBean.recordType}">${order.orderId}</a>
+									</td>
 									<td>
 										<s:date name="createTime" format="yyyy-MM-dd HH:mm:ss"/>
 									</td>
 									<td>
-										<s:if test="type == 1">购买</s:if>
-										<s:if test="type == 2">消费</s:if>
-										<s:if test="type == 3">管理员修改</s:if>
-										<s:if test="type == 4">任务消费返还</s:if>
+										${order.num}
 									</td>
 									<td>
-										${record.num}
+										${order.price}
 									</td>
 									<td>
-										${record.remain}
-									</td>
-									<td>
-										${record.remark}
+										<s:if test="status == 0">待审核</s:if>
+										<s:if test="status == 1">审核通过</s:if>
+										<s:if test="status == 2">审核失败</s:if>
 									</td>
 								</tr>
 								</s:iterator>
@@ -117,7 +119,20 @@
 <script type="text/javascript"> 
 
 $(function(){
-	$("#type_select").val("${type}");
+	$("#status_select").val("${llPayRecordBean.status}");
+	
+	$("#task_tabs_1").removeClass();
+	$("#task_tabs_2").removeClass();
+	var recordType = "${llPayRecordBean.recordType}";
+	$("#task_tabs_" + recordType).addClass("active");
+	if(recordType == '1'){
+		$("#num_desc").html("积分数");
+	} 
+	else if(recordType == '2'){
+		$("#num_desc").html("续费vip月数");
+	} else {
+		$("#num_desc").html("数量");
+	}
 })
 
 function resetPage(){

@@ -1,5 +1,7 @@
 package com.foal.liuliang.web.admin.useradmin.dealmanage;
 
+import java.util.Calendar;
+
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
@@ -42,20 +44,43 @@ public class VIPAction extends UserBaseAction implements ModelDriven<LLDealOrder
 	@Action("list_vip_order")
     public String list() {
 		llOrderBean.setUserId("");
+		if (llOrderBean.getBeginTime() != null) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(llOrderBean.getBeginTime());
+			cal.set(Calendar.HOUR_OF_DAY, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			llOrderBean.setBeginTime(cal.getTime());
+		}
+		if (llOrderBean.getEndTime() != null) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(llOrderBean.getEndTime());
+			cal.set(Calendar.HOUR_OF_DAY, 23);
+			cal.set(Calendar.MINUTE, 59);
+			cal.set(Calendar.SECOND, 59);
+			llOrderBean.setEndTime(cal.getTime());
+		}
 		PageBean pageBean = this.llVIPOrderService.queryLLScoreOrder(llOrderBean);
         this.setAttrToRequest("pageBean", pageBean);
         return SUCCESS;
     }
 	
-	@Action("check_vip_order")
-	public String checkShop() {
+	@Action("edit_vip_order_input")
+	public String editVipOrderInput() {
+		LLVIPOrder order = this.llVIPOrderService.getOrder(llOrderBean.getOrderId());
+        this.setAttrToRequest("order", order);
+        return SUCCESS;
+	}
+	
+	@Action("edit_vip_order")
+	public String editVipOrder() {
 		llOrderBean.setOperator(this.getSessionServerUser());
-        LLVIPOrder order = this.llVIPOrderService.checkVIPOrder(llOrderBean);
-        if (order.getStatus() == LLVIPOrder.Status.Success) {
-        	serverUserService.updateServerUser(order.getServerUser());
+		AjaxBean ajaxBean = new AjaxBean();
+		LLVIPOrder order = this.llVIPOrderService.updateVIPOrder(llOrderBean, ajaxBean);
+        if (ajaxBean.isSuccess() && order.getStatus() == LLVIPOrder.Status.Success) {//审核通过
 			this.updateSessionUser(order.getServerUser());
 		}
-		this.ajaxWrite(new AjaxBean(true, String.valueOf(order.getStatus())));
+        this.ajaxWrite(ajaxBean);
         return null;
 	}
 }

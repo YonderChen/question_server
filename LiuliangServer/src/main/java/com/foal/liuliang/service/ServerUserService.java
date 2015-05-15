@@ -281,6 +281,37 @@ public class ServerUserService extends DaoSupport {
 		}
 		return true;
 	}
+
+	public boolean addShopUser(ServerUserBean userBean, StringBuffer sb) {
+		String queryHql = "from ServerUser as t where t.username = ?";
+		List list = this.hibernateDao.queryList(queryHql, userBean.getUsername());
+		if (!list.isEmpty()) {
+			sb.append("用户名已存在");
+			return false;
+		}
+		queryHql = "from ServerUser as t where t.email = ?";
+		list = this.hibernateDao.queryList(queryHql, userBean.getEmail());
+		if (!list.isEmpty()) {
+			sb.append("邮箱已存在.");
+			return true;
+		}
+		ServerUser user = new ServerUser();
+		user.setUserType(userBean.getUserType());
+		user.setUsername(userBean.getUsername());
+		user.setName(userBean.getName());
+		user.setPhone(userBean.getPhone());
+		user.setEmail(userBean.getEmail());
+		user.setModifyTime(new Date());
+		user.setParent(userBean.getOperator());
+		user.setCreateTime(new Date());
+		user.setUserqq(userBean.getUserqq());
+		String[] passwords = StringUtil.generatePassword(userBean.getPassword());
+		user.setAssistantPassword(passwords[1]);
+		user.setEncryptedPassword(passwords[0]);
+		user.setStatus(ServerUser.Status.Normal);
+		this.hibernateDao.save(user);
+		return true;
+	}
 	
 	public void clearHibernateCache() {
 		this.hibernateDao.getSessionFactory().evict(LLScoreOrder.class);

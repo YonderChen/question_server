@@ -214,14 +214,14 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 			task.setIsQuickVerify(llTaskBean.getIsQuickVerify());
 			task.setIsQuickExecute(llTaskBean.getIsQuickExecute());
 			if (!llTaskService.updatePublishTask(task, getSessionServerUser())) {
-				this.alertAndRedirect("任务发布失败", "web/shop/taskmanage/add_task_failed");
+				this.alertAndRedirect("任务发布失败（积分不足）", "web/shop/taskmanage/add_task_failed");
 				return null;
 			}
 			this.alertAndRedirect("任务发布成功", "web/shop/taskmanage/task_detail?taskId=" + task.getTaskId());
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			this.alertAndRedirect("任务发布失败", "web/shop/taskmanage/add_task_failed");
+			this.alertAndRedirect("任务发布失败（未知错误）", "web/shop/taskmanage/add_task_failed");
 			return null;
 		}
 	}

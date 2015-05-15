@@ -40,7 +40,7 @@ public class LLVIPOrder implements Serializable {
 	public static class Status {
 		public static final int Create = 0;
 		public static final int Success = 1;
-		public static final int CheckFail = -1;
+		public static final int CheckFail = 2;
 	}
 	
 	@GenericGenerator(name = "generator", strategy = "uuid")

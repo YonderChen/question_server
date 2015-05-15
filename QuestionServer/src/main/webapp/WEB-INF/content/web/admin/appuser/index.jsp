@@ -112,7 +112,7 @@
 					if (result.success) {
 						$('#editModal').modal('hide');
 						alert(result.msg);
-						ajaxSearch(1);
+						ajaxSearch(null);
 					} else {
 						alert(result.msg);
 					}

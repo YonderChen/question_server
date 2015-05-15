@@ -9,7 +9,7 @@
 				<thead>
 					<tr>
 						<th width="10%">
-							用户名
+							平台帐号
 						</th>
 						<th width="5%">
 							积分
@@ -75,12 +75,11 @@
 							</s:else>
 						</td>
 						<td id="op_${order.orderId}">
-							<s:if test="status == 0">
-								<button class="btn btn-link" type="button" onclick="javascript:check_score_order('${order.orderId}', 1);" data-toggle="button" data-loading-text="<i class='icon-pencil'></i>&nbsp;通过"><i class="icon-pencil"></i>&nbsp;通过</button>
-								<button class="btn btn-link" type="button" onclick="javascript:check_score_order('${order.orderId}', -1);" data-toggle="button" data-loading-text="<i class='icon-pencil'></i>&nbsp;拒绝"><i class="icon-pencil"></i>&nbsp;拒绝</button>
+							<s:if test="status == 1">
+								无
 							</s:if>
 							<s:else>
-								无
+								<button class="btn btn-link" type="button" onclick="javascript:editInput('${order.orderId}');" data-toggle="button" data-loading-text="<i class='icon-pencil'></i>&nbsp;编辑"><i class="icon-pencil"></i>&nbsp;编辑</button>
 							</s:else>
 						</td>
 					</tr>

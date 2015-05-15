@@ -34,7 +34,12 @@
 				page : page,
 				pageSize : pageSize,
 				username : $("#username").val().trim(),
-				name : $("#name").val().trim()
+				bindName : $("#bindName").val().trim(),
+				beginTime : $("#beginTime").val().trim(),
+				endTime : $("#endTime").val().trim(),
+				bindPlat : $("#bindPlat").val().trim(),
+				status : $("#status").val().trim(),
+				taskId : $("#taskId").val().trim()
 			},
 			dataType : 'text',
 			timeout : 60000,
@@ -107,24 +112,66 @@
 
 		<div class="rightinfo">
 			<ul class="seachform">
-
 				<li>
 					<label>
-						用户名:
+						平台账号:
 					</label>
-					<input name="username" id="username" type="text" class="span2" placeholder="用户名"/>
+					<input name="username" id="username" type="text" class="span2" placeholder="平台账号"/>
 				</li>
 				<li>
 					<label>
-						姓名:
+						店铺名称:
 					</label>
-					<input name="name" id="name" type="text" class="span2" placeholder="姓名"/>
+					<input name="bindName" id="bindName" type="text" class="span2" placeholder="店铺名称"/>
+				</li>
+				<li>
+					<label>
+						状态:
+					</label>
+				    <select id="status" name="status" class="span2">
+						<option value="-1" selected="selected">请选择</option>
+						<option value="0">未发布</option>
+						<option value="1">待审核</option>
+						<option value="2">执行中</option>
+						<option value="3">已完成</option>
+						<option value="4">已取消</option>
+						<option value="5">审核不通过</option>
+						<option value="6">任务修改，待审核</option>
+					</select>
+				</li>
+				<li>
+					<label>
+						任务编号:
+					</label>
+					<input name="taskId" id="taskId" type="text" class="span2" placeholder="任务编号"/>
+				</li>
+				<li>
+					<label>
+						创建日期:
+					</label>
+                    <input type="text" class="span2" style="width:100px;" name="beginTime" id="beginTime" value="" onclick="javascript:WdatePicker()">
+                    -
+                    <input type="text" class="span2" style="width:100px;" name="endTime" id="endTime" value="" onclick="javascript:WdatePicker()">
+					
 				</li>
 				<li>
 					<label>
 						&nbsp;
 					</label>
 					<button id="searchBtn" class="btn btn-info" onclick="javascript:ajaxSearch(1);" data-toggle="button" data-loading-text="<i class='icon-search'></i>&nbsp;搜索中..."><i class="icon-search"></i>&nbsp;搜索</button>
+				</li>
+			</ul>
+			<ul class="seachform">
+				<li>
+					<label>
+						平台:
+					</label>
+				    <select id="bindPlat" name="bindPlat" class="span2">
+						<option value="" selected="selected">请选择</option>
+						<option value="taobao" >淘宝</option>
+						<option value="tmall" >天猫</option>
+						<option value="jd" >京东</option>
+					</select>
 				</li>
 
 			</ul>

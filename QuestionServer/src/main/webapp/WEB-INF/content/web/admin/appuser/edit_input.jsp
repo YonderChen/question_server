@@ -32,7 +32,7 @@
   <tr>
     <td align="right">头像：</td>
     <td>
-		<s:if test="userType == 1"><img alt="" width="50px" height="50px" src="${ctx}${user.figureurl}" /></s:if>
+		<s:if test="#request.user.userType == 1"><img alt="" width="50px" height="50px" src="${ctx}${user.figureurl}" /></s:if>
 		<s:else><img alt="" width="50px" height="50px" src="${user.figureurl}" /></s:else>
     </td>
   </tr>

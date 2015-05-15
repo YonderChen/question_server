@@ -44,6 +44,10 @@ public class LLTaskBean extends Page {
     private String goodsImgFileContentType;
 	
     private String bindPlat;
+	private String bindName;
+	private String username;
+	private Date beginTime;
+	private Date endTime;
     
 	public String getTaskId() {
 		return taskId;
@@ -237,10 +241,34 @@ public class LLTaskBean extends Page {
 	public void setBindPlat(String bindPlat) {
 		this.bindPlat = bindPlat;
 	}
+	public String getBindName() {
+		return bindName;
+	}
+	public void setBindName(String bindName) {
+		this.bindName = bindName;
+	}
 	public String getRemark() {
 		return remark;
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public Date getBeginTime() {
+		return beginTime;
+	}
+	public void setBeginTime(Date beginTime) {
+		this.beginTime = beginTime;
+	}
+	public Date getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 }

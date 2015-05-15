@@ -164,7 +164,7 @@
 					result = eval("("+result+")");
 					if (result.success) {
 						$('#editModal').modal('hide');
-						ajaxSearch(1);
+						ajaxSearch(null);
 					} else {
 						alert(result.msg);
 					}

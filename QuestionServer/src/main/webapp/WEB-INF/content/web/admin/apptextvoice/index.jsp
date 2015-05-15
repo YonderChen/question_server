@@ -110,7 +110,7 @@
 					result = eval("("+result+")");
 					if (result.success) {
 						alert(result.msg);
-						ajaxSearch(1);
+						ajaxSearch(null);
 					} else {
 						alert(result.msg);
 					}

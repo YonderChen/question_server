@@ -44,8 +44,8 @@ INSERT INTO `t_menu` VALUES ('500000', NULL, 0, '账户管理', NULL, 'rightFram
 INSERT INTO `t_menu` VALUES ('500001', '500000', 1, '基本信息', 'web/admin/baseinfo', 'rightFrame', '500001', NULL, NULL);
 INSERT INTO `t_menu` VALUES ('600000', NULL, 0, '审核管理', NULL, 'rightFrame', '600000', 'leftico01.png', NULL);
 INSERT INTO `t_menu` VALUES ('600001', '600000', 1, '店铺管理', 'web/admin/useradmin/shopmanage/index', 'rightFrame', '600001', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('600002', '600000', 1, '续费会员订单审核', 'web/admin/useradmin/dealmanage/index_vip_order', 'rightFrame', '600002', NULL, NULL);
-INSERT INTO `t_menu` VALUES ('600003', '600000', 1, '购买积分订单审核', 'web/admin/useradmin/dealmanage/index_score_order', 'rightFrame', '600003', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('600002', '600000', 1, '续费会员订单管理', 'web/admin/useradmin/dealmanage/index_vip_order', 'rightFrame', '600002', NULL, NULL);
+INSERT INTO `t_menu` VALUES ('600003', '600000', 1, '购买积分订单管理', 'web/admin/useradmin/dealmanage/index_score_order', 'rightFrame', '600003', NULL, NULL);
 INSERT INTO `t_menu` VALUES ('600004', '600000', 1, '任务列表', 'web/admin/useradmin/taskmanage/index', 'rightFrame', '600004', NULL, NULL);
 INSERT INTO `t_menu` VALUES ('600005', '600000', '1', '商户管理', 'web/admin/useradmin/shopusermanage/index', 'rightFrame', '600005', NULL, NULL);
 INSERT INTO `t_menu` VALUES ('600006', '600000', '1', '流量记录', 'web/admin/useradmin/liuliangmanage/index', 'rightFrame', '600006', NULL, NULL);
@@ -301,10 +301,10 @@ CREATE TABLE `ll_task` (
   `is_quick_execute_` int(11) NOT NULL DEFAULT '0' COMMENT '是否优先执行',
   `cost_score_` int(11) NOT NULL COMMENT '消耗积分',
   `create_time_` datetime DEFAULT NULL COMMENT '创建时间',
-  `check_time` datetime DEFAULT NULL COMMENT '审核通过（开始执行）时间',
+  `check_time_` datetime DEFAULT NULL COMMENT '审核通过（开始执行）时间',
   `check_admin_` varchar(64) DEFAULT NULL COMMENT '操作管理员id',
   `finish_time_` datetime DEFAULT NULL COMMENT '任务执行完毕时间',
   `status_` int(11) NOT NULL COMMENT '任务状态',
-  `remark_` varchar(500) NOT NULL COMMENT '备注',
+  `remark_` varchar(500) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`task_id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
