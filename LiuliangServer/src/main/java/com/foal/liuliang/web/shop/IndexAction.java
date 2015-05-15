@@ -145,7 +145,7 @@ public class IndexAction extends UserBaseAction implements ModelDriven<ServerUse
 			return null;
 		}
 		StringBuilder url = new StringBuilder();
-		url.append(Constant.CONTEXT_WEB_URL + "web/shop/reset_passwd?");
+		url.append(Constant.CONTEXT_WEB_URL + "/web/shop/reset_passwd?");
 		url.append("userId=");
 		url.append(serverUser.getUserId());
 		long now = System.currentTimeMillis();
