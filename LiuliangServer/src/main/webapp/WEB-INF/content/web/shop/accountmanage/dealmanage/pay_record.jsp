@@ -40,7 +40,7 @@
                 </ul>
                 <div class="business-info-bd">
                     <div class="integral-serch">
-                        <form id="condition_form" action="${ctx }/web/shop/accountmanage/dealmanage/pay_record?left-list-id=4" method="get">
+                        <form id="condition_form" action="${ctx }/web/shop/accountmanage/dealmanage/pay_record?left-list-id=4" method="post">
                             <div class="integral-search-type">
                                 <label>状态：</label>
                                 <select id="status_select" name="status">
@@ -56,7 +56,7 @@
                                 至
                                 <input type="text" name="endTime" class="Wdate" onclick="javascript:WdatePicker();" value="<s:date name="#request.llPayRecordBean.endTime" format="yyyy-MM-dd"/>">
                             </div>
-                            <input type="hidden" id="recordType" name="recordType" value="${llPayRecordBean.recordType}">
+                            <input type="hidden" id="record_type" name="record_type" value="${llPayRecordBean.recordType}">
                             <input type="hidden" id="current_page" name="page" value="${pageBean.currentPage}">
                             <input type="submit" class="integral-search-butt" onclick="javascript:resetPage();" value="提交查询">
                         </form>
@@ -144,47 +144,6 @@ function searchPage(page){
 	$("#condition_form").submit();
 }
 
-function export_score_record(){
- var url= "${ctx}/web/shop/accountmanage/dealmanage/export_score_record";       
-     $.ajax({
-         type: "POST",
-         dataType: "html",
-         url: url,
-         data: $('#condition_form').serialize(),
-         success: function (result) {
-			if (!isOutTime(result)) {
-				result = eval("("+result+")");
-				if (result.success) {
-					window.location.href = '${ctx}' + result.msg;
-				}
-			}
-         },
-         error: function(data) {
-			alert("连接服务器超时,请稍后再试.");
-          }
-     });
-}
-
-function export_all_score_record(){
- var url= "${ctx}/web/shop/accountmanage/dealmanage/export_all_score_record";       
-     $.ajax({
-         type: "POST",
-         dataType: "html",
-         url: url,
-         data: $('#condition_form').serialize(),
-         success: function (result) {
-			if (!isOutTime(result)) {
-				result = eval("("+result+")");
-				if (result.success) {
-					window.location.href= '${ctx}' + result.msg;
-				}
-			}
-         },
-         error: function(data) {
-			alert("连接服务器超时,请稍后再试.");
-          }
-     });
-}
 </script>
 
 </body></html>

@@ -34,7 +34,7 @@
 .pay-order-detail-left .source label{display:block; width:78px; float:left; line-height:25px;}
 .pay-order-detail-left .source div{display:block; width:280px; float:left; line-height:25px;}
 
-.pay-order-detail-right{width:598px; height:488px; overflow:hidden; float:right; border:1px solid #E0E0E0; border-radius:5px; background:#fff;}
+.pay-order-detail-right{width:598px; overflow:hidden; float:right; border:1px solid #E0E0E0; border-radius:5px; background:#fff;}
 .pay-order-detail-right h3{width:560px; height:45px; line-height:45px; padding-left:20px; border-bottom:1px solid #E7E7E7; font-size:16px; font-weight:bold; color:#444;}
 .pay-order-detail-right p{color:#555; font-size:14px; line-height:30px; padding-left:20px;}
 .pay-order-detail-right p span{color:#f00;}
