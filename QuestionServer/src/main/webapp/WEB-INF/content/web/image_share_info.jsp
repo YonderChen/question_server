@@ -42,7 +42,7 @@
 					<b style="font-style: normal; color: gray; font-size: 10px;"><s:date name="#request.record.createTime" format="yyyy-MM-dd HH:mm:ss"/></b>
 				</td>
 				<td align="right">
-					<b style="font-style: normal; color: blue; font-size: 10px; margin-right: 10px;"><a href="javascript:linkToAppDownloadPage();">遇见你, 听你说</a></b>
+					<b style="font-style: normal; color: blue; font-size: 10px; margin-right: 10px;"><a href="http://www.yujianni520.com">遇见你, 听你说</a></b>
 				</td>
 			</tr>
 			<tr>
