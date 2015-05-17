@@ -202,7 +202,7 @@
 		</div>
 	</div>
 		
-		<div id="showImg" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" style="z-index:100000;position: absolute;" data-backdrop="static">
+		<div id="showImg" class="modal hide fade" style="max-width: 560px; min-width: 80px; width: auto;" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" style="z-index:100000;position: absolute;" data-backdrop="static">
             <img id="showImg_img" />  
 	        <div style="display: none;">
 				<button id="closeShowButton" class="btn btn-cancel" data-dismiss="modal" aria-hidden="true" data-toggle="button" data-loading-text="关闭">关闭</button>

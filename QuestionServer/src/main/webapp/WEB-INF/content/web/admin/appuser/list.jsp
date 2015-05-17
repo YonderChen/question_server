@@ -60,8 +60,8 @@
 							${user.name}
 						</td>
 						<td>
-							<s:if test="userType == 1"><img alt="" width="50px" height="50px" src="${ctx}${user.figureurl}" /></s:if>
-							<s:else><img alt="" width="50px" height="50px" src="${user.figureurl}" /></s:else>
+							<s:if test="userType == 1"><img alt="" style="max-width: 50px; max-height: 50px;" src="${ctx}${user.figureurl}" /></s:if>
+							<s:else><img alt="" style="max-width: 50px; max-height: 50px;" src="${user.figureurl}" /></s:else>
 						</td>
 						<td>
 							<s:date name="updateAt" format="yyyy-MM-dd HH:mm:ss"/>

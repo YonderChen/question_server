@@ -52,8 +52,8 @@
 							${record.owner.name}
 						</td>
 						<td>
-							<s:if test="owner.userType == 1"><img alt="" width="50px" height="50px" src="${ctx}${record.owner.figureurl}" /></s:if>
-							<s:else><img alt="" width="50px" height="50px" src="${record.owner.figureurl}" /></s:else>
+							<s:if test="owner.userType == 1"><img alt="" style="max-width: 50px; max-height: 50px;" src="${ctx}${record.owner.figureurl}" /></s:if>
+							<s:else><img alt="" style="max-width: 50px; max-height: 50px;" src="${record.owner.figureurl}" /></s:else>
 						</td>
 						<td>
 							${record.content}
