@@ -62,7 +62,7 @@
 							<s:date name="payTime" format="yyyy-MM-dd HH:mm:ss"/>
 						</td>
 						<td>
-							<img width="50px" height="80px" alt="" src="${ctx}${order.payImgUrl}" onclick="javascript:showImg('${ctx}${order.payImgUrl}');" />
+							<img style="max-width: 50px; max-height: 80px;" alt="" src="${ctx}${order.payImgUrl}" onclick="javascript:showImg('${ctx}${order.payImgUrl}');" />
 						</td>
 						<td>
 							<s:date name="createTime" format="yyyy-MM-dd HH:mm:ss"/>

@@ -1,4 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@page import="com.foal.liuliang.pojo.LLTask"%>
+<%@page import="org.apache.commons.lang3.math.NumberUtils"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,6 +23,22 @@
     <link rel="stylesheet" href="${ctx}/static_shop/style/detail.css">
 	<script type="text/javascript">
 
+	$('document').ready(function() {
+		var pageStayCostScore = parseInt($("#pageStayCostScore").val());
+		var visitTimeCostScore = parseInt($("#visitTimeCostScore").val());
+		var quickVerifyCostScore = parseInt($("#quickVerifyCostScore").val());
+		var quickExecuteCostScore = parseInt($("#quickExecuteCostScore").val());
+		var oneKeywordCostScore_4 = parseInt($("#oneKeywordCostScore_4").val());
+		var oneKeywordCostScore_5 = parseInt($("#oneKeywordCostScore_5").val());
+		var addedCostScore = pageStayCostScore + visitTimeCostScore + quickVerifyCostScore + quickExecuteCostScore + oneKeywordCostScore_4 + oneKeywordCostScore_5;
+		$("#addedCostScore").html(addedCostScore);
+		$("#addedCostScoreVal").val(addedCostScore);
+		var visitCostScore = parseInt($("#visitCostScoreVal").val());
+		var allCostScore = parseInt($("#allCostScoreVal").val());
+		var adjustCostScore = allCostScore - visitCostScore - addedCostScore;
+		$("#adjustCostScore").html(adjustCostScore);
+	});
+	
 	function isOutTime(result) {
 		if (result.indexOf("win.location.href='${ctx}/web/admin/index'") > 0) {
 			alert("登录超时,请重新登录.");
@@ -98,7 +116,7 @@
 </head>
 <body>
 <div class="breadcrumbs">
-    <div class="wrap"><a href="${ctx}">首页</a> &gt; <a href="#">任务详情</a></div>
+    <div class="wrap"><a href="#">任务详情</a></div>
 </div>
 <div class="task-detail">
     <div class="task-detail-left">
@@ -255,10 +273,14 @@
 						+llTask.orderNumberOneDay3 + llTask.orderNumberOneDay4 +
 						llTask.orderNumberOneDay5) * llTask.durationDay}访客 X
 						${oneVisitCostScore } =
-						<span>${(llTask.orderNumberOneDay1 +
+						<span id="visitCostScore">${(llTask.orderNumberOneDay1 +
 							llTask.orderNumberOneDay2 +llTask.orderNumberOneDay3 +
 							llTask.orderNumberOneDay4 + llTask.orderNumberOneDay5) *
 							llTask.durationDay * oneVisitCostScore}</span>（ 积分 ）
+						<input id="visitCostScoreVal" type="hidden" value="${(llTask.orderNumberOneDay1 +
+							llTask.orderNumberOneDay2 +llTask.orderNumberOneDay3 +
+							llTask.orderNumberOneDay4 + llTask.orderNumberOneDay5) *
+							llTask.durationDay * oneVisitCostScore}">
 					</td>
 				</tr>
 				<tr>
@@ -266,21 +288,17 @@
 						增值服务
 					</td>
 					<td>
-						<s:if test="#request.llTask.pageStayType > 0">
-							<s:if test="#request.llTask.pageStayType == 1">
-				            	【页面停留时间优化（停留时间60~120秒，${pageStayCostScoreMap['1'] }积分）】<br>
-				            </s:if>
-							<s:if test="#request.llTask.pageStayType == 2">
-				            	【页面停留时间优化（停留时间120~180秒，${pageStayCostScoreMap['2'] }积分）】<br>
-				            </s:if>
+						<s:if test="#request.llTask.pageStayType == 1">
+			            	【页面停留时间优化（停留时间60~120秒，${pageStayCostScoreMap['1'] }积分）】<br>
 			            </s:if>
-						<s:if test="#request.llTask.visitTimeType > 0">
-							<s:if test="#request.llTask.visitTimeType == 1">
-				            	【流量访问时间优化（随机分布，${visitTimeCostScoreMap['1'] }积分）】<br>
-				            </s:if>
-							<s:if test="#request.llTask.visitTimeType == 2">
-				            	【流量访问时间优化（网购用户习惯曲线分布，${visitTimeCostScoreMap['2'] }积分）】<br>
-				            </s:if>
+						<s:if test="#request.llTask.pageStayType == 2">
+			            	【页面停留时间优化（停留时间120~180秒，${pageStayCostScoreMap['2'] }积分）】<br>
+			            </s:if>
+						<s:if test="#request.llTask.visitTimeType == 1">
+			            	【流量访问时间优化（随机分布，${visitTimeCostScoreMap['1'] }积分）】<br>
+			            </s:if>
+						<s:if test="#request.llTask.visitTimeType == 2">
+			            	【流量访问时间优化（网购用户习惯曲线分布，${visitTimeCostScoreMap['2'] }积分）】<br>
 			            </s:if>
 						<s:if test="#request.llTask.isQuickVerify > 0">
 			            	【快速完成任务（优先审单，${quickVerifyCostScore }积分）】<br>
@@ -298,40 +316,79 @@
 					<td>
 						<s:if test="#request.llTask.pageStayType == 1">
 			            	【+ ${pageStayCostScoreMap['1'] }】
+							<input type="hidden" id="pageStayCostScore" value="${pageStayCostScoreMap['1'] }">
 			            </s:if>
-						<s:if test="#request.llTask.pageStayType == 2">
+			            <s:elseif  test="#request.llTask.pageStayType == 2">
 			            	【+ ${pageStayCostScoreMap['2'] }】
-			            </s:if>
+							<input type="hidden" id="pageStayCostScore" value="${pageStayCostScoreMap['2'] }">
+			            </s:elseif>
+						<s:else>
+							<input type="hidden" id="pageStayCostScore" value="0">
+			            </s:else>
 						<s:if test="#request.llTask.visitTimeType == 1">
 			            	【+ ${visitTimeCostScoreMap['1'] }】
+							<input type="hidden" id="visitTimeCostScore" value="${visitTimeCostScoreMap['1'] }">
 			            </s:if>
-						<s:if test="#request.llTask.visitTimeType == 2">
+						<s:elseif test="#request.llTask.visitTimeType == 2">
 			            	【+ ${visitTimeCostScoreMap['2'] }】
-			            </s:if>
+							<input type="hidden" id="visitTimeCostScore" value="${visitTimeCostScoreMap['2'] }">
+			            </s:elseif>
+			            <s:else>
+							<input type="hidden" id="visitTimeCostScore" value="0">
+			            </s:else>
 						<s:if test="#request.llTask.isQuickVerify > 0">
 			            	【+ ${quickVerifyCostScore }】
+							<input type="hidden" id="quickVerifyCostScore" value="${quickVerifyCostScore }">
 			            </s:if>
+			            <s:else>
+							<input type="hidden" id="quickVerifyCost" value="0">
+			            </s:else>
 						<s:if test="#request.llTask.isQuickExecute > 0">
 			            	【+ ${quickExecuteCostScore }】
+							<input type="hidden" id="quickExecuteCostScore" value="${quickExecuteCostScore }">
 			            </s:if>
+			            <s:else>
+							<input type="hidden" id="quickExecuteCostScore" value="0">
+			            </s:else>
 						<s:if test="#request.llTask.orderNumberOneDay4 > 0">
 			            	【+ ${oneKeywordCostScore }】<br>
+							<input type="hidden" id="oneKeywordCostScore_4" value="${oneKeywordCostScore }">
 			            </s:if>
+			            <s:else>
+							<input type="hidden" id="oneKeywordCostScore_4" value="0">
+			            </s:else>
 						<s:if test="#request.llTask.orderNumberOneDay5 > 0">
 			            	【+ ${oneKeywordCostScore }】<br>
+							<input type="hidden" id="oneKeywordCostScore_5" value="${oneKeywordCostScore }">
 			            </s:if>
+			            <s:else>
+							<input type="hidden" id="oneKeywordCostScore_5" value="0">
+			            </s:else>
 						积分
 					</td>
 					<td>
-						<span>${llTask.costScore - (llTask.orderNumberOneDay1 +
-							llTask.orderNumberOneDay2 +llTask.orderNumberOneDay3 +
-							llTask.orderNumberOneDay4 + llTask.orderNumberOneDay5) *
-							llTask.durationDay * oneVisitCostScore}</span>（ 积分 ）
+						积分
+						<span id="addedCostScore">0</span>（ 积分 ）
+						<input id="addedCostScoreVal" type="hidden" value="">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						管理员调整
+					</td>
+					<td>
+					</td>
+					<td>
+					</td>
+					<td>
+						积分
+						<span id="adjustCostScore">0</span>（ 积分 ）
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		<div class="task-detail-bott">费用合计：<span>${llTask.costScore }</span>积分</div>
+		<div class="task-detail-bott">费用合计：<span id="allCostScore">${llTask.costScore }</span>积分</div>
+		<input id="allCostScoreVal" type="hidden" value="${llTask.costScore }">
 </div>
 			<jsp:include page="/include/footer.jsp" flush="true"></jsp:include>
 
