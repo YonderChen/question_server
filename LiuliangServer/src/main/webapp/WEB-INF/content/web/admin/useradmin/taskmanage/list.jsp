@@ -9,6 +9,9 @@
 				<thead>
 					<tr>
 						<th width="10%">
+							任务编号
+						</th>
+						<th width="9%">
 							用户名
 						</th>
 						<th width="10%">
@@ -17,10 +20,10 @@
 						<th width="5%">
 							平台
 						</th>
-						<th width="10%">
+						<th width="8%">
 							客户端
 						</th>
-						<th width="15%">
+						<th width="8%">
 							店铺
 						</th>
 						<th width="10%">
@@ -46,6 +49,9 @@
 				<tbody>
 					<s:iterator value="#request.pageBean.list" id="task">
 					<tr>
+						<td>
+							${task.taskId }
+						</td>
 						<td>
 							${task.serverUser.username }
 						</td>

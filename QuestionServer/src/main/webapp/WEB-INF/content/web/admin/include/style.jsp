@@ -15,6 +15,7 @@
 	<script type="text/javascript" src="${ctx}/js/swfupload.queue.js"></script>
 	<script type="text/javascript" src="${ctx}/js/jquery.swfupload.js"></script>
   	<script type="text/javascript" src="${ctx}/js/jquery.idTabs.min.js"></script>
+  	<script type="text/javascript" src="${ctx}/js/jquery.mousewheel.js"></script>
    	<script type="text/javascript" src="${ctx}/js/bootstrap.min.js"></script>   
    	<script type="text/javascript" src="${ctx}/js/calendar/WdatePicker.js"></script>
 <script type="text/javascript">
