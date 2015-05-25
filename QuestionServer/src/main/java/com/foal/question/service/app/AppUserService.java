@@ -14,6 +14,7 @@ import com.foal.question.dao.DaoSupport;
 import com.foal.question.jersey.resource.tools.ResultMap;
 import com.foal.question.jersey.resource.tools.APIConstants.RetCode;
 import com.foal.question.pojo.AppUser;
+import com.foal.question.pojo.AppUserFollow;
 import com.foal.question.util.MD5Tools;
 import com.foal.question.util.StringTools;
 import com.foal.question.util.StringUtil;
@@ -121,5 +122,65 @@ public class AppUserService extends DaoSupport {
 		user.setUpdateAt(new Date());
 		this.hibernateDao.update(user);
 		return true;
+	}
+	
+	public AppUserFollow getFollow(String uid, String targetUid) {
+		String queryHql = "from AppUserFollow as u where u.owner.uid = ? and u.follower.uid = ?";
+		List<AppUserFollow> list = this.hibernateDao.queryList(queryHql, targetUid, uid);
+		if (list == null || list.size() == 0) {
+			return null;
+		}
+		return list.get(0);
+	}
+	/**
+	 * 判断是否已经关注过
+	 * @param uid
+	 * @param targetUid
+	 * @return
+	 */
+	public boolean hasFollow(String uid, String targetUid) {
+		return getFollow(uid, targetUid) != null;
+	}
+	/**
+	 * 关注某个用户
+	 * @param follower
+	 * @param owner
+	 */
+	public void follow(AppUser follower, AppUser owner) {
+		AppUserFollow follow = new AppUserFollow();
+		follow.setFollower(follower);
+		follow.setOwner(owner);
+		follow.setCreateTime(new Date());
+		this.hibernateDao.save(follow);
+	}
+	/**
+	 * 获取关注自己的用户列表
+	 * @param owner
+	 * @return
+	 */
+	public List<AppUserFollow> getFollowsByOwner(AppUser owner) {
+		String queryHql = "from AppUserFollow as u where u.owner.uid = ?";
+		List<AppUserFollow> list = this.hibernateDao.queryList(queryHql, owner.getUid());
+		return list;
+	}
+	/**
+	 * 获取自己关注的用户列表
+	 * @param follower
+	 * @return
+	 */
+	public List<AppUserFollow> getFollowsByFollower(AppUser follower) {
+		String queryHql = "from AppUserFollow as u where u.follower.uid = ?";
+		List<AppUserFollow> list = this.hibernateDao.queryList(queryHql, follower.getUid());
+		return list;
+	}
+	/**
+	 * 获取相互关注的（好友）列表
+	 * @param owner
+	 * @return
+	 */
+	public List<AppUserFollow> getFriends(AppUser owner) {
+		String queryHql = "from AppUserFollow as u where u.owner.uid = ? and u.status = ?";
+		List<AppUserFollow> list = this.hibernateDao.queryList(queryHql, owner.getUid(), AppUserFollow.FollowStatus.Mutual);
+		return list;
 	}
 }
