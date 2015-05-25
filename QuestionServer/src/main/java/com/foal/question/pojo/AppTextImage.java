@@ -165,7 +165,7 @@ public class AppTextImage implements Serializable{
 			return false;
 		return true;
 	}
-	public JsonObject toJson(boolean hasPraised) {
+	public JsonObject toJson(boolean hasPraised, int commentCount) {
 		JsonObject jo = GsonTools.parseJsonObject(this);
 		jo.remove("owner");
 		jo.addProperty("ownerId", owner.getUid());
@@ -178,7 +178,8 @@ public class AppTextImage implements Serializable{
 		jo.addProperty("imageUrl", Constant.CONTEXT_WEB_URL + this.imageUrl);
 		jo.add("imageInfo", GsonTools.parseJsonObject(imageInfo));
 		jo.addProperty("createTime", createTime.getTime());
-		jo.addProperty("hasPraised", hasPraised);
+		jo.addProperty("hasPraised", hasPraised ? 1 : 0);
+		jo.addProperty("commentCount", commentCount);
 		return jo;
 	}
 }

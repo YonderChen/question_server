@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Index;
 
 @Entity
-@Table(name = "app_user_follow", uniqueConstraints = {@UniqueConstraint(columnNames={"owner_id_", "follower_uid_"})})
+@Table(name = "app_user_follow", uniqueConstraints = {@UniqueConstraint(columnNames={"owner_id_", "follower_id_"})})
 @Cache(region = "yonderHibernateCache", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class AppUserFollow implements Serializable{
 	/**
@@ -78,5 +78,49 @@ public class AppUserFollow implements Serializable{
 	}
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((createTime == null) ? 0 : createTime.hashCode());
+		result = prime * result + ((follower == null) ? 0 : follower.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
+		result = prime * result + status;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AppUserFollow other = (AppUserFollow) obj;
+		if (createTime == null) {
+			if (other.createTime != null)
+				return false;
+		} else if (!createTime.equals(other.createTime))
+			return false;
+		if (follower == null) {
+			if (other.follower != null)
+				return false;
+		} else if (!follower.equals(other.follower))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (owner == null) {
+			if (other.owner != null)
+				return false;
+		} else if (!owner.equals(other.owner))
+			return false;
+		if (status != other.status)
+			return false;
+		return true;
 	}
 }

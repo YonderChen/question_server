@@ -13,6 +13,7 @@ import com.foal.question.bean.AppTextImageBean;
 import com.foal.question.bean.PageBean;
 import com.foal.question.dao.DaoSupport;
 import com.foal.question.pojo.AppTextImage;
+import com.foal.question.pojo.AppTextImageComment;
 import com.foal.question.pojo.AppTextImagePraiseLog;
 import com.foal.question.pojo.AppUser;
 import com.foal.question.util.StringTools;
@@ -107,6 +108,24 @@ public class AppTextImageService extends DaoSupport {
 	}
 
 	/**
+	 * 获取关注用户的记录列表
+	 * @param uid	用户uid
+	 * @param orderBy	0（默认）：创建时间，1：点赞数
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 */
+	public List<AppTextImage> getRecordByFollow(String uid, int orderBy, int page, int pageSize) {
+		String queryHql;
+		if (orderBy == 0) {
+			queryHql = "from AppTextImage v where v.owner.uid in (select uid from AppUserFollow f where f.follower.uid = ?) order by v.createTime desc";
+		} else {
+			queryHql = "from AppTextImage v where v.owner.uid in (select uid from AppUserFollow f where f.follower.uid = ?) order by v.praiseCount desc";
+		}
+		return this.hibernateDao.queryList(queryHql, page, pageSize, uid);
+	}
+
+	/**
 	 * 获取公共列表
 	 * @param orderBy	0（默认）：创建时间，1：点赞数
 	 * @param page
@@ -155,5 +174,32 @@ public class AppTextImageService extends DaoSupport {
 		queryHql += " order by r.createTime desc";
 		List list = this.hibernateDao.queryList(queryHql, appTextImageBean.getPage(), appTextImageBean.getPageSize(), paramMap);
 		return new PageBean(list, allRow, appTextImageBean.getPage(), appTextImageBean.getPageSize());
+	}
+	
+	public void addComment(AppUser owner, AppTextImage record, String content) {
+		AppTextImageComment comment = new AppTextImageComment();
+		comment.setOwner(owner);
+		comment.setRecord(record);
+		comment.setContent(content);
+		comment.setCreateTime(new Date());
+		this.hibernateDao.save(comment);
+	}
+	
+	public List<AppTextImageComment> getRecordComment(int recordId, int page, int pageSize) {
+		String queryHql = "from AppTextImageComment as v where v.record.id = ? order by v.createTime desc";
+		return this.hibernateDao.queryList(queryHql, page, pageSize, recordId);
+	}
+	
+	public int getRecordCommentCount(int recordId) {
+		String queryHql = "select count(*) from AppTextImageComment as r where r.record.id = ?";
+		return this.hibernateDao.getAllRow(queryHql, recordId);
+	}
+	
+	public AppTextImageComment getRecordComment(String commentId) {
+		return this.hibernateDao.get(AppTextImageComment.class, commentId);
+	}
+	
+	public void delRecordComment(AppTextImageComment comment) {
+		this.hibernateDao.delete(comment);
 	}
 }

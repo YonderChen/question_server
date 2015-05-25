@@ -13,6 +13,7 @@ import com.foal.question.bean.AppTextVoiceBean;
 import com.foal.question.bean.PageBean;
 import com.foal.question.dao.DaoSupport;
 import com.foal.question.pojo.AppTextVoice;
+import com.foal.question.pojo.AppTextVoiceComment;
 import com.foal.question.pojo.AppTextVoicePraiseLog;
 import com.foal.question.pojo.AppUser;
 import com.foal.question.util.StringTools;
@@ -107,6 +108,24 @@ public class AppTextVoiceService extends DaoSupport {
 	}
 
 	/**
+	 * 获取关注用户的记录列表
+	 * @param uid	用户uid
+	 * @param orderBy	0（默认）：创建时间，1：点赞数
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 */
+	public List<AppTextVoice> getRecordByFollow(String uid, int orderBy, int page, int pageSize) {
+		String queryHql;
+		if (orderBy == 0) {
+			queryHql = "from AppTextVoice v where v.owner.uid in (select uid from AppUserFollow f where f.follower.uid = ?) order by v.createTime desc";
+		} else {
+			queryHql = "from AppTextVoice v where v.owner.uid in (select uid from AppUserFollow f where f.follower.uid = ?) order by v.praiseCount desc";
+		}
+		return this.hibernateDao.queryList(queryHql, page, pageSize, uid);
+	}
+
+	/**
 	 * 获取公共列表
 	 * @param orderBy	0（默认）：创建时间，1：点赞数
 	 * @param page
@@ -155,5 +174,32 @@ public class AppTextVoiceService extends DaoSupport {
 		queryHql += " order by r.createTime desc";
 		List list = this.hibernateDao.queryList(queryHql, appTextVoiceBean.getPage(), appTextVoiceBean.getPageSize(), paramMap);
 		return new PageBean(list, allRow, appTextVoiceBean.getPage(), appTextVoiceBean.getPageSize());
+	}
+	
+	public void addComment(AppUser owner, AppTextVoice record, String content) {
+		AppTextVoiceComment comment = new AppTextVoiceComment();
+		comment.setOwner(owner);
+		comment.setRecord(record);
+		comment.setContent(content);
+		comment.setCreateTime(new Date());
+		this.hibernateDao.save(comment);
+	}
+	
+	public List<AppTextVoiceComment> getRecordComment(int recordId, int page, int pageSize) {
+		String queryHql = "from AppTextVoiceComment v where v.record.id = ? order by v.createTime desc";
+		return this.hibernateDao.queryList(queryHql, page, pageSize, recordId);
+	}
+	
+	public int getRecordCommentCount(int recordId) {
+		String queryHql = "select count(*) from AppTextVoiceComment as r where r.record.id = ?";
+		return this.hibernateDao.getAllRow(queryHql, recordId);
+	}
+	
+	public AppTextVoiceComment getRecordComment(String commentId) {
+		return this.hibernateDao.get(AppTextVoiceComment.class, commentId);
+	}
+	
+	public void delRecordComment(AppTextVoiceComment comment) {
+		this.hibernateDao.delete(comment);
 	}
 }

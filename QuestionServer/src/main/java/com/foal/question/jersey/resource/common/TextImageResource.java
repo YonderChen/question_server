@@ -26,6 +26,7 @@ import com.foal.question.jersey.resource.tools.ResourceTools;
 import com.foal.question.jersey.resource.tools.ResultMap;
 import com.foal.question.jersey.resource.tools.APIConstants.RetCode;
 import com.foal.question.pojo.AppTextImage;
+import com.foal.question.pojo.AppTextImageComment;
 import com.foal.question.pojo.AppUser;
 import com.foal.question.service.RiskWordService;
 import com.foal.question.service.app.AppTextImageService;
@@ -99,7 +100,7 @@ public class TextImageResource {
 			record.setPraiseCount(0);
 			record.setShareCount(0);
 			appTextImageService.addRecord(record);
-			ret.add("text_image", record.toJson(false));
+			ret.add("text_image", record.toJson(false, 0));
 			ret.setResult(RetCode.Success);
 		} catch (Exception e) {
 			logger.error("发送文字图片失败", e);
@@ -189,7 +190,7 @@ public class TextImageResource {
 	
 	private JsonObject getRetRecordJson(AppTextImage record, String uid) {
 		boolean hasPraised = appTextImageService.hasPraised(record.getId(), uid);
-		return record.toJson(hasPraised);
+		return record.toJson(hasPraised, appTextImageService.getRecordCommentCount(record.getId()));
 	}
 	
 	/**
@@ -292,6 +293,114 @@ public class TextImageResource {
 			retJa.add(user.toJson());
 		}
 		ret.add("users", retJa);
+		ret.setResult(RetCode.Success);
+		return ret.toJson();
+	}
+	
+	/**
+	 * 加载关注的人的图片文字列表
+	 * @param uid
+	 * @param orderBy	0（默认）：创建时间，1：点赞数
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 */
+	@GET
+	@Path(value = "/load_by_follow")
+	@Produces( { MediaType.TEXT_HTML })
+	public String loadByFollow(@QueryParam(value = "uid") String uid, @QueryParam(value = "order_by") int orderBy, @QueryParam(value = "page") int page, @QueryParam(value = "page_size") int pageSize) {
+		ResultMap ret = ResultMap.getResultMap();
+		AppUser user = appTextImageService.getAppUserService().getAppUserById(uid);
+		if (user == null) {
+			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
+			return ret.toJson();
+		}
+		List<AppTextImage> recordList = appTextImageService.getRecordByFollow(uid, orderBy, page, pageSize);
+		JsonArray retJa = new JsonArray();
+		for (AppTextImage record : recordList) {
+			retJa.add(getRetRecordJson(record, uid));
+		}
+		ret.add("text_images", retJa);
+		ret.setResult(RetCode.Success);
+		return ret.toJson();
+	}
+	
+	/**
+	 * 添加评论
+	 * @param recordId
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 */
+	@POST
+	@Path(value = "/add_comment")
+	@Produces( { MediaType.TEXT_HTML })
+	public String addComment(@QueryParam(value = "uid") String uid, @QueryParam(value = "record_id") int recordId, @QueryParam(value = "content") String content) {
+		ResultMap ret = ResultMap.getResultMap();
+		AppUser user = appTextImageService.getAppUserService().getAppUserById(uid);
+		if (user == null) {
+			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
+			return ret.toJson();
+		}
+		AppTextImage record = appTextImageService.getRecord(recordId);
+		if (record == null) {
+			ret.setResult(RetCode.Faild, "要评论的记录不存在");
+			return ret.toJson();
+		}
+		appTextImageService.addComment(user, record, content);
+		ret.setResult(RetCode.Success);
+		return ret.toJson();
+	}
+	
+	/**
+	 * 删除评论
+	 * @param recordId
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 */
+	@GET
+	@Path(value = "/del_comment")
+	@Produces( { MediaType.TEXT_HTML })
+	public String delComment(@QueryParam(value = "uid") String uid, @QueryParam(value = "comment_id") String commentId) {
+		ResultMap ret = ResultMap.getResultMap();
+		AppUser user = appTextImageService.getAppUserService().getAppUserById(uid);
+		if (user == null) {
+			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
+			return ret.toJson();
+		}
+		AppTextImageComment comment = appTextImageService.getRecordComment(commentId);
+		if (comment == null) {
+			ret.setResult(RetCode.Faild, "要删除的评论不存在");
+			return ret.toJson();
+		}
+		if (!StringTools.equalsStr(comment.getOwner().getUid(),uid)) {
+			ret.setResult(RetCode.Faild, "该评论不属于您");
+			return ret.toJson();
+		}
+		appTextImageService.delRecordComment(comment);
+		ret.setResult(RetCode.Success);
+		return ret.toJson();
+	}
+	
+	/**
+	 * 加载记录的评论
+	 * @param recordId
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 */
+	@GET
+	@Path(value = "/load_comment")
+	@Produces( { MediaType.TEXT_HTML })
+	public String loadComment(@QueryParam(value = "record_id") int recordId, @QueryParam(value = "page") int page, @QueryParam(value = "page_size") int pageSize) {
+		ResultMap ret = ResultMap.getResultMap();
+		List<AppTextImageComment> commentList = appTextImageService.getRecordComment(recordId, page, pageSize);
+		JsonArray retJa = new JsonArray();
+		for (AppTextImageComment comment : commentList) {
+			retJa.add(comment.toJson());
+		}
+		ret.add("comments", retJa);
 		ret.setResult(RetCode.Success);
 		return ret.toJson();
 	}

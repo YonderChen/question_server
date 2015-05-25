@@ -13,6 +13,7 @@ import com.foal.question.config.Constant;
 import com.foal.question.dao.DaoSupport;
 import com.foal.question.jersey.resource.tools.ResultMap;
 import com.foal.question.jersey.resource.tools.APIConstants.RetCode;
+import com.foal.question.pojo.AppTextImage;
 import com.foal.question.pojo.AppUser;
 import com.foal.question.pojo.AppUserFollow;
 import com.foal.question.util.MD5Tools;
@@ -123,7 +124,12 @@ public class AppUserService extends DaoSupport {
 		this.hibernateDao.update(user);
 		return true;
 	}
-	
+	/**
+	 * 获取uid关注targetUid的follow对象
+	 * @param uid
+	 * @param targetUid
+	 * @return
+	 */
 	public AppUserFollow getFollow(String uid, String targetUid) {
 		String queryHql = "from AppUserFollow as u where u.owner.uid = ? and u.follower.uid = ?";
 		List<AppUserFollow> list = this.hibernateDao.queryList(queryHql, targetUid, uid);
@@ -133,7 +139,7 @@ public class AppUserService extends DaoSupport {
 		return list.get(0);
 	}
 	/**
-	 * 判断是否已经关注过
+	 * 判断uid是否关注了targetUid
 	 * @param uid
 	 * @param targetUid
 	 * @return
@@ -151,16 +157,49 @@ public class AppUserService extends DaoSupport {
 		follow.setFollower(follower);
 		follow.setOwner(owner);
 		follow.setCreateTime(new Date());
+		AppUserFollow ownerFollow = getFollow(owner.getUid(), follower.getUid());
+		if (ownerFollow != null) {
+			follow.setStatus(AppUserFollow.FollowStatus.Mutual);
+			ownerFollow.setStatus(AppUserFollow.FollowStatus.Mutual);
+			this.hibernateDao.update(ownerFollow);
+		} else {
+			follow.setStatus(AppUserFollow.FollowStatus.Single);
+		}
 		this.hibernateDao.save(follow);
+	}
+	/**
+	 * 取消关注某个用户
+	 * @param follower
+	 * @param owner
+	 */
+	public void cancelFollow(String uid, String targetUid) {
+		AppUserFollow follow = getFollow(uid, targetUid);
+		if (follow != null) {
+			this.hibernateDao.delete(follow);
+			AppUserFollow ownerFollow = getFollow(targetUid, uid);
+			if (ownerFollow != null) {
+				ownerFollow.setStatus(AppUserFollow.FollowStatus.Single);
+				this.hibernateDao.update(ownerFollow);
+			}
+		}
+	}
+	public List<AppTextImage> getRecordByOwner(String ownerId, int orderBy, int page, int pageSize) {
+		String queryHql;
+		if (orderBy == 0) {
+			queryHql = "from AppTextImage v where v.owner.uid = ? order by v.createTime desc";
+		} else {
+			queryHql = "from AppTextImage v where v.owner.uid = ? order by v.praiseCount desc";
+		}
+		return this.hibernateDao.queryList(queryHql, page, pageSize, ownerId);
 	}
 	/**
 	 * 获取关注自己的用户列表
 	 * @param owner
 	 * @return
 	 */
-	public List<AppUserFollow> getFollowsByOwner(AppUser owner) {
+	public List<AppUserFollow> getFollowsByOwner(String ownerId, int page, int pageSize) {
 		String queryHql = "from AppUserFollow as u where u.owner.uid = ?";
-		List<AppUserFollow> list = this.hibernateDao.queryList(queryHql, owner.getUid());
+		List<AppUserFollow> list = this.hibernateDao.queryList(queryHql, page, pageSize, ownerId);
 		return list;
 	}
 	/**
@@ -168,9 +207,9 @@ public class AppUserService extends DaoSupport {
 	 * @param follower
 	 * @return
 	 */
-	public List<AppUserFollow> getFollowsByFollower(AppUser follower) {
+	public List<AppUserFollow> getFollowsByFollower(String followerId, int page, int pageSize) {
 		String queryHql = "from AppUserFollow as u where u.follower.uid = ?";
-		List<AppUserFollow> list = this.hibernateDao.queryList(queryHql, follower.getUid());
+		List<AppUserFollow> list = this.hibernateDao.queryList(queryHql, page, pageSize, followerId);
 		return list;
 	}
 	/**
@@ -178,9 +217,9 @@ public class AppUserService extends DaoSupport {
 	 * @param owner
 	 * @return
 	 */
-	public List<AppUserFollow> getFriends(AppUser owner) {
+	public List<AppUserFollow> getFriends(String ownerId, int page, int pageSize) {
 		String queryHql = "from AppUserFollow as u where u.owner.uid = ? and u.status = ?";
-		List<AppUserFollow> list = this.hibernateDao.queryList(queryHql, owner.getUid(), AppUserFollow.FollowStatus.Mutual);
+		List<AppUserFollow> list = this.hibernateDao.queryList(queryHql, page, pageSize, ownerId, AppUserFollow.FollowStatus.Mutual);
 		return list;
 	}
 }

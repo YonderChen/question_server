@@ -165,7 +165,7 @@ public class AppTextVoice implements Serializable{
 			return false;
 		return true;
 	}
-	public JsonObject toJson(boolean hasPraised) {
+	public JsonObject toJson(boolean hasPraised, int commentCount) {
 		JsonObject jo = GsonTools.parseJsonObject(this);
 		jo.remove("owner");
 		jo.addProperty("ownerId", owner.getUid());
@@ -179,6 +179,7 @@ public class AppTextVoice implements Serializable{
 		jo.add("voiceInfo", GsonTools.parseJsonObject(voiceInfo));
 		jo.addProperty("createTime", createTime.getTime());
 		jo.addProperty("hasPraised", hasPraised ? 1 : 0);
+		jo.addProperty("commentCount", commentCount);
 		return jo;
 	}
 }
