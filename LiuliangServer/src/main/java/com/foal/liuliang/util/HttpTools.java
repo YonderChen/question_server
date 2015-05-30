@@ -11,6 +11,7 @@ import java.net.ConnectException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 /**
@@ -18,7 +19,7 @@ import java.util.Map.Entry;
  *
  */
 public class HttpTools {
-    public static String sendGet(String url, HashMap<String,String> params) throws ConnectException {
+    public static String sendGet(String url, Map<String,String> params) throws ConnectException {
     	return sendGet(url, params, "UTF-8");
     }
 	/**
@@ -28,7 +29,7 @@ public class HttpTools {
      * @return URL 所代表远程资源的响应结果
 	 * @throws ConnectException 
      */
-    public static String sendGet(String url, HashMap<String,String> params, String charset) throws ConnectException {
+    public static String sendGet(String url, Map<String,String> params, String charset) throws ConnectException {
     	if (charset == null) {
 			charset = "UTF-8";
 		}
@@ -132,7 +133,7 @@ public class HttpTools {
      * @param map
      * @return
      */
-    private static String parseParams(HashMap<String,String> map){
+    private static String parseParams(Map<String,String> map){
     	
         StringBuffer sb = new StringBuffer();
         if(map != null && map.size()>0){
