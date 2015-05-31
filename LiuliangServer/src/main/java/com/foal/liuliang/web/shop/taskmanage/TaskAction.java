@@ -117,6 +117,10 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 			this.alertAndGoBack("提交数据异常");
 			return null;
 		}
+		if(!llShopService.checkGoodsUrl(llTaskBean.getBindPlat(), llTaskBean.getGoodsUrl())) {
+			this.alertAndGoBack("商品地址有误");
+			return null;
+		}
 		try {
 			String fileSuffix = ResourceTools.getFileSuffix(llTaskBean.getGoodsImgFileFileName());
 			if(!ResourceTools.checkSuffix(fileSuffix, ResourceTools.getImageSuffixs())) {

@@ -7,19 +7,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.foal.liuliang.config.Constant;
 import com.google.gson.JsonObject;
 
 public class CrazyClickTools {
 	
-	private static final String appkey = "test"; 
-	private static final String appsecret = "a9d11a189099ac9b483ab982e849e939"; 
-	private static final String baseUrl = "http://api.sandbox.aymoo.com/api/";
+	public static class Method {
+		public static final String tbpc_add = "tbpc/add";
+		public static final String tbpc_modify = "tbpc/modify";
+		public static final String tbmobi_add = "tbmobi/add";
+		public static final String tbmobi_modify = "tbmobi/modify";
+		public static final String jdpc_add = "jdpc/add";
+		public static final String jdpc_modify = "jdpc/modify";
+	}
 	
-	public static String getSign(String method, Map<String, String> params, String appsecret) {
+	private static String getSign(String method, Map<String, String> params, String appsecret) {
         List<String> scortKeys = getSortParamKey(params);
         String signString = method.trim();
         for (int i = 0; i < scortKeys.size(); i++) {
-        	signString += scortKeys.get(i);
+        	signString += params.get(scortKeys.get(i));
 		}
         signString += MD5Tools.hashToMD5(appsecret);
         String sign = MD5Tools.hashToMD5(signString);
@@ -33,17 +39,12 @@ public class CrazyClickTools {
 		return keys;
     }
     
-    public static Map<String, String> getBaseParam() {
-    	Map<String, String> baseParam = new HashMap<String, String>();
-    	baseParam.put("appkey", appkey);
-    	return baseParam;
-    }
-    
     public static JsonObject request(String method, Map<String, String> params) {
-    	String sign = getSign(method, params, appsecret);
+    	params.put("appkey", Constant.CrazyClickAppkey);
+    	params.put("timestamp", String.valueOf(System.currentTimeMillis() / 1000));
+    	String sign = getSign(method, params, Constant.CrazyClickAppsecret);
     	params.put("sign", sign);
-    	params.put("timestamp", String.valueOf(System.currentTimeMillis()));
-    	String url = baseUrl + method;
+    	String url = Constant.CrazyClickBaseUrl + method;
     	JsonObject jo = new JsonObject();
     	String response = "";
     	try {
@@ -54,4 +55,27 @@ public class CrazyClickTools {
 		jo = GsonTools.parseJsonObject(response);
 		return jo;
     }
+    
+	public static void main(String[] args) {
+
+		Constant.CrazyClickAppkey = "test"; 
+		Constant.CrazyClickAppsecret = "a9d11a189099ac9b483ab982e849e939"; 
+		Constant.CrazyClickBaseUrl = "http://api.sandbox.aymoo.com/api/";
+		
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("kwd", "T恤");
+		params.put("nid", "43038352468");
+		params.put("shop_type", "b");
+		params.put("times", "20");
+		params.put("sleep_time", "50");
+		params.put("click_start", "0");
+		params.put("click_end", "23");
+		params.put("begin_time", "2015-05-31");
+		params.put("end_time", "2015-06-30");
+//		params.put("path1", "0");
+//		params.put("path2", "80");
+//		params.put("path3", "20");
+		JsonObject res = CrazyClickTools.request("jdpc/add", params);
+		System.out.println(res.toString());
+	}
 }

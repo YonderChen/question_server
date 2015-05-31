@@ -14,6 +14,7 @@ import com.foal.liuliang.bean.PageBean;
 import com.foal.liuliang.pojo.LLScoreRecord;
 import com.foal.liuliang.pojo.LLTask;
 import com.foal.liuliang.pojo.ServerUser;
+import com.foal.liuliang.service.LLLiuliangService;
 import com.foal.liuliang.service.LLScoreRecordService;
 import com.foal.liuliang.service.LLShopService;
 import com.foal.liuliang.service.LLTaskService;
@@ -42,6 +43,9 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
 	
 	@Autowired
 	LLScoreRecordService llScoreRecordService;
+	
+	@Autowired
+	LLLiuliangService llLiuliangService;
 	
 	public LLTaskBean getModel() {
 		return llTaskBean;
@@ -90,9 +94,7 @@ public class TaskAction extends UserBaseAction implements ModelDriven<LLTaskBean
         	this.ajaxWrite(new AjaxBean(false, "该用户账户已被冻结，审核失败"));
             return null;
     	}
-    	//调用第三方接口
-    	//
-    	//============
+    	llLiuliangService.addKewordTask(llTask);
     	Date now = new Date();
     	int returnScore = llTask.getCostScore() - llTaskBean.getCostScore();
     	if (returnScore != 0) {

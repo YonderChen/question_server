@@ -27,7 +27,7 @@
 		}
 		$("#searchBtn").button('loading');
 		$("#ajaxSearchId").html("<div class='no-found'>加载中...</div>");
-		var url = "${ctx}/web/admin/useradmin/taskmanage/list";
+		var url = "${ctx}/web/admin/useradmin/liuliangmanage/list";
 		$.ajax( {
 			url : url,
 			type : 'post',
@@ -35,7 +35,11 @@
 				page : page,
 				pageSize : pageSize,
 				username : $("#username").val().trim(),
-				name : $("#name").val().trim()
+				bindName : $("#bindName").val().trim(),
+				taskId : $("#taskId").val().trim(),
+				doStatus : $("#doStatus").val().trim(),
+				beginTime : $("#beginTime").val().trim(),
+				endTime : $("#endTime").val().trim()
 			},
 			dataType : 'text',
 			timeout : 60000,
@@ -54,34 +58,6 @@
 		});
 	}
 	
-	function check_task(taskId){
-		var url = "${ctx}/web/admin/useradmin/taskmanage/check_task";
-		$.ajax( {
-			url : url,
-			type : 'post',
-			data : {
-				taskId : taskId,
-			},
-			dataType : 'text',
-			timeout : 60000,
-			error : function(e) {
-				alert("审核失败，连接异常");
-			},
-			success : function(result) {
-				if (!isOutTime(result)) {
-					result = eval("("+result+")");
-					if (result.success) {
-						$("#task_status_"+taskId).html("执行中");
-						$("#check_a_"+taskId).remove();
-						alert("审核成功");
-					} else {
-						alert(result.msg);
-					}
-				}
-			}
-		});
-	}
-	
 </script>
 	</head>
 	<body>
@@ -92,7 +68,7 @@
 					流量管理
 				</li>
 				<li>
-					任务列表
+					流量记录
 				</li>
 			</ul>
 		</div>
@@ -108,9 +84,36 @@
 				</li>
 				<li>
 					<label>
-						姓名:
+						店铺名称:
 					</label>
-					<input name="name" id="name" type="text" class="span2" placeholder="姓名"/>
+					<input name="bindName" id="bindName" type="text" class="span2" placeholder="店铺名称"/>
+				</li>
+				<li>
+					<label>
+						任务编号:
+					</label>
+					<input name="taskId" id="taskId" type="text" class="span2" placeholder="任务编号"/>
+				</li>
+				<li>
+					<label>
+						状态:
+					</label>
+				    <select id="doStatus" name="doStatus" class="span2">
+						<option value="" selected="selected">请选择</option>
+						<option value="0" >添加失败</option>
+						<option value="1" >待处理</option>
+						<option value="2" >处理中</option>
+						<option value="3" >已完成</option>
+					</select>
+				</li>
+				<li>
+					<label>
+						日期:
+					</label>
+                    <input type="text" class="span2" style="width:100px;" name="beginTime" id="beginTime" value="" onclick="javascript:WdatePicker()">
+                    -
+                    <input type="text" class="span2" style="width:100px;" name="endTime" id="endTime" value="" onclick="javascript:WdatePicker()">
+					
 				</li>
 				<li>
 					<label>

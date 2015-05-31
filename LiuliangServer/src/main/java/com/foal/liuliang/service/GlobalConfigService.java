@@ -40,6 +40,10 @@ public class GlobalConfigService extends DaoSupport {
 		Constant.EMAIL_PASSWORD = systemParamService.getStringSystemParam(Constant.EMAIL_PASSWORD_KEY);
 
 		Constant.INIT_PASSWORD = systemParamService.getStringSystemParam(Constant.INIT_PASSWORD_KEY);
+
+		Constant.CrazyClickAppkey = systemParamService.getStringSystemParam(Constant.CrazyClickAppkey_KEY);
+		Constant.CrazyClickAppsecret = systemParamService.getStringSystemParam(Constant.CrazyClickAppsecret_KEY);
+		Constant.CrazyClickBaseUrl = systemParamService.getStringSystemParam(Constant.CrazyClickBaseUrl_KEY);
 		initBusinessParam(context);
 	}
 

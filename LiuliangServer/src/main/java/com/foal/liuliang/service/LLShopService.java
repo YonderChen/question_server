@@ -22,11 +22,11 @@ public class LLShopService extends DaoSupport {
 	
 	public static class Regex {
 		public static String TaoBaoShopUrl_regex = "http://\\w+\\.taobao\\.com.*";
-		public static String TaoBaoGoodsUrl_regex = "http://item\\.taobao\\.com/item\\.htm\\?.*";
+		public static String TaoBaoGoodsUrl_regex = "http://item\\.taobao\\.com/item\\.htm\\?.*id=.*";
 		public static String TmallShopUrl_regex = "http://\\w+\\.tmall\\.com.*";
-		public static String TmallGoodsUrl_regex = "http://detail\\.tmall\\.com/item\\.htm\\?.*";
+		public static String TmallGoodsUrl_regex = "http://detail\\.tmall\\.com/item\\.htm\\?.*id=.*";
 		public static String JDShopUrl_regex = "http://\\w+\\.jd\\.com.*";
-		public static String JDGoodsUrl_regex = "http://item\\.jd\\.com/.*";
+		public static String JDGoodsUrl_regex = "http://item\\.jd\\.com/.*\\.html.*";
 	}
 	
 	public boolean checkShopUrl(LLShopBean llShopBean) {
@@ -97,16 +97,21 @@ public class LLShopService extends DaoSupport {
 	
 	public boolean checkGoodsUrl(LLShopBean llShopBean) {
 		//检测店铺URL是否正确
-		if (LLShop.BindPlat.TaoBao.equals(llShopBean.getBindPlat())) {
-			if (!llShopBean.getVerifyGoodsUrl().matches(Regex.TaoBaoGoodsUrl_regex)) {
+		return checkGoodsUrl(llShopBean.getBindPlat(), llShopBean.getVerifyGoodsUrl());
+	}
+
+	public boolean checkGoodsUrl(String bindPlat, String goodsUrl) {
+		//检测店铺URL是否正确
+		if (LLShop.BindPlat.TaoBao.equals(bindPlat)) {
+			if (!goodsUrl.matches(Regex.TaoBaoGoodsUrl_regex)) {
 				return false;
 			}
-		} else if (LLShop.BindPlat.Tmall.equals(llShopBean.getBindPlat())) {
-			if (!llShopBean.getVerifyGoodsUrl().matches(Regex.TmallGoodsUrl_regex)) {
+		} else if (LLShop.BindPlat.Tmall.equals(bindPlat)) {
+			if (!goodsUrl.matches(Regex.TmallGoodsUrl_regex)) {
 				return false;
 			}
-		} else if (LLShop.BindPlat.JD.equals(llShopBean.getBindPlat())) {
-			if (!llShopBean.getVerifyGoodsUrl().matches(Regex.JDGoodsUrl_regex)) {
+		} else if (LLShop.BindPlat.JD.equals(bindPlat)) {
+			if (!goodsUrl.matches(Regex.JDGoodsUrl_regex)) {
 				return false;
 			}
 		} else {

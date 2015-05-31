@@ -10,7 +10,6 @@ import java.io.PrintWriter;
 import java.net.ConnectException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -20,7 +19,7 @@ import java.util.Map.Entry;
  */
 public class HttpTools {
     public static String sendGet(String url, Map<String,String> params) throws ConnectException {
-    	return sendGet(url, params, "UTF-8");
+    	return sendGet(url, params, null);
     }
 	/**
      * 向指定URL发送GET方法的请求
@@ -30,9 +29,6 @@ public class HttpTools {
 	 * @throws ConnectException 
      */
     public static String sendGet(String url, Map<String,String> params, String charset) throws ConnectException {
-    	if (charset == null) {
-			charset = "UTF-8";
-		}
         String result = "";
         BufferedReader in = null;
         try {
@@ -52,7 +48,11 @@ public class HttpTools {
             /**建立实际的连接**/
             connection.connect();
             /**定义 BufferedReader输入流来读取URL的响应**/
-            in = new BufferedReader(new InputStreamReader(connection.getInputStream(), charset));
+            if (StringTools.isBlank(charset)) {
+                in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			} else {
+				in = new BufferedReader(new InputStreamReader(connection.getInputStream(), charset));
+			}
             String line;
             while ((line = in.readLine()) != null) {
                 result += line;
@@ -71,8 +71,8 @@ public class HttpTools {
         }
         return result;
     }
-    public static String sendPost(String url, HashMap<String,String> params) throws ConnectException {
-    	return sendPost(url, params, "UTF-8");
+    public static String sendPost(String url, Map<String,String> params) throws ConnectException {
+    	return sendPost(url, params, null);
     }
     /**
      * 向指定 URL 发送POST方法的请求
@@ -81,10 +81,7 @@ public class HttpTools {
      * @return 所代表远程资源的响应结果
      * @throws ConnectException 
      */
-    public static String sendPost(String url, HashMap<String,String> params, String charset) throws ConnectException {
-    	if (charset == null) {
-			charset = "UTF-8";
-		}
+    public static String sendPost(String url, Map<String,String> params, String charset) throws ConnectException {
         PrintWriter out = null;
         BufferedReader in = null;
         String result = "";
@@ -107,7 +104,11 @@ public class HttpTools {
             /**flush输出流的缓冲**/
             out.flush();
             /**定义BufferedReader输入流来读取URL的响应**/
-            in = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
+            if (StringTools.isBlank(charset)) {
+                in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			} else {
+				in = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
+			}
             String line;
             while ((line = in.readLine()) != null) {
                 result += line;
@@ -149,20 +150,15 @@ public class HttpTools {
     }
     
     public static void main(String[] args){
-    	String url = "http://lvtujiaju.jd.com";
+    	String url = "http://api.sandbox.aymoo.com/api/tbmobi/add?kwd=中年女装&begin_time=2015-05-31&nid=37746241150&sleep_time=150&click_end=23&appkey=test&shop_type=b&sign=b15d587e54ea45f0e290e9e5398332d3&timestamp=1433080473&path2=100&times=20&end_time=2015-06-15&path1=0&click_start=0&path3=0";
     	
     	String content = "";
-    	String bindName = "";
 		try {
 			content = HttpTools.sendGet(url, null);
-			String html = content.substring(content.indexOf("<title>") + 7, content.indexOf("</title>", content.indexOf("<title>") + 7));
-			html = html.trim();
-			bindName = html.substring(0, html.indexOf(" - 京东"));
-	    	System.out.println(bindName);
+	    	System.out.println(content);
 		} catch (ConnectException e) {
 			e.printStackTrace();
 			//链接超时
 		}
     }
-    
 }

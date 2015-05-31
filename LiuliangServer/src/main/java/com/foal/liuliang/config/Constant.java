@@ -27,6 +27,14 @@ public class Constant {
 	public static final String EXPORT_PATH = "/user_export/";
 	
 	public static final String ADMIN_ID = "402881e846e4b3910146e4b8ce6c0004";
+
+	public static final String CrazyClickAppkey_KEY = "crazyClickAppkey"; 
+	public static final String CrazyClickAppsecret_KEY = "crazyClickAppsecret"; 
+	public static final String CrazyClickBaseUrl_KEY = "crazyClickBaseUrl";
+	
+	public static String CrazyClickAppkey; 
+	public static String CrazyClickAppsecret; 
+	public static String CrazyClickBaseUrl;
 	
 	public static final String EMAIL_STMP_SERVER_KEY = "emailStmpServer";
 	public static final String EMAIL_USERNAME_KEY = "emailUsername";
@@ -55,11 +63,29 @@ public class Constant {
 		PageStayCostScoreMap.put("1", 40);
 		PageStayCostScoreMap.put("2", 50);
 	}
+	public static final Map<Integer, Integer> PageStayTypeTimeMap = new HashMap<Integer, Integer>();//页面停留时间类型与停留时间map
+	static {
+		PageStayTypeTimeMap.put(0, 50);
+		PageStayTypeTimeMap.put(1, 100);
+		PageStayTypeTimeMap.put(2, 150);
+	}
 	public static final Map<String, Integer> VisitTimeCostScoreMap = new HashMap<String, Integer>();//流量访问时间优化花费积分
 	static {
 		VisitTimeCostScoreMap.put("0", 0);
 		VisitTimeCostScoreMap.put("1", 50);
 		VisitTimeCostScoreMap.put("2", 60);
+	}
+	public static final Map<Integer, Integer> VisitTimeTypeClickStartMap = new HashMap<Integer, Integer>();//流量访问时间优化类型与开始时间
+	static {
+		VisitTimeTypeClickStartMap.put(0, 0);
+		VisitTimeTypeClickStartMap.put(1, 7);
+		VisitTimeTypeClickStartMap.put(2, 19);
+	}
+	public static final Map<Integer, Integer> VisitTimeTypeClickEndMap = new HashMap<Integer, Integer>();//流量访问时间优化类型与结束时间
+	static {
+		VisitTimeTypeClickEndMap.put(0, 23);
+		VisitTimeTypeClickEndMap.put(1, 23);
+		VisitTimeTypeClickEndMap.put(2, 22);
 	}
 	public static final Map<String, Integer> PriceScoreMap = new HashMap<String, Integer>();//购买积分，价格-积分
 	static {

@@ -166,6 +166,11 @@ INSERT INTO `t_system_param` VALUES ('initPassword', '新用户初始化密码',
 INSERT INTO `t_system_param` VALUES ('emailStmpServer', '邮件服务器', 'smtp.tom.com', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
 INSERT INTO `t_system_param` VALUES ('emailUsername', '系统邮箱用户名', 'liuliang_server@tom.com', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
 INSERT INTO `t_system_param` VALUES ('emailPassword', '系统邮箱密码', 'liuliang654321', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
+
+INSERT INTO `t_system_param` VALUES ('crazyClickAppkey', '第三方接口appKey', 'test', '2015-05-31 14:34:22', '2015-05-31 14:34:22');
+INSERT INTO `t_system_param` VALUES ('crazyClickAppsecret', '第三方接口appsecret', 'a9d11a189099ac9b483ab982e849e939', '2015-05-31 14:34:22', '2015-05-31 14:34:22');
+INSERT INTO `t_system_param` VALUES ('crazyClickBaseUrl', '第三方接口基础url', 'http://api.sandbox.aymoo.com/api/', '2015-05-31 14:34:22', '2015-05-31 14:34:22');
+
 INSERT INTO `t_system_param` VALUES ('oneVisitCostScore', '每个流量花费积分数', '3', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
 INSERT INTO `t_system_param` VALUES ('oneKeywordCostScore', '每额外添加一个关键词话费的积分数', '30', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
 INSERT INTO `t_system_param` VALUES ('pageStayCostScore1', '增值服务，页面停留60~120秒花费积分数', '40', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
@@ -307,4 +312,30 @@ CREATE TABLE `ll_task` (
   `status_` int(11) NOT NULL COMMENT '任务状态',
   `remark_` varchar(500) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`task_id_`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for ll_liuliang
+-- ----------------------------
+DROP TABLE IF EXISTS `ll_liuliang`;
+CREATE TABLE `ll_liuliang` (
+  `id_` varchar(64) NOT NULL,
+  `third_id_` int(11) DEFAULT NULL,
+  `task_id_` varchar(64) DEFAULT NULL,
+  `good_id_` varchar(50) DEFAULT NULL,
+  `keyword_` varchar(100) DEFAULT NULL,
+  `shop_type_` varchar(50) DEFAULT NULL,
+  `times_` int(11) DEFAULT NULL,
+  `path1_` int(11) DEFAULT NULL,
+  `path2_` int(11) DEFAULT NULL,
+  `path3_` int(11) DEFAULT NULL,
+  `sleep_time_` int(11) DEFAULT NULL,
+  `click_start_` int(11) DEFAULT NULL,
+  `click_end_` int(11) DEFAULT NULL,
+  `begin_time_` datetime DEFAULT NULL,
+  `end_time_` datetime DEFAULT NULL,
+  `num_` int(11) DEFAULT NULL,
+  `create_time_` datetime DEFAULT NULL,
+  `status_` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
