@@ -1,6 +1,7 @@
 package com.foal.liuliang.pojo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -45,6 +46,7 @@ public class LLLiuliang implements Serializable {
 	private int status;
 	
 	private int doStatus;
+	private int numCurrent;
 
 	@Transient
 	public int getDoStatus() {
@@ -53,22 +55,56 @@ public class LLLiuliang implements Serializable {
 		}
 		long now = System.currentTimeMillis();
 		if (now < beginTime.getTime()) {
-			doStatus = 1;
+			doStatus = DoStatus.Wait;
 		}
 		else if (now >= beginTime.getTime() && now < endTime.getTime()) {
-			doStatus = 2;
+			doStatus = DoStatus.Doing;
 		} else {
-			doStatus = 3;
+			doStatus = DoStatus.Done;
 		}
 		return doStatus;
 	}
 	public void setDoStatus(int doStatus) {
 		this.doStatus = doStatus;
 	}
-	
+
+	@Transient
+	public int getNumCurrent() {
+		if (getDoStatus() == DoStatus.Doing) {
+			try {
+				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			    long from = df.parse(df.format(getBeginTime())).getTime();
+			    long to = df.parse(df.format(new Date())).getTime();
+			    if (from < to) {
+			    	int days = (int)((to - from) / (1000 * 60 * 60 * 24));
+			    	numCurrent = times * days;
+				} else {
+					numCurrent = 0;
+				}
+			} catch (Exception e) {
+				numCurrent = 0;
+			}
+		} else if (getDoStatus() == DoStatus.Done) {
+			numCurrent = num;
+		} else {
+			numCurrent = 0;
+		}
+		return numCurrent;
+	}
+	public void setNumCurrent(int numCurrent) {
+		this.numCurrent = numCurrent;
+	}
+
 	public static class Status {
 		public static final int Fail = 0;
 		public static final int Success = 1;
+	}
+	
+	public static class DoStatus {
+		public static int Fail = 0;
+		public static int Wait = 1;
+		public static int Doing = 2;
+		public static int Done = 3;
 	}
 	
 	@GenericGenerator(name = "generator", strategy = "uuid")

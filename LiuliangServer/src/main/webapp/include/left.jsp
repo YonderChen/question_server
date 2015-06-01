@@ -9,6 +9,9 @@
         <dd id="dd_id_2">
             <a target="_self" href="${ctx}/web/shop/accountmanage/dealmanage/score_record?left-list-id=2">积分记录</a>
         </dd>
+        <dd id="dd_id_3">
+            <a target="_self" href="${ctx}/web/shop/taskmanage/liuliang_list?left-list-id=3">流量明细</a>
+        </dd>
     </dl>
     
     <dl>

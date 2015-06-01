@@ -13,10 +13,12 @@ import com.foal.liuliang.bean.LLTaskRecordBean;
 import com.foal.liuliang.bean.PageBean;
 import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.dao.DaoSupport;
+import com.foal.liuliang.pojo.LLLiuliang;
 import com.foal.liuliang.pojo.LLScoreRecord;
 import com.foal.liuliang.pojo.LLShop;
 import com.foal.liuliang.pojo.LLTask;
 import com.foal.liuliang.pojo.ServerUser;
+import com.foal.liuliang.pojo.LLTask.Status;
 import com.foal.liuliang.util.GenerateSequenceUtil;
 import com.foal.liuliang.util.StringTools;
 import com.foal.liuliang.util.StringUtil;
@@ -248,5 +250,32 @@ public class LLTaskService extends DaoSupport {
         int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
 		return allRow;
     }
+
+	public int updateTaskStatus(LLTask task, int status) {
+		if (status != Status.Executing) {
+			return status;
+		}
+		Map paramMap = new HashMap();
+		paramMap.put("taskId", task.getTaskId());
+		paramMap.put("status", LLLiuliang.Status.Success);
+		List<LLLiuliang> llLiuliangList = this.hibernateDao.queryList("from LLLiuliang where llTask.taskId = :taskId and status = :status", paramMap);
+		if (llLiuliangList.size() > 0) {
+			long finishTime = 0;
+			for (LLLiuliang llLiuliang : llLiuliangList) {
+				if (finishTime < llLiuliang.getEndTime().getTime()) {
+					finishTime = llLiuliang.getEndTime().getTime();
+				}
+			}
+			if(System.currentTimeMillis() > finishTime) {
+				LLTask llTask = getLLTask(task.getTaskId());
+				llTask.setStatus(LLTask.Status.Finish);
+				llTask.setFinishTime(new Date(finishTime));
+				updateLLTask(llTask);
+				task.setStatus(LLTask.Status.Finish);
+				task.setFinishTime(new Date(finishTime));
+			}
+		}
+		return status;
+	}
 }
 

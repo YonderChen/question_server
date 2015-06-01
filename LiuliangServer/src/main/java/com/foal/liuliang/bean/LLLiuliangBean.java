@@ -16,13 +16,6 @@ public class LLLiuliangBean extends Page {
 	private Date endTime;
 	private String doStatus;
 	
-	public static class DoStatus {
-		public static int Fail = 0;
-		public static int Wait = 1;
-		public static int Doing = 2;
-		public static int Done = 3;
-	}
-	
 	public String getKeyword() {
 		return keyword;
 	}

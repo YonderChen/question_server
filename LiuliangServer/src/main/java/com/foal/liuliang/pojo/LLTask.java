@@ -15,10 +15,15 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.foal.liuliang.listener.ServiceLocator;
+import com.foal.liuliang.service.LLTaskService;
+
 @Entity
 @Table(name = "ll_task")
 @Cache(region = "yonderHibernateCache", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class LLTask implements Serializable {
+	
+	private LLTaskService llTaskService = ServiceLocator.getBean(LLTaskService.class);
 	/**
 	 * 
 	 */
@@ -338,7 +343,11 @@ public class LLTask implements Serializable {
 
 	@Column(name = "status_")
 	public int getStatus() {
-		return status;
+		if (status == Status.Executing) {
+			return llTaskService.updateTaskStatus(this, status);
+		} else {
+			return status;
+		}
 	}
 
 	public void setStatus(int status) {

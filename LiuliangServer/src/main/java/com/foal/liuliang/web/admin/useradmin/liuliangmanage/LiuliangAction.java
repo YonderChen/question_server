@@ -22,7 +22,7 @@ public class LiuliangAction extends UserBaseAction implements ModelDriven<LLLiul
 	private LLLiuliangBean llLiuliangBean = new LLLiuliangBean();
 	
 	@Autowired
-	LLLiuliangService llLiuliangService;
+	private LLLiuliangService llLiuliangService;
 	
 	public LLLiuliangBean getModel() {
 		return llLiuliangBean;

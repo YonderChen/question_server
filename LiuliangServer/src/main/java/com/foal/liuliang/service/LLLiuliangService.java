@@ -167,6 +167,10 @@ public class LLLiuliangService extends DaoSupport {
 	public PageBean queryLLLiuliang(LLLiuliangBean llLiuliangBean) {
         String queryHql = "from LLLiuliang as l where 1=1";
         Map paramMap = new HashMap();
+        if (!StringUtil.isEmpty(llLiuliangBean.getKeyword())) {
+            queryHql += " and l.keyword like :keyword";
+            paramMap.put("keyword", "%" + llLiuliangBean.getKeyword() + "%" );
+		}
         if (!StringUtil.isEmpty(llLiuliangBean.getBindName())) {
             queryHql += " and l.llTask.llShop.bindName like :bindName";
             paramMap.put("bindName", "%" + llLiuliangBean.getBindName() + "%" );
@@ -183,15 +187,15 @@ public class LLLiuliangService extends DaoSupport {
         	if (Integer.valueOf(llLiuliangBean.getDoStatus()) == LLLiuliang.Status.Fail) {
                 queryHql += " and l.status = :status";
                 paramMap.put("status", LLLiuliang.Status.Fail );
-			} else if (Integer.valueOf(llLiuliangBean.getDoStatus()) == LLLiuliangBean.DoStatus.Wait){
+			} else if (Integer.valueOf(llLiuliangBean.getDoStatus()) == LLLiuliang.DoStatus.Wait){
 	            queryHql += " and l.status = :status and l.beginTime > :now";
 	            paramMap.put("status", LLLiuliang.Status.Success );
 	            paramMap.put("now", new Date() );
-			} else if (Integer.valueOf(llLiuliangBean.getDoStatus()) == LLLiuliangBean.DoStatus.Doing){
+			} else if (Integer.valueOf(llLiuliangBean.getDoStatus()) == LLLiuliang.DoStatus.Doing){
 	            queryHql += " and l.status = :status and l.beginTime <= :now and l.endTime >= :now";
 	            paramMap.put("status", LLLiuliang.Status.Success );
 	            paramMap.put("now", new Date() );
-			} else if (Integer.valueOf(llLiuliangBean.getDoStatus()) == LLLiuliangBean.DoStatus.Done){
+			} else if (Integer.valueOf(llLiuliangBean.getDoStatus()) == LLLiuliang.DoStatus.Done){
 	            queryHql += " and l.status = :status and l.endTime < :now";
 	            paramMap.put("status", LLLiuliang.Status.Success );
 	            paramMap.put("now", new Date() );
@@ -209,4 +213,5 @@ public class LLLiuliangService extends DaoSupport {
         int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
 		return new PageBean(list, allRow, llLiuliangBean.getPage(), llLiuliangBean.getPageSize());
 	}
+	
 }

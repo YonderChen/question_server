@@ -172,7 +172,7 @@ function changePlat(bindPlat, clearShopId){
     if(clearShopId){
 		$("#shopId").val("");
     }
-
+    
 	var url = "${ctx}/web/shop/taskmanage/load_add_task_shop";
 	$.ajax( {
 		url : url,
@@ -234,6 +234,10 @@ function nextStep(){
 		alert("请选择客户端类型");
 		return;
 	}
+    if(bindPlat == "jd" && clientType == "phone") {
+    	alert("京东平台只能选择PC端");
+    	return;
+    }
 	$("#trade_form").submit();
 }
 
