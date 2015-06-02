@@ -37,7 +37,7 @@
 				username : $("#username").val().trim(),
 				bindName : $("#bindName").val().trim(),
 				taskId : $("#taskId").val().trim(),
-				doStatus : $("#doStatus").val().trim(),
+				status : $("#status").val().trim(),
 				beginTime : $("#beginTime").val().trim(),
 				endTime : $("#endTime").val().trim()
 			},
@@ -98,12 +98,10 @@
 					<label>
 						状态:
 					</label>
-				    <select id="doStatus" name="doStatus" class="span2">
+				    <select id="status" name="status" class="span2">
 						<option value="" selected="selected">请选择</option>
 						<option value="0" >添加失败</option>
-						<option value="1" >待处理</option>
-						<option value="2" >处理中</option>
-						<option value="3" >已完成</option>
+						<option value="1" >添加成功</option>
 					</select>
 				</li>
 				<li>

@@ -82,13 +82,13 @@
     	<div class="task-state">
         	<h4 class="f16"><i></i>任务状态：
         		<span id="task_status">
-		            <s:if test="#request.llTask.status == 0">未发布</s:if>
-		            <s:if test="#request.llTask.status == 1">待审核</s:if>
-		            <s:if test="#request.llTask.status == 2">任务进行中</s:if>
-		            <s:if test="#request.llTask.status == 3">已完成</s:if>
-		            <s:if test="#request.llTask.status == 4">已取消</s:if>
-		            <s:if test="#request.llTask.status == 5">审核不通过</s:if>
-		            <s:if test="#request.llTask.status == 6">任务修改,待审核</s:if>
+		            <s:if test="#request.llTask.statusCurrent == 0">未发布</s:if>
+		            <s:if test="#request.llTask.statusCurrent == 1">待审核</s:if>
+		            <s:if test="#request.llTask.statusCurrent == 2">任务进行中</s:if>
+		            <s:if test="#request.llTask.statusCurrent == 3">已完成</s:if>
+		            <s:if test="#request.llTask.statusCurrent == 4">已取消</s:if>
+		            <s:if test="#request.llTask.statusCurrent == 5">审核不通过</s:if>
+		            <s:if test="#request.llTask.statusCurrent == 6">任务修改,待审核</s:if>
 	            </span>
 			</h4>
 			<s:if test="#request.llTask.status == 0 || #request.llTask.status == 5">

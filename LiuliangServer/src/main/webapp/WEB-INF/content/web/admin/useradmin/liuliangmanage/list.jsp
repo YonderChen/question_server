@@ -21,13 +21,16 @@
 							关键词
 						</th>
 						<th width="10%">
-							总流量
+							计划流量
+						</th>
+						<th width="10%">
+							完成流量
 						</th>
 						<th width="15%">
 							日期
 						</th>
 						<th width="15%">
-							状态
+							完成情况
 						</th>
 					</tr>
 				</thead>
@@ -50,7 +53,10 @@
 							${liuliang.num }
 						</td>
 						<td>
-							<s:date name="createTime" format="yyyy-MM-dd HH:mm:ss"/>
+							${liuliang.numCurrent }
+						</td>
+						<td>
+							<s:date name="date" format="yyyy-MM-dd"/>
 						</td>
 						<td>
 							<s:if test="doStatus == 0" >添加失败</s:if>

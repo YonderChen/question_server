@@ -1,5 +1,6 @@
 package com.foal.liuliang.service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,6 +22,8 @@ import com.foal.liuliang.util.CrazyClickTools;
 import com.foal.liuliang.util.GsonTools;
 import com.foal.liuliang.util.StringTools;
 import com.foal.liuliang.util.StringUtil;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 @SuppressWarnings("unchecked")
@@ -81,18 +84,26 @@ public class LLLiuliangService extends DaoSupport {
 			shopType = "";
 		}
 		LLLiuliang keyword1 = parseKeyword(goodId, shopType, llTask.getKeyword1(), llTask.getOrderNumberOneDay1(), path1, path2, path3, llTask);
-		addKeyword(keyword1, method);
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		Date beginTime = cal.getTime();
+		cal.add(Calendar.DAY_OF_MONTH, llTask.getDurationDay());
+		Date endTime = cal.getTime();
+		addKeyword(keyword1, method, beginTime, endTime);
 		LLLiuliang keyword2 = parseKeyword(goodId, shopType, llTask.getKeyword2(), llTask.getOrderNumberOneDay2(), path1, path2, path3, llTask);
-		addKeyword(keyword2, method);
+		addKeyword(keyword2, method, beginTime, endTime);
 		LLLiuliang keyword3 = parseKeyword(goodId, shopType, llTask.getKeyword3(), llTask.getOrderNumberOneDay3(), path1, path2, path3, llTask);
-		addKeyword(keyword3, method);
+		addKeyword(keyword3, method, beginTime, endTime);
 		if (StringTools.isNotBlank(llTask.getKeyword4()) && llTask.getOrderNumberOneDay4() > 0) {
 			LLLiuliang keyword4 = parseKeyword(goodId, shopType, llTask.getKeyword4(), llTask.getOrderNumberOneDay4(), path1, path2, path3, llTask);
-			addKeyword(keyword4, method);
+			addKeyword(keyword4, method, beginTime, endTime);
 		}
 		if (StringTools.isNotBlank(llTask.getKeyword5()) && llTask.getOrderNumberOneDay5() > 0) {
 			LLLiuliang keyword5 = parseKeyword(goodId, shopType, llTask.getKeyword5(), llTask.getOrderNumberOneDay5(), path1, path2, path3, llTask);
-			addKeyword(keyword5, method);
+			addKeyword(keyword5, method, beginTime, endTime);
 		}
 	}
 	
@@ -109,20 +120,13 @@ public class LLLiuliangService extends DaoSupport {
 		liuliang.setSleepTime(Constant.PageStayTypeTimeMap.get(llTask.getPageStayType()));
 		liuliang.setClickStart(Constant.VisitTimeTypeClickStartMap.get(llTask.getVisitTimeType()));
 		liuliang.setClickEnd(Constant.VisitTimeTypeClickEndMap.get(llTask.getVisitTimeType()));
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.HOUR_OF_DAY, 0);
-		cal.set(Calendar.MINUTE, 0);
-		cal.set(Calendar.SECOND, 0);
-		cal.set(Calendar.MILLISECOND, 0);
-		liuliang.setBeginTime(cal.getTime());
-		cal.add(Calendar.DAY_OF_MONTH, llTask.getDurationDay());
-		liuliang.setEndTime(cal.getTime());
-		liuliang.setNum(llTask.getDurationDay() * times);
+		liuliang.setNum(times);
+		liuliang.setIsFinish(0);
 		liuliang.setCreateTime(new Date());
 		return liuliang;
 	}
 	
-	private void addKeyword(LLLiuliang liuliang, String method) {
+	private void addKeyword(LLLiuliang liuliang, String method, Date beginTime, Date endTime) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("kwd", liuliang.getKeyword());
 		params.put("nid", liuliang.getGoodId());
@@ -131,8 +135,8 @@ public class LLLiuliangService extends DaoSupport {
 		params.put("click_start", String.valueOf(liuliang.getClickStart()));
 		params.put("click_end", String.valueOf(liuliang.getClickEnd()));
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		params.put("begin_time", sdf.format(liuliang.getBeginTime()));
-		params.put("end_time", sdf.format(liuliang.getEndTime()));
+		params.put("begin_time", sdf.format(beginTime));
+		params.put("end_time", sdf.format(endTime));
 		if (StringTools.isNotBlank(liuliang.getShopType())) {
 			params.put("shop_type", liuliang.getShopType());
 		}
@@ -142,33 +146,66 @@ public class LLLiuliangService extends DaoSupport {
 			params.put("path3", String.valueOf(liuliang.getPath3()));
 		}
 		JsonObject res = CrazyClickTools.request(method, params);
-		logger.error(res.toString());
+		logger.info("add keyword api res:" + res.toString());
 		String status = GsonTools.getStringValue(res, "status", "");
 		if ("success".equals(status)) {
 			JsonObject data = GsonTools.getJsonObject(res, "data");
 			int thirdId = GsonTools.getIntValue(data, "id", -1);
 			if (thirdId > 0) {
 				liuliang.setThirdId(thirdId);
-				long beginTime = GsonTools.getLongValue(data, "begin_time", 0);
-				long endTime = GsonTools.getLongValue(data, "end_time", 0);
-				liuliang.setBeginTime(new Date(beginTime * 1000));
-				liuliang.setEndTime(new Date(endTime * 1000));
+				long beginTimeLong = GsonTools.getLongValue(data, "begin_time", 0);
+				long endTimeLong = GsonTools.getLongValue(data, "end_time", 0);
 				liuliang.setStatus(LLLiuliang.Status.Success);
-				this.hibernateDao.save(liuliang);
+
+				int days = 0;
+				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				try {
+				    long from = df.parse(df.format(new Date(beginTimeLong * 1000))).getTime();
+				    long to = df.parse(df.format(new Date(endTimeLong * 1000))).getTime();
+				    if (from < to) {
+				    	days = (int)((to - from) / (1000 * 60 * 60 * 24));
+					} else {
+						days = 0;
+					}
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(new Date(beginTimeLong * 1000));
+			    for (int i = 0; i < days; i++) {
+			    	if (i > 0) {
+			    		cal.add(Calendar.DAY_OF_YEAR, 1);
+					}
+					liuliang.setDate(cal.getTime());
+					this.hibernateDao.save(liuliang);
+				}
 			} else {
 				liuliang.setThirdId(0);
 				liuliang.setStatus(LLLiuliang.Status.Fail);
+				this.hibernateDao.save(liuliang);
 			}
 		} else {
 			liuliang.setThirdId(0);
 			liuliang.setStatus(LLLiuliang.Status.Fail);
+			this.hibernateDao.save(liuliang);
 		}
-		this.hibernateDao.save(liuliang);
+	}
+	
+	public List<LLLiuliang> queryLLLiuliangByTaskId(String taskId) {
+        String queryHql = "from LLLiuliang as l where 1=1";
+        Map paramMap = new HashMap();
+        queryHql += " and l.llTask.taskId = :taskId";
+        paramMap.put("taskId", taskId );
+        return this.hibernateDao.queryList(queryHql, paramMap);
 	}
 	
 	public PageBean queryLLLiuliang(LLLiuliangBean llLiuliangBean) {
         String queryHql = "from LLLiuliang as l where 1=1";
         Map paramMap = new HashMap();
+        if (!StringUtil.isEmpty(llLiuliangBean.getUserId())) {
+            queryHql += " and l.llTask.serverUser.userId = :userId";
+            paramMap.put("userId", llLiuliangBean.getUserId() );
+        }
         if (!StringUtil.isEmpty(llLiuliangBean.getKeyword())) {
             queryHql += " and l.keyword like :keyword";
             paramMap.put("keyword", "%" + llLiuliangBean.getKeyword() + "%" );
@@ -185,23 +222,9 @@ public class LLLiuliangService extends DaoSupport {
             queryHql += " and l.llTask.serverUser.username = :username";
             paramMap.put("username", llLiuliangBean.getUsername() );
         }
-        if (!StringUtil.isEmpty(llLiuliangBean.getDoStatus())) {
-        	if (Integer.valueOf(llLiuliangBean.getDoStatus()) == LLLiuliang.Status.Fail) {
-                queryHql += " and l.status = :status";
-                paramMap.put("status", LLLiuliang.Status.Fail );
-			} else if (Integer.valueOf(llLiuliangBean.getDoStatus()) == LLLiuliang.DoStatus.Wait){
-	            queryHql += " and l.status = :status and l.beginTime > :now";
-	            paramMap.put("status", LLLiuliang.Status.Success );
-	            paramMap.put("now", new Date() );
-			} else if (Integer.valueOf(llLiuliangBean.getDoStatus()) == LLLiuliang.DoStatus.Doing){
-	            queryHql += " and l.status = :status and l.beginTime <= :now and l.endTime >= :now";
-	            paramMap.put("status", LLLiuliang.Status.Success );
-	            paramMap.put("now", new Date() );
-			} else if (Integer.valueOf(llLiuliangBean.getDoStatus()) == LLLiuliang.DoStatus.Done){
-	            queryHql += " and l.status = :status and l.endTime < :now";
-	            paramMap.put("status", LLLiuliang.Status.Success );
-	            paramMap.put("now", new Date() );
-			}
+        if (!StringUtil.isEmpty(llLiuliangBean.getStatus())){
+            queryHql += " and l.status = :status";
+            paramMap.put("status", llLiuliangBean.getStatus());
         }
         if (llLiuliangBean.getBeginTime() != null) {
             queryHql += " and l.createTime >= :beginTime";
@@ -216,4 +239,35 @@ public class LLLiuliangService extends DaoSupport {
 		return new PageBean(list, allRow, llLiuliangBean.getPage(), llLiuliangBean.getPageSize());
 	}
 	
+	public int getCurrentNum(LLLiuliang liuliang) {
+		if (liuliang.getIsFinish() > 0) {
+			return liuliang.getNum();
+		}
+		int currentNum = 0;
+		Map<String, String> params = new HashMap<String, String>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		params.put("id", String.valueOf(liuliang.getThirdId()));
+		params.put("date", sdf.format(liuliang.getDate()));
+		params.put("page_no", "1");
+		params.put("page_size", "100");
+		JsonObject res = CrazyClickTools.request(CrazyClickTools.Method.statistics_getclicks, params);
+		logger.info("getclicks api res:" + res.toString());
+		String status = GsonTools.getStringValue(res, "status", "");
+		if ("success".equals(status)) {
+			JsonObject data = GsonTools.getJsonObject(res, "data");
+			JsonArray clicksJa = GsonTools.getJsonArray(data, "clicks");
+			for (JsonElement je : clicksJa) {
+				JsonObject jo = je.getAsJsonObject();
+				int clicksNum = GsonTools.getIntValue(jo, "clicks", 0);
+				currentNum += clicksNum;
+			}
+		}
+		if (currentNum >= liuliang.getNum()) {
+			liuliang.setIsFinish(1);
+			LLLiuliang entry = this.hibernateDao.get(LLLiuliang.class, liuliang.getId());
+			entry.setIsFinish(1);
+			this.hibernateDao.update(entry);
+		}
+		return currentNum;
+	}
 }

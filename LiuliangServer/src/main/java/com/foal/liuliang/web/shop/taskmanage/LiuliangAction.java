@@ -33,6 +33,7 @@ public class LiuliangAction extends UserBaseAction implements ModelDriven<LLLiul
 	
 	@Action("liuliang_list")
     public String list() {
+		llLiuliangBean.setUserId(getSessionServerUser().getUserId());
 		if (llLiuliangBean.getBeginTime() == null) {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(new Date());

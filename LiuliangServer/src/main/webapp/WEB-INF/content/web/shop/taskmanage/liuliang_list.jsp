@@ -47,12 +47,10 @@
                             </div>
                             <div class="integral-search-type">
                                 <label>状态：</label>
-							    <select id="doStatus" name="doStatus">
+							    <select id="status" name="status">
 									<option value="" selected="selected">请选择</option>
 									<option value="0" >添加失败</option>
-									<option value="1" >待处理</option>
-									<option value="2" >处理中</option>
-									<option value="3" >已完成</option>
+									<option value="1" >添加成功</option>
 								</select>
                             </div>
                             <input type="hidden" id="current_page" name="page" value="${pageBean.currentPage}">
@@ -66,15 +64,14 @@
                     <table class="integral-record-table">
 						<thead>
                     	<tr>
-                            <th width="10%">任务ID</th>
-                            <th width="10%">店铺类型</th>
-                            <th width="10%">任务类型</th>
+                            <th width="13%">任务ID</th>
+                            <th width="12%">店铺类型</th>
+                            <th width="12%">任务类型</th>
                             <th width="10%">宝贝ID</th>
-                            <th width="10%">关键词</th>
+                            <th width="13%">关键词</th>
                             <th width="10%">计划点击</th>
                             <th width="10%">完成点击</th>
-                            <th width="10%">开始时间</th>
-                            <th width="10%">结束时间</th>
+                            <th width="10%">日期</th>
                             <th width="10%">状态</th>
                         </tr>
                         </thead>
@@ -109,10 +106,7 @@
 										${liuliang.numCurrent}
 									</td>
 									<td>
-										<s:date name="beginTime" format="yyyy-MM-dd"/>
-									</td>
-									<td>
-										<s:date name="endTime" format="yyyy-MM-dd"/>
+										<s:date name="date" format="yyyy-MM-dd"/>
 									</td>
 									<td>
 										<s:if test="doStatus == 0" >添加失败</s:if>
@@ -143,7 +137,7 @@
 <script type="text/javascript"> 
 
 $(function(){
-	$("#doStatus").val("${llLiuliangBean.doStatus}");
+	$("#status").val("${llLiuliangBean.status}");
 })
 
 function resetPage(){

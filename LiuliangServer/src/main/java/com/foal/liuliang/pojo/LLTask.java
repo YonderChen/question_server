@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -23,7 +24,6 @@ import com.foal.liuliang.service.LLTaskService;
 @Cache(region = "yonderHibernateCache", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class LLTask implements Serializable {
 	
-	private LLTaskService llTaskService = ServiceLocator.getBean(LLTaskService.class);
 	/**
 	 * 
 	 */
@@ -59,6 +59,42 @@ public class LLTask implements Serializable {
 	private Date finishTime;
 	private int status;
 	private String remark;
+	
+	private int finishDay;
+	private long finishDayUpdateTime = 0;
+	private int statusCurrent;
+	private long statusCurrentUpdateTime = 0;
+
+	@Transient
+	public int getFinishDay() {
+		if (System.currentTimeMillis() - finishDayUpdateTime < 1000 * 60) {//60秒更新一次
+			return finishDay;
+		}
+		finishDay = ServiceLocator.getBean(LLTaskService.class).updateFinishDay(this);
+		finishDayUpdateTime = System.currentTimeMillis();
+		return finishDay;
+	}
+	public void setFinishDay(int finishDay) {
+		this.finishDay = finishDay;
+	}
+
+	@Transient
+	public int getStatusCurrent() {
+		if (System.currentTimeMillis() - statusCurrentUpdateTime < 1000 * 60) {//60秒更新一次
+			return statusCurrent;
+		}
+		if (status == Status.Executing) {
+			statusCurrent = ServiceLocator.getBean(LLTaskService.class).updateTaskStatus(this, status);
+		} else {
+			statusCurrent = status;
+		}
+		statusCurrentUpdateTime = System.currentTimeMillis();
+		return statusCurrent;
+	}
+	
+	public void setStatusCurrent(int statusCurrent) {
+		this.statusCurrent = statusCurrent;
+	}
 
 	public static class Status {
         public static final int Create = 0;//未发布
@@ -343,11 +379,7 @@ public class LLTask implements Serializable {
 
 	@Column(name = "status_")
 	public int getStatus() {
-		if (status == Status.Executing) {
-			return llTaskService.updateTaskStatus(this, status);
-		} else {
-			return status;
-		}
+		return status;
 	}
 
 	public void setStatus(int status) {

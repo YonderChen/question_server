@@ -19,6 +19,8 @@ public class CrazyClickTools {
 		public static final String tbmobi_modify = "tbmobi/modify";
 		public static final String jdpc_add = "jdpc/add";
 		public static final String jdpc_modify = "jdpc/modify";
+		
+		public static final String statistics_getclicks = "statistics/getclicks";
 	}
 	
 	private static String getSign(String method, Map<String, String> params, String appsecret) {

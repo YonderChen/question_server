@@ -1,7 +1,6 @@
 package com.foal.liuliang.pojo;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,10 +17,14 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.foal.liuliang.listener.ServiceLocator;
+import com.foal.liuliang.service.LLLiuliangService;
+
 @Entity
 @Table(name = "ll_liuliang")
 @Cache(region = "yonderHibernateCache", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class LLLiuliang implements Serializable {
+	
 	/**
 	 * 
 	 */
@@ -39,29 +42,39 @@ public class LLLiuliang implements Serializable {
 	private int sleepTime;
 	private int clickStart;
 	private int clickEnd;
-	private Date beginTime;
-	private Date endTime;
+	private Date date;
 	private int num;
+	private int isFinish;
 	private Date createTime;
 	private int status;
 	
 	private int doStatus;
+	private long doStatusUpdateTime = 0;
 	private int numCurrent;
-
+	private long numCurrentUpdateTime = 0;
+	
 	@Transient
 	public int getDoStatus() {
-		if (status == Status.Fail) {
-			return 0;
+		if (System.currentTimeMillis() - doStatusUpdateTime < 1000 * 60) {//60秒更新一次
+			return doStatus;
 		}
-		long now = System.currentTimeMillis();
-		if (now < beginTime.getTime()) {
+		if (status == Status.Fail) {
+			return DoStatus.Fail;
+		}
+		if (isFinish > 0 || num == 0) {
+			return DoStatus.Done;
+		}
+		numCurrent = getNumCurrent();
+		if (numCurrent == 0) {
 			doStatus = DoStatus.Wait;
 		}
-		else if (now >= beginTime.getTime() && now < endTime.getTime()) {
+		else if (numCurrent < num) {
 			doStatus = DoStatus.Doing;
-		} else {
+		}
+		else if (numCurrent >= num) {
 			doStatus = DoStatus.Done;
 		}
+		doStatusUpdateTime = System.currentTimeMillis();
 		return doStatus;
 	}
 	public void setDoStatus(int doStatus) {
@@ -70,25 +83,19 @@ public class LLLiuliang implements Serializable {
 
 	@Transient
 	public int getNumCurrent() {
-		if (getDoStatus() == DoStatus.Doing) {
+		if (System.currentTimeMillis() - numCurrentUpdateTime < 1000 * 60) {//60秒更新一次
+			return numCurrent;
+		}
+		if (status == Status.Success) {
 			try {
-				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			    long from = df.parse(df.format(getBeginTime())).getTime();
-			    long to = df.parse(df.format(new Date())).getTime();
-			    if (from < to) {
-			    	int days = (int)((to - from) / (1000 * 60 * 60 * 24));
-			    	numCurrent = times * days;
-				} else {
-					numCurrent = 0;
-				}
+				numCurrent = ServiceLocator.getBean(LLLiuliangService.class).getCurrentNum(this);
 			} catch (Exception e) {
 				numCurrent = 0;
 			}
-		} else if (getDoStatus() == DoStatus.Done) {
-			numCurrent = num;
 		} else {
 			numCurrent = 0;
 		}
+		numCurrentUpdateTime = System.currentTimeMillis();
 		return numCurrent;
 	}
 	public void setNumCurrent(int numCurrent) {
@@ -202,19 +209,12 @@ public class LLLiuliang implements Serializable {
 	public void setClickEnd(int clickEnd) {
 		this.clickEnd = clickEnd;
 	}
-	@Column(name = "begin_time_")
-	public Date getBeginTime() {
-		return beginTime;
+	@Column(name = "date_")
+	public Date getDate() {
+		return date;
 	}
-	public void setBeginTime(Date beginTime) {
-		this.beginTime = beginTime;
-	}
-	@Column(name = "end_time_")
-	public Date getEndTime() {
-		return endTime;
-	}
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	@Column(name = "num_")
 	public int getNum() {
@@ -222,6 +222,13 @@ public class LLLiuliang implements Serializable {
 	}
 	public void setNum(int num) {
 		this.num = num;
+	}
+	@Column(name = "is_finish_")
+	public int getIsFinish() {
+		return isFinish;
+	}
+	public void setIsFinish(int isFinish) {
+		this.isFinish = isFinish;
 	}
 	@Column(name = "create_time_")
 	public Date getCreateTime() {
@@ -241,11 +248,10 @@ public class LLLiuliang implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((beginTime == null) ? 0 : beginTime.hashCode());
 		result = prime * result + clickEnd;
 		result = prime * result + clickStart;
 		result = prime * result + ((createTime == null) ? 0 : createTime.hashCode());
-		result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((goodId == null) ? 0 : goodId.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((keyword == null) ? 0 : keyword.hashCode());
@@ -270,11 +276,6 @@ public class LLLiuliang implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		LLLiuliang other = (LLLiuliang) obj;
-		if (beginTime == null) {
-			if (other.beginTime != null)
-				return false;
-		} else if (!beginTime.equals(other.beginTime))
-			return false;
 		if (clickEnd != other.clickEnd)
 			return false;
 		if (clickStart != other.clickStart)
@@ -284,10 +285,10 @@ public class LLLiuliang implements Serializable {
 				return false;
 		} else if (!createTime.equals(other.createTime))
 			return false;
-		if (endTime == null) {
-			if (other.endTime != null)
+		if (date == null) {
+			if (other.date != null)
 				return false;
-		} else if (!endTime.equals(other.endTime))
+		} else if (!date.equals(other.date))
 			return false;
 		if (goodId == null) {
 			if (other.goodId != null)

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.math.NumberUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.foal.liuliang.bean.LLTaskBean;
@@ -26,6 +27,9 @@ import com.foal.liuliang.util.StringUtil;
 @SuppressWarnings("unchecked")
 @Service(value = "llTaskService")
 public class LLTaskService extends DaoSupport {
+	
+	@Autowired
+	private LLLiuliangService llLiuliangService;
 	
 	public LLTask getLLTask(String taskId) {
 		return this.hibernateDao.get(LLTask.class, taskId);
@@ -255,23 +259,39 @@ public class LLTaskService extends DaoSupport {
 		if (status != Status.Executing) {
 			return status;
 		}
-		Map paramMap = new HashMap();
-		paramMap.put("taskId", task.getTaskId());
-		paramMap.put("status", LLLiuliang.Status.Success);
-		List<LLLiuliang> llLiuliangList = this.hibernateDao.queryList("from LLLiuliang where llTask.taskId = :taskId and status = :status", paramMap);
-		if (llLiuliangList.size() > 0) {
-			boolean isFinish = true;
-			for (LLLiuliang llLiuliang : llLiuliangList) {
-				if (llLiuliang.getDoStatus() != LLLiuliang.DoStatus.Done) {
-					isFinish = false;
-					break;
-				}
-			}
-			if (isFinish) {
-				status = LLTask.Status.Finish;
+		List<LLLiuliang> liuliangList = llLiuliangService.queryLLLiuliangByTaskId(task.getTaskId());
+		boolean isFinish = true;
+		for (LLLiuliang llLiuliang : liuliangList) {
+			if(llLiuliang.getDoStatus() != LLLiuliang.DoStatus.Done) {
+				isFinish = false;
 			}
 		}
+		if (isFinish) {
+			task.setStatus(LLTask.Status.Finish);
+			LLTask entry = this.hibernateDao.get(LLTask.class, task.getTaskId());
+			entry.setStatus(LLTask.Status.Finish);
+			updateLLTask(entry);
+		}
 		return status;
+	}
+
+	public int updateFinishDay(LLTask task) {
+		if (task.getStatusCurrent() == Status.Finish) {
+			return task.getDurationDay();
+		} else {
+			if (task.getStatusCurrent() == Status.Executing) {
+				List<LLLiuliang> liuliangList = llLiuliangService.queryLLLiuliangByTaskId(task.getTaskId());
+				int finishDay = 0;
+				for (LLLiuliang llLiuliang : liuliangList) {
+					if(llLiuliang.getDoStatus() == LLLiuliang.DoStatus.Done) {
+						finishDay++;
+					}
+				}
+				return finishDay;
+			} else {
+				return 0;
+			}
+		}
 	}
 }
 

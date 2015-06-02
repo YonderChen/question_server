@@ -8,14 +8,21 @@ import java.util.Date;
  */
 public class LLLiuliangBean extends Page {
 
+	private String userId;
 	private String keyword;
 	private String taskId;
 	private String bindName;
 	private String username;
 	private Date beginTime;
 	private Date endTime;
-	private String doStatus;
+	private String status;
 	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public String getKeyword() {
 		return keyword;
 	}
@@ -52,11 +59,11 @@ public class LLLiuliangBean extends Page {
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
-	public String getDoStatus() {
-		return doStatus;
+	public String getStatus() {
+		return status;
 	}
-	public void setDoStatus(String doStatus) {
-		this.doStatus = doStatus;
+	public void setStatus(String status) {
+		this.status = status;
 	}
     
 }

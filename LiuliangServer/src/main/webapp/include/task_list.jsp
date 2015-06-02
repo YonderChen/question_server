@@ -100,16 +100,16 @@
 															+ record.orderNumberOneDay5}
 													</td>
 													<td style="font-size: 14px; width: 15%;">
-														0 / ${record.durationDay}
+														${record.finishDay} / ${record.durationDay}
 													</td>
 													<td id="status_${record.taskId}" style="font-size: 14px; width: 15%;">
-						                                <s:if test="status == 0">未发布</s:if>
-						                                <s:if test="status == 1">待审核</s:if>
-						                                <s:if test="status == 2">任务进行中</s:if>
-						                                <s:if test="status == 3">已完成</s:if>
-						                                <s:if test="status == 4">已取消</s:if>
-						                                <s:if test="status == 5">审核不通过</s:if>
-						                                <s:if test="status == 6">任务修改,待审核</s:if>
+						                                <s:if test="statusCurrent == 0">未发布</s:if>
+						                                <s:if test="statusCurrent == 1">待审核</s:if>
+						                                <s:if test="statusCurrent == 2">任务进行中</s:if>
+						                                <s:if test="statusCurrent == 3">已完成</s:if>
+						                                <s:if test="statusCurrent == 4">已取消</s:if>
+						                                <s:if test="statusCurrent == 5">审核不通过</s:if>
+						                                <s:if test="statusCurrent == 6">任务修改,待审核</s:if>
 													</td>
 													<td id="op_${record.taskId}" style="font-size: 14px; width: 12%;">
 						                                <s:if test="status == 0 || status == 5">
