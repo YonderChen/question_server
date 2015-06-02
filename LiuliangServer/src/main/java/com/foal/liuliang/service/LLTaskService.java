@@ -260,19 +260,15 @@ public class LLTaskService extends DaoSupport {
 		paramMap.put("status", LLLiuliang.Status.Success);
 		List<LLLiuliang> llLiuliangList = this.hibernateDao.queryList("from LLLiuliang where llTask.taskId = :taskId and status = :status", paramMap);
 		if (llLiuliangList.size() > 0) {
-			long finishTime = 0;
+			boolean isFinish = true;
 			for (LLLiuliang llLiuliang : llLiuliangList) {
-				if (finishTime < llLiuliang.getEndTime().getTime()) {
-					finishTime = llLiuliang.getEndTime().getTime();
+				if (llLiuliang.getDoStatus() != LLLiuliang.DoStatus.Done) {
+					isFinish = false;
+					break;
 				}
 			}
-			if(System.currentTimeMillis() > finishTime) {
-				LLTask llTask = getLLTask(task.getTaskId());
-				llTask.setStatus(LLTask.Status.Finish);
-				llTask.setFinishTime(new Date(finishTime));
-				updateLLTask(llTask);
-				task.setStatus(LLTask.Status.Finish);
-				task.setFinishTime(new Date(finishTime));
+			if (isFinish) {
+				status = LLTask.Status.Finish;
 			}
 		}
 		return status;

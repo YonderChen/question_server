@@ -78,7 +78,7 @@ public class LLLiuliangService extends DaoSupport {
 			path1 = 100;
 			path2 = 0;
 			path3 = 0;
-			shopType = "a";
+			shopType = "";
 		}
 		LLLiuliang keyword1 = parseKeyword(goodId, shopType, llTask.getKeyword1(), llTask.getOrderNumberOneDay1(), path1, path2, path3, llTask);
 		addKeyword(keyword1, method);
@@ -133,7 +133,9 @@ public class LLLiuliangService extends DaoSupport {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		params.put("begin_time", sdf.format(liuliang.getBeginTime()));
 		params.put("end_time", sdf.format(liuliang.getEndTime()));
-		params.put("shop_type", liuliang.getShopType());
+		if (StringTools.isNotBlank(liuliang.getShopType())) {
+			params.put("shop_type", liuliang.getShopType());
+		}
 		if (CrazyClickTools.Method.tbpc_add.equals(method) || CrazyClickTools.Method.tbmobi_add.equals(method)) {
 			params.put("path1", String.valueOf(liuliang.getPath1()));
 			params.put("path2", String.valueOf(liuliang.getPath2()));
