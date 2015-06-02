@@ -12,6 +12,8 @@ public class Constant {
 	public static String TOMCAT_SERVICE_ADDRESS;
 	
 	public static String CONTEXT_WEB_URL;
+	
+	public static String KEY_OF_SIGN;
 
 	// 以下从数据库取
 	public static String INIT_PASSWORD;
@@ -26,4 +28,5 @@ public class Constant {
 	public static final String DEFAULT_ROLE_ID = "402882374a4ba68c014a4bb1cc9d0001";
 
 	public static final String PASSWORD_SECRET_KEY = "yjn_meat@163.com";
+	
 }

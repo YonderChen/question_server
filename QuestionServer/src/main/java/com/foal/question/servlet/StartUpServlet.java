@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import org.apache.log4j.Logger;
 
 import com.foal.question.config.Constant;
+import com.foal.question.jersey.command.CommandRouter;
 import com.foal.question.listener.ServiceLocator;
 import com.foal.question.service.GlobalConfigService;
 import com.foal.question.service.RiskWordService;
@@ -39,6 +40,7 @@ public class StartUpServlet extends HttpServlet {
 		
 		Constant.CONTEXT_WEB_URL = ServiceLocator.getMessage("context.web.url");
 		this.getServletContext().setAttribute(Constant.CONTEXT_WEB_URL_KEY, Constant.CONTEXT_WEB_URL);
+		Constant.KEY_OF_SIGN = ServiceLocator.getMessage("keyOfSign");
 		
 		GlobalConfigService globalConfigService = ServiceLocator.getBean(GlobalConfigService.class);
 		// 执行增量脚本
@@ -47,6 +49,8 @@ public class StartUpServlet extends HttpServlet {
 
 		RiskWordService riskWordService = ServiceLocator.getBean(RiskWordService.class);
 		riskWordService.initRiskWord();
+		
+		CommandRouter.initHandlerService();//初始化接口
 		
 		logger.info("启动成功...");
 	}

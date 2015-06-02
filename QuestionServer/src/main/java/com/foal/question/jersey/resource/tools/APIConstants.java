@@ -12,6 +12,12 @@ public class APIConstants {
 	public class DataKeys {
 		public static final String Result = "ret";
 		public static final String Message = "msg";
+		
+		public static final String Root = "root";
+		public static final String Sign = "sign";
+		public static final String Version = "version";
+		
+		public static final String Command = "command";
 	}
     
 	public class RetCode {
