@@ -18,6 +18,7 @@ import com.foal.question.pojo.AppTextVoicePraiseLog;
 import com.foal.question.pojo.AppUser;
 import com.foal.question.util.StringTools;
 import com.foal.question.util.StringUtil;
+import com.google.gson.JsonObject;
 
 @SuppressWarnings("unchecked")
 @Service(value = "appTextVoiceService")
@@ -195,11 +196,16 @@ public class AppTextVoiceService extends DaoSupport {
 		return this.hibernateDao.getAllRow(queryHql, recordId);
 	}
 	
-	public AppTextVoiceComment getRecordComment(String commentId) {
+	public AppTextVoiceComment getRecordComment(int commentId) {
 		return this.hibernateDao.get(AppTextVoiceComment.class, commentId);
 	}
 	
 	public void delRecordComment(AppTextVoiceComment comment) {
 		this.hibernateDao.delete(comment);
+	}
+
+	public JsonObject getRetRecordJson(AppTextVoice record, String uid) {
+		boolean hasPraised = hasPraised(record.getId(), uid);
+		return record.toJson(hasPraised, getRecordCommentCount(record.getId()));
 	}
 }

@@ -14,7 +14,7 @@ import com.foal.question.pojo.AppUser;
 import com.foal.question.service.app.AppUserService;
 import com.foal.question.util.StringTools;
 
-public class EditUserinfoCommand implements ICommand {
+public class EditUserInfoCommand implements ICommand {
 
 	private AppUserService appUserService = ServiceLocator.getBean(AppUserService.class);
 	

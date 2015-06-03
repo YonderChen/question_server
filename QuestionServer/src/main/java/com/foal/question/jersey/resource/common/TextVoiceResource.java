@@ -345,7 +345,7 @@ public class TextVoiceResource {
 	@GET
 	@Path(value = "/del_comment")
 	@Produces( { MediaType.TEXT_HTML })
-	public String delComment(@QueryParam(value = "uid") String uid, @QueryParam(value = "comment_id") String commentId) {
+	public String delComment(@QueryParam(value = "uid") String uid, @QueryParam(value = "comment_id") int commentId) {
 		ResultMap ret = ResultMap.getResultMap();
 		AppUser user = appTextVoiceService.getAppUserService().getAppUserById(uid);
 		if (user == null) {

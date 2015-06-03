@@ -189,8 +189,7 @@ public class TextImageResource {
 	}
 	
 	private JsonObject getRetRecordJson(AppTextImage record, String uid) {
-		boolean hasPraised = appTextImageService.hasPraised(record.getId(), uid);
-		return record.toJson(hasPraised, appTextImageService.getRecordCommentCount(record.getId()));
+		return appTextImageService.getRetRecordJson(record, uid);
 	}
 	
 	/**
@@ -362,7 +361,7 @@ public class TextImageResource {
 	@GET
 	@Path(value = "/del_comment")
 	@Produces( { MediaType.TEXT_HTML })
-	public String delComment(@QueryParam(value = "uid") String uid, @QueryParam(value = "comment_id") String commentId) {
+	public String delComment(@QueryParam(value = "uid") String uid, @QueryParam(value = "comment_id") int commentId) {
 		ResultMap ret = ResultMap.getResultMap();
 		AppUser user = appTextImageService.getAppUserService().getAppUserById(uid);
 		if (user == null) {

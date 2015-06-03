@@ -41,7 +41,7 @@ public class Param {
 		short command = NumberUtils.toShort(param.getField(DataKeys.Command, ""), (short)0);
 		String newSign = root + "&" + Constant.KEY_OF_SIGN;
 		if (!sign.equals(MD5Tools.hashToMD5(newSign))) {
-			throw new QuestionException(QuestionException.UnKnowError, "签名错误");
+			throw new QuestionException(QuestionException.UnKnowError, "签名错误，sign:" + MD5Tools.hashToMD5(newSign) );
 		}
 		List<FileItem> fileItemList = param.getFileItemList();
 		return new Param(command, request, GsonTools.parseJsonObject(root), version, fileItemList);

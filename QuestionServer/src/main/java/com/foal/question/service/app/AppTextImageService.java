@@ -18,6 +18,7 @@ import com.foal.question.pojo.AppTextImagePraiseLog;
 import com.foal.question.pojo.AppUser;
 import com.foal.question.util.StringTools;
 import com.foal.question.util.StringUtil;
+import com.google.gson.JsonObject;
 
 @SuppressWarnings("unchecked")
 @Service(value = "appTextImageService")
@@ -195,11 +196,16 @@ public class AppTextImageService extends DaoSupport {
 		return this.hibernateDao.getAllRow(queryHql, recordId);
 	}
 	
-	public AppTextImageComment getRecordComment(String commentId) {
+	public AppTextImageComment getRecordComment(int commentId) {
 		return this.hibernateDao.get(AppTextImageComment.class, commentId);
 	}
 	
 	public void delRecordComment(AppTextImageComment comment) {
 		this.hibernateDao.delete(comment);
+	}
+
+	public JsonObject getRetRecordJson(AppTextImage record, String uid) {
+		boolean hasPraised = hasPraised(record.getId(), uid);
+		return record.toJson(hasPraised, getRecordCommentCount(record.getId()));
 	}
 }

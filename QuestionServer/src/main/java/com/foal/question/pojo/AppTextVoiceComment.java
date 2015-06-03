@@ -28,20 +28,20 @@ public class AppTextVoiceComment implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 9132273889559563198L;
-	private String id;
+	private int id;
 	private AppTextVoice record;
 	private AppUser owner;
 	private String content;
 	private Date createTime;
 
-	@GenericGenerator(name = "generator", strategy = "uuid")
+	@GenericGenerator(name = "generator", strategy = "native")
 	@Id
 	@GeneratedValue(generator = "generator")
 	@Column(name = "id_")
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	@Index(name = "record_id_index")
@@ -62,7 +62,7 @@ public class AppTextVoiceComment implements Serializable{
 	public void setOwner(AppUser owner) {
 		this.owner = owner;
 	}
-	@JoinColumn(name = "content_")
+	@Column(name = "content_")
 	public String getContent() {
 		return content;
 	}
@@ -83,7 +83,7 @@ public class AppTextVoiceComment implements Serializable{
 		int result = 1;
 		result = prime * result + ((content == null) ? 0 : content.hashCode());
 		result = prime * result + ((createTime == null) ? 0 : createTime.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + id;
 		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
 		result = prime * result + ((record == null) ? 0 : record.hashCode());
 		return result;
@@ -107,10 +107,7 @@ public class AppTextVoiceComment implements Serializable{
 				return false;
 		} else if (!createTime.equals(other.createTime))
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
 		if (owner == null) {
 			if (other.owner != null)
