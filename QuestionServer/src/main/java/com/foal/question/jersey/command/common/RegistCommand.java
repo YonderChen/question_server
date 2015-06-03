@@ -17,7 +17,7 @@ import com.foal.question.util.StringTools;
 
 public class RegistCommand implements ICommand {
 
-	private AppUserService appUserService = ServiceLocator.getBean(AppUserService.class);;
+	private AppUserService appUserService = ServiceLocator.getBean(AppUserService.class);
 
 	@Override
 	public ResultMap handle(Param param) throws Exception {

@@ -9,7 +9,7 @@ import com.foal.question.service.SystemParamService;
 
 public class GetVersionCommand implements ICommand {
 
-	private SystemParamService systemParamService = ServiceLocator.getBean(SystemParamService.class);;
+	private SystemParamService systemParamService = ServiceLocator.getBean(SystemParamService.class);
 	
 	@Override
 	public ResultMap handle(Param param) {
