@@ -16,8 +16,8 @@
     
     <dl>
         <dt>账户管理</dt>
-        <dd id="dd_id_3"><a target="_self" href="${ctx }/web/shop/userinfo?left-list-id=3">基本信息</a></dd>
-        <dd id="dd_id_4"><a target="_self" href="${ctx }/web/shop/accountmanage/dealmanage/pay_record?left-list-id=4">充值记录</a></dd>
+        <dd id="dd_id_4"><a target="_self" href="${ctx }/web/shop/userinfo?left-list-id=4">基本信息</a></dd>
+        <dd id="dd_id_5"><a target="_self" href="${ctx }/web/shop/accountmanage/dealmanage/pay_record?left-list-id=5">充值记录</a></dd>
         <dd><a target="_self" href="${ctx }/web/shop/accountmanage/shopmanage/bind_shop">绑定店铺</a></dd>
         <dd><a target="_self" href="${ctx }/web/shop/accountmanage/dealmanage/renewalvip">续费会员</a></dd>
         <dd><a target="_self" href="${ctx }/web/shop/accountmanage/dealmanage/get_score">购买积分</a></dd>

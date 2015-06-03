@@ -334,6 +334,8 @@ CREATE TABLE `ll_liuliang` (
   `click_end_` int(11) NOT NULL DEFAULT '0',
   `date_` datetime DEFAULT NULL,
   `num_` int(11) NOT NULL DEFAULT '0',
+  `finish_num_` int(11) NOT NULL DEFAULT '0',
+  `finish_num_update_time_` bigint(11) NOT NULL DEFAULT '0',
   `is_finish_` int(11) NOT NULL DEFAULT '0',
   `create_time_` datetime DEFAULT NULL,
   `status_` int(11) NOT NULL DEFAULT '0',

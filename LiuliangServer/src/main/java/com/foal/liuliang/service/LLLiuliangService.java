@@ -239,7 +239,7 @@ public class LLLiuliangService extends DaoSupport {
 		return new PageBean(list, allRow, llLiuliangBean.getPage(), llLiuliangBean.getPageSize());
 	}
 	
-	public int getCurrentNum(LLLiuliang liuliang) {
+	public int updateCurrentNum(LLLiuliang liuliang) {
 		if (liuliang.getIsFinish() > 0) {
 			return liuliang.getNum();
 		}
@@ -264,10 +264,10 @@ public class LLLiuliangService extends DaoSupport {
 		}
 		if (currentNum >= liuliang.getNum()) {
 			liuliang.setIsFinish(1);
-			LLLiuliang entry = this.hibernateDao.get(LLLiuliang.class, liuliang.getId());
-			entry.setIsFinish(1);
-			this.hibernateDao.update(entry);
 		}
+		liuliang.setFinishNumUpdateTime(System.currentTimeMillis());
+		liuliang.setFinishNum(currentNum);
+		this.hibernateDao.update(liuliang);
 		return currentNum;
 	}
 }

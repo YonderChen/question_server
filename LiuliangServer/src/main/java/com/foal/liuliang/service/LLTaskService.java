@@ -268,9 +268,7 @@ public class LLTaskService extends DaoSupport {
 		}
 		if (isFinish) {
 			task.setStatus(LLTask.Status.Finish);
-			LLTask entry = this.hibernateDao.get(LLTask.class, task.getTaskId());
-			entry.setStatus(LLTask.Status.Finish);
-			updateLLTask(entry);
+			updateLLTask(task);
 		}
 		return status;
 	}

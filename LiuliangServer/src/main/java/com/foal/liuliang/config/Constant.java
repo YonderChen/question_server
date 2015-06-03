@@ -5,6 +5,9 @@ import java.util.Map;
 
 
 public class Constant {
+	
+	public static final long SyncFinishNumInterval = 1000 * 60;
+	
 	public static final String PRO_CTX_KEY = "ctx";
 	public static String PRO_CTX_VALUE;
 

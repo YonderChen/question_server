@@ -17,6 +17,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.foal.liuliang.config.Constant;
 import com.foal.liuliang.listener.ServiceLocator;
 import com.foal.liuliang.service.LLLiuliangService;
 
@@ -44,6 +45,8 @@ public class LLLiuliang implements Serializable {
 	private int clickEnd;
 	private Date date;
 	private int num;
+	private int finishNum;
+	private long finishNumUpdateTime = 0;
 	private int isFinish;
 	private Date createTime;
 	private int status;
@@ -51,11 +54,10 @@ public class LLLiuliang implements Serializable {
 	private int doStatus;
 	private long doStatusUpdateTime = 0;
 	private int numCurrent;
-	private long numCurrentUpdateTime = 0;
 	
 	@Transient
 	public int getDoStatus() {
-		if (System.currentTimeMillis() - doStatusUpdateTime < 1000 * 60) {//60秒更新一次
+		if (System.currentTimeMillis() - doStatusUpdateTime < Constant.SyncFinishNumInterval) {//60秒更新一次
 			return doStatus;
 		}
 		if (status == Status.Fail) {
@@ -82,20 +84,27 @@ public class LLLiuliang implements Serializable {
 	}
 
 	@Transient
+	public long getDoStatusUpdateTime() {
+		return doStatusUpdateTime;
+	}
+	public void setDoStatusUpdateTime(long doStatusUpdateTime) {
+		this.doStatusUpdateTime = doStatusUpdateTime;
+	}
+	
+	@Transient
 	public int getNumCurrent() {
-		if (System.currentTimeMillis() - numCurrentUpdateTime < 1000 * 60) {//60秒更新一次
-			return numCurrent;
+		if (System.currentTimeMillis() - finishNumUpdateTime < 1000 * 60) {//60秒更新一次
+			return finishNum;
 		}
 		if (status == Status.Success) {
 			try {
-				numCurrent = ServiceLocator.getBean(LLLiuliangService.class).getCurrentNum(this);
+				numCurrent = ServiceLocator.getBean(LLLiuliangService.class).updateCurrentNum(this);
 			} catch (Exception e) {
 				numCurrent = 0;
 			}
 		} else {
 			numCurrent = 0;
 		}
-		numCurrentUpdateTime = System.currentTimeMillis();
 		return numCurrent;
 	}
 	public void setNumCurrent(int numCurrent) {
@@ -222,6 +231,20 @@ public class LLLiuliang implements Serializable {
 	}
 	public void setNum(int num) {
 		this.num = num;
+	}
+	@Column(name = "finish_num_")
+	public int getFinishNum() {
+		return finishNum;
+	}
+	public void setFinishNum(int finishNum) {
+		this.finishNum = finishNum;
+	}
+	@Column(name = "finish_num_update_time_")
+	public long getFinishNumUpdateTime() {
+		return finishNumUpdateTime;
+	}
+	public void setFinishNumUpdateTime(long finishNumUpdateTime) {
+		this.finishNumUpdateTime = finishNumUpdateTime;
 	}
 	@Column(name = "is_finish_")
 	public int getIsFinish() {
