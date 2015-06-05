@@ -2,6 +2,7 @@ package com.foal.question.jersey.command.textimage;
 
 import java.util.List;
 
+import com.foal.question.config.QuestionException;
 import com.foal.question.jersey.command.ICommand;
 import com.foal.question.jersey.resource.tools.Param;
 import com.foal.question.jersey.resource.tools.ResultMap;
@@ -26,7 +27,7 @@ public class TextImageLoadOthersCommand implements ICommand {
 		int pageSize = param.getInt("pageSize");
 		AppUser targetUser = appTextImageService.getAppUserService().getAppUserById(targetUid);
 		if (targetUser == null) {
-			ret.setResult(RetCode.Faild, "目标用户不存在");
+			throw new QuestionException(QuestionException.UserNotExist, "目标用户不存在");
 		}
 		List<AppTextImage> recordList = appTextImageService.getRecordByOwner(targetUid, orderBy, page, pageSize);
 		JsonArray retJa = new JsonArray();

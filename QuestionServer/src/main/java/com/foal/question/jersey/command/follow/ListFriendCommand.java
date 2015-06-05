@@ -25,7 +25,7 @@ public class ListFriendCommand implements ICommand {
 		int pageSize = param.getInt("pageSize");
 		AppUser owner = appUserService.getAppUserById(uid);
 		if (owner == null) {
-			throw new QuestionException(QuestionException.UnKnowError, "登录信息异常，请重新登录");
+			throw new QuestionException(QuestionException.LoginInfoError, "登录信息异常，请重新登录");
 		}
 		List<AppUserFollow> followList = appUserService.getFriends(owner.getUid(), page, pageSize);
 		JsonArray friends = new JsonArray();

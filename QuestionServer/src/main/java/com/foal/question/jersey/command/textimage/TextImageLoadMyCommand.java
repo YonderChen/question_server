@@ -26,7 +26,7 @@ public class TextImageLoadMyCommand implements ICommand {
 		int pageSize = param.getInt("pageSize");
 		AppUser user = appTextImageService.getAppUserService().getAppUserById(uid);
 		if (user == null) {
-			throw new QuestionException(QuestionException.UnKnowError, "登录信息异常，请重新登录");
+			throw new QuestionException(QuestionException.LoginInfoError, "登录信息异常，请重新登录");
 		}
 		List<AppTextImage> recordList = appTextImageService.getRecordByOwner(uid, orderBy, page, pageSize);
 		JsonArray retJa = new JsonArray();

@@ -15,6 +15,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Index;
 
+import com.foal.question.config.Constant;
 import com.foal.question.util.GsonTools;
 import com.google.gson.JsonObject;
 
@@ -224,6 +225,9 @@ public class AppUser implements Serializable{
 	}
 	public JsonObject toJson() {
 		JsonObject jo = GsonTools.parseJsonObject(this);
+		if (userType == AppUser.UserType.Local) {
+			jo.addProperty("figureurl", Constant.CONTEXT_WEB_URL + figureurl);
+		}
 		jo.remove("openId");
 		jo.remove("createTime");
 		jo.remove("updateAt");

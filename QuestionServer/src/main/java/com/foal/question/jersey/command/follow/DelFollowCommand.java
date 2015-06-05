@@ -20,7 +20,7 @@ public class DelFollowCommand implements ICommand {
 		String targetUid = param.get("targetUid");
 		AppUser follower = appUserService.getAppUserById(uid);
 		if (follower == null) {
-			throw new QuestionException(QuestionException.UnKnowError, "登录信息异常，请重新登录");
+			throw new QuestionException(QuestionException.LoginInfoError, "登录信息异常，请重新登录");
 		}
 		appUserService.cancelFollow(uid, targetUid);
 		ret.setResult(RetCode.Success);

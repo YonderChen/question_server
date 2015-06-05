@@ -24,7 +24,7 @@ public class LoginCommand implements ICommand {
 		String gender = param.get("gender");
 		String figureurl = param.get("figureurl");
 		if (StringTools.isBlank(openId)) {
-			throw new QuestionException(QuestionException.UnKnowError, "登录信息异常，请重新登录");
+			throw new QuestionException(QuestionException.LoginInfoError, "登录信息异常，请重新登录");
 		}
 		int userType = AppUser.UserType.Thrid;
 		AppUser appUser = appUserService.getAppUserByOpenId(openId, userType);
@@ -45,7 +45,7 @@ public class LoginCommand implements ICommand {
 			appUserService.addAppUser(appUser);
 		} else {
 			if (appUser.getStatus() == AppUser.Status.Freeze) {
-				throw new QuestionException(QuestionException.UnKnowError, "该帐号已经被封，请联系管理人员");
+				throw new QuestionException(QuestionException.AccountIsFreeze, "该帐号已经被封，请联系管理人员");
 			}
 			appUser.setName(name);
 			appUser.setGender(gender);

@@ -1,5 +1,6 @@
 package com.foal.question.jersey.command.textimage;
 
+import com.foal.question.config.QuestionException;
 import com.foal.question.jersey.command.ICommand;
 import com.foal.question.jersey.resource.tools.Param;
 import com.foal.question.jersey.resource.tools.ResultMap;
@@ -23,14 +24,14 @@ public class TextImageAddCommentCommand implements ICommand {
 		String content = param.get("content", "");
 		AppUser user = appTextImageService.getAppUserService().getAppUserById(uid);
 		if (user == null) {
-			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
+			throw new QuestionException(QuestionException.LoginInfoError, "登录信息异常，请重新登录");
 		}
 		AppTextImage record = appTextImageService.getRecord(recordId);
 		if (record == null) {
-			ret.setResult(RetCode.Faild, "要评论的记录不存在");
+			throw new QuestionException(QuestionException.RecordNotExist, "要评论的记录不存在");
 		}
 		if(riskWordService.containRiskWord(content)) {
-			ret.setResult(RetCode.Faild, "您输入的文字包含敏感内容");
+			throw new QuestionException(QuestionException.ContentHasRiskWord, "您输入的文字包含敏感内容");
 		}
 		appTextImageService.addComment(user, record, content);
 		ret.setResult(RetCode.Success);

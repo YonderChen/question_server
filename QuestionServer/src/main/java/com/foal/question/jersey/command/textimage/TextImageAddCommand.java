@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.imageio.ImageIO;
 
 import com.foal.question.config.Constant;
+import com.foal.question.config.QuestionException;
 import com.foal.question.jersey.command.ICommand;
 import com.foal.question.jersey.resource.tools.Param;
 import com.foal.question.jersey.resource.tools.ResourceTools;
@@ -31,16 +32,16 @@ public class TextImageAddCommand implements ICommand {
 		String content = param.get("content", "");
 		AppUser user = appTextImageService.getAppUserService().getAppUserById(uid);
 		if (user == null) {
-			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
+			throw new QuestionException(QuestionException.LoginInfoError, "登录信息异常，请重新登录");
 		}
 		if (user.getStatus() == AppUser.Status.Freeze) {
-			ret.setResult(RetCode.Faild, "该帐号已经被封，请联系管理人员");
+			throw new QuestionException(QuestionException.AccountIsFreeze, "该帐号已经被封，请联系管理人员");
 		}
 		if (user.getStatus() == AppUser.Status.Silenced) {
-			ret.setResult(RetCode.Faild, "该帐号已经被禁言，请联系管理人员");
+			throw new QuestionException(QuestionException.AccountIsSilenced, "该帐号已经被禁言，请联系管理人员");
 		}
 		if(riskWordService.containRiskWord(content)) {
-			ret.setResult(RetCode.Faild, "您输入的文字包含敏感内容");
+			throw new QuestionException(QuestionException.ContentHasRiskWord, "您输入的文字包含敏感内容");
 		}
 		String imageUrl = ResourceTools.uploadFile(param.getFileItemList(), ResourceTools.getImageSuffixs(), Constant.UPLOAD_IMAGE_PATH);
 		AppTextImage record = new AppTextImage();

@@ -25,18 +25,18 @@ public class LoginLocalCommand implements ICommand {
 		String password = param.get("password");
 
 		if (StringTools.isBlank(username)) {
-			throw new QuestionException(QuestionException.UnKnowError, "用户名不能为空");
+			throw new QuestionException(QuestionException.UsernameError, "用户名不能为空");
 		}
 		AppUser appUser = appUserService.getAppUserByUsername(username);
 		if (appUser == null) {
-			throw new QuestionException(QuestionException.UnKnowError, "用户名不存在");
+			throw new QuestionException(QuestionException.UsernameError, "用户名不存在");
 		}
 		String checkPwd = MD5Tools.hashToMD5(password + Constant.PASSWORD_SECRET_KEY);
 		if (!checkPwd.equals(appUser.getPassword())) {
-			throw new QuestionException(QuestionException.UnKnowError, "用户名密码错误");
+			throw new QuestionException(QuestionException.PasswordError, "用户名密码错误");
 		}
 		if (appUser.getStatus() == AppUser.Status.Freeze) {
-			throw new QuestionException(QuestionException.UnKnowError, "该帐号已经被封，请联系管理人员");
+			throw new QuestionException(QuestionException.AccountIsFreeze, "该帐号已经被封，请联系管理人员");
 		}
 		appUser.setUpdateAt(new Date());
 		appUser.setLastLoginIp(param.getRequest().getRemoteAddr());

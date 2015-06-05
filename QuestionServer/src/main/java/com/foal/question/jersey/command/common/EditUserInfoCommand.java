@@ -26,17 +26,17 @@ public class EditUserInfoCommand implements ICommand {
 		String gender = param.get("gender", "");
 		
 		if (StringTools.isBlank(uid)) {
-			throw new QuestionException(QuestionException.UnKnowError, "登录信息异常，请重新登录");
+			throw new QuestionException(QuestionException.LoginInfoError, "登录信息异常，请重新登录");
 		}
 		if (StringTools.isBlank(name)) {
-			throw new QuestionException(QuestionException.UnKnowError, "昵称不能为空");
+			throw new QuestionException(QuestionException.NickNameError, "昵称不能为空");
 		}
 		if (name.length() > 50) {
-			throw new QuestionException(QuestionException.UnKnowError, "昵称过长");
+			throw new QuestionException(QuestionException.NickNameError, "昵称过长");
 		}
 		AppUser appUser = appUserService.getAppUserById(uid);
 		if (appUserService.getAppUserById(uid) == null) {
-			throw new QuestionException(QuestionException.UnKnowError, "登录信息异常，请重新登录");
+			throw new QuestionException(QuestionException.LoginInfoError, "登录信息异常，请重新登录");
 		}
 		Date now = new Date();
 		appUser.setName(name);

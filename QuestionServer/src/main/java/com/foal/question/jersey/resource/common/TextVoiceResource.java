@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -310,15 +311,15 @@ public class TextVoiceResource {
 	
 	/**
 	 * 添加评论
+	 * @param uid
 	 * @param recordId
-	 * @param page
-	 * @param pageSize
+	 * @param content
 	 * @return
 	 */
 	@POST
 	@Path(value = "/add_comment")
 	@Produces( { MediaType.TEXT_HTML })
-	public String addComment(@QueryParam(value = "uid") String uid, @QueryParam(value = "record_id") int recordId, @QueryParam(value = "content") String content) {
+	public String addComment(@FormParam(value = "uid") String uid, @FormParam(value = "record_id") int recordId, @FormParam(value = "content") String content) {
 		ResultMap ret = ResultMap.getResultMap();
 		AppUser user = appTextVoiceService.getAppUserService().getAppUserById(uid);
 		if (user == null) {

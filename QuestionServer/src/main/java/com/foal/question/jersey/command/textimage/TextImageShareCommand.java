@@ -1,5 +1,6 @@
 package com.foal.question.jersey.command.textimage;
 
+import com.foal.question.config.QuestionException;
 import com.foal.question.jersey.command.ICommand;
 import com.foal.question.jersey.resource.tools.Param;
 import com.foal.question.jersey.resource.tools.ResultMap;
@@ -21,14 +22,14 @@ public class TextImageShareCommand implements ICommand {
 		int recordId = param.getInt("recordId");
 		AppUser user = appTextImageService.getAppUserService().getAppUserById(uid);
 		if (user == null) {
-			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
+			throw new QuestionException(QuestionException.LoginInfoError, "登录信息异常，请重新登录");
 		}
 		AppTextImage record = appTextImageService.getRecord(recordId);
 		if (record == null) {
-			ret.setResult(RetCode.Faild, "要删除的记录不存在");
+			throw new QuestionException(QuestionException.RecordNotExist, "要删除的记录不存在");
 		}
 		if (!StringTools.equalsStr(record.getOwner().getUid(), uid)) {
-			ret.setResult(RetCode.Faild, "该记录不属于你，不能进行删除");
+			throw new QuestionException(QuestionException.RecordIsNotYours, "该记录不属于你，不能进行删除");
 		}
 		appTextImageService.deleteRecord(record);
 		ret.setResult(RetCode.Success);

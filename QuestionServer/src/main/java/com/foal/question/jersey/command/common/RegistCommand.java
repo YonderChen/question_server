@@ -29,22 +29,22 @@ public class RegistCommand implements ICommand {
 		String gender = param.get("gender");
 
 		if (StringTools.isBlank(username)) {
-			throw new QuestionException(QuestionException.UnKnowError, "用户名不能为空");
+			throw new QuestionException(QuestionException.UsernameError, "用户名不能为空");
 		}
 		if (StringTools.isBlank(password)) {
-			throw new QuestionException(QuestionException.UnKnowError, "密码不能为空");
+			throw new QuestionException(QuestionException.PasswordIsEmpty, "密码不能为空");
 		}
 		if (username.length() < 6 || username.length() > 50) {
-			throw new QuestionException(QuestionException.UnKnowError, "用户名长度只能在6-50字符之间");
+			throw new QuestionException(QuestionException.UsernameError, "用户名长度只能在6-50字符之间");
 		}
 		if (name.length() > 50) {
-			throw new QuestionException(QuestionException.UnKnowError, "昵称过长");
+			throw new QuestionException(QuestionException.NickNameError, "昵称过长");
 		}
 		if (!StringTools.checkNumberOrLetterOrUnderLine(username)) {
-			throw new QuestionException(QuestionException.UnKnowError, "用户名只能是字母数字或下划线");
+			throw new QuestionException(QuestionException.UsernameError, "用户名只能是字母数字或下划线");
 		}
 		if (appUserService.isUsernameExist(username)) {
-			throw new QuestionException(QuestionException.UnKnowError, "用户名已存在");
+			throw new QuestionException(QuestionException.UsernameError, "用户名已存在");
 		}
 		Date now = new Date();
 		AppUser appUser = new AppUser();

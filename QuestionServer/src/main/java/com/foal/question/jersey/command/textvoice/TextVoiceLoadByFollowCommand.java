@@ -2,6 +2,7 @@ package com.foal.question.jersey.command.textvoice;
 
 import java.util.List;
 
+import com.foal.question.config.QuestionException;
 import com.foal.question.jersey.command.ICommand;
 import com.foal.question.jersey.resource.tools.Param;
 import com.foal.question.jersey.resource.tools.ResultMap;
@@ -25,7 +26,7 @@ public class TextVoiceLoadByFollowCommand implements ICommand {
 		int pageSize = param.getInt("pageSize");
 		AppUser user = appTextVoiceService.getAppUserService().getAppUserById(uid);
 		if (user == null) {
-			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
+			throw new QuestionException(QuestionException.LoginInfoError, "登录信息异常，请重新登录");
 		}
 		List<AppTextVoice> recordList = appTextVoiceService.getRecordByFollow(uid, orderBy, page, pageSize);
 		JsonArray retJa = new JsonArray();

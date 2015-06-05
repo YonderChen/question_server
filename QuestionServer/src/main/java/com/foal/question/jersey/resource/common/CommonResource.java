@@ -228,7 +228,17 @@ public class CommonResource {
 			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
 			return ret.toJson();
 		}
-		ret = appUserService.editPassword(uid, oldPassword, newPassword);
+		AppUser appUser = appUserService.getAppUserById(uid);
+		if (appUser == null) {
+			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
+			return ret.toJson();
+		}
+		boolean isSuccess = appUserService.editPassword(appUser, oldPassword, newPassword);
+		if (isSuccess) {
+			ret.setResult(RetCode.Success);
+		} else {
+			ret.setResult(RetCode.Faild, "旧密码错误");
+		}
 		return ret.toJson();
 	}
 	

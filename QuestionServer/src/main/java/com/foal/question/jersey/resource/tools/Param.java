@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.log4j.Logger;
 
 import com.foal.question.config.Constant;
 import com.foal.question.config.QuestionException;
@@ -26,6 +27,9 @@ import com.google.gson.JsonObject;
  *
  */
 public class Param {
+	
+	private static final Logger logger = Logger.getLogger(Param.class);
+	
 	private JsonObject paramJo;
 	private short command;
 	private HttpServletRequest request;
@@ -39,9 +43,15 @@ public class Param {
 		String sign = param.getField(DataKeys.Sign, "");
 		String version = param.getField(DataKeys.Version, "");
 		short command = NumberUtils.toShort(param.getField(DataKeys.Command, ""), (short)0);
-		String newSign = root + "&" + Constant.KEY_OF_SIGN;
-		if (!sign.equals(MD5Tools.hashToMD5(newSign))) {
-			throw new QuestionException(QuestionException.UnKnowError, "签名错误，sign:" + MD5Tools.hashToMD5(newSign) );
+		String signStr = command + root + version + Constant.KEY_OF_SIGN;
+		String newSign = MD5Tools.hashToMD5(signStr);
+		if (!sign.equals(newSign)) {
+			logger.error("command:" + command);
+			logger.error("root:" + root);
+			logger.error("sign:" + sign);
+			logger.error("version:" + version);
+			logger.error("client ip:" + request.getRemoteAddr());
+			throw new QuestionException(QuestionException.SignError, "签名错误，正确sign:" + newSign );
 		}
 		List<FileItem> fileItemList = param.getFileItemList();
 		return new Param(command, request, GsonTools.parseJsonObject(root), version, fileItemList);

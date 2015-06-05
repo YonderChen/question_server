@@ -1,5 +1,6 @@
 package com.foal.question.jersey.command.textvoice;
 
+import com.foal.question.config.QuestionException;
 import com.foal.question.jersey.command.ICommand;
 import com.foal.question.jersey.resource.tools.Param;
 import com.foal.question.jersey.resource.tools.ResultMap;
@@ -21,14 +22,14 @@ public class TextVoiceDelCommentCommand implements ICommand {
 		int commentId = param.getInt("commentId");
 		AppUser user = appTextVoiceService.getAppUserService().getAppUserById(uid);
 		if (user == null) {
-			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
+			throw new QuestionException(QuestionException.LoginInfoError, "登录信息异常，请重新登录");
 		}
 		AppTextVoiceComment comment = appTextVoiceService.getRecordComment(commentId);
 		if (comment == null) {
-			ret.setResult(RetCode.Faild, "要删除的评论不存在");
+			throw new QuestionException(QuestionException.RecordNotExist, "要删除的评论不存在");
 		}
 		if (!StringTools.equalsStr(comment.getOwner().getUid(),uid)) {
-			ret.setResult(RetCode.Faild, "该评论不属于您");
+			throw new QuestionException(QuestionException.RecordIsNotYours, "该评论不属于您");
 		}
 		appTextVoiceService.delRecordComment(comment);
 		ret.setResult(RetCode.Success);

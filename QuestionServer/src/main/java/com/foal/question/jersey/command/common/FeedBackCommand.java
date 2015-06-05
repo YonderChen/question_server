@@ -26,13 +26,13 @@ public class FeedBackCommand implements ICommand {
 		String content = param.get("content");
 		String uid = param.get("uid");
 		if (StringTools.isBlank(content)) {
-			throw new QuestionException(QuestionException.UnKnowError, "反馈内容不能为空");
+			throw new QuestionException(QuestionException.ContentIsEmpty, "反馈内容不能为空");
 		}
 		if (appUserService.getAppUserById(uid) == null) {
-			throw new QuestionException(QuestionException.UnKnowError, "登录信息异常，请重新登录");
+			throw new QuestionException(QuestionException.LoginInfoError, "登录信息异常，请重新登录");
 		}
 		if(riskWordService.containRiskWord(content)) {
-			throw new QuestionException(QuestionException.UnKnowError, "您输入的文字包含敏感内容");
+			throw new QuestionException(QuestionException.ContentHasRiskWord, "您输入的文字包含敏感内容");
 		}
 		AppFeedback feedback = new AppFeedback();
 		feedback.setContent(content);

@@ -1,6 +1,5 @@
 package com.foal.question.config;
 
-import com.foal.question.jersey.resource.tools.APIConstants.RetCode;
 
 public class QuestionException extends IllegalStateException {
 
@@ -54,8 +53,21 @@ public class QuestionException extends IllegalStateException {
 	}
 
 	/**
-	 * 返回报文的状态码常量 1000以上为固定意义的常量
+	 * 返回报文异常码
 	 */
-	public static final int UnKnowError = RetCode.Faild;// 未知错误
-
+	public static final int UnKnowError = -1;// 未知错误
+	public static final int CommandNotFound = -2;// 没有找到命令
+	public static final int SignError = -3;// 数字签名错误
+	public static final int LoginInfoError = -4;// 登录信息异常
+	public static final int NickNameError = -5;// 昵称不符合规范
+	public static final int ContentIsEmpty = -6;// 内容为空
+	public static final int ContentHasRiskWord = -7;// 内容含有敏感词汇
+	public static final int AccountIsSilenced = -8;// 帐号被禁言
+	public static final int AccountIsFreeze = -9;// 帐号被封
+	public static final int UsernameError = -10;// 用户名不规范
+	public static final int UserNotExist = -11;// 用户不存在
+	public static final int PasswordError = -12;// 密码错误
+	public static final int PasswordIsEmpty = -13;// 密码为空
+	public static final int RecordNotExist = -14;// 记录不存在
+	public static final int RecordIsNotYours = -15;// 记录不属于你
 }

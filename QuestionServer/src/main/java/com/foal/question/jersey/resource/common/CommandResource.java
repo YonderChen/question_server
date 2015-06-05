@@ -16,7 +16,6 @@ import com.foal.question.jersey.command.CommandRouter;
 import com.foal.question.jersey.command.ICommand;
 import com.foal.question.jersey.resource.tools.Param;
 import com.foal.question.jersey.resource.tools.ResultMap;
-import com.foal.question.jersey.resource.tools.APIConstants.RetCode;
 
 @Component
 @Path("/yjn")
@@ -35,17 +34,17 @@ public class CommandResource {
 			short command = param.getCommand();
 			ICommand service = CommandRouter.getHandlerService(command);
 			if (service == null) {
-				throw new QuestionException(QuestionException.UnKnowError);
+				throw new QuestionException(QuestionException.CommandNotFound, "没有找到命令");
 			}
 			ret = service.handle(param);
 		} catch (QuestionException e) {
 			logger.error("QuestionException", e);
 			ret = ResultMap.getResultMap();
-			ret.setResult(RetCode.Faild, "未知错误");
+			ret.setResult(e.getStatusCode(), e.getStatusMsg());
 		} catch (Exception e) {
 			logger.error("其他异常", e);
 			ret = ResultMap.getResultMap();
-			ret.setResult(RetCode.Faild, "未知错误");
+			ret.setResult(QuestionException.UnKnowError, "未知错误");
 		}
 		return ret.toJson();
 	}

@@ -11,8 +11,6 @@ import com.foal.question.bean.AppUserBean;
 import com.foal.question.bean.PageBean;
 import com.foal.question.config.Constant;
 import com.foal.question.dao.DaoSupport;
-import com.foal.question.jersey.resource.tools.ResultMap;
-import com.foal.question.jersey.resource.tools.APIConstants.RetCode;
 import com.foal.question.pojo.AppTextImage;
 import com.foal.question.pojo.AppUser;
 import com.foal.question.pojo.AppUserFollow;
@@ -56,24 +54,15 @@ public class AppUserService extends DaoSupport {
 		return list.get(0);
 	}
 	
-	public ResultMap editPassword(String uid, String oldPassword, String newPassword) {
-		ResultMap ret = ResultMap.getResultMap();
-		AppUser appUser = getAppUserById(uid);
-		if (appUser == null) {
-			ret.setResult(RetCode.Faild, "uid不正确");
-			return ret;
-		} else {
-			if(!appUser.getPassword().equals(MD5Tools.hashToMD5(oldPassword + Constant.PASSWORD_SECRET_KEY))) {
-				ret.setResult(RetCode.Faild, "旧密码不正确");
-				return ret;
-			}
-			appUser.setPassword(MD5Tools.hashToMD5(newPassword + Constant.PASSWORD_SECRET_KEY));
-			Date now = new Date();
-			appUser.setUpdateAt(now);
-			this.hibernateDao.update(appUser);
-			ret.setResult(RetCode.Success);
-			return ret;
+	public boolean editPassword(AppUser appUser, String oldPassword, String newPassword) {
+		if(!appUser.getPassword().equals(MD5Tools.hashToMD5(oldPassword + Constant.PASSWORD_SECRET_KEY))) {
+			return false;
 		}
+		appUser.setPassword(MD5Tools.hashToMD5(newPassword + Constant.PASSWORD_SECRET_KEY));
+		Date now = new Date();
+		appUser.setUpdateAt(now);
+		this.hibernateDao.update(appUser);
+		return true;
 	}
 
 	public AppUser getAppUserByOpenId(String openId, int userType) {

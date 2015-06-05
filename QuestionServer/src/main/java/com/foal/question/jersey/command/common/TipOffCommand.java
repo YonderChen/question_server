@@ -26,10 +26,10 @@ public class TipOffCommand implements ICommand {
 		String content = param.get("content");
 		String uid = param.get("uid");
 		if (StringTools.isBlank(content)) {
-			throw new QuestionException(QuestionException.UnKnowError, "举报内容不能为空");
+			throw new QuestionException(QuestionException.ContentIsEmpty, "举报内容不能为空");
 		}
 		if (riskWordService.containRiskWord(content)) {
-			throw new QuestionException(QuestionException.UnKnowError, "您输入的文字包含敏感内容");
+			throw new QuestionException(QuestionException.ContentHasRiskWord, "您输入的文字包含敏感内容");
 		}
 		AppTipOff tipOff = new AppTipOff();
 		tipOff.setType(type);
