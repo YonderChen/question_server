@@ -14,6 +14,7 @@ public interface ICommand {
 	public static final short EditUserInfo = 10006;//编辑用户信息
 	public static final short TipOff = 10007;//举报
 	public static final short FeedBack = 10008;//反馈
+	public static final short GetUserinfo = 10009;//获取用户信息
 	
 	public static final short AddFollow = 10101;//添加关注
 	public static final short DelFollow = 10102;//取消关注

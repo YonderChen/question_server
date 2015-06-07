@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import com.foal.question.jersey.command.common.EditPasswordCommand;
 import com.foal.question.jersey.command.common.EditUserInfoCommand;
 import com.foal.question.jersey.command.common.FeedBackCommand;
+import com.foal.question.jersey.command.common.GetUserinfoCommand;
 import com.foal.question.jersey.command.common.GetVersionCommand;
 import com.foal.question.jersey.command.common.LoginCommand;
 import com.foal.question.jersey.command.common.LoginLocalCommand;
@@ -100,6 +101,7 @@ public class CommandRouter {
     	register(ICommand.EditUserInfo, new EditUserInfoCommand());
     	register(ICommand.TipOff, new TipOffCommand());
     	register(ICommand.FeedBack, new FeedBackCommand());
+    	register(ICommand.GetUserinfo, new GetUserinfoCommand());
     	
     	register(ICommand.AddFollow, new AddFollowCommand());
     	register(ICommand.DelFollow, new DelFollowCommand());

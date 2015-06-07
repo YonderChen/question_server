@@ -5,9 +5,11 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
@@ -346,4 +348,25 @@ public class CommonResource {
 		ret.setResult(RetCode.Success);
 		return ret.toJson();
 	}
+	
+	@GET
+	@Path("/get_userinfo")
+	@Produces( { MediaType.TEXT_HTML })
+	public String getUserinfo(@QueryParam(value = "uid") String uid, @QueryParam(value = "target_uid") String targetUid) {
+		ResultMap ret = ResultMap.getResultMap();
+		if (StringTools.isBlank(targetUid)) {
+			ret.setResult(RetCode.Faild, "目标用户uid不能为空");
+			return ret.toJson();
+		}
+		AppUser targetUser = appUserService.getAppUserById(targetUid);
+		if (targetUser == null) {
+			ret.setResult(RetCode.Faild, "目标用户不存在");
+			return ret.toJson();
+		}
+		ret.add("userinfo", targetUser.toJson());
+		ret.add("relation", appUserService.getRelation(uid, targetUid));
+		ret.setResult(RetCode.Success);
+		return ret.toJson();
+	}
+	
 }

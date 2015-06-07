@@ -137,6 +137,28 @@ public class AppUserService extends DaoSupport {
 		return getFollow(uid, targetUid) != null;
 	}
 	/**
+	 * 获取用户关系
+	 * @param uid
+	 * @param targetUid
+	 * @return
+	 */
+	public int getRelation(String uid, String targetUid) {
+		if (StringTools.isBlank(uid)) {
+			return AppUser.Relation.None;
+		}
+		boolean hasFollow = hasFollow(uid, targetUid);
+		boolean hasBeFollowed = hasFollow(targetUid, uid);
+		if (hasFollow && hasBeFollowed) {
+			return AppUser.Relation.Friend;
+		} else if (hasFollow && !hasBeFollowed) {
+			return AppUser.Relation.Follow;
+		} else if (!hasFollow && hasBeFollowed) {
+			return AppUser.Relation.BeFollowed;
+		} else {
+			return AppUser.Relation.None;
+		}
+	}
+	/**
 	 * 关注某个用户
 	 * @param follower
 	 * @param owner

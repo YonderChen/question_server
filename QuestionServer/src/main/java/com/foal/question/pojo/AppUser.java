@@ -47,8 +47,15 @@ public class AppUser implements Serializable{
 	}
 	
 	public static class UserType {
-		public static final int Thrid = 0;
-		public static final int Local = 1;
+		public static final int Thrid = 0;//第三方账户
+		public static final int Local = 1;//本地账户
+	}
+	
+	public static class Relation {
+		public static final int None = 0;//没有关系
+		public static final int Follow = 1;//已关注此人
+		public static final int BeFollowed = 2;//已被此人关注
+		public static final int Friend = 3;//相互关注
 	}
 
 	@GenericGenerator(name = "generator", strategy = "uuid")
@@ -231,6 +238,8 @@ public class AppUser implements Serializable{
 		jo.remove("openId");
 		jo.remove("createTime");
 		jo.remove("updateAt");
+		jo.remove("password");
+		jo.remove("lastLoginIp");
 		return jo;
 	}
 }
