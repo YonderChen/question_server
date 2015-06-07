@@ -63,12 +63,16 @@ public class CommonResource {
 		String versionNew = systemParamService.getSystemParam("client_version").getValue();
 		ret.setResult(RetCode.Success);
 		if (!versionNew.equals(version)) {
-			ret.add("update", true);
+			ret.add("update", 0);
+			ret.add("need_update", 1);
 			ret.add("version", versionNew);
 			String versionInfo = systemParamService.getSystemParam("client_version_info").getValue();
 			ret.add("version_info", versionInfo);
 		} else {
-			ret.add("update", false);
+			ret.add("update", 1);
+			String versionInfo = systemParamService.getSystemParam("client_version_info").getValue();
+			ret.add("version_info", versionInfo);
+			ret.add("need_update", 0);
 		}
 		return ret.toJson();
 	}

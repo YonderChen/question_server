@@ -169,7 +169,7 @@ h2{font-weight:normal;}
 	line-height: 25px;
 	text-align: center;
 	background: url(../images/loginbg2.png) repeat-x;
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 	width: 100%;
 	color: #0b3a58;
