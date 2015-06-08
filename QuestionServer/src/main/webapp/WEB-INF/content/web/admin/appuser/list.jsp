@@ -5,7 +5,7 @@
 </s:if>
 <s:else>
 
-                        <table style="width: 1250px" class="tablelist">
+                        <table style="min-width: 1250px" class="tablelist">
 				<thead>
 					<tr>
 						<th width="10%">
