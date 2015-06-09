@@ -21,18 +21,24 @@ import com.foal.question.config.Constant;
 import com.google.gson.JsonObject;
 
 @Entity
-@Table(name = "app_text_voice_comment")
+@Table(name = "app_comment")
 @Cache(region = "yonderHibernateCache", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class AppTextVoiceComment implements Serializable{
+public class AppComment implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 9132273889559563198L;
 	private int id;
-	private AppTextVoice record;
+	private int type;
+	private int recordId;
 	private AppUser owner;
 	private String content;
 	private Date createTime;
+	
+	public static class Type {
+		public static final int TextImageComment = 0;
+		public static final int TextVoiceComment = 1;
+	}
 
 	@GenericGenerator(name = "generator", strategy = "native")
 	@Id
@@ -45,13 +51,19 @@ public class AppTextVoiceComment implements Serializable{
 		this.id = id;
 	}
 	@Index(name = "record_id_index")
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "record_id_")
-	public AppTextVoice getRecord() {
-		return record;
+	@Column(name = "record_id_")
+	public int getRecordId() {
+		return recordId;
 	}
-	public void setRecord(AppTextVoice record) {
-		this.record = record;
+	public void setRecordId(int recordId) {
+		this.recordId = recordId;
+	}
+	@Column(name = "type_")
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
 	}
 	@Index(name = "owner_id_index")
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -85,7 +97,8 @@ public class AppTextVoiceComment implements Serializable{
 		result = prime * result + ((createTime == null) ? 0 : createTime.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
-		result = prime * result + ((record == null) ? 0 : record.hashCode());
+		result = prime * result + recordId;
+		result = prime * result + type;
 		return result;
 	}
 	@Override
@@ -96,7 +109,7 @@ public class AppTextVoiceComment implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AppTextVoiceComment other = (AppTextVoiceComment) obj;
+		AppComment other = (AppComment) obj;
 		if (content == null) {
 			if (other.content != null)
 				return false;
@@ -114,10 +127,9 @@ public class AppTextVoiceComment implements Serializable{
 				return false;
 		} else if (!owner.equals(other.owner))
 			return false;
-		if (record == null) {
-			if (other.record != null)
-				return false;
-		} else if (!record.equals(other.record))
+		if (recordId != other.recordId)
+			return false;
+		if (type != other.type)
 			return false;
 		return true;
 	}
@@ -125,6 +137,8 @@ public class AppTextVoiceComment implements Serializable{
 	public JsonObject toJson() {
 		JsonObject jo = new JsonObject();
 		jo.addProperty("id", id);
+		jo.addProperty("type", type);
+		jo.addProperty("recordId", recordId);
 		jo.addProperty("ownerId", owner.getUid());
 		if (owner.getUserType() == AppUser.UserType.Local) {
 			jo.addProperty("ownerFigureurl", Constant.CONTEXT_WEB_URL + owner.getFigureurl());

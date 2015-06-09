@@ -18,9 +18,10 @@ CREATE TABLE `app_user_follow` (
 -- ----------------------------
 -- Table structure for app_text_image_comment
 -- ----------------------------
-DROP TABLE IF EXISTS `app_text_image_comment`;
-CREATE TABLE `app_text_image_comment` (
+DROP TABLE IF EXISTS `app_comment`;
+CREATE TABLE `app_comment` (
   `id_` int(11) NOT NULL AUTO_INCREMENT COMMENT '评论id',
+  `type_` int(11) NOT NULL COMMENT '评论类型。0：图片，1：声音',
   `record_id_` int(11) NOT NULL COMMENT '记录id',
   `owner_id_` varchar(50) NOT NULL COMMENT '评论人id',
   `content_` varchar(500) NOT NULL COMMENT '评论内容',
@@ -30,17 +31,3 @@ CREATE TABLE `app_text_image_comment` (
   KEY `owner_id_index` (`owner_id_`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Table structure for app_text_voice_comment
--- ----------------------------
-DROP TABLE IF EXISTS `app_text_voice_comment`;
-CREATE TABLE `app_text_voice_comment` (
-  `id_` int(11) NOT NULL AUTO_INCREMENT COMMENT '评论id',
-  `record_id_` int(11) NOT NULL COMMENT '记录id',
-  `owner_id_` varchar(50) NOT NULL COMMENT '评论人id',
-  `content_` varchar(500) NOT NULL COMMENT '评论内容',
-  `create_time_` datetime NOT NULL COMMENT '评论时间',
-  PRIMARY KEY (`id_`),
-  KEY `record_id_index` (`record_id_`) USING BTREE,
-  KEY `owner_id_index` (`owner_id_`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;

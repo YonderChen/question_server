@@ -13,6 +13,24 @@
 			body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {margin:0;padding:0;}
 		</style>
 		<link type="text/css" href="style/style.css" rel="stylesheet" />
+		<script type="text/javascript">
+			var u = navigator.userAgent, app = navigator.appVersion;
+			var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端
+			var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+			var isMicroMessenger = u.indexOf('MicroMessenger') > -1; //微信中打开
+			function linkToAppDownloadPage(){
+				if(isMicroMessenger){
+					location.href='http://a.app.qq.com/o/simple.jsp?pkgname=com.example.yujianni&g_f=991653'
+				} else {
+					if(isAndroid){
+						location.href='http://a.app.qq.com/o/simple.jsp?pkgname=com.example.yujianni&g_f=991653';
+					}
+					else{
+						location.href='https://itunes.apple.com/us/app/yu-jian-ni/id983458853?l=zh&ls=1&mt=8';
+					}
+				}
+			}
+		</script>
 	</head>
 	<body>
 		<div style="width: 100%; min-width: 1200px; height: 700px; background-image: url('images/yjn/bkg.jpg');background-repeat: repeat-x; position: absolute; display: block; z-index: -1;">
@@ -23,12 +41,12 @@
 					<img alt="图标" src="images/yjn/logo_2.png">
 				</div>
 				<div style="padding-top: 100px;">
-					<img width="150px" height="150px" alt="appstore" src="images/yjn/yjn_appstore.png">
-					<img style="padding-left: 100px;" width="150px" height="150px" alt="应用宝" src="images/yjn/yjn_yingyongbao.png">
+					<img width="150px" onclick="javascript:linkToAppDownloadPage()" height="150px" alt="appstore" src="images/yjn/yjn_appstore.png">
+					<img style="padding-left: 100px;" onclick="javascript:linkToAppDownloadPage()" width="150px" height="150px" alt="应用宝" src="images/yjn/yjn_yingyongbao.png">
 				</div>
 				<div>
-					<img alt="ios" src="images/yjn/text_ios.png">
-					<img style="padding-left: 100px;" alt="android" src="images/yjn/text_android.png">
+					<img alt="ios" onclick="javascript:linkToAppDownloadPage()" src="images/yjn/text_ios.png">
+					<img style="padding-left: 100px;" onclick="javascript:linkToAppDownloadPage()" src="images/yjn/text_android.png">
 				</div>
 			</div>
 			<div style="float: left; padding-left: 100px;">

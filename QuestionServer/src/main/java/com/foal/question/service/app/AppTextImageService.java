@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import com.foal.question.bean.AppTextImageBean;
 import com.foal.question.bean.PageBean;
 import com.foal.question.dao.DaoSupport;
+import com.foal.question.pojo.AppComment;
 import com.foal.question.pojo.AppTextImage;
-import com.foal.question.pojo.AppTextImageComment;
 import com.foal.question.pojo.AppTextImagePraiseLog;
 import com.foal.question.pojo.AppUser;
 import com.foal.question.util.StringTools;
@@ -26,6 +26,9 @@ public class AppTextImageService extends DaoSupport {
 
 	@Autowired
 	private AppUserService appUserService;
+	
+	@Autowired
+	private AppCommentService appCommentService;
 	
 	public AppUserService getAppUserService() {
 		return appUserService;
@@ -176,36 +179,9 @@ public class AppTextImageService extends DaoSupport {
 		List list = this.hibernateDao.queryList(queryHql, appTextImageBean.getPage(), appTextImageBean.getPageSize(), paramMap);
 		return new PageBean(list, allRow, appTextImageBean.getPage(), appTextImageBean.getPageSize());
 	}
-	
-	public void addComment(AppUser owner, AppTextImage record, String content) {
-		AppTextImageComment comment = new AppTextImageComment();
-		comment.setOwner(owner);
-		comment.setRecord(record);
-		comment.setContent(content);
-		comment.setCreateTime(new Date());
-		this.hibernateDao.save(comment);
-	}
-	
-	public List<AppTextImageComment> getRecordComment(int recordId, int page, int pageSize) {
-		String queryHql = "from AppTextImageComment as v where v.record.id = ? order by v.createTime desc";
-		return this.hibernateDao.queryList(queryHql, page, pageSize, recordId);
-	}
-	
-	public int getRecordCommentCount(int recordId) {
-		String queryHql = "select count(*) from AppTextImageComment as r where r.record.id = ?";
-		return this.hibernateDao.getAllRow(queryHql, recordId);
-	}
-	
-	public AppTextImageComment getRecordComment(int commentId) {
-		return this.hibernateDao.get(AppTextImageComment.class, commentId);
-	}
-	
-	public void delRecordComment(AppTextImageComment comment) {
-		this.hibernateDao.delete(comment);
-	}
 
 	public JsonObject getRetRecordJson(AppTextImage record, String uid) {
 		boolean hasPraised = hasPraised(record.getId(), uid);
-		return record.toJson(hasPraised, getRecordCommentCount(record.getId()));
+		return record.toJson(hasPraised, appCommentService.getRecordCommentCount(record.getId(), AppComment.Type.TextImageComment));
 	}
 }

@@ -21,6 +21,10 @@ public interface ICommand {
 	public static final short ListFriend = 10103;//加载相互关注（好友）列表
 	public static final short ListFollowers = 10104;//加载关注我的用户列表
 	public static final short ListMyFollow = 10105;//加载我关注的用户列表
+
+	public static final short AddComment = 10201;//添加评论
+	public static final short DelComment = 10202;//删除评论
+	public static final short LoadComment = 10203;//加载评论
 	
 	public static final short TextImageAdd = 20001;//添加记录
 	public static final short TextImageLoadMy = 20002;//加载我的记录
@@ -31,9 +35,6 @@ public interface ICommand {
 	public static final short TextImageShare = 20007;//分享
 	public static final short TextImageLoadPraiseUser = 20008;//加载点赞用户
 	public static final short TextImageLoadByFollow = 20009;//根据关注加载
-	public static final short TextImageAddComment = 20010;//添加评论
-	public static final short TextImageDelComment = 20011;//删除评论
-	public static final short TextImageLoadComment = 20012;//加载评论
 
 	public static final short TextVoiceAdd = 30001;//添加记录
 	public static final short TextVoiceLoadMy = 30002;//加载我的记录
@@ -44,7 +45,4 @@ public interface ICommand {
 	public static final short TextVoiceShare = 30007;//分享
 	public static final short TextVoiceLoadPraiseUser = 30008;//加载点赞用户
 	public static final short TextVoiceLoadByFollow = 30009;//根据关注加载
-	public static final short TextVoiceAddComment = 30010;//添加评论
-	public static final short TextVoiceDelComment = 30011;//删除评论
-	public static final short TextVoiceLoadComment = 30012;//加载评论
 }

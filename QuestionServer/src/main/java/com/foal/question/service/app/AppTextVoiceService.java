@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import com.foal.question.bean.AppTextVoiceBean;
 import com.foal.question.bean.PageBean;
 import com.foal.question.dao.DaoSupport;
+import com.foal.question.pojo.AppComment;
 import com.foal.question.pojo.AppTextVoice;
-import com.foal.question.pojo.AppTextVoiceComment;
 import com.foal.question.pojo.AppTextVoicePraiseLog;
 import com.foal.question.pojo.AppUser;
 import com.foal.question.util.StringTools;
@@ -26,6 +26,9 @@ public class AppTextVoiceService extends DaoSupport {
 
 	@Autowired
 	private AppUserService appUserService;
+	
+	@Autowired
+	private AppCommentService appCommentService;
 	
 	public AppUserService getAppUserService() {
 		return appUserService;
@@ -177,35 +180,8 @@ public class AppTextVoiceService extends DaoSupport {
 		return new PageBean(list, allRow, appTextVoiceBean.getPage(), appTextVoiceBean.getPageSize());
 	}
 	
-	public void addComment(AppUser owner, AppTextVoice record, String content) {
-		AppTextVoiceComment comment = new AppTextVoiceComment();
-		comment.setOwner(owner);
-		comment.setRecord(record);
-		comment.setContent(content);
-		comment.setCreateTime(new Date());
-		this.hibernateDao.save(comment);
-	}
-	
-	public List<AppTextVoiceComment> getRecordComment(int recordId, int page, int pageSize) {
-		String queryHql = "from AppTextVoiceComment v where v.record.id = ? order by v.createTime desc";
-		return this.hibernateDao.queryList(queryHql, page, pageSize, recordId);
-	}
-	
-	public int getRecordCommentCount(int recordId) {
-		String queryHql = "select count(*) from AppTextVoiceComment as r where r.record.id = ?";
-		return this.hibernateDao.getAllRow(queryHql, recordId);
-	}
-	
-	public AppTextVoiceComment getRecordComment(int commentId) {
-		return this.hibernateDao.get(AppTextVoiceComment.class, commentId);
-	}
-	
-	public void delRecordComment(AppTextVoiceComment comment) {
-		this.hibernateDao.delete(comment);
-	}
-
 	public JsonObject getRetRecordJson(AppTextVoice record, String uid) {
 		boolean hasPraised = hasPraised(record.getId(), uid);
-		return record.toJson(hasPraised, getRecordCommentCount(record.getId()));
+		return record.toJson(hasPraised, appCommentService.getRecordCommentCount(record.getId(), AppComment.Type.TextImageComment));
 	}
 }

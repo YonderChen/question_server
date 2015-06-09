@@ -9,6 +9,9 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import com.foal.question.jersey.command.comment.AddCommentCommand;
+import com.foal.question.jersey.command.comment.DelCommentCommand;
+import com.foal.question.jersey.command.comment.LoadCommentCommand;
 import com.foal.question.jersey.command.common.EditPasswordCommand;
 import com.foal.question.jersey.command.common.EditUserInfoCommand;
 import com.foal.question.jersey.command.common.FeedBackCommand;
@@ -24,11 +27,8 @@ import com.foal.question.jersey.command.follow.ListFollowersCommand;
 import com.foal.question.jersey.command.follow.ListFriendCommand;
 import com.foal.question.jersey.command.follow.ListMyFollowCommand;
 import com.foal.question.jersey.command.textimage.TextImageAddCommand;
-import com.foal.question.jersey.command.textimage.TextImageAddCommentCommand;
 import com.foal.question.jersey.command.textimage.TextImageDelCommand;
-import com.foal.question.jersey.command.textimage.TextImageDelCommentCommand;
 import com.foal.question.jersey.command.textimage.TextImageLoadByFollowCommand;
-import com.foal.question.jersey.command.textimage.TextImageLoadCommentCommand;
 import com.foal.question.jersey.command.textimage.TextImageLoadMyCommand;
 import com.foal.question.jersey.command.textimage.TextImageLoadOthersCommand;
 import com.foal.question.jersey.command.textimage.TextImageLoadPraiseUserCommand;
@@ -36,11 +36,8 @@ import com.foal.question.jersey.command.textimage.TextImageLoadPublicCommand;
 import com.foal.question.jersey.command.textimage.TextImagePraiseCommand;
 import com.foal.question.jersey.command.textimage.TextImageShareCommand;
 import com.foal.question.jersey.command.textvoice.TextVoiceAddCommand;
-import com.foal.question.jersey.command.textvoice.TextVoiceAddCommentCommand;
 import com.foal.question.jersey.command.textvoice.TextVoiceDelCommand;
-import com.foal.question.jersey.command.textvoice.TextVoiceDelCommentCommand;
 import com.foal.question.jersey.command.textvoice.TextVoiceLoadByFollowCommand;
-import com.foal.question.jersey.command.textvoice.TextVoiceLoadCommentCommand;
 import com.foal.question.jersey.command.textvoice.TextVoiceLoadMyCommand;
 import com.foal.question.jersey.command.textvoice.TextVoiceLoadOthersCommand;
 import com.foal.question.jersey.command.textvoice.TextVoiceLoadPraiseUserCommand;
@@ -118,9 +115,6 @@ public class CommandRouter {
     	register(ICommand.TextImageShare, new TextImageShareCommand());
     	register(ICommand.TextImageLoadPraiseUser, new TextImageLoadPraiseUserCommand());
     	register(ICommand.TextImageLoadByFollow, new TextImageLoadByFollowCommand());
-    	register(ICommand.TextImageAddComment, new TextImageAddCommentCommand());
-    	register(ICommand.TextImageDelComment, new TextImageDelCommentCommand());
-    	register(ICommand.TextImageLoadComment, new TextImageLoadCommentCommand());
 
     	register(ICommand.TextVoiceAdd, new TextVoiceAddCommand());
     	register(ICommand.TextVoiceLoadMy, new TextVoiceLoadMyCommand());
@@ -131,8 +125,9 @@ public class CommandRouter {
     	register(ICommand.TextVoiceShare, new TextVoiceShareCommand());
     	register(ICommand.TextVoiceLoadPraiseUser, new TextVoiceLoadPraiseUserCommand());
     	register(ICommand.TextVoiceLoadByFollow, new TextVoiceLoadByFollowCommand());
-    	register(ICommand.TextVoiceAddComment, new TextVoiceAddCommentCommand());
-    	register(ICommand.TextVoiceDelComment, new TextVoiceDelCommentCommand());
-    	register(ICommand.TextVoiceLoadComment, new TextVoiceLoadCommentCommand());
+    	
+    	register(ICommand.AddComment, new AddCommentCommand());
+    	register(ICommand.DelComment, new DelCommentCommand());
+    	register(ICommand.LoadComment, new LoadCommentCommand());
     }
 }

@@ -23,10 +23,11 @@ import com.foal.question.jersey.resource.tools.MultipartFormParam;
 import com.foal.question.jersey.resource.tools.ResourceTools;
 import com.foal.question.jersey.resource.tools.ResultMap;
 import com.foal.question.jersey.resource.tools.APIConstants.RetCode;
+import com.foal.question.pojo.AppComment;
 import com.foal.question.pojo.AppTextVoice;
-import com.foal.question.pojo.AppTextVoiceComment;
 import com.foal.question.pojo.AppUser;
 import com.foal.question.service.RiskWordService;
+import com.foal.question.service.app.AppCommentService;
 import com.foal.question.service.app.AppTextVoiceService;
 import com.foal.question.util.StringTools;
 import com.google.gson.JsonArray;
@@ -45,6 +46,9 @@ public class TextVoiceResource {
 
 	@Autowired
 	AppTextVoiceService appTextVoiceService;
+	
+	@Autowired
+	AppCommentService appCommentService;
 	
 	@Autowired
 	RiskWordService riskWordService;
@@ -179,8 +183,7 @@ public class TextVoiceResource {
 	}
 	
 	private JsonObject getRetRecordJson(AppTextVoice record, String uid) {
-		boolean hasPraised = appTextVoiceService.hasPraised(record.getId(), uid);
-		return record.toJson(hasPraised, appTextVoiceService.getRecordCommentCount(record.getId()));
+		return appTextVoiceService.getRetRecordJson(record, uid);
 	}
 
 	/**
@@ -319,7 +322,7 @@ public class TextVoiceResource {
 	@POST
 	@Path(value = "/add_comment")
 	@Produces( { MediaType.TEXT_HTML })
-	public String addComment(@FormParam(value = "uid") String uid, @FormParam(value = "record_id") int recordId, @FormParam(value = "content") String content) {
+	public String addComment(@FormParam(value = "uid") String uid, @FormParam(value = "type") int type, @FormParam(value = "record_id") int recordId, @FormParam(value = "content") String content) {
 		ResultMap ret = ResultMap.getResultMap();
 		AppUser user = appTextVoiceService.getAppUserService().getAppUserById(uid);
 		if (user == null) {
@@ -331,7 +334,7 @@ public class TextVoiceResource {
 			ret.setResult(RetCode.Faild, "要评论的记录不存在");
 			return ret.toJson();
 		}
-		appTextVoiceService.addComment(user, record, content);
+		appCommentService.addComment(user, type, recordId, content);
 		ret.setResult(RetCode.Success);
 		return ret.toJson();
 	}
@@ -353,7 +356,7 @@ public class TextVoiceResource {
 			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
 			return ret.toJson();
 		}
-		AppTextVoiceComment comment = appTextVoiceService.getRecordComment(commentId);
+		AppComment comment = appCommentService.getRecordComment(commentId);
 		if (comment == null) {
 			ret.setResult(RetCode.Faild, "要删除的评论不存在");
 			return ret.toJson();
@@ -362,7 +365,7 @@ public class TextVoiceResource {
 			ret.setResult(RetCode.Faild, "该评论不属于您");
 			return ret.toJson();
 		}
-		appTextVoiceService.delRecordComment(comment);
+		appCommentService.delRecordComment(comment);
 		ret.setResult(RetCode.Success);
 		return ret.toJson();
 	}
@@ -377,11 +380,11 @@ public class TextVoiceResource {
 	@GET
 	@Path(value = "/load_comment")
 	@Produces( { MediaType.TEXT_HTML })
-	public String loadComment(@QueryParam(value = "record_id") int recordId, @QueryParam(value = "page") int page, @QueryParam(value = "page_size") int pageSize) {
+	public String loadComment(@QueryParam(value = "type") int type, @QueryParam(value = "record_id") int recordId, @QueryParam(value = "page") int page, @QueryParam(value = "page_size") int pageSize) {
 		ResultMap ret = ResultMap.getResultMap();
-		List<AppTextVoiceComment> commentList = appTextVoiceService.getRecordComment(recordId, page, pageSize);
+		List<AppComment> commentList = appCommentService.getRecordComment(type, recordId, page, pageSize);
 		JsonArray retJa = new JsonArray();
-		for (AppTextVoiceComment comment : commentList) {
+		for (AppComment comment : commentList) {
 			retJa.add(comment.toJson());
 		}
 		ret.add("comments", retJa);
