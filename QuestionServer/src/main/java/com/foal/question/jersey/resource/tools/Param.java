@@ -114,6 +114,9 @@ public class Param {
 		}
 		return paramJo.get(key).getAsJsonArray();
 	}
+	public String getUid() {
+		return get("uid", "");
+	}
 	public short getCommand() {
 		return this.command;
 	}

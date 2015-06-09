@@ -16,7 +16,7 @@ public class AddFollowCommand implements ICommand {
 	@Override
 	public ResultMap handle(Param param) {
 		ResultMap ret = ResultMap.getResultMap();
-		String uid = param.get("uid");
+		String uid = param.getUid();
 		String targetUid = param.get("targetUid");
 		AppUser follower = appUserService.getAppUserById(uid);
 		if (follower == null) {

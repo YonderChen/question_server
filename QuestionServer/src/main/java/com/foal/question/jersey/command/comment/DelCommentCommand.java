@@ -20,7 +20,7 @@ public class DelCommentCommand implements ICommand {
 	@Override
 	public ResultMap handle(Param param) throws Exception {
 		ResultMap ret = ResultMap.getResultMap();
-		String uid = param.get("uid", "");
+		String uid = param.getUid();
 		int commentId = param.getInt("commentId");
 		AppUser user = appUserService.getAppUserById(uid);
 		if (user == null) {

@@ -24,7 +24,7 @@ public class FeedBackCommand implements ICommand {
 	public ResultMap handle(Param param) {
 		ResultMap ret = ResultMap.getResultMap();
 		String content = param.get("content");
-		String uid = param.get("uid");
+		String uid = param.getUid();
 		if (StringTools.isBlank(content)) {
 			throw new QuestionException(QuestionException.ContentIsEmpty, "反馈内容不能为空");
 		}

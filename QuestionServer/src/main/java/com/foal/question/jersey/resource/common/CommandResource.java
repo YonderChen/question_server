@@ -16,12 +16,17 @@ import com.foal.question.jersey.command.CommandRouter;
 import com.foal.question.jersey.command.ICommand;
 import com.foal.question.jersey.resource.tools.Param;
 import com.foal.question.jersey.resource.tools.ResultMap;
+import com.foal.question.listener.ServiceLocator;
+import com.foal.question.service.app.AppCommentService;
+import com.foal.question.util.StringTools;
 
 @Component
 @Path("/yjn")
 public class CommandResource {
 
 	private static final Logger logger = Logger.getLogger(CommandResource.class);
+	
+	private AppCommentService appCommentService = ServiceLocator.getBean(AppCommentService.class);
 	
 	@POST
 	@Path("/post")
@@ -37,6 +42,12 @@ public class CommandResource {
 				throw new QuestionException(QuestionException.CommandNotFound, "没有找到命令");
 			}
 			ret = service.handle(param);
+			int notReadCommentNum = 0;
+			String uid = param.getUid();
+			if (StringTools.isNotBlank(uid)) {
+				notReadCommentNum = appCommentService.getNotReadCommentCount(uid);
+			}
+			ret.add("notReadCommentNum", notReadCommentNum);
 		} catch (QuestionException e) {
 			logger.error("QuestionException", e);
 			ret = ResultMap.getResultMap();

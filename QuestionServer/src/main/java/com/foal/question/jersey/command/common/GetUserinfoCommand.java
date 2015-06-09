@@ -17,7 +17,7 @@ public class GetUserinfoCommand implements ICommand {
 	@Override
 	public ResultMap handle(Param param) {
 		ResultMap ret = ResultMap.getResultMap();
-		String uid = param.get("uid");
+		String uid = param.getUid();
 		String targetUid = param.get("targetUid");
 		if (StringTools.isBlank(targetUid)) {
 			throw new QuestionException(QuestionException.UserNotExist, "目标用户不能为空");

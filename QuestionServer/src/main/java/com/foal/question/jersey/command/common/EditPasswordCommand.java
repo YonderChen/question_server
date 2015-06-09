@@ -17,7 +17,7 @@ public class EditPasswordCommand implements ICommand {
 	@Override
 	public ResultMap handle(Param param) {
 		ResultMap ret = ResultMap.getResultMap();
-		String uid = param.get("uid");
+		String uid = param.getUid();
 		String oldPassword = param.get("oldPassword");
 		String newPassword = param.get("newPassword");
 		if (StringTools.isBlank(uid)) {

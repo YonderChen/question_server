@@ -24,7 +24,7 @@ public class TipOffCommand implements ICommand {
 		int type = param.getInt("type");
 		int recordId = param.getInt("recordId");
 		String content = param.get("content");
-		String uid = param.get("uid");
+		String uid = param.getUid();
 		if (StringTools.isBlank(content)) {
 			throw new QuestionException(QuestionException.ContentIsEmpty, "举报内容不能为空");
 		}

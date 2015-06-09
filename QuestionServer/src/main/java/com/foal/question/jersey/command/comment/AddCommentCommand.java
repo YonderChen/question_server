@@ -25,7 +25,7 @@ public class AddCommentCommand implements ICommand {
 	@Override
 	public ResultMap handle(Param param) throws Exception {
 		ResultMap ret = ResultMap.getResultMap();
-		String uid = param.get("uid", "");
+		String uid = param.getUid();
 		int type = param.getInt("type");
 		int recordId = param.getInt("recordId");
 		String content = param.get("content", "");

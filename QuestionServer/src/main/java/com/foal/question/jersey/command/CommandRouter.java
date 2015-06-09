@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import com.foal.question.jersey.command.comment.AddCommentCommand;
 import com.foal.question.jersey.command.comment.DelCommentCommand;
+import com.foal.question.jersey.command.comment.LoadCommentByOwnerCommand;
 import com.foal.question.jersey.command.comment.LoadCommentCommand;
 import com.foal.question.jersey.command.common.EditPasswordCommand;
 import com.foal.question.jersey.command.common.EditUserInfoCommand;
@@ -106,6 +107,11 @@ public class CommandRouter {
     	register(ICommand.ListFollowers, new ListFollowersCommand());
     	register(ICommand.ListMyFollow, new ListMyFollowCommand());
     	
+    	register(ICommand.AddComment, new AddCommentCommand());
+    	register(ICommand.DelComment, new DelCommentCommand());
+    	register(ICommand.LoadComment, new LoadCommentCommand());
+    	register(ICommand.LoadCommentByOwner, new LoadCommentByOwnerCommand());
+    	
     	register(ICommand.TextImageAdd, new TextImageAddCommand());
     	register(ICommand.TextImageLoadMy, new TextImageLoadMyCommand());
     	register(ICommand.TextImageLoadOthers, new TextImageLoadOthersCommand());
@@ -125,9 +131,5 @@ public class CommandRouter {
     	register(ICommand.TextVoiceShare, new TextVoiceShareCommand());
     	register(ICommand.TextVoiceLoadPraiseUser, new TextVoiceLoadPraiseUserCommand());
     	register(ICommand.TextVoiceLoadByFollow, new TextVoiceLoadByFollowCommand());
-    	
-    	register(ICommand.AddComment, new AddCommentCommand());
-    	register(ICommand.DelComment, new DelCommentCommand());
-    	register(ICommand.LoadComment, new LoadCommentCommand());
     }
 }

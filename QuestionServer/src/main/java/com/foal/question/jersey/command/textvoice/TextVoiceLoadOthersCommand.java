@@ -20,7 +20,7 @@ public class TextVoiceLoadOthersCommand implements ICommand {
 	@Override
 	public ResultMap handle(Param param) {
 		ResultMap ret = ResultMap.getResultMap();
-		String uid = param.get("uid");
+		String uid = param.getUid();
 		String targetUid = param.get("targetUid");
 		int orderBy = param.getInt("orderBy");
 		int page = param.getInt("page");

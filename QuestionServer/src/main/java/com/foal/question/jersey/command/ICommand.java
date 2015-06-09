@@ -25,6 +25,7 @@ public interface ICommand {
 	public static final short AddComment = 10201;//添加评论
 	public static final short DelComment = 10202;//删除评论
 	public static final short LoadComment = 10203;//加载评论
+	public static final short LoadCommentByOwner = 10204;//根据用户加载评论
 	
 	public static final short TextImageAdd = 20001;//添加记录
 	public static final short TextImageLoadMy = 20002;//加载我的记录

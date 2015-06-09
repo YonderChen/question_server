@@ -26,8 +26,10 @@ CREATE TABLE `app_comment` (
   `owner_id_` varchar(50) NOT NULL COMMENT '评论人id',
   `content_` varchar(500) NOT NULL COMMENT '评论内容',
   `create_time_` datetime NOT NULL COMMENT '评论时间',
+  `status_` int(11) NOT NULL COMMENT '状态。0：未读，1：已读',
   PRIMARY KEY (`id_`),
   KEY `record_id_index` (`record_id_`) USING BTREE,
-  KEY `owner_id_index` (`owner_id_`) USING BTREE
+  KEY `owner_id_index` (`owner_id_`) USING BTREE,
+  KEY `status_index` (`status_`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

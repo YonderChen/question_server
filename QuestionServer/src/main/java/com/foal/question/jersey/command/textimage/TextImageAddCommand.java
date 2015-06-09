@@ -28,7 +28,7 @@ public class TextImageAddCommand implements ICommand {
 	@Override
 	public ResultMap handle(Param param) throws Exception {
 		ResultMap ret = ResultMap.getResultMap();
-		String uid = param.get("uid", "");
+		String uid = param.getUid();
 		String content = param.get("content", "");
 		AppUser user = appTextImageService.getAppUserService().getAppUserById(uid);
 		if (user == null) {

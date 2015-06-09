@@ -34,10 +34,16 @@ public class AppComment implements Serializable{
 	private AppUser owner;
 	private String content;
 	private Date createTime;
+	private int status;
 	
 	public static class Type {
 		public static final int TextImageComment = 0;
 		public static final int TextVoiceComment = 1;
+	}
+	
+	public static class Status {
+		public static final int NotRead = 0;
+		public static final int Read = 1;
 	}
 
 	@GenericGenerator(name = "generator", strategy = "native")
@@ -88,6 +94,14 @@ public class AppComment implements Serializable{
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+	@Index(name = "status_index")
+	@Column(name = "status_")
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
 	
 	@Override
 	public int hashCode() {
@@ -98,6 +112,7 @@ public class AppComment implements Serializable{
 		result = prime * result + id;
 		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
 		result = prime * result + recordId;
+		result = prime * result + status;
 		result = prime * result + type;
 		return result;
 	}
@@ -129,6 +144,8 @@ public class AppComment implements Serializable{
 			return false;
 		if (recordId != other.recordId)
 			return false;
+		if (status != other.status)
+			return false;
 		if (type != other.type)
 			return false;
 		return true;
@@ -148,6 +165,7 @@ public class AppComment implements Serializable{
 		jo.addProperty("ownerName", owner.getName());
 		jo.addProperty("content", content);
 		jo.addProperty("createTime", createTime.getTime());
+		jo.addProperty("status", status);
 		return jo;
 	}
 }
