@@ -16,7 +16,7 @@ CREATE TABLE `app_user_follow` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for app_text_image_comment
+-- Table structure for app_comment
 -- ----------------------------
 DROP TABLE IF EXISTS `app_comment`;
 CREATE TABLE `app_comment` (

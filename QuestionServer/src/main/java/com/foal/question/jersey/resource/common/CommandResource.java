@@ -9,6 +9,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.foal.question.config.QuestionException;
@@ -16,7 +17,6 @@ import com.foal.question.jersey.command.CommandRouter;
 import com.foal.question.jersey.command.ICommand;
 import com.foal.question.jersey.resource.tools.Param;
 import com.foal.question.jersey.resource.tools.ResultMap;
-import com.foal.question.listener.ServiceLocator;
 import com.foal.question.service.app.AppCommentService;
 import com.foal.question.service.app.AppUserService;
 import com.foal.question.util.StringTools;
@@ -26,10 +26,12 @@ import com.foal.question.util.StringTools;
 public class CommandResource {
 
 	private static final Logger logger = Logger.getLogger(CommandResource.class);
+
+	@Autowired
+	AppCommentService appCommentService;
 	
-	private AppCommentService appCommentService = ServiceLocator.getBean(AppCommentService.class);
-	
-	private AppUserService appUserService = ServiceLocator.getBean(AppUserService.class);
+	@Autowired
+	AppUserService appUserService;
 	
 	@POST
 	@Path("/post")
