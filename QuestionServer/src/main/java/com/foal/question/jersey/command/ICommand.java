@@ -18,14 +18,15 @@ public interface ICommand {
 	
 	public static final short AddFollow = 10101;//添加关注
 	public static final short DelFollow = 10102;//取消关注
-	public static final short ListFriend = 10103;//加载相互关注（好友）列表
-	public static final short ListFollowers = 10104;//加载关注我的用户列表
-	public static final short ListMyFollow = 10105;//加载我关注的用户列表
+	public static final short ListTargetFollow = 10103;//加载指定用户的关注列表
+	public static final short ListTargetFollowers = 10104;//加载关注指定用户的用户列表
+	public static final short LoadMyNewFollowers = 10106;//加载新关注我的用户列表
 
 	public static final short AddComment = 10201;//添加评论
 	public static final short DelComment = 10202;//删除评论
 	public static final short LoadComment = 10203;//加载评论
 	public static final short LoadCommentByOwner = 10204;//根据用户加载评论
+	public static final short ReadComment = 10205;//根据用户加载评论
 	
 	public static final short TextImageAdd = 20001;//添加记录
 	public static final short TextImageLoadMy = 20002;//加载我的记录

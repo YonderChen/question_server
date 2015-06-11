@@ -14,6 +14,7 @@ import com.foal.question.service.RiskWordService;
 import com.foal.question.service.app.AppCommentService;
 import com.foal.question.service.app.AppTextImageService;
 import com.foal.question.service.app.AppTextVoiceService;
+import com.foal.question.util.StringTools;
 
 public class AddCommentCommand implements ICommand {
 
@@ -28,20 +29,34 @@ public class AddCommentCommand implements ICommand {
 		String uid = param.getUid();
 		int type = param.getInt("type");
 		int recordId = param.getInt("recordId");
+		String toUserId = param.get("toUserId", "");
 		String content = param.get("content", "");
 		AppUser user = appTextImageService.getAppUserService().getAppUserById(uid);
 		if (user == null) {
 			throw new QuestionException(QuestionException.LoginInfoError, "登录信息异常，请重新登录");
 		}
+		AppUser toUser = null;
+		if (StringTools.isNotBlank(toUserId)) {
+			toUser = appTextImageService.getAppUserService().getAppUserById(toUserId);
+		}
+		AppUser recordOwner = null;
 		if (type == AppComment.Type.TextImageComment) {
 			AppTextImage record = appTextImageService.getRecord(recordId);
 			if (record == null) {
 				throw new QuestionException(QuestionException.RecordNotExist, "要评论的记录不存在");
 			}
+			recordOwner = record.getOwner();
+			if (toUser == null) {
+				toUser = record.getOwner();
+			}
 		} else if (type == AppComment.Type.TextVoiceComment) {
 			AppTextVoice record = appTextVoiceService.getRecord(recordId);
 			if (record == null) {
 				throw new QuestionException(QuestionException.RecordNotExist, "要评论的记录不存在");
+			}
+			recordOwner = record.getOwner();
+			if (toUser == null) {
+				toUser = record.getOwner();
 			}
 		} else {
 			throw new QuestionException(QuestionException.RecordNotExist, "要评论的记录不存在");
@@ -49,7 +64,7 @@ public class AddCommentCommand implements ICommand {
 		if(riskWordService.containRiskWord(content)) {
 			throw new QuestionException(QuestionException.ContentHasRiskWord, "您输入的文字包含敏感内容");
 		}
-		appCommentService.addComment(user, type, recordId, content);
+		appCommentService.addComment(user, type, recordId, recordOwner, toUser, content);
 		ret.setResult(RetCode.Success);
 		return ret;
 	}

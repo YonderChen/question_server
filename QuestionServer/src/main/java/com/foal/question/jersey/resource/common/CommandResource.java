@@ -18,6 +18,7 @@ import com.foal.question.jersey.resource.tools.Param;
 import com.foal.question.jersey.resource.tools.ResultMap;
 import com.foal.question.listener.ServiceLocator;
 import com.foal.question.service.app.AppCommentService;
+import com.foal.question.service.app.AppUserService;
 import com.foal.question.util.StringTools;
 
 @Component
@@ -27,6 +28,8 @@ public class CommandResource {
 	private static final Logger logger = Logger.getLogger(CommandResource.class);
 	
 	private AppCommentService appCommentService = ServiceLocator.getBean(AppCommentService.class);
+	
+	private AppUserService appUserService = ServiceLocator.getBean(AppUserService.class);
 	
 	@POST
 	@Path("/post")
@@ -43,11 +46,14 @@ public class CommandResource {
 			}
 			ret = service.handle(param);
 			int notReadCommentNum = 0;
+			int myNewFollowerCount = 0;
 			String uid = param.getUid();
 			if (StringTools.isNotBlank(uid)) {
-				notReadCommentNum = appCommentService.getNotReadCommentCount(uid);
+				notReadCommentNum = appCommentService.getNotReadCommentCountByCareUser(uid);
+				myNewFollowerCount = appUserService.getMyNewFollowerCount(uid);
 			}
 			ret.add("notReadCommentNum", notReadCommentNum);
+			ret.add("myNewFollowerCount", myNewFollowerCount);
 		} catch (QuestionException e) {
 			logger.error("QuestionException", e);
 			ret = ResultMap.getResultMap();

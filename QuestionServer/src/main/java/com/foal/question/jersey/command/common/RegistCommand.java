@@ -61,6 +61,7 @@ public class RegistCommand implements ICommand {
 		appUser.setCreateTime(now);
 		appUser.setUpdateAt(now);
 		appUser.setLastLoginIp(param.getRequest().getRemoteAddr());
+		appUser.setLastLoadFollowersTime(now);
 		appUser.setStatus(AppUser.Status.Normal);
 		appUserService.addAppUser(appUser);
 

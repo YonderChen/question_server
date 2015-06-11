@@ -130,6 +130,7 @@ public class CommonResource {
 			appUser.setCreateTime(now);
 			appUser.setUpdateAt(now);
 			appUser.setLastLoginIp(request.getRemoteAddr());
+			appUser.setLastLoadFollowersTime(now);
 			appUser.setStatus(AppUser.Status.Normal);
 			appUserService.addAppUser(appUser);
 			
@@ -204,6 +205,7 @@ public class CommonResource {
 			appUser.setCreateTime(now);
 			appUser.setUpdateAt(now);
 			appUser.setLastLoginIp(request.getRemoteAddr());
+			appUser.setLastLoadFollowersTime(now);
 			appUser.setStatus(AppUser.Status.Normal);
 			appUserService.addAppUser(appUser);
 		} else {

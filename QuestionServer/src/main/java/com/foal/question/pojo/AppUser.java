@@ -26,7 +26,7 @@ public class AppUser implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 313662374271707657L;
+	private static final long serialVersionUID = -6089095898500368983L;
 	private String uid;
 	private int userType;
 	private String openId;
@@ -38,6 +38,7 @@ public class AppUser implements Serializable{
 	private Date createTime;
 	private Date updateAt;
 	private String lastLoginIp;
+	private Date lastLoadFollowersTime;
 	private int status;
 
 	public class Status {
@@ -140,6 +141,13 @@ public class AppUser implements Serializable{
 	public void setLastLoginIp(String lastLoginIp) {
 		this.lastLoginIp = lastLoginIp;
 	}
+	@Column(name = "last_load_followers_time_")
+	public Date getLastLoadFollowersTime() {
+		return lastLoadFollowersTime;
+	}
+	public void setLastLoadFollowersTime(Date lastLoadFollowersTime) {
+		this.lastLoadFollowersTime = lastLoadFollowersTime;
+	}
 	@Column(name = "status_")
 	public int getStatus() {
 		return status;
@@ -147,6 +155,7 @@ public class AppUser implements Serializable{
 	public void setStatus(int status) {
 		this.status = status;
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -154,6 +163,7 @@ public class AppUser implements Serializable{
 		result = prime * result + ((createTime == null) ? 0 : createTime.hashCode());
 		result = prime * result + ((figureurl == null) ? 0 : figureurl.hashCode());
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+		result = prime * result + ((lastLoadFollowersTime == null) ? 0 : lastLoadFollowersTime.hashCode());
 		result = prime * result + ((lastLoginIp == null) ? 0 : lastLoginIp.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((openId == null) ? 0 : openId.hashCode());
@@ -188,6 +198,11 @@ public class AppUser implements Serializable{
 			if (other.gender != null)
 				return false;
 		} else if (!gender.equals(other.gender))
+			return false;
+		if (lastLoadFollowersTime == null) {
+			if (other.lastLoadFollowersTime != null)
+				return false;
+		} else if (!lastLoadFollowersTime.equals(other.lastLoadFollowersTime))
 			return false;
 		if (lastLoginIp == null) {
 			if (other.lastLoginIp != null)

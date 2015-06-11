@@ -163,7 +163,7 @@ public class AppUserService extends DaoSupport {
 	 * @param follower
 	 * @param owner
 	 */
-	public void follow(AppUser follower, AppUser owner) {
+	public void addFollow(AppUser follower, AppUser owner) {
 		AppUserFollow follow = new AppUserFollow();
 		follow.setFollower(follower);
 		follow.setOwner(owner);
@@ -183,7 +183,7 @@ public class AppUserService extends DaoSupport {
 	 * @param follower
 	 * @param owner
 	 */
-	public void cancelFollow(String uid, String targetUid) {
+	public void delFollow(String uid, String targetUid) {
 		AppUserFollow follow = getFollow(uid, targetUid);
 		if (follow != null) {
 			this.hibernateDao.delete(follow);
@@ -204,19 +204,37 @@ public class AppUserService extends DaoSupport {
 		return this.hibernateDao.queryList(queryHql, page, pageSize, ownerId);
 	}
 	/**
-	 * 获取关注自己的用户列表
-	 * @param owner
-	 * @return
+	 * 获取关注某人的用户列表
 	 */
 	public List<AppUserFollow> getFollowsByOwner(String ownerId, int page, int pageSize) {
 		String queryHql = "from AppUserFollow as u where u.owner.uid = ?";
 		List<AppUserFollow> list = this.hibernateDao.queryList(queryHql, page, pageSize, ownerId);
 		return list;
 	}
+
 	/**
-	 * 获取自己关注的用户列表
-	 * @param follower
-	 * @return
+	 * 获取新关注自己的用户列表
+	 */
+	public List<AppUserFollow> updateTimeAndLoadNewFollowsByOwner(String uid, int page, int pageSize) {
+		AppUser user = getAppUserById(uid);
+		String queryHql = "from AppUserFollow as u where u.owner.uid = ? and u.createTime > ?";
+		List<AppUserFollow> list = this.hibernateDao.queryList(queryHql, page, pageSize, uid, user.getLastLoadFollowersTime());
+		user.setLastLoadFollowersTime(new Date());
+		updateAppUser(user);
+		return list;
+	}
+
+	/**
+	 * 获取新关注自己的用户数量
+	 */
+	public int getMyNewFollowerCount(String uid) {
+		AppUser user = getAppUserById(uid);
+		String queryHql = "select count(*) from AppUserFollow as u where u.owner.uid = ? and u.createTime > ?";
+		return this.hibernateDao.getAllRow(queryHql, uid, user.getLastLoadFollowersTime());
+	}
+	
+	/**
+	 * 获取某人关注的用户列表
 	 */
 	public List<AppUserFollow> getFollowsByFollower(String followerId, int page, int pageSize) {
 		String queryHql = "from AppUserFollow as u where u.follower.uid = ?";
@@ -225,8 +243,6 @@ public class AppUserService extends DaoSupport {
 	}
 	/**
 	 * 获取相互关注的（好友）列表
-	 * @param owner
-	 * @return
 	 */
 	public List<AppUserFollow> getFriends(String ownerId, int page, int pageSize) {
 		String queryHql = "from AppUserFollow as u where u.owner.uid = ? and u.status = ?";

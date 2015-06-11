@@ -13,11 +13,13 @@ import com.foal.question.pojo.AppUser;
 @Service(value = "appCommentService")
 public class AppCommentService extends DaoSupport {
 
-	public void addComment(AppUser owner, int type, int recordId, String content) {
+	public void addComment(AppUser owner, int type, int recordId, AppUser recordOwner, AppUser toUser, String content) {
 		AppComment comment = new AppComment();
 		comment.setOwner(owner);
 		comment.setType(type);
 		comment.setRecordId(recordId);
+		comment.setRecordOwner(recordOwner);
+		comment.setToUser(toUser);
 		comment.setContent(content);
 		comment.setCreateTime(new Date());
 		this.hibernateDao.save(comment);
@@ -33,14 +35,19 @@ public class AppCommentService extends DaoSupport {
 		return this.hibernateDao.queryList(queryHql, page, pageSize, ownerId);
 	}
 	
+	public List<AppComment> getRecordCommentByCareUser(String careUserId, int page, int pageSize) {
+		String queryHql = "from AppComment v where v.recordOwner.uid = ? or v.toUser.uid = ? order by v.createTime desc";
+		return this.hibernateDao.queryList(queryHql, page, pageSize, careUserId, careUserId);
+	}
+	
 	public int getRecordCommentCount(int recordId, int type) {
 		String queryHql = "select count(*) from AppComment as r where r.type = ? and r.recordId = ?";
 		return this.hibernateDao.getAllRow(queryHql, type, recordId);
 	}
 	
-	public int getNotReadCommentCount(String ownerId) {
-		String queryHql = "select count(*) from AppComment as r where r.owner.uid = ? and r.status = ?";
-		return this.hibernateDao.getAllRow(queryHql, ownerId, AppComment.Status.NotRead);
+	public int getNotReadCommentCountByCareUser(String careUserId) {
+		String queryHql = "select count(*) from AppComment as r where (r.recordOwner.uid = ? and r.status = ?) or (r.toUser.uid = ? and r.toUserStatus = ?)";
+		return this.hibernateDao.getAllRow(queryHql, careUserId, AppComment.Status.NotRead, careUserId, AppComment.Status.NotRead);
 	}
 	
 	public AppComment getRecordComment(int commentId) {
@@ -49,5 +56,9 @@ public class AppCommentService extends DaoSupport {
 	
 	public void delRecordComment(AppComment comment) {
 		this.hibernateDao.delete(comment);
+	}
+	
+	public void updateRecordComment(AppComment comment) {
+		this.hibernateDao.update(comment);
 	}
 }

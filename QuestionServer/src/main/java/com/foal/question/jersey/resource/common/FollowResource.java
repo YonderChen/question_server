@@ -58,7 +58,7 @@ public class FollowResource {
 			return ret.toJson();
 		}
 		if (!appUserService.hasFollow(uid, targetUid)) {
-			appUserService.follow(follower, owner);
+			appUserService.addFollow(follower, owner);
 		}
 		ret.setResult(RetCode.Success);
 		return ret.toJson();
@@ -79,7 +79,7 @@ public class FollowResource {
 			ret.setResult(RetCode.Faild, "登录信息异常，请重新登录");
 			return ret.toJson();
 		}
-		appUserService.cancelFollow(uid, targetUid);
+		appUserService.delFollow(uid, targetUid);
 		ret.setResult(RetCode.Success);
 		return ret.toJson();
 	}

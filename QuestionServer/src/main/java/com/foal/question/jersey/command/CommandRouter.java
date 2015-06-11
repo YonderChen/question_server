@@ -13,6 +13,7 @@ import com.foal.question.jersey.command.comment.AddCommentCommand;
 import com.foal.question.jersey.command.comment.DelCommentCommand;
 import com.foal.question.jersey.command.comment.LoadCommentByOwnerCommand;
 import com.foal.question.jersey.command.comment.LoadCommentCommand;
+import com.foal.question.jersey.command.comment.ReadCommentCommand;
 import com.foal.question.jersey.command.common.EditPasswordCommand;
 import com.foal.question.jersey.command.common.EditUserInfoCommand;
 import com.foal.question.jersey.command.common.FeedBackCommand;
@@ -24,9 +25,9 @@ import com.foal.question.jersey.command.common.RegistCommand;
 import com.foal.question.jersey.command.common.TipOffCommand;
 import com.foal.question.jersey.command.follow.AddFollowCommand;
 import com.foal.question.jersey.command.follow.DelFollowCommand;
-import com.foal.question.jersey.command.follow.ListFollowersCommand;
-import com.foal.question.jersey.command.follow.ListFriendCommand;
-import com.foal.question.jersey.command.follow.ListMyFollowCommand;
+import com.foal.question.jersey.command.follow.ListTargetFollowCommand;
+import com.foal.question.jersey.command.follow.ListTargetFollowersCommand;
+import com.foal.question.jersey.command.follow.LoadMyNewFollowersCommand;
 import com.foal.question.jersey.command.textimage.TextImageAddCommand;
 import com.foal.question.jersey.command.textimage.TextImageDelCommand;
 import com.foal.question.jersey.command.textimage.TextImageLoadByFollowCommand;
@@ -103,14 +104,15 @@ public class CommandRouter {
     	
     	register(ICommand.AddFollow, new AddFollowCommand());
     	register(ICommand.DelFollow, new DelFollowCommand());
-    	register(ICommand.ListFriend, new ListFriendCommand());
-    	register(ICommand.ListFollowers, new ListFollowersCommand());
-    	register(ICommand.ListMyFollow, new ListMyFollowCommand());
+    	register(ICommand.ListTargetFollow, new ListTargetFollowCommand());
+    	register(ICommand.ListTargetFollowers, new ListTargetFollowersCommand());
+    	register(ICommand.LoadMyNewFollowers, new LoadMyNewFollowersCommand());
     	
     	register(ICommand.AddComment, new AddCommentCommand());
     	register(ICommand.DelComment, new DelCommentCommand());
     	register(ICommand.LoadComment, new LoadCommentCommand());
     	register(ICommand.LoadCommentByOwner, new LoadCommentByOwnerCommand());
+    	register(ICommand.ReadComment, new ReadCommentCommand());
     	
     	register(ICommand.TextImageAdd, new TextImageAddCommand());
     	register(ICommand.TextImageLoadMy, new TextImageLoadMyCommand());

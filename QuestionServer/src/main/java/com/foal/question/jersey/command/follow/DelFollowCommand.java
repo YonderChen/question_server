@@ -22,7 +22,7 @@ public class DelFollowCommand implements ICommand {
 		if (follower == null) {
 			throw new QuestionException(QuestionException.LoginInfoError, "登录信息异常，请重新登录");
 		}
-		appUserService.cancelFollow(uid, targetUid);
+		appUserService.delFollow(uid, targetUid);
 		ret.setResult(RetCode.Success);
 		return ret;
 	}

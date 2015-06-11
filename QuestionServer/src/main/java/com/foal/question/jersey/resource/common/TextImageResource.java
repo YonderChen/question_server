@@ -351,7 +351,7 @@ public class TextImageResource {
 			ret.setResult(RetCode.Faild, "要评论的记录不存在");
 			return ret.toJson();
 		}
-		appCommentService.addComment(user, type, recordId, content);
+		appCommentService.addComment(user, type, recordId, record.getOwner(), record.getOwner(), content);
 		ret.setResult(RetCode.Success);
 		return ret.toJson();
 	}

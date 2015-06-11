@@ -12,7 +12,7 @@ import com.foal.question.service.app.AppCommentService;
 import com.foal.question.service.app.AppUserService;
 import com.foal.question.util.StringTools;
 
-public class DelCommentCommand implements ICommand {
+public class ReadCommentCommand implements ICommand {
 
 	private AppUserService appUserService = ServiceLocator.getBean(AppUserService.class);
 	private AppCommentService appCommentService = ServiceLocator.getBean(AppCommentService.class);
@@ -28,12 +28,20 @@ public class DelCommentCommand implements ICommand {
 		}
 		AppComment comment = appCommentService.getRecordComment(commentId);
 		if (comment == null) {
-			throw new QuestionException(QuestionException.RecordNotExist, "要删除的评论不存在");
+			throw new QuestionException(QuestionException.RecordNotExist, "要阅读的评论不存在");
 		}
-		if (!StringTools.equalsStr(comment.getOwner().getUid(), uid) && !StringTools.equalsStr(comment.getRecordOwner().getUid(), uid)) {
-			throw new QuestionException(QuestionException.RecordIsNotYours, "该评论不属于您");
+		boolean isYoursComment = false;
+		if (StringTools.equalsStr(comment.getOwner().getUid(),uid)) {
+			comment.setStatus(AppComment.Status.Read);
+			isYoursComment = true;
 		}
-		appCommentService.delRecordComment(comment);
+		if (StringTools.equalsStr(comment.getToUser().getUid(), uid)) {
+			comment.setToUserStatus(AppComment.Status.Read);
+			isYoursComment = true;
+		}
+		if (isYoursComment) {
+			appCommentService.updateRecordComment(comment);
+		}
 		ret.setResult(RetCode.Success);
 		return ret;
 	}

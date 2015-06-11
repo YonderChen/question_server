@@ -13,7 +13,7 @@ import com.foal.question.pojo.AppUserFollow;
 import com.foal.question.service.app.AppUserService;
 import com.google.gson.JsonArray;
 
-public class ListFriendCommand implements ICommand {
+public class LoadMyNewFollowersCommand implements ICommand {
 
 	private AppUserService appUserService = ServiceLocator.getBean(AppUserService.class);
 
@@ -27,10 +27,10 @@ public class ListFriendCommand implements ICommand {
 		if (owner == null) {
 			throw new QuestionException(QuestionException.LoginInfoError, "登录信息异常，请重新登录");
 		}
-		List<AppUserFollow> followList = appUserService.getFriends(owner.getUid(), page, pageSize);
+		List<AppUserFollow> followList = appUserService.updateTimeAndLoadNewFollowsByOwner(owner.getUid(), page, pageSize);
 		JsonArray friends = new JsonArray();
 		for (AppUserFollow follow : followList) {
-			friends.add(follow.getFollower().toJson());
+			friends.add(follow.getOwner().toJson());
 		}
 		ret.add("friends", friends);
 		ret.setResult(RetCode.Success);

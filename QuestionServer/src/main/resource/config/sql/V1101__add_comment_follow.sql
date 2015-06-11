@@ -24,12 +24,18 @@ CREATE TABLE `app_comment` (
   `type_` int(11) NOT NULL COMMENT '评论类型。0：图片，1：声音',
   `record_id_` int(11) NOT NULL COMMENT '记录id',
   `owner_id_` varchar(50) NOT NULL COMMENT '评论人id',
+  `record_owner_id_` varchar(50) NOT NULL COMMENT '记录所属用户id',
+  `to_user_id_` varchar(50) NOT NULL COMMENT '回复目标用户id',
   `content_` varchar(500) NOT NULL COMMENT '评论内容',
   `create_time_` datetime NOT NULL COMMENT '评论时间',
-  `status_` int(11) NOT NULL COMMENT '状态。0：未读，1：已读',
+  `status_` int(11) NOT NULL COMMENT '记录发布者阅读状态。0：未读，1：已读',
+  `to_user_status_` int(11) NOT NULL COMMENT '评论回复目标阅读状态。0：未读，1：已读',
   PRIMARY KEY (`id_`),
   KEY `record_id_index` (`record_id_`) USING BTREE,
   KEY `owner_id_index` (`owner_id_`) USING BTREE,
-  KEY `status_index` (`status_`) USING BTREE
+  KEY `record_owner_id_index` (`record_owner_id_`) USING BTREE,
+  KEY `to_user_id_index` (`to_user_id_`) USING BTREE,
+  KEY `status_index` (`status_`) USING BTREE,
+  KEY `to_user_status_index` (`to_user_status_`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
