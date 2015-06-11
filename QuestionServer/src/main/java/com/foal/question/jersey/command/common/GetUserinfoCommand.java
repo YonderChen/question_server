@@ -9,6 +9,7 @@ import com.foal.question.listener.ServiceLocator;
 import com.foal.question.pojo.AppUser;
 import com.foal.question.service.app.AppUserService;
 import com.foal.question.util.StringTools;
+import com.google.gson.JsonObject;
 
 public class GetUserinfoCommand implements ICommand {
 
@@ -26,7 +27,10 @@ public class GetUserinfoCommand implements ICommand {
 		if (targetUser == null) {
 			throw new QuestionException(QuestionException.UserNotExist, "目标用户不存在");
 		}
-		ret.add("userinfo", targetUser.toJson());
+		JsonObject userinfo = targetUser.toJson();
+		userinfo.addProperty("followCount", appUserService.getFollowCountByFollower(uid));
+		userinfo.addProperty("followerCount", appUserService.getFollowCountByOwner(uid));
+		ret.add("userinfo", userinfo);
 		ret.add("relation", appUserService.getRelation(uid, targetUid));
 		ret.setResult(RetCode.Success);
 		return ret;

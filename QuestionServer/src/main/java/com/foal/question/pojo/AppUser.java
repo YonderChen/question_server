@@ -255,6 +255,7 @@ public class AppUser implements Serializable{
 		jo.remove("updateAt");
 		jo.remove("password");
 		jo.remove("lastLoginIp");
+		jo.remove("lastLoadFollowersTime");
 		return jo;
 	}
 }

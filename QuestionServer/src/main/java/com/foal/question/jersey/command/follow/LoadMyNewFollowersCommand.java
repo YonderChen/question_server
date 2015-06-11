@@ -30,7 +30,7 @@ public class LoadMyNewFollowersCommand implements ICommand {
 		List<AppUserFollow> followList = appUserService.updateTimeAndLoadNewFollowsByOwner(owner.getUid(), page, pageSize);
 		JsonArray friends = new JsonArray();
 		for (AppUserFollow follow : followList) {
-			friends.add(follow.getOwner().toJson());
+			friends.add(follow.getFollower().toJson());
 		}
 		ret.add("friends", friends);
 		ret.setResult(RetCode.Success);

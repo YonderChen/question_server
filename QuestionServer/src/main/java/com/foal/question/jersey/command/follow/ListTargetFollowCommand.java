@@ -30,7 +30,7 @@ public class ListTargetFollowCommand implements ICommand {
 		List<AppUserFollow> followList = appUserService.getFollowsByFollower(targetUser.getUid(), page, pageSize);
 		JsonArray friends = new JsonArray();
 		for (AppUserFollow follow : followList) {
-			friends.add(follow.getFollower().toJson());
+			friends.add(follow.getOwner().toJson());
 		}
 		ret.add("friends", friends);
 		ret.setResult(RetCode.Success);

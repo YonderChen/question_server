@@ -8,7 +8,7 @@ CREATE TABLE `app_user_follow` (
   `owner_id_` varchar(50) NOT NULL COMMENT '主体用户uid',
   `follower_id_` varchar(50) NOT NULL COMMENT '关注用户uid',
   `create_time_` datetime NOT NULL COMMENT '关系创建时间',
-  `status_` int(11) NOT NULL COMMENT '状态，0：单向关注，2：双向关注',
+  `status_` int(11) NOT NULL COMMENT '状态，0：单向关注，1：双向关注',
   PRIMARY KEY (`id_`),
   UNIQUE KEY `unique_follow_index` (`owner_id_`,`follower_id_`) USING HASH,
   KEY `owner_id_index` (`owner_id_`) USING BTREE,
