@@ -19,6 +19,7 @@
 			type : 'post',
 			data : {
 				command:$("#command").val().trim(),
+				version:$("#version").val().trim(),
 				root:$("#root").val().trim()
 			},
 			dataType : 'text',
