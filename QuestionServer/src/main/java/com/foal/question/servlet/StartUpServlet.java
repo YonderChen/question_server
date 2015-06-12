@@ -39,9 +39,10 @@ public class StartUpServlet extends HttpServlet {
 		Constant.TOMCAT_SERVICE_ADDRESS = this.getServletContext().getRealPath("");
 		
 		Constant.CONTEXT_WEB_URL = ServiceLocator.getMessage("context.web.url");
+		logger.info("context.web.url:" + Constant.CONTEXT_WEB_URL);
 		this.getServletContext().setAttribute(Constant.CONTEXT_WEB_URL_KEY, Constant.CONTEXT_WEB_URL);
 		Constant.KEY_OF_SIGN = ServiceLocator.getMessage("keyOfSign");
-		
+		logger.info("keyOfSign:" + Constant.KEY_OF_SIGN);
 		GlobalConfigService globalConfigService = ServiceLocator.getBean(GlobalConfigService.class);
 		// 执行增量脚本
 		globalConfigService.runDbMigrate();
