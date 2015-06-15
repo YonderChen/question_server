@@ -28,6 +28,7 @@ public class GetUserinfoCommand implements ICommand {
 			throw new QuestionException(QuestionException.UserNotExist, "目标用户不存在");
 		}
 		JsonObject userinfo = targetUser.toJson();
+		userinfo.addProperty("signature", targetUser.getSignature());
 		userinfo.addProperty("followCount", appUserService.getFollowCountByFollower(uid));
 		userinfo.addProperty("followerCount", appUserService.getFollowCountByOwner(uid));
 		ret.add("userinfo", userinfo);

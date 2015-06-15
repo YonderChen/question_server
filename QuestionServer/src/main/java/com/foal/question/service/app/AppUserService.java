@@ -81,9 +81,8 @@ public class AppUserService extends DaoSupport {
 		return this.hibernateDao.get(AppUser.class, id);
 	}
 
-	public boolean updateAppUser(AppUser appUser) {
+	public void updateAppUser(AppUser appUser) {
 		this.hibernateDao.update(appUser);
-		return true;
 	}
 	
 	public PageBean queryAppUser(AppUserBean appUserBean) {

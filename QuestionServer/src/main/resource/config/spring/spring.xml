@@ -160,6 +160,7 @@
 
 
 	<!-- 通知  -->
+	<!--
 	<bean id="notifyTask" class="com.foal.question.task.TriggerTask" />
 	
 	<bean id="notifyJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -170,10 +171,11 @@
 			<value>run</value>
 		</property>
 	</bean>
-
+	-->
 	
 	
 	<!--6月份,11月份,每天早上9点开始-->
+	<!--
 	 <bean id="notifyTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail">
 			<ref bean="notifyJob" />
@@ -182,8 +184,10 @@
 			 <value>0 0 9 ? 6,11 *</value> 
 		</property>
 	</bean> 
+	-->
 	
 	
+	<!--
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
@@ -191,5 +195,6 @@
 			</list>
 		</property>
 	</bean>
+	-->
     
 </beans>

@@ -4,11 +4,11 @@ import com.foal.question.config.QuestionException;
 import com.foal.question.jersey.command.ICommand;
 import com.foal.question.jersey.resource.tools.Param;
 import com.foal.question.jersey.resource.tools.ResultMap;
-import com.foal.question.jersey.resource.tools.APIConstants.RetCode;
 import com.foal.question.listener.ServiceLocator;
 import com.foal.question.pojo.AppTextImage;
 import com.foal.question.pojo.AppUser;
 import com.foal.question.service.app.AppTextImageService;
+import com.foal.question.util.StringTools;
 
 public class TextImageDelCommand implements ICommand {
 	
@@ -25,10 +25,12 @@ public class TextImageDelCommand implements ICommand {
 		}
 		AppTextImage record = appTextImageService.getRecord(recordId);
 		if (record == null) {
-			throw new QuestionException(QuestionException.RecordNotExist, "要分享的记录不存在");
+			throw new QuestionException(QuestionException.RecordNotExist, "要删除的记录不存在");
 		}
-		appTextImageService.share(record, uid);
-		ret.setResult(RetCode.Success);
+		if (!StringTools.equalsStr(record.getOwner().getUid(), uid)) {
+			throw new QuestionException(QuestionException.RecordIsNotYours, "该记录不属于你，不能进行删除");
+		}
+		appTextImageService.deleteRecord(record);
 		return ret;
 	}
 

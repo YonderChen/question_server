@@ -164,6 +164,7 @@ CREATE TABLE `app_user` (
   `username_` varchar(100) NOT NULL COMMENT '用户名',
   `password_` varchar(255) NOT NULL COMMENT '密码',
   `name_` varchar(255) DEFAULT NULL COMMENT '昵称',
+  `signature_` varchar(500) DEFAULT NULL COMMENT '个性签名',
   `gender_` varchar(20) DEFAULT NULL COMMENT '性别',
   `figureurl_` varchar(255) DEFAULT NULL COMMENT '头像url',
   `create_time_` datetime NOT NULL COMMENT '用户创建时间',

@@ -33,6 +33,7 @@ public class AppUser implements Serializable{
 	private String username;
 	private String password;
 	private String name;
+	private String signature;
 	private String gender;
 	private String figureurl;
 	private Date createTime;
@@ -106,6 +107,13 @@ public class AppUser implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
+	@Column(name = "signature_")
+	public String getSignature() {
+		return signature;
+	}
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
 	@Column(name = "gender_")
 	public String getGender() {
 		return gender;
@@ -168,6 +176,7 @@ public class AppUser implements Serializable{
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((openId == null) ? 0 : openId.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((signature == null) ? 0 : signature.hashCode());
 		result = prime * result + status;
 		result = prime * result + ((uid == null) ? 0 : uid.hashCode());
 		result = prime * result + ((updateAt == null) ? 0 : updateAt.hashCode());
@@ -224,6 +233,11 @@ public class AppUser implements Serializable{
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
+		if (signature == null) {
+			if (other.signature != null)
+				return false;
+		} else if (!signature.equals(other.signature))
+			return false;
 		if (status != other.status)
 			return false;
 		if (uid == null) {
@@ -245,12 +259,14 @@ public class AppUser implements Serializable{
 			return false;
 		return true;
 	}
+	
 	public JsonObject toJson() {
 		JsonObject jo = GsonTools.parseJsonObject(this);
 		if (userType == AppUser.UserType.Local) {
 			jo.addProperty("figureurl", Constant.CONTEXT_WEB_URL + figureurl);
 		}
 		jo.remove("openId");
+		jo.remove("signature");
 		jo.remove("createTime");
 		jo.remove("updateAt");
 		jo.remove("password");

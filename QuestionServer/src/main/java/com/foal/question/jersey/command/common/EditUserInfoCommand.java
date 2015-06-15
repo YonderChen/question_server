@@ -24,6 +24,7 @@ public class EditUserInfoCommand implements ICommand {
 		String uid = param.getUid();
 		String name = param.get("name", "");
 		String gender = param.get("gender", "");
+		String signature = param.get("signature");
 		
 		if (StringTools.isBlank(uid)) {
 			throw new QuestionException(QuestionException.LoginInfoError, "登录信息异常，请重新登录");
@@ -41,6 +42,7 @@ public class EditUserInfoCommand implements ICommand {
 		Date now = new Date();
 		appUser.setName(name);
 		appUser.setGender(gender);
+		appUser.setSignature(signature);
 		
 		if (param.getFileItemList().size() > 0) {
 			String imageUrl = ResourceTools.uploadFile(param.getFileItemList(), ResourceTools.getImageSuffixs(), Constant.UPLOAD_IMAGE_PATH);

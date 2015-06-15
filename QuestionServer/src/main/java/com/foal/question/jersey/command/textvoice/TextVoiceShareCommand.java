@@ -9,7 +9,6 @@ import com.foal.question.listener.ServiceLocator;
 import com.foal.question.pojo.AppTextVoice;
 import com.foal.question.pojo.AppUser;
 import com.foal.question.service.app.AppTextVoiceService;
-import com.foal.question.util.StringTools;
 
 public class TextVoiceShareCommand implements ICommand {
 	
@@ -26,12 +25,9 @@ public class TextVoiceShareCommand implements ICommand {
 		}
 		AppTextVoice record = appTextVoiceService.getRecord(recordId);
 		if (record == null) {
-			throw new QuestionException(QuestionException.RecordNotExist, "要删除的记录不存在");
+			throw new QuestionException(QuestionException.RecordNotExist, "要分享的记录不存在");
 		}
-		if (!StringTools.equalsStr(record.getOwner().getUid(), uid)) {
-			throw new QuestionException(QuestionException.RecordIsNotYours, "该记录不属于你，不能进行删除");
-		}
-		appTextVoiceService.deleteRecord(record);
+		appTextVoiceService.share(record, uid);
 		ret.setResult(RetCode.Success);
 		return ret;
 	}
