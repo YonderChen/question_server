@@ -29,8 +29,8 @@ public class GetUserinfoCommand implements ICommand {
 		}
 		JsonObject userinfo = targetUser.toJson();
 		userinfo.addProperty("signature", targetUser.getSignature());
-		userinfo.addProperty("followCount", appUserService.getFollowCountByFollower(uid));
-		userinfo.addProperty("followerCount", appUserService.getFollowCountByOwner(uid));
+		userinfo.addProperty("followCount", appUserService.getFollowCountByFollower(targetUid));
+		userinfo.addProperty("followerCount", appUserService.getFollowCountByOwner(targetUid));
 		ret.add("userinfo", userinfo);
 		ret.add("relation", appUserService.getRelation(uid, targetUid));
 		ret.setResult(RetCode.Success);
