@@ -182,6 +182,6 @@ public class AppTextVoiceService extends DaoSupport {
 	
 	public JsonObject getRetRecordJson(AppTextVoice record, String uid) {
 		boolean hasPraised = hasPraised(record.getId(), uid);
-		return record.toJson(hasPraised, appCommentService.getRecordCommentCount(record.getId(), AppComment.Type.TextImageComment));
+		return record.toJson(hasPraised, appCommentService.getRecordCommentCount(record.getId(), AppComment.Type.TextVoiceComment));
 	}
 }
