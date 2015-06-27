@@ -26,8 +26,9 @@ public interface ICommand {
 	public static final short AddComment = 10201;//添加评论
 	public static final short DelComment = 10202;//删除评论
 	public static final short LoadComment = 10203;//加载评论
-	public static final short LoadCommentByOwner = 10204;//根据用户加载评论
-	public static final short ReadComment = 10205;//根据用户加载评论
+	public static final short LoadCommentByCareUser = 10204;//阅读评论
+	public static final short ReadComment = 10205;//阅读评论
+	public static final short LoadCommentByOwner = 10206;//根据用户加载评论
 	
 	public static final short TextImageAdd = 20001;//添加记录
 	public static final short TextImageLoadMy = 20002;//加载我的记录
@@ -38,6 +39,7 @@ public interface ICommand {
 	public static final short TextImageShare = 20007;//分享
 	public static final short TextImageLoadPraiseUser = 20008;//加载点赞用户
 	public static final short TextImageLoadByFollow = 20009;//根据关注加载
+	public static final short TextImageByRecordId = 20010;//根据记录id加载记录信息
 
 	public static final short TextVoiceAdd = 30001;//添加记录
 	public static final short TextVoiceLoadMy = 30002;//加载我的记录
@@ -48,4 +50,5 @@ public interface ICommand {
 	public static final short TextVoiceShare = 30007;//分享
 	public static final short TextVoiceLoadPraiseUser = 30008;//加载点赞用户
 	public static final short TextVoiceLoadByFollow = 30009;//根据关注加载
+	public static final short TextVoiceByRecordId = 30010;//根据记录id加载记录信息
 }

@@ -70,4 +70,5 @@ public class QuestionException extends IllegalStateException {
 	public static final int PasswordIsEmpty = -13;// 密码为空
 	public static final int RecordNotExist = -14;// 记录不存在
 	public static final int RecordIsNotYours = -15;// 记录不属于你
+	public static final int ParamError = -16;//参数异常
 }

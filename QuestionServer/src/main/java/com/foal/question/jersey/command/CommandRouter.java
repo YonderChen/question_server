@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import com.foal.question.jersey.command.comment.AddCommentCommand;
 import com.foal.question.jersey.command.comment.DelCommentCommand;
+import com.foal.question.jersey.command.comment.LoadCommentByCareUserCommand;
 import com.foal.question.jersey.command.comment.LoadCommentByOwnerCommand;
 import com.foal.question.jersey.command.comment.LoadCommentCommand;
 import com.foal.question.jersey.command.comment.ReadCommentCommand;
@@ -30,6 +31,7 @@ import com.foal.question.jersey.command.follow.ListTargetFollowCommand;
 import com.foal.question.jersey.command.follow.ListTargetFollowersCommand;
 import com.foal.question.jersey.command.follow.LoadMyNewFollowersCommand;
 import com.foal.question.jersey.command.textimage.TextImageAddCommand;
+import com.foal.question.jersey.command.textimage.TextImageByRecordIdCommand;
 import com.foal.question.jersey.command.textimage.TextImageDelCommand;
 import com.foal.question.jersey.command.textimage.TextImageLoadByFollowCommand;
 import com.foal.question.jersey.command.textimage.TextImageLoadMyCommand;
@@ -39,6 +41,7 @@ import com.foal.question.jersey.command.textimage.TextImageLoadPublicCommand;
 import com.foal.question.jersey.command.textimage.TextImagePraiseCommand;
 import com.foal.question.jersey.command.textimage.TextImageShareCommand;
 import com.foal.question.jersey.command.textvoice.TextVoiceAddCommand;
+import com.foal.question.jersey.command.textvoice.TextVoiceByRecordIdCommand;
 import com.foal.question.jersey.command.textvoice.TextVoiceDelCommand;
 import com.foal.question.jersey.command.textvoice.TextVoiceLoadByFollowCommand;
 import com.foal.question.jersey.command.textvoice.TextVoiceLoadMyCommand;
@@ -113,8 +116,9 @@ public class CommandRouter {
     	register(ICommand.AddComment, new AddCommentCommand());
     	register(ICommand.DelComment, new DelCommentCommand());
     	register(ICommand.LoadComment, new LoadCommentCommand());
-    	register(ICommand.LoadCommentByOwner, new LoadCommentByOwnerCommand());
+    	register(ICommand.LoadCommentByCareUser, new LoadCommentByCareUserCommand());
     	register(ICommand.ReadComment, new ReadCommentCommand());
+    	register(ICommand.LoadCommentByOwner, new LoadCommentByOwnerCommand());
     	
     	register(ICommand.TextImageAdd, new TextImageAddCommand());
     	register(ICommand.TextImageLoadMy, new TextImageLoadMyCommand());
@@ -125,7 +129,8 @@ public class CommandRouter {
     	register(ICommand.TextImageShare, new TextImageShareCommand());
     	register(ICommand.TextImageLoadPraiseUser, new TextImageLoadPraiseUserCommand());
     	register(ICommand.TextImageLoadByFollow, new TextImageLoadByFollowCommand());
-
+    	register(ICommand.TextImageByRecordId, new TextImageByRecordIdCommand());
+    	
     	register(ICommand.TextVoiceAdd, new TextVoiceAddCommand());
     	register(ICommand.TextVoiceLoadMy, new TextVoiceLoadMyCommand());
     	register(ICommand.TextVoiceLoadOthers, new TextVoiceLoadOthersCommand());
@@ -135,5 +140,6 @@ public class CommandRouter {
     	register(ICommand.TextVoiceShare, new TextVoiceShareCommand());
     	register(ICommand.TextVoiceLoadPraiseUser, new TextVoiceLoadPraiseUserCommand());
     	register(ICommand.TextVoiceLoadByFollow, new TextVoiceLoadByFollowCommand());
+    	register(ICommand.TextVoiceByRecordId, new TextVoiceByRecordIdCommand());
     }
 }
