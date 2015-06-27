@@ -26,9 +26,10 @@ public interface ICommand {
 	public static final short AddComment = 10201;//添加评论
 	public static final short DelComment = 10202;//删除评论
 	public static final short LoadComment = 10203;//加载评论
-	public static final short LoadCommentByCareUser = 10204;//阅读评论
+	public static final short LoadCommentByCareUser = 10204;//加载用户关心的评论
 	public static final short ReadComment = 10205;//阅读评论
 	public static final short LoadCommentByOwner = 10206;//根据用户加载评论
+	public static final short ReadAllComment = 10207;//把全部未读的相关评论置为已读
 	
 	public static final short TextImageAdd = 20001;//添加记录
 	public static final short TextImageLoadMy = 20002;//加载我的记录

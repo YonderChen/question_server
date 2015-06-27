@@ -14,6 +14,7 @@ import com.foal.question.jersey.command.comment.DelCommentCommand;
 import com.foal.question.jersey.command.comment.LoadCommentByCareUserCommand;
 import com.foal.question.jersey.command.comment.LoadCommentByOwnerCommand;
 import com.foal.question.jersey.command.comment.LoadCommentCommand;
+import com.foal.question.jersey.command.comment.ReadAllCommentCommand;
 import com.foal.question.jersey.command.comment.ReadCommentCommand;
 import com.foal.question.jersey.command.common.EditPasswordCommand;
 import com.foal.question.jersey.command.common.EditUserInfoCommand;
@@ -119,6 +120,7 @@ public class CommandRouter {
     	register(ICommand.LoadCommentByCareUser, new LoadCommentByCareUserCommand());
     	register(ICommand.ReadComment, new ReadCommentCommand());
     	register(ICommand.LoadCommentByOwner, new LoadCommentByOwnerCommand());
+    	register(ICommand.ReadAllComment, new ReadAllCommentCommand());
     	
     	register(ICommand.TextImageAdd, new TextImageAddCommand());
     	register(ICommand.TextImageLoadMy, new TextImageLoadMyCommand());

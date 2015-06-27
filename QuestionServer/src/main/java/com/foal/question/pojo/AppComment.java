@@ -18,6 +18,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Index;
 
 import com.foal.question.config.Constant;
+import com.foal.question.util.StringTools;
 import com.google.gson.JsonObject;
 
 @Entity
@@ -196,6 +197,11 @@ public class AppComment implements Serializable{
 	}
 	
 	public JsonObject toJson() {
+		JsonObject jo = toJson("");
+		return jo;
+	}
+	
+	public JsonObject toJson(String uid) {
 		JsonObject jo = new JsonObject();
 		jo.addProperty("id", id);
 		jo.addProperty("type", type);
@@ -211,7 +217,15 @@ public class AppComment implements Serializable{
 		jo.addProperty("toUserName", toUser.getName());
 		jo.addProperty("content", content);
 		jo.addProperty("createTime", createTime.getTime());
-		jo.addProperty("status", status);
+		int statusByUid = Status.NotRead;
+		if (!StringTools.isBlank(uid)) {
+			if (recordOwner != null && StringTools.equalsStr(recordOwner.getUid(), uid)) {
+				statusByUid = status;
+			} else if (toUser != null && StringTools.equalsStr(toUser.getUid(), uid)) {
+				statusByUid = toUserStatus;
+			}
+		}
+		jo.addProperty("status", statusByUid);
 		return jo;
 	}
 }

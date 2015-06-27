@@ -45,6 +45,15 @@ public class AppCommentService extends DaoSupport {
 		return this.hibernateDao.getAllRow(queryHql, type, recordId);
 	}
 	
+	public int updateReadAllCommentByCareUser(String careUserId) {
+		int updateNum = 0;
+		String queryHqlRecordOwner = "update AppComment r set r.status = ? where (r.recordOwner.uid = ? and r.status = ?)";
+		updateNum += this.hibernateDao.executeUpdate(queryHqlRecordOwner, AppComment.Status.Read, careUserId, AppComment.Status.NotRead);
+		String queryHqlRoUser = "update AppComment r set r.toUserStatus = ? where (r.toUser.uid = ? and r.toUserStatus = ?)";
+		updateNum += this.hibernateDao.executeUpdate(queryHqlRoUser, AppComment.Status.Read, careUserId, AppComment.Status.NotRead);
+		return updateNum;
+	}
+	
 	public int getNotReadCommentCountByCareUser(String careUserId) {
 		String queryHql = "select count(*) from AppComment as r where (r.recordOwner.uid = ? and r.status = ?) or (r.toUser.uid = ? and r.toUserStatus = ?)";
 		return this.hibernateDao.getAllRow(queryHql, careUserId, AppComment.Status.NotRead, careUserId, AppComment.Status.NotRead);

@@ -97,4 +97,15 @@ public class HibernateDao extends HibernateDaoSupport{
         return query.list();
 	}
 	
+	public int executeUpdate(String queryHql, Object... values) {
+		Session session = getSession();
+		Query query = session.createQuery(queryHql);
+        if (values != null) {
+        	for (int i = 0; i < values.length; i++) {
+        		query.setParameter(i, values[i]);
+        	}
+        }
+        return query.executeUpdate();
+	}
+	
 }
