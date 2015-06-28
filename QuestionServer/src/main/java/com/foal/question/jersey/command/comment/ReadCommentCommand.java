@@ -31,7 +31,7 @@ public class ReadCommentCommand implements ICommand {
 			throw new QuestionException(QuestionException.RecordNotExist, "要阅读的评论不存在");
 		}
 		boolean isYoursComment = false;
-		if (StringTools.equalsStr(comment.getOwner().getUid(),uid)) {
+		if (StringTools.equalsStr(comment.getRecordOwner().getUid(),uid)) {
 			comment.setStatus(AppComment.Status.Read);
 			isYoursComment = true;
 		}

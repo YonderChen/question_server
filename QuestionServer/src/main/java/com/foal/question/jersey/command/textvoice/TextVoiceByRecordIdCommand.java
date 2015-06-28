@@ -25,7 +25,7 @@ public class TextVoiceByRecordIdCommand implements ICommand {
 		if (record == null) {
 			throw new QuestionException(QuestionException.RecordNotExist, "记录不存在，可能已被删除");
 		}
-		ret.add("text_image", appTextVoiceService.getRetRecordJson(record, uid));
+		ret.add("text_voice", appTextVoiceService.getRetRecordJson(record, uid));
 		ret.setResult(RetCode.Success);
 		return ret;
 	}
