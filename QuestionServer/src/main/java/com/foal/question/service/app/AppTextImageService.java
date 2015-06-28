@@ -122,9 +122,9 @@ public class AppTextImageService extends DaoSupport {
 	public List<AppTextImage> getRecordByFollow(String uid, int orderBy, int page, int pageSize) {
 		String queryHql;
 		if (orderBy == 0) {
-			queryHql = "from AppTextImage v where v.owner.uid in (select uid from AppUserFollow f where f.follower.uid = ?) order by v.createTime desc";
+			queryHql = "from AppTextImage v where v.owner.uid in (select f.owner.uid as followerUid from AppUserFollow f where f.follower.uid = ?) order by v.createTime desc";
 		} else {
-			queryHql = "from AppTextImage v where v.owner.uid in (select uid from AppUserFollow f where f.follower.uid = ?) order by v.praiseCount desc";
+			queryHql = "from AppTextImage v where v.owner.uid in (select f.owner.uid as followerUid from AppUserFollow f where f.follower.uid = ?) order by v.praiseCount desc";
 		}
 		return this.hibernateDao.queryList(queryHql, page, pageSize, uid);
 	}

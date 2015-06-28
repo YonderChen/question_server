@@ -122,9 +122,9 @@ public class AppTextVoiceService extends DaoSupport {
 	public List<AppTextVoice> getRecordByFollow(String uid, int orderBy, int page, int pageSize) {
 		String queryHql;
 		if (orderBy == 0) {
-			queryHql = "from AppTextVoice v where v.owner.uid in (select uid from AppUserFollow f where f.follower.uid = ?) order by v.createTime desc";
+			queryHql = "from AppTextVoice v where v.owner.uid in (select f.owner.uid as followerUid from AppUserFollow f where f.follower.uid = ?) order by v.createTime desc";
 		} else {
-			queryHql = "from AppTextVoice v where v.owner.uid in (select uid from AppUserFollow f where f.follower.uid = ?) order by v.praiseCount desc";
+			queryHql = "from AppTextVoice v where v.owner.uid in (select f.owner.uid as followerUid from AppUserFollow f where f.follower.uid = ?) order by v.praiseCount desc";
 		}
 		return this.hibernateDao.queryList(queryHql, page, pageSize, uid);
 	}

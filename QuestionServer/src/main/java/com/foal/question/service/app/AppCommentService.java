@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.foal.question.dao.DaoSupport;
 import com.foal.question.pojo.AppComment;
 import com.foal.question.pojo.AppUser;
+import com.foal.question.util.StringTools;
 
 @SuppressWarnings("unchecked")
 @Service(value = "appCommentService")
@@ -22,6 +23,12 @@ public class AppCommentService extends DaoSupport {
 		comment.setToUser(toUser);
 		comment.setContent(content);
 		comment.setCreateTime(new Date());
+		if (StringTools.equalsStr(owner.getUid(), recordOwner.getUid())) {
+			comment.setStatus(AppComment.Status.Read);
+		}
+		if (StringTools.equalsStr(owner.getUid(), toUser.getUid())) {
+			comment.setToUserStatus(AppComment.Status.Read);
+		}
 		this.hibernateDao.save(comment);
 	}
 	
@@ -36,8 +43,8 @@ public class AppCommentService extends DaoSupport {
 	}
 	
 	public List<AppComment> getRecordCommentByCareUser(String careUserId, int page, int pageSize) {
-		String queryHql = "from AppComment v where v.recordOwner.uid = ? or v.toUser.uid = ? order by v.createTime desc";
-		return this.hibernateDao.queryList(queryHql, page, pageSize, careUserId, careUserId);
+		String queryHql = "from AppComment v where (v.recordOwner.uid = ? or v.toUser.uid = ?) and v.owner.uid != ? order by v.createTime desc";
+		return this.hibernateDao.queryList(queryHql, page, pageSize, careUserId, careUserId, careUserId);
 	}
 	
 	public int getRecordCommentCount(int recordId, int type) {
@@ -55,8 +62,8 @@ public class AppCommentService extends DaoSupport {
 	}
 	
 	public int getNotReadCommentCountByCareUser(String careUserId) {
-		String queryHql = "select count(*) from AppComment as r where (r.recordOwner.uid = ? and r.status = ?) or (r.toUser.uid = ? and r.toUserStatus = ?)";
-		return this.hibernateDao.getAllRow(queryHql, careUserId, AppComment.Status.NotRead, careUserId, AppComment.Status.NotRead);
+		String queryHql = "select count(*) from AppComment as r where (r.recordOwner.uid = ? and r.owner.uid != ? and r.status = ?) or (r.toUser.uid = ? and r.toUserStatus = ?)";
+		return this.hibernateDao.getAllRow(queryHql, careUserId, careUserId, AppComment.Status.NotRead, careUserId, AppComment.Status.NotRead);
 	}
 	
 	public AppComment getRecordComment(int commentId) {

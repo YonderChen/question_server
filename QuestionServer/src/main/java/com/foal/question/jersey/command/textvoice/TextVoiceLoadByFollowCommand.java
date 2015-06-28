@@ -33,7 +33,7 @@ public class TextVoiceLoadByFollowCommand implements ICommand {
 		for (AppTextVoice record : recordList) {
 			retJa.add(appTextVoiceService.getRetRecordJson(record, uid));
 		}
-		ret.add("text_images", retJa);
+		ret.add("text_voices", retJa);
 		ret.setResult(RetCode.Success);
 		return ret;
 	}
