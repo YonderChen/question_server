@@ -2,6 +2,7 @@ package com.foal.question.service;
 
 import java.io.File;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,10 @@ public class GlobalConfigService extends DaoSupport {
 	public void initSystemParam() {
 		SystemParam sp1 = this.hibernateDao.get(SystemParam.class, Constant.INIT_PASSWORD_KEY);
 		Constant.INIT_PASSWORD = sp1.getValue();
+		SystemParam logParam = this.hibernateDao.get(SystemParam.class, Constant.LOG_PARAM_SWITCH_KEY);
+		Constant.LOG_PARAM_SWITCH = NumberUtils.toInt(logParam.getValue(), 0);
+		SystemParam logResult = this.hibernateDao.get(SystemParam.class, Constant.LOG_RESULT_SWITCH_KEY);
+		Constant.LOG_RESULT_SWITCH = NumberUtils.toInt(logResult.getValue(), 0);
 	}
 	
 }

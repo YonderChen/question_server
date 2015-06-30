@@ -136,6 +136,8 @@ CREATE TABLE `t_system_param` (
 INSERT INTO `t_system_param` VALUES ('initPassword', '新用户初始化密码', '123456', '2014-12-18 09:34:22', '2014-12-18 09:42:22');
 INSERT INTO `t_system_param` VALUES ('client_version', '客户端版本号', '1.0.0', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
 INSERT INTO `t_system_param` VALUES ('client_version_info', '客户端版本信息', '这是一个新版本提示', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
+INSERT INTO `t_system_param` VALUES ('log_param_switch', '客户端接口参数日志开关（小于等于0：关闭，大于0：打开）', '0', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
+INSERT INTO `t_system_param` VALUES ('log_result_switch', '客户端接口返回结果日志开关（小于等于0：关闭，大于0：打开）', '0', '2015-04-03 09:34:22', '2015-04-03 09:42:22');
 
 -- ----------------------------
 -- Table structure for t_user_role

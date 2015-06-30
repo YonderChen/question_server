@@ -29,4 +29,10 @@ public class Constant {
 
 	public static final String PASSWORD_SECRET_KEY = "yjn_meat@163.com";
 	
+	public static int LOG_PARAM_SWITCH = 0;
+	public static int LOG_RESULT_SWITCH = 0;
+	
+	public static final String LOG_PARAM_SWITCH_KEY = "log_param_switch";
+	public static final String LOG_RESULT_SWITCH_KEY = "log_result_switch";
+	
 }
