@@ -19,7 +19,7 @@ public class LoginCommand implements ICommand {
 	@Override
 	public ResultMap handle(Param param) {
 		ResultMap ret = ResultMap.getResultMap();
-		String openId = param.get("openId");
+		String openId = param.get("openid");
 		String name = param.get("name");
 		String gender = param.get("gender");
 		String figureurl = param.get("figureurl");
