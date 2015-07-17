@@ -136,7 +136,7 @@ public class CommonResource {
 			
 			ret.setResult(RetCode.Success);
 			ret.add("uid", appUser.getUid());
-			ret.add("figureurl", Constant.CONTEXT_WEB_URL + appUser.getFigureurl());
+			ret.add("figureurl", appUser.getRealFigureurl());
 			return ret.toJson();
 		} catch (Exception e) {
 			logger.error("注册失败", e);
@@ -176,7 +176,7 @@ public class CommonResource {
 		ret.add("uid", appUser.getUid());
 		ret.add("name", appUser.getName());
 		ret.add("gender", appUser.getGender());
-		ret.add("figureurl", Constant.CONTEXT_WEB_URL + appUser.getFigureurl());
+		ret.add("figureurl", appUser.getRealFigureurl());
 		return ret.toJson();
 	}
 	
@@ -293,7 +293,7 @@ public class CommonResource {
 			appUser.setUpdateAt(now);
 			appUserService.updateAppUser(appUser);
 			ret.setResult(RetCode.Success);
-			ret.add("figureurl", Constant.CONTEXT_WEB_URL + appUser.getFigureurl());
+			ret.add("figureurl", appUser.getRealFigureurl());
 			return ret.toJson();
 		} catch (Exception e) {
 			logger.error("修改信息失败", e);

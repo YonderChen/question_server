@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Cache;
@@ -58,6 +59,15 @@ public class AppUser implements Serializable{
 		public static final int Follow = 1;//已关注此人
 		public static final int BeFollowed = 2;//已被此人关注
 		public static final int Friend = 3;//相互关注
+	}
+
+	@Transient
+	public String getRealFigureurl() {
+		String realFigureurl = figureurl;
+		if (realFigureurl.startsWith(Constant.UPLOAD_IMAGE_PATH)) {
+			realFigureurl = Constant.CONTEXT_WEB_URL + realFigureurl;
+		}
+		return realFigureurl;
 	}
 
 	@GenericGenerator(name = "generator", strategy = "uuid")

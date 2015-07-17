@@ -53,7 +53,7 @@ public class EditUserInfoCommand implements ICommand {
 		appUser.setUpdateAt(now);
 		appUserService.updateAppUser(appUser);
 		ret.setResult(RetCode.Success);
-		ret.add("figureurl", Constant.CONTEXT_WEB_URL + appUser.getFigureurl());
+		ret.add("figureurl", appUser.getRealFigureurl());
 		return ret;
 	}
 

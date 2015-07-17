@@ -169,11 +169,7 @@ public class AppTextVoice implements Serializable{
 		JsonObject jo = GsonTools.parseJsonObject(this);
 		jo.remove("owner");
 		jo.addProperty("ownerId", owner.getUid());
-		if (owner.getUserType() == AppUser.UserType.Local) {
-			jo.addProperty("ownerFigureurl", Constant.CONTEXT_WEB_URL + owner.getFigureurl());
-		} else {
-			jo.addProperty("ownerFigureurl", owner.getFigureurl());
-		}
+		jo.addProperty("ownerFigureurl", owner.getRealFigureurl());
 		jo.addProperty("ownerName", owner.getName());
 		jo.addProperty("voiceUrl", Constant.CONTEXT_WEB_URL + this.voiceUrl);
 		jo.add("voiceInfo", GsonTools.parseJsonObject(voiceInfo));

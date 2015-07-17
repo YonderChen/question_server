@@ -17,7 +17,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Index;
 
-import com.foal.question.config.Constant;
 import com.foal.question.util.StringTools;
 import com.google.gson.JsonObject;
 
@@ -207,11 +206,7 @@ public class AppComment implements Serializable{
 		jo.addProperty("type", type);
 		jo.addProperty("recordId", recordId);
 		jo.addProperty("ownerId", owner.getUid());
-		if (owner.getUserType() == AppUser.UserType.Local) {
-			jo.addProperty("ownerFigureurl", Constant.CONTEXT_WEB_URL + owner.getFigureurl());
-		} else {
-			jo.addProperty("ownerFigureurl", owner.getFigureurl());
-		}
+		jo.addProperty("ownerFigureurl", owner.getRealFigureurl());
 		jo.addProperty("ownerName", owner.getName());
 		jo.addProperty("toUserId", toUser.getUid());
 		jo.addProperty("toUserName", toUser.getName());

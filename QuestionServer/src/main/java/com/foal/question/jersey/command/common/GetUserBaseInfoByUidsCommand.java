@@ -1,6 +1,5 @@
 package com.foal.question.jersey.command.common;
 
-import com.foal.question.config.Constant;
 import com.foal.question.config.QuestionException;
 import com.foal.question.jersey.command.ICommand;
 import com.foal.question.jersey.resource.tools.Param;
@@ -34,11 +33,7 @@ public class GetUserBaseInfoByUidsCommand implements ICommand {
 			JsonObject userBaseInfo = new JsonObject();
 			userBaseInfo.addProperty("uid", targetUser.getUid());
 			userBaseInfo.addProperty("name", targetUser.getName());
-			if (targetUser.getUserType() == AppUser.UserType.Local) {
-				userBaseInfo.addProperty("figureurl", Constant.CONTEXT_WEB_URL + targetUser.getFigureurl());
-			} else {
-				userBaseInfo.addProperty("figureurl", targetUser.getFigureurl());
-			}
+			userBaseInfo.addProperty("figureurl", targetUser.getRealFigureurl());
 			userBaseInfoJa.add(userBaseInfo);
 		}
 		ret.add("userBaseInfos", userBaseInfoJa);

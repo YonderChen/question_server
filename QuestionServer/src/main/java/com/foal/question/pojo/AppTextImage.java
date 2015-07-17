@@ -169,11 +169,7 @@ public class AppTextImage implements Serializable{
 		JsonObject jo = GsonTools.parseJsonObject(this);
 		jo.remove("owner");
 		jo.addProperty("ownerId", owner.getUid());
-		if (owner.getUserType() == AppUser.UserType.Local) {
-			jo.addProperty("ownerFigureurl", Constant.CONTEXT_WEB_URL + owner.getFigureurl());
-		} else {
-			jo.addProperty("ownerFigureurl", owner.getFigureurl());
-		}
+		jo.addProperty("ownerFigureurl", owner.getRealFigureurl());
 		jo.addProperty("ownerName", owner.getName());
 		jo.addProperty("imageUrl", Constant.CONTEXT_WEB_URL + this.imageUrl);
 		jo.add("imageInfo", GsonTools.parseJsonObject(imageInfo));

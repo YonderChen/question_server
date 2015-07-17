@@ -45,7 +45,7 @@ public class LoginLocalCommand implements ICommand {
 		ret.add("uid", appUser.getUid());
 		ret.add("name", appUser.getName());
 		ret.add("gender", appUser.getGender());
-		ret.add("figureurl", Constant.CONTEXT_WEB_URL + appUser.getFigureurl());
+		ret.add("figureurl", appUser.getRealFigureurl());
 		return ret;
 	}
 
