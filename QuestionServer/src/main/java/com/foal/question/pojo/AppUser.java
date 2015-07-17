@@ -262,7 +262,7 @@ public class AppUser implements Serializable{
 	
 	public JsonObject toJson() {
 		JsonObject jo = GsonTools.parseJsonObject(this);
-		if (userType == AppUser.UserType.Local) {
+		if (figureurl.startsWith(Constant.UPLOAD_IMAGE_PATH)) {
 			jo.addProperty("figureurl", Constant.CONTEXT_WEB_URL + figureurl);
 		}
 		jo.remove("openId");
