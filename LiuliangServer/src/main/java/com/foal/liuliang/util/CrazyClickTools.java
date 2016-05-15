@@ -42,6 +42,10 @@ public class CrazyClickTools {
     }
     
     public static JsonObject request(String method, Map<String, String> params) {
+    	//第三方api不能用
+    	if (true) {
+    		return new JsonObject();
+    	}
     	params.put("appkey", Constant.CrazyClickAppkey);
     	params.put("timestamp", String.valueOf(System.currentTimeMillis() / 1000));
     	String sign = getSign(method, params, Constant.CrazyClickAppsecret);
