@@ -200,14 +200,14 @@ public class AppUserService extends DaoSupport {
 		} else {
 			queryHql = "from AppTextImage v where v.owner.uid = ? order by v.praiseCount desc";
 		}
-		return this.hibernateDao.queryList(queryHql, page, pageSize, ownerId);
+		return this.hibernateDao.queryListByPage(queryHql, page, pageSize, ownerId);
 	}
 	/**
 	 * 获取关注某人的用户列表
 	 */
 	public List<AppUserFollow> getFollowsByOwner(String ownerId, int page, int pageSize) {
 		String queryHql = "from AppUserFollow as u where u.owner.uid = ?";
-		List<AppUserFollow> list = this.hibernateDao.queryList(queryHql, page, pageSize, ownerId);
+		List<AppUserFollow> list = this.hibernateDao.queryListByPage(queryHql, page, pageSize, ownerId);
 		return list;
 	}
 	/**
@@ -224,7 +224,7 @@ public class AppUserService extends DaoSupport {
 	public List<AppUserFollow> updateTimeAndLoadNewFollowsByOwner(String ownerId, int page, int pageSize) {
 		AppUser user = getAppUserById(ownerId);
 		String queryHql = "from AppUserFollow as u where u.owner.uid = ? and u.createTime > ?";
-		List<AppUserFollow> list = this.hibernateDao.queryList(queryHql, page, pageSize, ownerId, user.getLastLoadFollowersTime());
+		List<AppUserFollow> list = this.hibernateDao.queryListByPage(queryHql, page, pageSize, ownerId, user.getLastLoadFollowersTime());
 		user.setLastLoadFollowersTime(new Date());
 		updateAppUser(user);
 		return list;
@@ -244,7 +244,7 @@ public class AppUserService extends DaoSupport {
 	 */
 	public List<AppUserFollow> getFollowsByFollower(String followerId, int page, int pageSize) {
 		String queryHql = "from AppUserFollow as u where u.follower.uid = ?";
-		List<AppUserFollow> list = this.hibernateDao.queryList(queryHql, page, pageSize, followerId);
+		List<AppUserFollow> list = this.hibernateDao.queryListByPage(queryHql, page, pageSize, followerId);
 		return list;
 	}
 	
@@ -260,7 +260,7 @@ public class AppUserService extends DaoSupport {
 	 */
 	public List<AppUserFollow> getFriends(String ownerId, int page, int pageSize) {
 		String queryHql = "from AppUserFollow as u where u.owner.uid = ? and u.status = ?";
-		List<AppUserFollow> list = this.hibernateDao.queryList(queryHql, page, pageSize, ownerId, AppUserFollow.FollowStatus.Mutual);
+		List<AppUserFollow> list = this.hibernateDao.queryListByPage(queryHql, page, pageSize, ownerId, AppUserFollow.FollowStatus.Mutual);
 		return list;
 	}
 }

@@ -108,7 +108,7 @@ public class AppTextVoiceService extends DaoSupport {
 		} else {
 			queryHql = "from AppTextVoice v where v.owner.uid = ? order by v.praiseCount desc";
 		}
-		return this.hibernateDao.queryList(queryHql, page, pageSize, ownerId);
+		return this.hibernateDao.queryListByPage(queryHql, page, pageSize, ownerId);
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class AppTextVoiceService extends DaoSupport {
 		} else {
 			queryHql = "from AppTextVoice v where v.owner.uid in (select f.owner.uid as followerUid from AppUserFollow f where f.follower.uid = ?) order by v.praiseCount desc";
 		}
-		return this.hibernateDao.queryList(queryHql, page, pageSize, uid);
+		return this.hibernateDao.queryListByPage(queryHql, page, pageSize, uid);
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class AppTextVoiceService extends DaoSupport {
 		} else {
 			queryHql= "from AppTextVoice v order by v.praiseCount desc";
 		}
-		return this.hibernateDao.queryList(queryHql, page, pageSize);
+		return this.hibernateDao.queryListByPage(queryHql, page, pageSize);
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class AppTextVoiceService extends DaoSupport {
 	 */
 	public List<AppUser> getPraiseUsers(int recordId, int page, int pageSize) {
 		String queryHql = "from AppTextVoicePraiseLog v where recordId = ? order by v.opTime desc";
-		List<AppTextVoicePraiseLog> logList =  this.hibernateDao.queryList(queryHql, page, pageSize, recordId);
+		List<AppTextVoicePraiseLog> logList =  this.hibernateDao.queryListByPage(queryHql, page, pageSize, recordId);
 		List<AppUser> userList = new ArrayList<AppUser>();
 		for (AppTextVoicePraiseLog log : logList) {
 			userList.add(appUserService.getAppUserById(log.getUid()));

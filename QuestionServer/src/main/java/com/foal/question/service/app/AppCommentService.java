@@ -34,17 +34,17 @@ public class AppCommentService extends DaoSupport {
 	
 	public List<AppComment> getRecordComment(int type, int recordId, int page, int pageSize) {
 		String queryHql = "from AppComment v where v.type = ? and v.recordId = ? order by v.createTime desc";
-		return this.hibernateDao.queryList(queryHql, page, pageSize, type, recordId);
+		return this.hibernateDao.queryListByPage(queryHql, page, pageSize, type, recordId);
 	}
 	
 	public List<AppComment> getRecordCommentByOwner(String ownerId, int page, int pageSize) {
 		String queryHql = "from AppComment v where v.owner.uid = ? order by v.createTime desc";
-		return this.hibernateDao.queryList(queryHql, page, pageSize, ownerId);
+		return this.hibernateDao.queryListByPage(queryHql, page, pageSize, ownerId);
 	}
 	
 	public List<AppComment> getRecordCommentByCareUser(String careUserId, int page, int pageSize) {
 		String queryHql = "from AppComment v where (v.recordOwner.uid = ? or v.toUser.uid = ?) and v.owner.uid != ? order by v.createTime desc";
-		return this.hibernateDao.queryList(queryHql, page, pageSize, careUserId, careUserId, careUserId);
+		return this.hibernateDao.queryListByPage(queryHql, page, pageSize, careUserId, careUserId, careUserId);
 	}
 	
 	public int getRecordCommentCount(int recordId, int type) {

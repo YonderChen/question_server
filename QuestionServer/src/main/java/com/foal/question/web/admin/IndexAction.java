@@ -37,7 +37,6 @@ public class IndexAction extends AdminBaseAction implements ModelDriven<ServerUs
 	
 	@Action("login")
 	public String login() {
-		/*
 		String validationCode = (String)this.getAttrFromSession("validationCode");
 		if (validationCode == null) {
 			ajaxBean = new AjaxBean(false, "验证码超时.");
@@ -48,7 +47,6 @@ public class IndexAction extends AdminBaseAction implements ModelDriven<ServerUs
 			this.ajaxWrite(ajaxBean);
 			return null;
 		}
-		*/
 		StringBuffer sb = new StringBuffer();
 		ServerUser user = this.serverUserService.queryServerUser(userBean, sb);
 		if (user == null) {
