@@ -70,7 +70,7 @@ public class ServerUserService extends DaoSupport {
         }
         int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
         queryHql += " order by s.createTime desc";
-        List list = this.hibernateDao.queryList(queryHql, serverUserBean.getPage(), serverUserBean.getPageSize(), paramMap);
+        List list = this.hibernateDao.queryListByPage(queryHql, serverUserBean.getPage(), serverUserBean.getPageSize(), paramMap);
         return new PageBean(list, allRow, serverUserBean.getPage(), serverUserBean.getPageSize());
     }
 

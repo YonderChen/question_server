@@ -98,7 +98,7 @@ public class AppUserService extends DaoSupport {
 		}
 		int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
 		queryHql += " order by u.updateAt desc";
-		List list = this.hibernateDao.queryList(queryHql, appUserBean.getPage(), appUserBean.getPageSize(), paramMap);
+		List list = this.hibernateDao.queryListByPage(queryHql, appUserBean.getPage(), appUserBean.getPageSize(), paramMap);
 		return new PageBean(list, allRow, appUserBean.getPage(), appUserBean.getPageSize());
 	}
 

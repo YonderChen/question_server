@@ -176,7 +176,7 @@ public class AppTextImageService extends DaoSupport {
 		}
 		int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
 		queryHql += " order by r.createTime desc";
-		List list = this.hibernateDao.queryList(queryHql, appTextImageBean.getPage(), appTextImageBean.getPageSize(), paramMap);
+		List list = this.hibernateDao.queryListByPage(queryHql, appTextImageBean.getPage(), appTextImageBean.getPageSize(), paramMap);
 		return new PageBean(list, allRow, appTextImageBean.getPage(), appTextImageBean.getPageSize());
 	}
 

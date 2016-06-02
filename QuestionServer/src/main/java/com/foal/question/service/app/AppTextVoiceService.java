@@ -176,7 +176,7 @@ public class AppTextVoiceService extends DaoSupport {
 		}
 		int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
 		queryHql += " order by r.createTime desc";
-		List list = this.hibernateDao.queryList(queryHql, appTextVoiceBean.getPage(), appTextVoiceBean.getPageSize(), paramMap);
+		List list = this.hibernateDao.queryListByPage(queryHql, appTextVoiceBean.getPage(), appTextVoiceBean.getPageSize(), paramMap);
 		return new PageBean(list, allRow, appTextVoiceBean.getPage(), appTextVoiceBean.getPageSize());
 	}
 	

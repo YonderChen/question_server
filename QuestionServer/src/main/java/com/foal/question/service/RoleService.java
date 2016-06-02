@@ -56,7 +56,7 @@ public class RoleService extends DaoSupport {
 		}
 		int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
 		queryHql += " order by r.createTime desc";
-		List list = this.hibernateDao.queryList(queryHql, roleBean.getPage(), roleBean.getPageSize(), paramMap);
+		List list = this.hibernateDao.queryListByPage(queryHql, roleBean.getPage(), roleBean.getPageSize(), paramMap);
 		return new PageBean(list, allRow, roleBean.getPage(), roleBean.getPageSize());
 	}
 	

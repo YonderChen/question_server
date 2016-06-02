@@ -71,7 +71,7 @@ public class HibernateDao extends HibernateDaoSupport{
 		return Integer.valueOf(list.get(0).toString());
 	}
 	
-	public List queryList(String queryHql, int page, int pageSize, Map paramMap) {
+	public List queryListByPage(String queryHql, int page, int pageSize, Map paramMap) {
 		Session session = getSession();
 		Query query = session.createQuery(queryHql);
         if (paramMap != null) {
