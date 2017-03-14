@@ -17,13 +17,13 @@ import com.foal.question.jersey.command.shopping.LoadGoodsListCommand;
  */
 public class ShoppingCommandRouter {
     private static final Logger logger = Logger.getLogger(ShoppingCommandRouter.class);
-    private static Map<Short, ShoppingCommand> handlerServiceMap = new HashMap<Short, ShoppingCommand>();
+    private static Map<Short, IShoppingCommand> handlerServiceMap = new HashMap<Short, IShoppingCommand>();
     /**
      * 获取处理接口
      * @param command
      * @return 
      */
-    public static ShoppingCommand getHandlerService(short command){
+    public static IShoppingCommand getHandlerService(short command){
         if(handlerServiceMap.containsKey(command)){
             return handlerServiceMap.get(command);
         }else{
@@ -36,7 +36,7 @@ public class ShoppingCommandRouter {
      * @param command
      * @param handlerService 
      */
-    public static void register(short command,ShoppingCommand handlerService){
+    public static void register(short command,IShoppingCommand handlerService){
         if(handlerServiceMap.containsKey(command)){
             logger.error("处理句柄已存在:"+command+"");
             throw new IllegalStateException("HandlerService注册失败：handlerId有重复！"+command);
@@ -54,6 +54,6 @@ public class ShoppingCommandRouter {
     public static void initHandlerService(){
     	//服务接口注册
         clear();
-    	register(ShoppingCommand.LoadGoodsListCommand, new LoadGoodsListCommand());
+    	register(IShoppingCommand.LoadGoodsListCommand, new LoadGoodsListCommand());
     }
 }

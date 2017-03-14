@@ -56,11 +56,11 @@ public class ShoppingService extends DaoSupport {
 			queryHql += " and r.sourceStore like :sourceStore";
 			paramMap.put("sourceStore", "%" + sourceStore + "%");
 		}
-		queryHql += " order by r.createTime desc";
+		queryHql += " order by r.createAt desc";
 		return this.hibernateDao.queryListByPage(queryHql, page, pageSize, paramMap);
 	}
 
-	public PageBean queryTextImage(ShoppingGoodsBean bean) {
+	public PageBean queryShoppingGoods(ShoppingGoodsBean bean) {
 		String queryHql = "from ShoppingGoods as r where 1 = 1";
 		Map paramMap = new HashMap();
 		if (!StringUtil.isEmpty(bean.getId())) {
@@ -84,7 +84,7 @@ public class ShoppingService extends DaoSupport {
 			paramMap.put("sourceStore", "%" + bean.getSourceStore() + "%");
 		}
 		int allRow = this.hibernateDao.getAllRow("select count(*) " + queryHql, paramMap);
-		queryHql += " order by r.createTime desc";
+		queryHql += " order by r.createAt desc";
 		List list = this.hibernateDao.queryListByPage(queryHql, bean.getPage(), bean.getPageSize(), paramMap);
 		return new PageBean(list, allRow, bean.getPage(), bean.getPageSize());
 	}

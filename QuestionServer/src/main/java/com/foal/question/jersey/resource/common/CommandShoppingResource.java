@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.foal.question.config.Constant;
 import com.foal.question.config.QuestionException;
-import com.foal.question.jersey.command.ShoppingCommand;
+import com.foal.question.jersey.command.IShoppingCommand;
 import com.foal.question.jersey.command.ShoppingCommandRouter;
 import com.foal.question.jersey.resource.tools.Param;
 import com.foal.question.jersey.resource.tools.ResultMap;
@@ -34,7 +34,7 @@ public class CommandShoppingResource {
 		try {
 			param = Param.getParam(request);
 			short command = param.getCommand();
-			ShoppingCommand service = ShoppingCommandRouter.getHandlerService(command);
+			IShoppingCommand service = ShoppingCommandRouter.getHandlerService(command);
 			if (service == null) {
 				throw new QuestionException(QuestionException.CommandNotFound, "没有找到命令");
 			}

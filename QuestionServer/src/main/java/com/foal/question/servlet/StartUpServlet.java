@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import com.foal.question.config.Constant;
 import com.foal.question.jersey.command.CommandRouter;
+import com.foal.question.jersey.command.ShoppingCommandRouter;
 import com.foal.question.listener.ServiceLocator;
 import com.foal.question.service.GlobalConfigService;
 import com.foal.question.service.RiskWordService;
@@ -52,6 +53,7 @@ public class StartUpServlet extends HttpServlet {
 		riskWordService.initRiskWord();
 		
 		CommandRouter.initHandlerService();//初始化接口
+		ShoppingCommandRouter.initHandlerService();//初始化接口
 		
 		logger.info("启动成功...");
 	}

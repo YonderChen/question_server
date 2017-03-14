@@ -70,18 +70,18 @@ public class ShoppingGoods implements Serializable{
 		this.imageUrl = imageUrl;
 	}
 	@Column(name = "create_at_")
+	public long getCreateAt() {
+		return createAt;
+	}
 	public void setCreateAt(long createAt) {
 		this.createAt = createAt;
-	}
-	public void setSourceStore(int sourceStore) {
-		this.sourceStore = sourceStore;
 	}
 	@Column(name = "source_store_")
 	public int getSourceStore() {
 		return sourceStore;
 	}
-	public long getCreateAt() {
-		return createAt;
+	public void setSourceStore(int sourceStore) {
+		this.sourceStore = sourceStore;
 	}
 	public JsonObject toJson() {
 		JsonObject jo = GsonTools.parseJsonObject(this);
